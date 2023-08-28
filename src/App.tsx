@@ -1,9 +1,5 @@
 import React from 'react';
 
-const testFunc = (a:number, b:number) => {
-    return a > b
-}
-
 const App = () => {
     return (
         <div>
