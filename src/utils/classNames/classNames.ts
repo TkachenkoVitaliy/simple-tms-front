@@ -1,8 +1,11 @@
-type Mods = Record<string, boolean | (() => boolean)>
+type Mods = Record<string, boolean | ((...args: any[]) => boolean)>
 export function classNames(cls: string, mods?: Mods, additional?: string[]): string {
+    const modsParam = mods ? mods : {}
+    const additionalParam = additional ? additional : []
+
     return [
         cls,
-        ...Object.entries(mods)
+        ...Object.entries(modsParam)
             .filter(([, value]) => {
                 if (value instanceof Function) {
                     return value()
@@ -11,6 +14,6 @@ export function classNames(cls: string, mods?: Mods, additional?: string[]): str
                 }
             })
             .map(([cls,_]) => cls),
-        ...additional,
+        ...additionalParam,
     ].join(' ')
 }
