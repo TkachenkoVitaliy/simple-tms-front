@@ -1,0 +1,7 @@
+#Project
+/build/
+node_modules/
+#Jetbrains
+.idea/
+#VSCode
+.vscode/
