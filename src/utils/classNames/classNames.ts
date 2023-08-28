@@ -1,13 +1,16 @@
-type Mods = Record<string, boolean | string>
+type Mods = Record<string, boolean | (() => boolean)>
 export function classNames(cls: string, mods?: Mods, additional?: string[]): string {
     return [
         cls,
         ...Object.entries(mods)
-            .filter(([cls, value]) => Boolean(value))
-            .map(([cls]) => cls),
+            .filter(([, value]) => {
+                if (value instanceof Function) {
+                    return value()
+                } else {
+                    return Boolean(value)
+                }
+            })
+            .map(([cls,_]) => cls),
         ...additional,
     ].join(' ')
 }
-
-const s = classNames('btn', {hovered: true, selectable: true, red: false}, ['additional']);
-console.log(s);
