@@ -9,8 +9,8 @@
     "build:dev": "webpack --env mode=development",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "style:lint": "npx stylelint '**/*.scss'",
-    "style:lint:fix": "npx stylelint '**/*.scss' --fix",
+    "style:lint": "stylelint '**/*.scss'",
+    "style:lint:fix": "stylelint '**/*.scss' --fix",
     "lint-staged": "lint-staged",
     "husky-install": "husky install"
   },
