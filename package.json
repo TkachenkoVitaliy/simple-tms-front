@@ -9,7 +9,10 @@
     "build:dev": "webpack --env mode=development",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "lint-staged": "lint-staged"
+    "style:lint": "npx stylelint '**/*.scss'",
+    "style:lint:fix": "npx stylelint '**/*.scss' --fix",
+    "lint-staged": "lint-staged",
+    "husky-install": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -35,12 +38,15 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.3",
     "mini-css-extract-plugin": "^2.7.6",
     "prettier": "^3.0.2",
     "react-refresh": "^0.14.0",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard-scss": "^10.0.0",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",
     "type-fest": "^4.3.1",
@@ -53,5 +59,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "npm run lint:fix",
+    "*.scss": "npm run style:lint:fix"
   }
 }
