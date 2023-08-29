@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -23,7 +24,7 @@ module.exports = {
     quotes: ['error', 'single'],
     'no-shadow': 'warn',
     'no-underscore-dangle': 'off',
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_|args' }],
+    'no-unused-vars': 'off',
     'max-lines': [
       'warn',
       { max: 100, skipBlankLines: false, skipComments: true },
@@ -39,7 +40,10 @@ module.exports = {
     'import/extensions': ['warn', { ts: 'never', tsx: 'never', js: 'never' }],
     'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
     '@typescript-eslint/semi': ['error', 'never'],
-    
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { vars: 'local', argsIgnorePattern: '^_|args' },
+    ],
   },
   globals: {
     __IS_DEV__: true,

@@ -6,12 +6,10 @@
     "target": "es5",
     "jsx": "react-jsx",
     "allowJs": true,
+    "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "types": [
-      "webpack",
-    ],
+    "allowSyntheticDefaultImports": true
   },
   "ts-node": {
     "compilerOptions": {
