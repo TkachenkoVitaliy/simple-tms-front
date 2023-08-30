@@ -7,18 +7,11 @@ declare module '*.scss' {
 }
 
 declare module '*.svg' {
-  import { ReactElement, SVGProps } from 'react'
-
-  // eslint-disable-next-line no-unused-vars
-  const SVG: (props: SVGProps<SVGElement>) => ReactElement
-  export default SVG
-
-  // const content: React.ElementType<React.ComponentPropsWithRef<'svg'>>;
-  // export default content;
-
-  // import React from 'react'
-  // const SVG: React.VFC<React.SVGProps<SVGSVGElement>>
+  // const SVG: React.ElementType<React.ComponentPropsWithRef<'svg'>>
   // export default SVG
+
+  const SVG: React.FC<React.SVGProps<SVGSVGElement>>
+  export default SVG
 }
 
 declare module '*.png'

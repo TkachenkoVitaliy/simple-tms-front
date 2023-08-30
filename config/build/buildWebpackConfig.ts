@@ -17,12 +17,13 @@ export function buildWebpackConfig(
       filename: '[name].[contenthash].js',
       path: paths.build,
       clean: true,
+      publicPath: '/',
     },
     plugins: buildPlugins(options),
     module: {
       rules: buildLoaders(options),
     },
-    resolve: buildResolvers(),
+    resolve: buildResolvers(options),
     devtool: isDev ? 'inline-source-map' : false,
     devServer: isDev ? buildDevServer(options) : undefined,
   }

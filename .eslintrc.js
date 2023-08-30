@@ -37,7 +37,10 @@ module.exports = {
     'react/require-default-props': 'warn',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'warn',
-    'import/extensions': ['warn', { ts: 'never', tsx: 'never', js: 'never' }],
+    'import/extensions': [
+      'warn',
+      { ts: 'never', tsx: 'never', js: 'never', svg: 'always', scss: 'always' },
+    ],
     'import/no-extraneous-dependencies': ['warn', { devDependencies: true }],
     '@typescript-eslint/semi': ['error', 'never'],
     '@typescript-eslint/no-unused-vars': [
