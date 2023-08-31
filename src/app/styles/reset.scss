@@ -19,3 +19,8 @@ select {
 a {
   text-decoration: none;
 }
+
+a:any-link {
+  color: inherit;
+  cursor: pointer;
+}

@@ -22,7 +22,8 @@ module.exports = {
     indent: ['error', 2],
     semi: ['error', 'never'],
     quotes: ['error', 'single'],
-    'no-shadow': 'warn',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off',
     'max-lines': [

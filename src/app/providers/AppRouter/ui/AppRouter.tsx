@@ -1,19 +1,54 @@
+import { ErrorPage } from 'pages/ErrorPage'
 import { Suspense, memo, useCallback } from 'react'
-import { Route, RouteProps, RouterProvider, Routes } from 'react-router-dom'
-import { routes } from '../model/routes'
+import {
+  Navigate,
+  RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom'
+import { IAppRoute } from 'shared/types/routerTypes'
+import { AppLayout } from 'app/AppLayout'
+import { appRoutes } from '../model/appRoutes'
 
 const AppRouter = memo(() => {
-  const renderWithWrapper = useCallback((route: RouteProps) => {
-    return (
-      <Route
-        key={route.path}
-        path={route.path}
-        element={<Suspense fallback="loading...">{route.element}</Suspense>}
-      />
-    )
+  const mapToRoute = useCallback((appRoute: IAppRoute) => {
+    const { path, element } = appRoute
+    return {
+      path,
+      element: <Suspense fallback="loading...">{element}</Suspense>,
+    }
   }, [])
 
-  return <Routes>{Object.values(routes).map(renderWithWrapper)}</Routes>
+  const routes: RouteObject[] = [
+    {
+      path: '/',
+      element: (
+        <Suspense fallback="loading...">
+          <AppLayout />
+        </Suspense>
+      ),
+      errorElement: (
+        <Suspense fallback="loading...">
+          <ErrorPage />
+        </Suspense>
+      ),
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/projects" />,
+        },
+        ...appRoutes.map(mapToRoute),
+      ],
+    },
+    {
+      path: 'auth',
+      element: <div>AuthLayout</div>,
+    },
+  ]
+
+  const router = createBrowserRouter(routes)
+
+  return <RouterProvider router={router} />
 })
 
 export default AppRouter

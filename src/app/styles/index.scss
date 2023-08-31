@@ -1,9 +1,19 @@
 @import 'reset';
+@import 'variables';
 
 .app {
   min-height: 100vh;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .content-page {
   display: flex;
+}
+
+.main {
+  height: calc(100vh - var(--navbar-height));
+  padding: 20px;
 }

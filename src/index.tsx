@@ -1,13 +1,18 @@
-import { BrowserRouter } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
-import App from './app/App'
+import { CssBaseline } from '@mui/material'
+import { AppThemeProvider } from 'app/providers/AppThemeProvider'
+import { ThemeName } from 'shared/consts/theme'
 
 import './app/styles/index.scss'
+import { AppRouter } from 'app/providers/AppRouter'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)
+
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <AppThemeProvider initialThemeName={ThemeName.DARK}>
+    <CssBaseline>
+      <AppRouter />
+    </CssBaseline>
+  </AppThemeProvider>,
 )

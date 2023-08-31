@@ -1,16 +1,13 @@
-import DashboardPage from '../../pages/DashboardPage/ui/DashboardPage'
-import ShutdownIcon from '../../../../shared/assets/shutdown.svg'
+import { OverridableComponent } from '@mui/material/OverridableComponent'
+import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon'
 
-export interface IAppRoutes {
+export interface IAppRoute {
   path: string
   element: React.ReactNode
   label?: string
-  Icon?: React.FC<React.SVGProps<SVGSVGElement>>
-}
-
-export const testElem: IAppRoutes = {
-  path: '/test',
-  element: <DashboardPage />,
-  label: 'TEST',
-  Icon: ShutdownIcon,
+  Icon?:
+    | React.FC<React.SVGProps<SVGSVGElement>>
+    | (OverridableComponent<SvgIconTypeMap<unknown, 'svg'>> & {
+        muiName: string
+      })
 }

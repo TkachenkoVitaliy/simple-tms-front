@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 
-function ProjectPage() {
+function ProjectsPage() {
   const location = useLocation()
   return (
     <div>
@@ -10,4 +10,4 @@ function ProjectPage() {
   )
 }
 
-export default ProjectPage
+export default ProjectsPage
