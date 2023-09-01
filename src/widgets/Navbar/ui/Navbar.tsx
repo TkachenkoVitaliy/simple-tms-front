@@ -16,6 +16,7 @@ export const Navbar = memo(() => {
         <Button
           variant="text"
           sx={{ textTransform: 'none' }}
+          component="button"
         >
           <S
             width={24}
@@ -37,7 +38,12 @@ export const Navbar = memo(() => {
         >
           {location.pathname}
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button
+          color="inherit"
+          component="button"
+        >
+          Login
+        </Button>
       </Toolbar>
     </AppBar>
   )

@@ -5,12 +5,7 @@ import ListItemText from '@mui/material/ListItemText'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import { SvgIconTypeMap } from '@mui/material/SvgIcon'
 import { memo } from 'react'
-import {
-  NavLink,
-  useMatch,
-  useMatches,
-  useResolvedPath,
-} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export interface SidebarNavItemProps {
   path: string

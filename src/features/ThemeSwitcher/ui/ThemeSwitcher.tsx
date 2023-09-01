@@ -1,5 +1,4 @@
 import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import { memo } from 'react'
 import { ThemeName } from 'shared/consts/theme'
@@ -9,7 +8,10 @@ export const ThemeSwitcher = memo(() => {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <IconButton onClick={toggleTheme}>
+    <IconButton
+      onClick={toggleTheme}
+      component="button"
+    >
       {theme === ThemeName.DARK ? (
         <DarkModeOutlined color="info" />
       ) : (

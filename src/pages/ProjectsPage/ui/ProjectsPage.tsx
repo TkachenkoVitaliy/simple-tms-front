@@ -1,12 +1,14 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Container } from '@mui/material'
+import { ProjectList } from 'entities/Project/ui/ProjectList/ProjectList'
 
 function ProjectsPage() {
-  const location = useLocation()
   return (
-    <div>
-      <div>ProjectPage</div>
-      <Link to={`${location.pathname}/1/dashboard`}>To Dashboard</Link>
-    </div>
+    <Container
+      maxWidth={false}
+      sx={{ paddingTop: '24px', paddingBottom: '24px' }}
+    >
+      <ProjectList />
+    </Container>
   )
 }
 
