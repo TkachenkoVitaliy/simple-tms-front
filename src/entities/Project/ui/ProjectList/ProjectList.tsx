@@ -1,36 +1,36 @@
 import { Grid } from '@mui/material'
-import { IProject, mockProjects } from 'mock/Projects'
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
+import { appStore } from 'app/store/AppStore'
+import { observer } from 'mobx-react-lite'
 import { ProjectItem } from '../ProjectItem/ProjectItem'
 import { NewProjectItem } from '../NewProjectItem/NewProjectItem'
 
-export const ProjectList = memo(() => {
-  const [projects, setProjects] = useState<IProject[]>([])
-  useEffect(() => {
-    setProjects(mockProjects)
-  }, [mockProjects])
-
-  return (
-    <Grid
-      container
-      spacing={2}
-    >
+export const ProjectList = memo(
+  observer(() => {
+    return (
       <Grid
-        key={0}
-        item
-        xs={4}
+        container
+        spacing={2}
       >
-        <NewProjectItem />
-      </Grid>
-      {projects.map((project) => (
         <Grid
-          key={project.id}
+          key={0}
           item
           xs={4}
         >
-          <ProjectItem project={project} />
+          <NewProjectItem />
         </Grid>
-      ))}
-    </Grid>
-  )
-})
+        {appStore.projects
+          .filter((project) => project.id !== 0)
+          .map((project) => (
+            <Grid
+              key={project.id}
+              item
+              xs={4}
+            >
+              <ProjectItem project={project} />
+            </Grid>
+          ))}
+      </Grid>
+    )
+  }),
+)

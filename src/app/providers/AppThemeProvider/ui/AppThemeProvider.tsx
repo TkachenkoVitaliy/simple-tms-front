@@ -5,9 +5,9 @@ import { LOCAL_STORAGE_THEME_KEY } from 'shared/consts/localstorage'
 import { ThemeName } from 'shared/consts/theme'
 import { ThemeContext } from 'shared/lib/context/ThemeContext'
 
-const defaultThemeName: ThemeName =
-  (localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as ThemeName) ||
-  ThemeName.LIGHT
+const defaultThemeName: ThemeName = localStorage.getItem(
+  LOCAL_STORAGE_THEME_KEY,
+) as ThemeName
 
 const ligthTheme = createTheme({
   palette: {
@@ -36,7 +36,7 @@ function AppThemeProvider({
   children,
 }: AppThemeProviderProps) {
   const [themeName, setThemeName] = useState<ThemeName>(
-    initialThemeName || defaultThemeName,
+    defaultThemeName || initialThemeName,
   )
 
   const defaultProps = useMemo(
