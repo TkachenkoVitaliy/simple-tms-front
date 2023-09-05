@@ -2,9 +2,9 @@ import { Button, CardContent, CardHeader, useTheme } from '@mui/material'
 import Card from '@mui/material/Card'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { IProject } from 'mock/Projects'
 import { memo } from 'react'
 import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
+import { IProject } from 'shared/types/projectTypes'
 
 interface ProjectItemProps {
   project: IProject

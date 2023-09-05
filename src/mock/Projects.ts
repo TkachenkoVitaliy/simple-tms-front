@@ -1,8 +1,4 @@
-export interface IProject {
-  id: number
-  name: string
-  description: string
-}
+import { IProject } from 'shared/types/projectTypes'
 
 export const mockProjects: IProject[] = [
   {

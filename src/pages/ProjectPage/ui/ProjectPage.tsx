@@ -1,9 +1,7 @@
+import { ProjectForm } from 'entities/Project/ui/ProjectForm/ProjectForm'
+
 function ProjectPage() {
-  return (
-    <div>
-      <div>ProjectPage</div>
-    </div>
-  )
+  return <ProjectForm />
 }
 
 export default ProjectPage

@@ -1,24 +1,12 @@
-import {
-  Autocomplete,
-  Button,
-  TextField,
-  Toolbar,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Button, Toolbar, Typography } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
-import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { IProject } from 'mock/Projects'
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import S from 'shared/assets/s.svg'
 import { ProjectSelect } from './ProjectSelect'
 
 export const Navbar = memo(
   observer(() => {
-    const theme = useTheme()
-    const { contrastText } = theme.palette.primary
-
     return (
       <AppBar
         position="sticky"

@@ -1,8 +1,8 @@
 import { Autocomplete, TextField, useTheme } from '@mui/material'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { IProject } from 'mock/Projects'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { IProject } from 'shared/types/projectTypes'
 
 export const ProjectSelect = observer(() => {
   const NEW_PROJECT_PATH = '/project/0'
@@ -26,8 +26,6 @@ export const ProjectSelect = observer(() => {
       defaultValue={appStore.activeProject}
       value={appStore.activeProject}
       onChange={(_, value) => {
-        console.log(contrastText)
-
         if (value === null) return
         if (value.id === 0) {
           navigate(NEW_PROJECT_PATH, {

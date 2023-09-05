@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
-import { IProject, mockProjects } from 'mock/Projects'
+import { mockProjects } from 'mock/Projects'
 import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
+import { IProject } from 'shared/types/projectTypes'
 
 class AppStore {
   activeProject: IProject | null = null
