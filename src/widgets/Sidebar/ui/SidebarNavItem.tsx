@@ -8,6 +8,7 @@ import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 export interface SidebarNavItemProps {
+  collapsed: boolean
   path: string
   label: string
   Icon:
@@ -18,7 +19,7 @@ export interface SidebarNavItemProps {
 }
 
 export const SidebarNavItem = memo((props: SidebarNavItemProps) => {
-  const { path, label, Icon } = props
+  const { path, label, Icon, collapsed } = props
 
   return (
     <ListItem disablePadding>
@@ -26,14 +27,33 @@ export const SidebarNavItem = memo((props: SidebarNavItemProps) => {
         to={path}
         end
         key={label}
-        style={{ width: '100%' }}
+        style={{
+          width: '100%',
+          height: '50px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
       >
         {({ isActive }) => (
-          <ListItemButton selected={isActive}>
-            <ListItemIcon>
+          <ListItemButton
+            selected={isActive}
+            sx={collapsed ? { padding: '8px 0', width: '49px' } : {}}
+          >
+            <ListItemIcon
+              sx={
+                collapsed
+                  ? {
+                      width: '49px',
+                      minWidth: '49px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }
+                  : {}
+              }
+            >
               <Icon />
             </ListItemIcon>
-            <ListItemText primary={label} />
+            {collapsed || <ListItemText primary={label} />}
           </ListItemButton>
         )}
       </NavLink>

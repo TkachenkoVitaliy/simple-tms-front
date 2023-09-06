@@ -1,27 +1,33 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import Drawer from '@mui/material/Drawer'
 import Toolbar from '@mui/material/Toolbar'
 import Box from '@mui/material/Box'
 import { appRoutes } from 'app/providers/AppRouter/model/appRoutes'
-import { List } from '@mui/material'
+import { IconButton, List } from '@mui/material'
 import { ThemeSwitcher } from 'features/ThemeSwitcher/ui/ThemeSwitcher'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
+import { ArrowBackIosNew } from '@mui/icons-material'
 import { SidebarNavItem } from './SidebarNavItem'
 
 import styles from './Sidebar.module.scss'
 
 export const Sidebar = memo(
   observer(() => {
+    const [collapsed, setCollapsed] = useState<boolean>(false)
+
     return (
-      <aside className={styles.sidebar}>
+      <aside
+        className={styles.sidebar}
+        style={{ width: collapsed ? '50px' : '200px', transition: 'all 0.3s' }}
+      >
         <Drawer
           variant="permanent"
           sx={{
-            width: '200px',
+            width: collapsed ? '50px' : '200px',
             flexShrink: 0,
             '& .MuiDrawer-paper': {
-              width: '200px',
+              width: collapsed ? '50px' : '200px',
               boxSizing: 'border-box',
             },
           }}
@@ -40,6 +46,7 @@ export const Sidebar = memo(
                 if (item.label !== undefined && item.Icon !== undefined) {
                   return (
                     <SidebarNavItem
+                      collapsed={collapsed}
                       key={item.label}
                       path={item
                         .path()
@@ -55,6 +62,17 @@ export const Sidebar = memo(
                 return null
               })}
             </List>
+            <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+              <IconButton onClick={() => setCollapsed(!collapsed)}>
+                <ArrowBackIosNew
+                  sx={
+                    collapsed
+                      ? { rotate: '180deg', transition: 'all 0.3s' }
+                      : { transition: 'all 0.3s' }
+                  }
+                />
+              </IconButton>
+            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <ThemeSwitcher />
             </Box>
