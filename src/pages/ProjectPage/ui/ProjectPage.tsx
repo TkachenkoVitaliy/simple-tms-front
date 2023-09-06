@@ -1,7 +1,16 @@
+import { appStore } from 'app/store/AppStore'
 import { ProjectForm } from 'entities/Project/ui/ProjectForm/ProjectForm'
+import { useParams } from 'react-router-dom'
 
 function ProjectPage() {
-  return <ProjectForm />
+  const { id } = useParams<{ id: string }>()
+
+  const currentProject =
+    id === '0'
+      ? undefined
+      : appStore.projects.find((project) => project.id.toString() === id)
+
+  return <ProjectForm project={currentProject} />
 }
 
 export default ProjectPage

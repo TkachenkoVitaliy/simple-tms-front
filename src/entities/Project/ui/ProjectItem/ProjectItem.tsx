@@ -3,6 +3,7 @@ import Card from '@mui/material/Card'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
 import { IProject } from 'shared/types/projectTypes'
 
@@ -14,6 +15,7 @@ export const ProjectItem = memo(
   observer(({ project }: ProjectItemProps) => {
     const { name, description } = project
     const theme = useTheme()
+    const navigate = useNavigate()
     const borderColor = theme.palette.info.main
     const localStorageActiveProject = localStorage.getItem(
       LOCAL_STORAGE_ACTIVE_PROJECT,
@@ -29,6 +31,7 @@ export const ProjectItem = memo(
       e.preventDefault()
       e.stopPropagation()
       appStore.setActiveProject(project)
+      navigate(`../project/${project.id}`)
     }
 
     return (
@@ -64,7 +67,13 @@ export const ProjectItem = memo(
             component="div"
             sx={{ height: '130px', color: theme.palette.text.secondary }}
           >
-            <div style={{ height: '70px', overflowY: 'clip' }}>
+            <div
+              style={{
+                height: '70px',
+                overflowY: 'clip',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
               {description}
             </div>
           </CardContent>

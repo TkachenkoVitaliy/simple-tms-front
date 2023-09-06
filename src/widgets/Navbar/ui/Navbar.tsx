@@ -1,12 +1,19 @@
 import { Button, Toolbar, Typography } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
+import { ProjectSelect } from 'features/ProjectSelect'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import S from 'shared/assets/s.svg'
-import { ProjectSelect } from './ProjectSelect'
 
 export const Navbar = memo(
   observer(() => {
+    const navigate = useNavigate()
+
+    const onLogoClick = () => {
+      navigate('/')
+    }
+
     return (
       <AppBar
         position="sticky"
@@ -17,6 +24,7 @@ export const Navbar = memo(
             variant="text"
             sx={{ textTransform: 'none' }}
             component="button"
+            onClick={onLogoClick}
           >
             <S
               width={24}

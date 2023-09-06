@@ -29,7 +29,6 @@ export const ProjectSelect = observer(() => {
         if (value === null) return
         if (value.id === 0) {
           navigate(NEW_PROJECT_PATH, {
-            replace: false,
             relative: 'path',
           })
           appStore.setActiveProject(null)
@@ -37,6 +36,7 @@ export const ProjectSelect = observer(() => {
         }
         appStore.setActiveProject(value)
       }}
+      inputValue={appStore.activeProject?.name || ''}
       isOptionEqualToValue={(option, value) => {
         return option.id === value.id
       }}
@@ -46,6 +46,7 @@ export const ProjectSelect = observer(() => {
       renderOption={(props, option) => {
         return (
           <li
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
             style={option.id === 0 ? { color: createColor } : {}}
           >
@@ -54,10 +55,9 @@ export const ProjectSelect = observer(() => {
         )
       }}
       renderInput={(params) => {
-        // eslint-disable-next-line no-param-reassign
-
         return (
           <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             fullWidth
             margin="none"
