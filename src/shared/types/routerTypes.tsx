@@ -2,7 +2,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent'
 import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon'
 
 export interface IAppRoute {
-  path: string
+  path: () => string
   element: React.ReactNode
   label?: string
   Icon?:

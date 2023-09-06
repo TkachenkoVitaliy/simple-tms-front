@@ -1,5 +1,6 @@
 import { appStore } from 'app/store/AppStore'
 import { ProjectForm } from 'entities/Project/ui/ProjectForm/ProjectForm'
+import { observer } from 'mobx-react-lite'
 import { useParams } from 'react-router-dom'
 
 function ProjectPage() {
@@ -13,4 +14,4 @@ function ProjectPage() {
   return <ProjectForm project={currentProject} />
 }
 
-export default ProjectPage
+export default observer(ProjectPage)

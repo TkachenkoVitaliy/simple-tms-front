@@ -7,7 +7,8 @@ import {
   TextField,
 } from '@mui/material'
 import { appStore } from 'app/store/AppStore'
-import { memo, useMemo, useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
 
@@ -20,7 +21,7 @@ enum FormType {
   CREATE = 'create',
 }
 
-export const ProjectForm = memo((props: ProjectFormProps) => {
+export const ProjectForm = observer((props: ProjectFormProps) => {
   const FORM_TYPE: FormType = props?.project?.id
     ? FormType.EDIT
     : FormType.CREATE
@@ -30,6 +31,13 @@ export const ProjectForm = memo((props: ProjectFormProps) => {
   const [project, setProject] = useState<IProject>(
     props.project || { id: -1, name: '', description: '' },
   )
+
+  useEffect(() => {
+    if (project.id !== -1 && props.project === undefined) {
+      setProject({ id: -1, name: '', description: '' })
+    }
+  }, [props])
+
   const [isNameValid, setNameValidity] = useState<boolean>(true)
   const [haveChanges, setHaveChanges] = useState<boolean>(false)
   const navigate = useNavigate()

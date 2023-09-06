@@ -28,10 +28,8 @@ export const ProjectSelect = observer(() => {
       onChange={(_, value) => {
         if (value === null) return
         if (value.id === 0) {
-          navigate(NEW_PROJECT_PATH, {
-            relative: 'path',
-          })
           appStore.setActiveProject(null)
+          navigate(NEW_PROJECT_PATH)
           return
         }
         appStore.setActiveProject(value)

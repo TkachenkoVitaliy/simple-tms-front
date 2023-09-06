@@ -6,17 +6,17 @@ import { IAppRoute } from 'shared/types/routerTypes'
 
 export const appRoutes: IAppRoute[] = [
   {
-    path: 'projects',
+    path: () => 'projects',
     element: <ProjectsPage />,
     label: 'Проекты',
     Icon: Dataset,
   },
   {
-    path: 'project/:id',
+    path: () => 'project/:id',
     element: <ProjectPage />,
   },
   {
-    path: 'project/:id/dashboard',
+    path: () => 'project/:id/dashboard',
     element: <DashboardPage />,
     label: 'Главная',
     Icon: Dashboard,
