@@ -13,6 +13,8 @@ export const ProjectSelect = observer(() => {
   const createColor = theme.palette.success.light
   const { contrastText } = theme.palette.primary
 
+  console.log(location.pathname)
+
   return (
     <Autocomplete
       id="projectsList"
@@ -23,7 +25,6 @@ export const ProjectSelect = observer(() => {
       blurOnSelect
       clearOnBlur
       handleHomeEndKeys
-      defaultValue={appStore.activeProject}
       value={appStore.activeProject}
       onChange={(_, value) => {
         if (value === null) return

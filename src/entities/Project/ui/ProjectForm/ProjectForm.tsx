@@ -94,6 +94,7 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
         description: project.description,
       }
       appStore.setProjects([projectWithId, ...appStore.projects])
+      appStore.setActiveProject(projectWithId)
     }
     if (FORM_TYPE === FormType.EDIT) {
       const newProjects: IProject[] = []
