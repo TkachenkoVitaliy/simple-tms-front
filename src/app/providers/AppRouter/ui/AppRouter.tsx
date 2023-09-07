@@ -6,18 +6,19 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom'
-import { IAppRoute } from 'shared/types/routerTypes'
+import { IAppRoute, IRoute } from 'shared/types/routerTypes'
 import { AppLayout } from 'app/AppLayout'
 import { appStore } from 'app/store/AppStore'
 import { appRoutes } from '../model/appRoutes'
 
 const AppRouter = memo(() => {
   const mapToRoute = useCallback(
-    (appRoute: IAppRoute) => {
-      const { path, element } = appRoute
+    (appRoute: IAppRoute): IRoute => {
+      const { path, element, children } = appRoute
       return {
         path: path(),
         element: <Suspense fallback="loading...">{element}</Suspense>,
+        children: children ? children.map(mapToRoute) : undefined,
       }
     },
     [appStore.activeProject],

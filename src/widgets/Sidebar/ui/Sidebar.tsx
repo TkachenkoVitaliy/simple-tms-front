@@ -52,7 +52,7 @@ export const Sidebar = memo(
                         .path()
                         .replace(
                           ':id',
-                          appStore.activeProject?.id.toString() || ':id',
+                          appStore.activeProject?.id.toString() || '0',
                         )}
                       label={item.label}
                       Icon={item.Icon}

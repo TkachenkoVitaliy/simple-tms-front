@@ -32,6 +32,17 @@ class AppStore {
   constructor() {
     makeAutoObservable(this)
     this.loadProjects()
+    const localStorageActiveProjectId = localStorage.getItem(
+      LOCAL_STORAGE_ACTIVE_PROJECT,
+    )
+    if (localStorageActiveProjectId) {
+      const activeProjectFromLocalStorage = this.projects.find(
+        (project) => project.id.toString() === localStorageActiveProjectId,
+      )
+      if (activeProjectFromLocalStorage) {
+        this.setActiveProject(activeProjectFromLocalStorage)
+      }
+    }
   }
 }
 

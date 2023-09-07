@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import { ProjectList } from 'entities/Project/ui/ProjectList/ProjectList'
+import { ProjectList } from 'entities/Project'
 
 function ProjectsPage() {
   return (

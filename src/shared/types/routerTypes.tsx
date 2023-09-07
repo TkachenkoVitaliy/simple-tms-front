@@ -10,4 +10,11 @@ export interface IAppRoute {
     | (OverridableComponent<SvgIconTypeMap<unknown, 'svg'>> & {
         muiName: string
       })
+  children?: IAppRoute[]
+}
+
+export interface IRoute {
+  path: string
+  element: React.ReactNode
+  children?: IRoute[]
 }
