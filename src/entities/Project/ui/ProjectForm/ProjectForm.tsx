@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { memo, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
 

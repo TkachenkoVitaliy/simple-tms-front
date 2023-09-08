@@ -13,8 +13,6 @@ export const ProjectSelect = observer(() => {
   const createColor = theme.palette.success.light
   const { contrastText } = theme.palette.primary
 
-  console.log(location.pathname)
-
   return (
     <Autocomplete
       id="projectsList"
