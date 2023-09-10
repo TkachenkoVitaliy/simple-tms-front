@@ -1,17 +1,41 @@
 import { Autocomplete, TextField, useTheme } from '@mui/material'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
 
 export const ProjectSelect = observer(() => {
   const NEW_PROJECT_PATH = '/project/0'
+  const { projectId } = useParams()
 
   const navigate = useNavigate()
   const location = useLocation()
   const theme = useTheme()
   const createColor = theme.palette.success.light
   const { contrastText } = theme.palette.primary
+
+  const handleChange = (
+    _: React.SyntheticEvent<Element, Event>,
+    value: IProject | null,
+  ) => {
+    if (value === null) return
+    if (value.id === 0) {
+      appStore.setActiveProject(null)
+      navigate(NEW_PROJECT_PATH)
+      return
+    }
+    if (value.id !== 0) {
+      const id = value.id.toString()
+      const newProjectPath = `/project/${id}`
+      const newUrl = location.pathname.replace(
+        /\/project\/(\d+)/,
+        newProjectPath,
+      )
+      console.log(newUrl)
+      navigate(newUrl)
+    }
+    appStore.setActiveProject(value)
+  }
 
   return (
     <Autocomplete
@@ -24,15 +48,7 @@ export const ProjectSelect = observer(() => {
       clearOnBlur
       handleHomeEndKeys
       value={appStore.activeProject}
-      onChange={(_, value) => {
-        if (value === null) return
-        if (value.id === 0) {
-          appStore.setActiveProject(null)
-          navigate(NEW_PROJECT_PATH)
-          return
-        }
-        appStore.setActiveProject(value)
-      }}
+      onChange={handleChange}
       inputValue={appStore.activeProject?.name || ''}
       isOptionEqualToValue={(option, value) => {
         return option.id === value.id
