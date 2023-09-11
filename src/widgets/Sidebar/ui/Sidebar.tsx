@@ -44,6 +44,13 @@ export const Sidebar = memo(
             <List sx={{ paddingTop: '2px', paddingBottom: '2px' }}>
               {appRoutes.map((item) => {
                 if (item.label !== undefined && item.Icon !== undefined) {
+                  // Костыль переписать на определение в роутах
+                  if (
+                    !appStore.activeProject?.id.toString &&
+                    item.label !== 'Проекты'
+                  ) {
+                    return null
+                  }
                   return (
                     <SidebarNavItem
                       collapsed={collapsed}
@@ -51,7 +58,7 @@ export const Sidebar = memo(
                       path={item
                         .path()
                         .replace(
-                          ':id',
+                          ':projectId',
                           appStore.activeProject?.id.toString() || '0',
                         )}
                       label={item.label}
