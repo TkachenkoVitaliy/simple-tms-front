@@ -18,3 +18,5 @@ export interface IRoute {
   element: React.ReactNode
   children?: IRoute[]
 }
+
+export type RouteParams = 'projectId' | 'testId'

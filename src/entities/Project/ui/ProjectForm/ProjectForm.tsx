@@ -22,6 +22,7 @@ enum FormType {
 }
 
 export const ProjectForm = observer((props: ProjectFormProps) => {
+  console.log(props)
   const FORM_TYPE: FormType = props?.project?.id
     ? FormType.EDIT
     : FormType.CREATE
@@ -35,6 +36,9 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
   useEffect(() => {
     if (project.id !== -1 && props.project === undefined) {
       setProject({ id: -1, name: '', description: '' })
+    }
+    if (props.project !== undefined) {
+      setProject(props.project)
     }
   }, [props])
 

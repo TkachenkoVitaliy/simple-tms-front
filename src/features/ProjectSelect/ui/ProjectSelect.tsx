@@ -1,12 +1,39 @@
 import { Autocomplete, TextField, useTheme } from '@mui/material'
+import { appRoutes } from 'app/providers/AppRouter/model/appRoutes'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import {
+  generatePath,
+  matchPath,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
+import { IAppRoute, RouteParams } from 'shared/types/routerTypes'
+
+function flattenRoutes(routes: IAppRoute[], parentPath?: string) {
+  let flattenedRoutes: string[] = []
+
+  routes.forEach((route) => {
+    const routePath = parentPath
+      ? [parentPath, route.path()].join('/')
+      : route.path()
+
+    flattenedRoutes.push(routePath)
+
+    if (route.children) {
+      const childRoutes = flattenRoutes(route.children, routePath)
+      flattenedRoutes = flattenedRoutes.concat(childRoutes)
+    }
+  })
+
+  return flattenedRoutes
+}
 
 export const ProjectSelect = observer(() => {
   const NEW_PROJECT_PATH = '/project/0'
-  const { projectId } = useParams()
+  const params = useParams<RouteParams>()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,13 +53,16 @@ export const ProjectSelect = observer(() => {
     }
     if (value.id !== 0) {
       const id = value.id.toString()
-      const newProjectPath = `/project/${id}`
-      const newUrl = location.pathname.replace(
-        /\/project\/(\d+)/,
-        newProjectPath,
+      const { pathname } = location
+      const routes = flattenRoutes(appRoutes)
+      console.log(routes)
+      const pathPattern = flattenRoutes(appRoutes).find((pattern) =>
+        matchPath(pattern, pathname),
       )
-      console.log(newUrl)
-      navigate(newUrl)
+      console.log(pathPattern)
+      if (pathPattern) {
+        navigate(generatePath(pathPattern, { ...params, projectId: id }))
+      }
     }
     appStore.setActiveProject(value)
   }

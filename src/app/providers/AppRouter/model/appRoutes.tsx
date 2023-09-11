@@ -14,17 +14,17 @@ export const appRoutes: IAppRoute[] = [
     Icon: Dataset,
   },
   {
-    path: () => 'project/:id',
+    path: () => 'project/:projectId',
     element: <ProjectPage />,
   },
   {
-    path: () => 'project/:id/dashboard',
+    path: () => 'project/:projectId/dashboard',
     element: <DashboardPage />,
     label: 'Главная',
     Icon: Dashboard,
   },
   {
-    path: () => 'project/:id/tests',
+    path: () => 'project/:projectId/tests',
     element: <TestsPage />,
     label: 'Тесты',
     Icon: Grading,
