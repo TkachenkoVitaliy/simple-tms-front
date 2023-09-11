@@ -35,7 +35,7 @@ function flattenRoutes(routes: IAppRoute[], parentPath?: string) {
 }
 
 export const ProjectSelect = observer(() => {
-  const NEW_PROJECT_PATH = '/project/0'
+  const NEW_PROJECT_PATH = '/projects/0'
   const params = useParams<RouteParams>()
 
   const navigate = useNavigate()

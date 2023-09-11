@@ -15,7 +15,7 @@ export const NewProjectItem = memo(
     const cardClick = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
       e.stopPropagation()
-      navigate('/project/0')
+      navigate('/projects/0')
       appStore.setActiveProject(null)
     }
 

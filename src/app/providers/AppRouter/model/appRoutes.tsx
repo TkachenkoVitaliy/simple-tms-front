@@ -15,18 +15,18 @@ export const appRoutes: IAppRoute[] = [
     showWithoutActiveProject: true,
   },
   {
-    path: () => 'project/:projectId',
+    path: () => 'projects/:projectId',
     element: <ProjectPage />,
   },
   {
-    path: () => 'project/:projectId/dashboard',
+    path: () => 'projects/:projectId/dashboard',
     element: <DashboardPage />,
     label: 'Главная',
     Icon: Dashboard,
     showWithoutActiveProject: false,
   },
   {
-    path: () => 'project/:projectId/tests',
+    path: () => 'projects/:projectId/tests',
     element: <TestsPage />,
     label: 'Тесты',
     Icon: Grading,
@@ -35,7 +35,7 @@ export const appRoutes: IAppRoute[] = [
       {
         path: () => ':testCaseId',
         element: <TestCaseForm />,
-        onProjectChangePattern: 'project/:projectId/tests',
+        onProjectChangePattern: 'projects/:projectId/tests',
       },
     ],
   },
