@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material'
+import { Divider, useTheme } from '@mui/material'
 import { Resizable } from 're-resizable'
 import { Outlet } from 'react-router-dom'
 
@@ -11,7 +11,6 @@ const style = {
 function TestsPage() {
   const theme = useTheme()
   const { divider } = theme.palette
-  console.log(divider)
 
   return (
     <div
@@ -22,20 +21,37 @@ function TestsPage() {
         height: '100%',
       }}
     >
+      <div style={{ ...style, width: '100%', minWidth: '1px' }}>
+        <div style={{ width: '100%', height: '100%' }}>TestsPage</div>
+      </div>
+      <Divider
+        component="div"
+        orientation="vertical"
+      />
       <Resizable
-        style={{ ...style, borderRight: `2px solid ${divider}` }}
+        // style={{ ...style, borderLeft: `1px solid ${divider}` }}
+        style={{ ...style }}
         defaultSize={{
-          width: '30%',
+          width: '70%',
           height: '100%',
         }}
-        maxWidth="80%"
-        minWidth="10%"
+        maxWidth="87%"
+        minWidth="13%"
+        enable={{
+          top: false,
+          right: false,
+          bottom: false,
+          left: true,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
       >
-        <div style={{ width: '100%', height: '100%' }}>TestsPage</div>
+        <div style={{ ...style, width: '100%', minWidth: '1px', padding: '0' }}>
+          <Outlet />
+        </div>
       </Resizable>
-      <div style={{ ...style, width: '100%', minWidth: '1px' }}>
-        <Outlet />
-      </div>
     </div>
   )
 }

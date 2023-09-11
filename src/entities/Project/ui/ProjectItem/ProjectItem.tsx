@@ -31,7 +31,7 @@ export const ProjectItem = memo(
       e.preventDefault()
       e.stopPropagation()
       appStore.setActiveProject(project)
-      navigate(`../project/${project.id}`)
+      navigate(`../projects/${project.id}`)
     }
 
     return (
