@@ -12,6 +12,7 @@ export const appRoutes: IAppRoute[] = [
     element: <ProjectsPage />,
     label: 'Проекты',
     Icon: Dataset,
+    showWithoutActiveProject: true,
   },
   {
     path: () => 'project/:projectId',
@@ -22,20 +23,24 @@ export const appRoutes: IAppRoute[] = [
     element: <DashboardPage />,
     label: 'Главная',
     Icon: Dashboard,
+    showWithoutActiveProject: false,
   },
   {
     path: () => 'project/:projectId/tests',
     element: <TestsPage />,
     label: 'Тесты',
     Icon: Grading,
+    showWithoutActiveProject: false,
     children: [
       {
-        path: () => 'test-suite/:id',
+        path: () => 'test-suite/:testSuiteId',
         element: <div>TestSuite</div>,
+        onProjectChangePattern: 'project/:projectId/tests',
       },
       {
-        path: () => 'test/:id',
+        path: () => 'test/:testCaseId',
         element: <TestCaseForm />,
+        onProjectChangePattern: 'project/:projectId/tests',
       },
     ],
   },

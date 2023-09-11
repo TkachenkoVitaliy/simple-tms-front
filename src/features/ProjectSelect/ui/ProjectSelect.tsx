@@ -13,14 +13,17 @@ import { IProject } from 'shared/types/projectTypes'
 import { IAppRoute, RouteParams } from 'shared/types/routerTypes'
 
 function flattenRoutes(routes: IAppRoute[], parentPath?: string) {
-  let flattenedRoutes: string[] = []
+  let flattenedRoutes: { path: string; onProjectChangePattern?: string }[] = []
 
   routes.forEach((route) => {
     const routePath = parentPath
       ? [parentPath, route.path()].join('/')
       : route.path()
 
-    flattenedRoutes.push(routePath)
+    flattenedRoutes.push({
+      path: routePath,
+      onProjectChangePattern: route.onProjectChangePattern,
+    })
 
     if (route.children) {
       const childRoutes = flattenRoutes(route.children, routePath)
@@ -55,13 +58,16 @@ export const ProjectSelect = observer(() => {
       const id = value.id.toString()
       const { pathname } = location
       const routes = flattenRoutes(appRoutes)
-      console.log(routes)
-      const pathPattern = flattenRoutes(appRoutes).find((pattern) =>
-        matchPath(pattern, pathname),
+      const routeObj = flattenRoutes(appRoutes).find((item) =>
+        matchPath(item.path, pathname),
       )
-      console.log(pathPattern)
-      if (pathPattern) {
-        navigate(generatePath(pathPattern, { ...params, projectId: id }))
+      if (routeObj) {
+        navigate(
+          generatePath(routeObj.onProjectChangePattern || routeObj.path, {
+            ...params,
+            projectId: id,
+          }),
+        )
       }
     }
     appStore.setActiveProject(value)

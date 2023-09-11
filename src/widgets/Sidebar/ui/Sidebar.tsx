@@ -46,25 +46,24 @@ export const Sidebar = memo(
                 if (item.label !== undefined && item.Icon !== undefined) {
                   // Костыль переписать на определение в роутах
                   if (
-                    !appStore.activeProject?.id.toString &&
-                    item.label !== 'Проекты'
+                    appStore.activeProject?.id.toString ||
+                    item.showWithoutActiveProject
                   ) {
-                    return null
+                    return (
+                      <SidebarNavItem
+                        collapsed={collapsed}
+                        key={item.label}
+                        path={item
+                          .path()
+                          .replace(
+                            ':projectId',
+                            appStore.activeProject?.id.toString() || '0',
+                          )}
+                        label={item.label}
+                        Icon={item.Icon}
+                      />
+                    )
                   }
-                  return (
-                    <SidebarNavItem
-                      collapsed={collapsed}
-                      key={item.label}
-                      path={item
-                        .path()
-                        .replace(
-                          ':projectId',
-                          appStore.activeProject?.id.toString() || '0',
-                        )}
-                      label={item.label}
-                      Icon={item.Icon}
-                    />
-                  )
                 }
                 return null
               })}

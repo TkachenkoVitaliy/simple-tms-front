@@ -11,6 +11,8 @@ export interface IAppRoute {
         muiName: string
       })
   children?: IAppRoute[]
+  showWithoutActiveProject?: boolean
+  onProjectChangePattern?: string
 }
 
 export interface IRoute {
@@ -19,4 +21,4 @@ export interface IRoute {
   children?: IRoute[]
 }
 
-export type RouteParams = 'projectId' | 'testId'
+export type RouteParams = 'projectId' | 'testSuiteId' | 'testCaseId'
