@@ -1,4 +1,7 @@
-export const sampleData = [
+import { NodeModel } from '@minoru/react-dnd-treeview'
+import { TreeData } from 'shared/types/treeData'
+
+export const sampleData: NodeModel<TreeData>[] = [
   {
     id: 1,
     parent: 0,
@@ -11,8 +14,8 @@ export const sampleData = [
     droppable: false,
     text: 'File 1-1',
     data: {
-      fileType: 'case',
-      fileSize: '0.5MB',
+      children: [],
+      type: 'case',
     },
   },
   {
@@ -21,8 +24,8 @@ export const sampleData = [
     droppable: false,
     text: 'File 1-2',
     data: {
-      fileType: 'case',
-      fileSize: '4.8MB',
+      children: [],
+      type: 'case',
     },
   },
   {
@@ -43,8 +46,8 @@ export const sampleData = [
     droppable: false,
     text: 'File 2-1-1',
     data: {
-      fileType: 'case',
-      fileSize: '2.1MB',
+      children: [],
+      type: 'case',
     },
   },
   {
@@ -53,8 +56,8 @@ export const sampleData = [
     droppable: false,
     text: 'File 3',
     data: {
-      fileType: 'case',
-      fileSize: '0.8MB',
+      children: [],
+      type: 'case',
     },
   },
 ]

@@ -11,13 +11,13 @@ import { memo, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { sampleData } from 'mock/sample_data'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
+import { TreeData } from 'shared/types/treeData'
 import styles from './TestsTree.module.scss'
 
 export const TestsTree = memo(() => {
-  const [treeData, setTreeData] =
-    useState<NodeModel<{ fileType?: string; fileSize?: string }>[]>(sampleData)
+  const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(sampleData)
   const handleDrop = (
-    newTree: NodeModel<{ fileType?: string; fileSize?: string }>[],
+    newTree: NodeModel<TreeData>[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options: any,
   ) => {

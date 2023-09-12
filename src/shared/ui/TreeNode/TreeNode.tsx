@@ -5,11 +5,12 @@ import { memo } from 'react'
 import { ArrowRight } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
+import { TreeData } from 'shared/types/treeData'
 import styles from './TreeNode.module.scss'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 
 export interface TreeNodeProps {
-  node: NodeModel<{ fileType?: string; fileSize?: string }>
+  node: NodeModel<TreeData>
   depth: number
   isOpen: boolean
   onToggle: (id: NodeModel['id']) => void
@@ -53,7 +54,7 @@ export const TreeNode = memo((props: TreeNodeProps) => {
       <div className={styles.iconWrapper}>
         <TypeIcon
           droppable={droppable || false}
-          fileType={data?.fileType}
+          type={data?.type}
         />
       </div>
       <div className={styles.labelGridItem}>

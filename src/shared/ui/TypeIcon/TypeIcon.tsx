@@ -1,9 +1,10 @@
 import { Description, Folder } from '@mui/icons-material'
 import { memo } from 'react'
+import { TreeData } from 'shared/types/treeData'
 
 export interface TypeIconProps {
   droppable: boolean
-  fileType?: string
+  type?: TreeData['type']
 }
 
 export const TypeIcon = memo((props: TypeIconProps) => {
@@ -11,7 +12,7 @@ export const TypeIcon = memo((props: TypeIconProps) => {
     return <Folder />
   }
 
-  switch (props.fileType) {
+  switch (props.type) {
     case 'case':
       return <Description />
     default:
