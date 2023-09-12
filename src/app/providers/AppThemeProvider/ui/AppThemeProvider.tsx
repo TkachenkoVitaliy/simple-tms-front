@@ -50,9 +50,17 @@ function AppThemeProvider({
   )
 
   const currentTheme = useMemo(() => {
+    console.log(themes[themeName].palette)
     root.style.setProperty(
       '--mui-palette-primary-light',
       themes[themeName].palette.primary.main,
+    )
+    root.style.setProperty(
+      '--mui-palette-background-paper',
+      // themes[themeName].palette.divider,
+      themeName === 'dark'
+        ? 'rgba(255, 255, 255, 0.08)'
+        : 'rgba(0, 0, 0, 0.04)',
     )
     return themes[themeName]
   }, [themeName])

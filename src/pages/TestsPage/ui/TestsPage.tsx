@@ -22,8 +22,15 @@ function TestsPage() {
         height: '100%',
       }}
     >
-      <div style={{ ...style, width: '100%', minWidth: '1px' }}>
-        <div style={{ width: '100%', height: '100%' }}>
+      <div
+        style={{
+          ...style,
+          width: '100%',
+          minWidth: '1px',
+          overflowY: 'auto',
+        }}
+      >
+        <div style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>
           <TestsTree />
         </div>
       </div>

@@ -1,4 +1,4 @@
 export interface TreeData {
-  children: number[]
+  children: (number | string)[]
   type?: 'case' | 'suite'
 }

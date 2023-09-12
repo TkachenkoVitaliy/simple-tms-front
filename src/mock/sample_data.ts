@@ -6,13 +6,13 @@ export const sampleData: NodeModel<TreeData>[] = [
     id: 1,
     parent: 0,
     droppable: true,
-    text: 'Folder 1',
+    text: 'Suite 1',
   },
   {
     id: 2,
     parent: 1,
     droppable: false,
-    text: 'File 1-1',
+    text: 'Test 1',
     data: {
       children: [],
       type: 'case',
@@ -22,7 +22,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     id: 3,
     parent: 1,
     droppable: false,
-    text: 'File 1-2',
+    text: 'Test 2',
     data: {
       children: [],
       type: 'case',
@@ -32,19 +32,19 @@ export const sampleData: NodeModel<TreeData>[] = [
     id: 4,
     parent: 0,
     droppable: true,
-    text: 'Folder 2',
+    text: 'Suite 2',
   },
   {
     id: 5,
     parent: 4,
     droppable: true,
-    text: 'Folder 2-1',
+    text: 'Suite 3',
   },
   {
     id: 6,
     parent: 5,
     droppable: false,
-    text: 'File 2-1-1',
+    text: 'Test 3',
     data: {
       children: [],
       type: 'case',
@@ -54,10 +54,16 @@ export const sampleData: NodeModel<TreeData>[] = [
     id: 7,
     parent: 0,
     droppable: false,
-    text: 'File 3',
+    text: 'Test 4',
     data: {
       children: [],
       type: 'case',
     },
+  },
+  {
+    id: 8,
+    parent: 0,
+    droppable: true,
+    text: 'Suite 4',
   },
 ]

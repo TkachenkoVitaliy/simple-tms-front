@@ -4,6 +4,10 @@
   grid-template-columns: auto auto 1fr auto;
   height: 32px;
   padding-inline-end: 8px;
+  background-color: var(--mui-palette-background-paper);
+  border-radius: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .iconWrapper {
@@ -25,6 +29,16 @@
   width: 24px;
   transition: transform linear 0.1s;
   transform: rotate(0deg);
+}
+
+.withoutExpandIconWrapper {
+  align-items: center;
+  font-size: 0;
+  cursor: default;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
 }
 
 .expandIconWrapper.isOpen {
