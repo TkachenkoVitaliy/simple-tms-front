@@ -5,6 +5,8 @@ import { LOCAL_STORAGE_THEME_KEY } from 'shared/consts/localstorage'
 import { ThemeName } from 'shared/consts/theme'
 import { ThemeContext } from 'shared/lib/context/ThemeContext'
 
+const root = document.documentElement
+
 const defaultThemeName: ThemeName = localStorage.getItem(
   LOCAL_STORAGE_THEME_KEY,
 ) as ThemeName
@@ -48,6 +50,10 @@ function AppThemeProvider({
   )
 
   const currentTheme = useMemo(() => {
+    root.style.setProperty(
+      '--mui-palette-primary-light',
+      themes[themeName].palette.primary.main,
+    )
     return themes[themeName]
   }, [themeName])
 

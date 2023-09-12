@@ -1,0 +1,19 @@
+.treeApp {
+  height: 100%;
+}
+
+.treeRoot {
+  height: 100%;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  // background-color: #729fec;
+  // background-color: rgba(25, 118, 210, 0.8);
+  background-color: var(--mui-palette-primary-light);
+
+  // background-color: #1976d2;
+}
