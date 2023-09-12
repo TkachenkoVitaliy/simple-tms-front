@@ -10,9 +10,6 @@ const style = {
 }
 
 function TestsPage() {
-  const theme = useTheme()
-  const { divider } = theme.palette
-
   return (
     <div
       style={{
@@ -39,14 +36,13 @@ function TestsPage() {
         orientation="vertical"
       />
       <Resizable
-        // style={{ ...style, borderLeft: `1px solid ${divider}` }}
         style={{ ...style }}
         defaultSize={{
           width: '70%',
           height: '100%',
         }}
-        maxWidth="87%"
-        minWidth="13%"
+        maxWidth="81%"
+        minWidth="19%"
         enable={{
           top: false,
           right: false,
