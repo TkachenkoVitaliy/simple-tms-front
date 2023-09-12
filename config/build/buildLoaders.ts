@@ -11,7 +11,7 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
   }
 
   const cssLoader = {
-    test: /\.s[ac]ss$/i,
+    test: /\.s?[ac]ss$/i,
     use: [
       isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
       {

@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material'
+import { TestsTree } from 'features/TestsTree'
 import { Resizable } from 're-resizable'
 import { Outlet } from 'react-router-dom'
 
@@ -31,7 +32,9 @@ function TestsPage() {
         maxWidth="80%"
         minWidth="10%"
       >
-        <div style={{ width: '100%', height: '100%' }}>TestsPage</div>
+        <div style={{ width: '100%', height: '100%' }}>
+          <TestsTree />
+        </div>
       </Resizable>
       <div style={{ ...style, width: '100%', minWidth: '1px' }}>
         <Outlet />

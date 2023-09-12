@@ -33,12 +33,7 @@ export const appRoutes: IAppRoute[] = [
     showWithoutActiveProject: false,
     children: [
       {
-        path: () => 'test-suite/:testSuiteId',
-        element: <div>TestSuite</div>,
-        onProjectChangePattern: 'project/:projectId/tests',
-      },
-      {
-        path: () => 'test/:testCaseId',
+        path: () => ':testCaseId',
         element: <TestCaseForm />,
         onProjectChangePattern: 'project/:projectId/tests',
       },
