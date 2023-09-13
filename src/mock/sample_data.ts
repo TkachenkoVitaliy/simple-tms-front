@@ -9,38 +9,8 @@ export const sampleData: NodeModel<TreeData>[] = [
     text: 'Suite 1',
   },
   {
-    id: 11,
-    parent: 1,
-    droppable: true,
-    text: 'Suite',
-  },
-  {
-    id: 12,
-    parent: 11,
-    droppable: true,
-    text: 'Suite',
-  },
-  {
-    id: 13,
-    parent: 12,
-    droppable: true,
-    text: 'Suite',
-  },
-  {
-    id: 14,
-    parent: 13,
-    droppable: true,
-    text: 'Suite',
-  },
-  {
-    id: 15,
-    parent: 14,
-    droppable: true,
-    text: 'Suite',
-  },
-  {
     id: 2,
-    parent: 15,
+    parent: 1,
     droppable: false,
     text: 'Test 1 aaaaaaaaaa bbbbbbbbbbbb ccccccccccccc dddddddddddd',
     data: {
