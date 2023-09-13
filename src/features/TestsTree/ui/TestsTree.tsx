@@ -44,6 +44,7 @@ export const TestsTree = memo(() => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'auto 1fr auto',
+          marginBottom: '16px',
         }}
       >
         <TMSMenu

@@ -1,7 +1,7 @@
-import { Divider, useTheme } from '@mui/material'
+import { Divider } from '@mui/material'
 import { TestsTree } from 'features/TestsTree'
 import { Resizable } from 're-resizable'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useOutlet } from 'react-router-dom'
 
 const style = {
   minHeight: '100%',
@@ -10,6 +10,8 @@ const style = {
 }
 
 function TestsPage() {
+  const outlet = useOutlet()
+
   return (
     <div
       style={{
@@ -36,7 +38,7 @@ function TestsPage() {
         orientation="vertical"
       />
       <Resizable
-        style={{ ...style }}
+        style={{ ...style, display: outlet ? 'block' : 'none' }}
         defaultSize={{
           width: '70%',
           height: '100%',
@@ -54,7 +56,14 @@ function TestsPage() {
           topLeft: false,
         }}
       >
-        <div style={{ ...style, width: '100%', minWidth: '1px', padding: '0' }}>
+        <div
+          style={{
+            ...style,
+            width: '100%',
+            minWidth: '1px',
+            padding: '0',
+          }}
+        >
           <Outlet />
         </div>
       </Resizable>
