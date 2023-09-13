@@ -35,6 +35,10 @@ export const TreeNode = memo((props: TreeNodeProps) => {
       console.log('!!!', id.toString())
       navigate(id.toString())
       e.stopPropagation()
+    } else {
+      console.log('!!!SUITE', id.toString())
+      navigate(`suite${id}`)
+      e.stopPropagation()
     }
   }
 

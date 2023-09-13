@@ -8,14 +8,14 @@ import {
   TreeMethods,
   getBackendOptions,
 } from '@minoru/react-dnd-treeview'
-import { memo, useRef, useState } from 'react'
+import { memo, useCallback, useMemo, useRef, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { sampleData } from 'mock/sample_data'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { TreeData } from 'shared/types/treeData'
 import { createChildren, updateChildren } from 'shared/lib/tree'
 import { Button, ButtonGroup } from '@mui/material'
-import { Create, UnfoldLess, UnfoldMore } from '@mui/icons-material'
+import { Add, Create, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
 import styles from './TestsTree.module.scss'
 
@@ -23,6 +23,22 @@ export const TestsTree = memo(() => {
   const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(
     createChildren(sampleData),
   )
+
+  const calculateSuiteCount = useCallback(() => {
+    return treeData.reduce((count, treeNode) => {
+      if ((treeNode.data?.children.length || 0) > 0) {
+        return count + 1
+      }
+      return count
+    }, 0)
+  }, [treeData])
+
+  const [openedSuites, setOpenedSuites] = useState<number>(0)
+  const allSuitesIsOpened = useMemo(() => {
+    return openedSuites >= calculateSuiteCount()
+  }, [treeData, openedSuites])
+  const allSuitesIsClosed = useMemo(() => openedSuites === 0, [openedSuites])
+
   const ref = useRef<TreeMethods>(null)
   const handleDrop = (
     newTree: NodeModel<TreeData>[],
@@ -49,7 +65,7 @@ export const TestsTree = memo(() => {
       >
         <TMSMenu
           id="create-root"
-          icon={<Create />}
+          icon={<Add />}
           label="Create"
           options={[
             {
@@ -71,20 +87,24 @@ export const TestsTree = memo(() => {
           size="small"
           variant="outlined"
           color="inherit"
+          disableElevation
         >
-          <Button
-            onClick={handleOpenAll}
-            component="button"
-          >
-            <UnfoldMore />
-            Expand
-          </Button>
           <Button
             onClick={handleCloseAll}
             component="button"
+            disabled={allSuitesIsClosed}
+            style={{ borderRightColor: 'inherit' }}
           >
             <UnfoldLess />
-            Collapse
+            all
+          </Button>
+          <Button
+            onClick={handleOpenAll}
+            component="button"
+            disabled={allSuitesIsOpened}
+          >
+            <UnfoldMore />
+            all
           </Button>
         </ButtonGroup>
       </div>
@@ -95,6 +115,7 @@ export const TestsTree = memo(() => {
       >
         <div className={styles.treeApp}>
           <Tree
+            onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
             ref={ref}
             tree={treeData}
             rootId={0}
