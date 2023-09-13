@@ -13,6 +13,7 @@ export interface IAppRoute {
   children?: IAppRoute[]
   showWithoutActiveProject?: boolean
   onProjectChangePattern?: string
+  end?: boolean
 }
 
 export interface IRoute {

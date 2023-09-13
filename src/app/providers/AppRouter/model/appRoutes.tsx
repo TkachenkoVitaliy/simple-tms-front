@@ -13,6 +13,7 @@ export const appRoutes: IAppRoute[] = [
     label: 'Проекты',
     Icon: Dataset,
     showWithoutActiveProject: true,
+    end: true,
   },
   {
     path: () => 'projects/:projectId',

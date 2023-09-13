@@ -61,6 +61,7 @@ export const Sidebar = memo(
                           )}
                         label={item.label}
                         Icon={item.Icon}
+                        end={!!item.end}
                       />
                     )
                   }

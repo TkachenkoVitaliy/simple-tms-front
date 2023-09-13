@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable react/no-unstable-nested-components */
 import {
   DndProvider,
@@ -15,8 +14,9 @@ import { sampleData } from 'mock/sample_data'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { TreeData } from 'shared/types/treeData'
 import { createChildren, updateChildren } from 'shared/lib/tree'
-import { Button } from '@mui/material'
-import { UnfoldLess, UnfoldMore } from '@mui/icons-material'
+import { Button, ButtonGroup } from '@mui/material'
+import { Create, UnfoldLess, UnfoldMore } from '@mui/icons-material'
+import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
 import styles from './TestsTree.module.scss'
 
 export const TestsTree = memo(() => {
@@ -26,7 +26,6 @@ export const TestsTree = memo(() => {
   const ref = useRef<TreeMethods>(null)
   const handleDrop = (
     newTree: NodeModel<TreeData>[],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options: DropOptions<TreeData>,
   ) => {
     const { dragSource, dropTargetId } = options
@@ -35,7 +34,6 @@ export const TestsTree = memo(() => {
       setTreeData(
         updateChildren(dragSource.id, dragSource.parent, dropTargetId, newTree),
       )
-    console.log(newTree, options)
   }
   const handleOpenAll = () => ref.current?.openAll()
   const handleCloseAll = () => ref.current?.closeAll()
@@ -44,22 +42,51 @@ export const TestsTree = memo(() => {
     <div style={{ height: 'max-content' }}>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          gap: '1em',
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr auto',
         }}
       >
-        <Button onClick={handleOpenAll}>
-          <UnfoldMore />
-          Expand all
-        </Button>
-        <Button onClick={handleCloseAll}>
-          <UnfoldLess />
-          Collapse all
-        </Button>
+        <TMSMenu
+          id="create-root"
+          icon={<Create />}
+          label="Create"
+          options={[
+            {
+              label: 'Suite',
+              onSelect: () => {
+                console.log('SUITE')
+              },
+            },
+            {
+              label: 'Case',
+              onSelect: () => {
+                console.log('CASE')
+              },
+            },
+          ]}
+        />
+        <div />
+        <ButtonGroup
+          size="small"
+          variant="outlined"
+          color="inherit"
+        >
+          <Button
+            onClick={handleOpenAll}
+            component="button"
+          >
+            <UnfoldMore />
+            Expand
+          </Button>
+          <Button
+            onClick={handleCloseAll}
+            component="button"
+          >
+            <UnfoldLess />
+            Collapse
+          </Button>
+        </ButtonGroup>
       </div>
-      {/* <Button onClick={() => console.log('TREE', treeData)}>Tree</Button> */}
 
       <DndProvider
         backend={MultiBackend}

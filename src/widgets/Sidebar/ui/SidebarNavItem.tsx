@@ -16,16 +16,17 @@ export interface SidebarNavItemProps {
     | (OverridableComponent<SvgIconTypeMap<unknown, 'svg'>> & {
         muiName: string
       })
+  end?: boolean
 }
 
 export const SidebarNavItem = memo((props: SidebarNavItemProps) => {
-  const { path, label, Icon, collapsed } = props
+  const { path, label, Icon, collapsed, end } = props
 
   return (
     <ListItem disablePadding>
       <NavLink
         to={path}
-        end
+        end={!!end}
         key={label}
         style={{
           width: '100%',
