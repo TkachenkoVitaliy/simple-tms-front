@@ -8,13 +8,26 @@ import { ThemeSwitcher } from 'features/ThemeSwitcher/ui/ThemeSwitcher'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { ArrowBackIosNew } from '@mui/icons-material'
+import { LOCAL_STORAGE_COLLAPSED } from 'shared/consts/localstorage'
 import { SidebarNavItem } from './SidebarNavItem'
 
 import styles from './Sidebar.module.scss'
 
 export const Sidebar = memo(
   observer(() => {
-    const [collapsed, setCollapsed] = useState<boolean>(false)
+    const initialCollapsed = localStorage.getItem(LOCAL_STORAGE_COLLAPSED)
+
+    const [collapsed, setCollapsed] = useState<boolean>(!!initialCollapsed)
+
+    const toggleCollapsed = () => {
+      const isCollapse = !collapsed
+      if (isCollapse) {
+        localStorage.setItem(LOCAL_STORAGE_COLLAPSED, 'true')
+      } else {
+        localStorage.removeItem(LOCAL_STORAGE_COLLAPSED)
+      }
+      setCollapsed(isCollapse)
+    }
 
     return (
       <aside
@@ -44,7 +57,6 @@ export const Sidebar = memo(
             <List sx={{ paddingTop: '2px', paddingBottom: '2px' }}>
               {appRoutes.map((item) => {
                 if (item.label !== undefined && item.Icon !== undefined) {
-                  // Костыль переписать на определение в роутах
                   if (
                     appStore.activeProject?.id.toString ||
                     item.showWithoutActiveProject
@@ -70,7 +82,7 @@ export const Sidebar = memo(
               })}
             </List>
             <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-              <IconButton onClick={() => setCollapsed(!collapsed)}>
+              <IconButton onClick={toggleCollapsed}>
                 <ArrowBackIosNew
                   sx={
                     collapsed
