@@ -12,7 +12,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     id: 2,
     parent: 1,
     droppable: false,
-    text: 'Test 1',
+    text: 'Test 1 aaaaaaaaaa bbbbbbbbbbbb ccccccccccccc dddddddddddd',
     data: {
       children: [],
       type: 'case',

@@ -72,7 +72,12 @@ export const TreeNode = memo((props: TreeNodeProps) => {
         className={styles.labelGridItem}
         onMouseUp={handleClick}
       >
-        <Typography variant="body2">{props.node.text}</Typography>
+        <Typography
+          noWrap
+          variant="body2"
+        >
+          {props.node.text}
+        </Typography>
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', gap: '1em' }}>
         {droppable && (
