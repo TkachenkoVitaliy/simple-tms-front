@@ -1,14 +1,6 @@
-import {
-  Autocomplete,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  TextField,
-  useTheme,
-} from '@mui/material'
+import { Button, Card, CardActions, CardContent } from '@mui/material'
 import { suites } from 'mock/sample_data'
-import React, { memo, useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Location } from 'history'
 import { SuiteOption } from 'shared/types/autocompleteTypes'
@@ -82,49 +74,6 @@ export const TestCaseForm = memo(() => {
           getOptionLabel={(option) => option.name}
           isOptionEqualToValue={(option, val) => option.id === val.id}
         />
-        {/* <Autocomplete
-          id="projectsList"
-          disablePortal
-          forcePopupIcon={false}
-          selectOnFocus
-          clearOnEscape
-          loading
-          blurOnSelect
-          handleHomeEndKeys
-          value={suite}
-          onChange={handleChange}
-          isOptionEqualToValue={(option, value) => {
-            return option.id === value.id
-          }}
-          getOptionLabel={(option: SuiteOption) => option.name}
-          options={suites}
-          sx={{ minWidth: '18%', color: contrastText }}
-          renderOption={(props, option) => {
-            return (
-              <li
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...props}
-              >
-                {option.name}
-              </li>
-            )
-          }}
-          renderInput={(params) => {
-            return (
-              <TextField
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...params}
-                label="Test Suite"
-                fullWidth
-                margin="none"
-                InputProps={{
-                  ...params.InputProps,
-                }}
-                variant="outlined"
-              />
-            )
-          }}
-        /> */}
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button

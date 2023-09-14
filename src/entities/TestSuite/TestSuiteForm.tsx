@@ -1,4 +1,4 @@
-import { sampleData, suites } from 'mock/sample_data'
+import { suites } from 'mock/sample_data'
 import { memo, useState } from 'react'
 import { SuiteOption } from 'shared/types/autocompleteTypes'
 import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete/TMSAutocomplete'
