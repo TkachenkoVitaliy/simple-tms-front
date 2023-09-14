@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Autocomplete, TextField } from '@mui/material'
 import { useState } from 'react'
 
@@ -61,7 +62,7 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
       blurOnSelect
       handleHomeEndKeys
       value={value}
-      onChange={(_, value) => onChange(value)}
+      onChange={(_, newValue) => onChange(newValue)}
       isOptionEqualToValue={isOptionEqualToValue}
       getOptionLabel={getOptionLabel}
       options={localOptions}
@@ -69,7 +70,6 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
       renderOption={(props, option) => {
         return (
           <li
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
             style={optionStyle?.(option)}
           >
@@ -80,7 +80,6 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
       renderInput={(params) => {
         return (
           <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             label={label}
             fullWidth
