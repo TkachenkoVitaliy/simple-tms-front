@@ -1,6 +1,14 @@
 import { Autocomplete, TextField } from '@mui/material'
 import { useState } from 'react'
 
+// TODO: Для примера
+// const fetchData = async (): Promise<IPost[]> => {
+//   const response = await axios.get(
+//     'http://jsonplaceholder.typicode.com/posts',
+//   )
+//   return response.data
+// }
+
 export interface TMSAutocompleteProps<T> {
   id: string
   label?: string

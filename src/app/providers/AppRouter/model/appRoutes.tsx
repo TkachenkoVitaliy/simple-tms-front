@@ -40,7 +40,7 @@ export const appRoutes: IAppRoute[] = [
         onProjectChangePattern: 'projects/:projectId/tests',
       },
       {
-        path: () => 'suite/0',
+        path: () => 'suite/:suiteId',
         element: <TestSuiteForm />,
         onProjectChangePattern: 'projects/:projectId/tests',
       },

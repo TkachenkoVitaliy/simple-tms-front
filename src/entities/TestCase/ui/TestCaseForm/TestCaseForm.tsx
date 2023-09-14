@@ -1,6 +1,5 @@
 import {
   Autocomplete,
-  AutocompleteInputChangeReason,
   Button,
   Card,
   CardActions,
@@ -8,15 +7,11 @@ import {
   TextField,
   useTheme,
 } from '@mui/material'
-import { sampleData } from 'mock/sample_data'
+import { suites } from 'mock/sample_data'
 import React, { memo, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Location } from 'history'
-
-interface SuiteOption {
-  id: string | number
-  name: string
-}
+import { SuiteOption } from 'shared/types/autocompleteTypes'
 
 interface LocationState {
   id?: string | number
@@ -46,18 +41,6 @@ export const TestCaseForm = memo(() => {
       ? theme.palette.primary.contrastText
       : theme.palette.text.primary
 
-  const suites: SuiteOption[] = [
-    { id: 0, name: 'Not selected' },
-    ...sampleData
-      .filter((item) => item.droppable)
-      .map((item) => {
-        return {
-          id: item.id,
-          name: item.text,
-        }
-      }),
-  ]
-
   const defaultSuite = useMemo(() => {
     return suiteId === undefined
       ? suites[0]
@@ -80,7 +63,6 @@ export const TestCaseForm = memo(() => {
   ) => {
     if (value) {
       setSuite(value)
-      // setSuiteName(value.name)
     }
   }
 

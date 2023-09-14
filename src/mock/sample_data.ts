@@ -1,4 +1,5 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
+import { SuiteOption } from 'shared/types/autocompleteTypes'
 import { TreeData } from 'shared/types/treeData'
 
 export const sampleData: NodeModel<TreeData>[] = [
@@ -66,4 +67,16 @@ export const sampleData: NodeModel<TreeData>[] = [
     droppable: true,
     text: 'Suite 4',
   },
+]
+
+export const suites: SuiteOption[] = [
+  { id: 0, name: 'Not selected' },
+  ...sampleData
+    .filter((item) => item.droppable)
+    .map((item) => {
+      return {
+        id: item.id,
+        name: item.text,
+      }
+    }),
 ]

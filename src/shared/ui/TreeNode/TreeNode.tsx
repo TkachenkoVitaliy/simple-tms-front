@@ -34,7 +34,7 @@ export const TreeNode = memo((props: TreeNodeProps) => {
       navigate(id.toString())
       e.stopPropagation()
     } else {
-      navigate(`suite${id}`)
+      navigate(`suite/${id}`)
       e.stopPropagation()
     }
   }
