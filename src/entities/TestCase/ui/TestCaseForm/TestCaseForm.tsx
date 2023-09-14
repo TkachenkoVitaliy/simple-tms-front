@@ -116,8 +116,6 @@ export const TestCaseForm = memo(() => {
           handleHomeEndKeys
           value={suite}
           onChange={handleChange}
-          inputValue={suiteName}
-          onInputChange={handleChangeInput}
           isOptionEqualToValue={(option, value) => {
             return option.id === value.id
           }}

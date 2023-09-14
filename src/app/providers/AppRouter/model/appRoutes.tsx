@@ -1,5 +1,6 @@
 import { Dashboard, Dataset, Grading } from '@mui/icons-material'
 import { TestCaseForm } from 'entities/TestCase/ui/TestCaseForm/TestCaseForm'
+import { TestSuiteForm } from 'entities/TestSuite/TestSuiteForm'
 import { DashboardPage } from 'pages/DashboardPage'
 import ProjectPage from 'pages/ProjectPage/ui/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
@@ -33,6 +34,16 @@ export const appRoutes: IAppRoute[] = [
     Icon: Grading,
     showWithoutActiveProject: false,
     children: [
+      {
+        path: () => 'suite',
+        element: <TestSuiteForm />,
+        onProjectChangePattern: 'projects/:projectId/tests',
+      },
+      {
+        path: () => 'suite/0',
+        element: <TestSuiteForm />,
+        onProjectChangePattern: 'projects/:projectId/tests',
+      },
       {
         path: () => ':testCaseId',
         element: <TestCaseForm />,
