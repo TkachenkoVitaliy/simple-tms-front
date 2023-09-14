@@ -85,11 +85,9 @@ export const TestCaseForm = memo(() => {
   }
 
   const handleChangeInput = (
-    event: React.SyntheticEvent<Element, Event>,
+    _: React.SyntheticEvent<Element, Event>,
     value: string,
-    reason: AutocompleteInputChangeReason,
   ) => {
-    console.log('reason', reason, value)
     setSuiteName(value)
   }
 
@@ -113,6 +111,7 @@ export const TestCaseForm = memo(() => {
           forcePopupIcon={false}
           selectOnFocus
           clearOnEscape
+          loading
           blurOnSelect
           handleHomeEndKeys
           value={suite}
