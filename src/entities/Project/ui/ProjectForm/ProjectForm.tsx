@@ -22,7 +22,6 @@ enum FormType {
 }
 
 export const ProjectForm = observer((props: ProjectFormProps) => {
-  console.log(props)
   const FORM_TYPE: FormType = props?.project?.id
     ? FormType.EDIT
     : FormType.CREATE

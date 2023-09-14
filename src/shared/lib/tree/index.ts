@@ -17,8 +17,6 @@ export function createChildren(
     }
   })
 
-  console.log(Object.fromEntries(map))
-
   return Array.from(map, (entry) => entry[1])
 }
 
@@ -55,8 +53,6 @@ export function updateChildren(
 
     newParent.data.children.push(dragSourceId)
   }
-
-  console.log(models)
 
   return models
 }

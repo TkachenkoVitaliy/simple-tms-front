@@ -15,11 +15,13 @@ import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { TreeData } from 'shared/types/treeData'
 import { createChildren, updateChildren } from 'shared/lib/tree'
 import { Button, ButtonGroup } from '@mui/material'
-import { Add, Create, UnfoldLess, UnfoldMore } from '@mui/icons-material'
+import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
+import { useNavigate } from 'react-router-dom'
 import styles from './TestsTree.module.scss'
 
 export const TestsTree = memo(() => {
+  const navigate = useNavigate()
   const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(
     createChildren(sampleData),
   )
@@ -71,13 +73,13 @@ export const TestsTree = memo(() => {
             {
               label: 'Suite',
               onSelect: () => {
-                console.log('SUITE')
+                navigate('suite/0')
               },
             },
             {
               label: 'Case',
               onSelect: () => {
-                console.log('CASE')
+                navigate('create')
               },
             },
           ]}

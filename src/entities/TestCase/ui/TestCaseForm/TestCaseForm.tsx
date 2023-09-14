@@ -9,11 +9,17 @@ import {
   useTheme,
 } from '@mui/material'
 import { sampleData } from 'mock/sample_data'
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { Location } from 'history'
 
 interface SuiteOption {
   id: string | number
   name: string
+}
+
+interface LocationState {
+  id?: string | number
 }
 
 export const TestCaseForm = memo(() => {
@@ -30,8 +36,15 @@ export const TestCaseForm = memo(() => {
   //   </div>s
   // </>s
 
+  const location = useLocation() as Location<LocationState>
+
+  const suiteId = location.state?.id?.toString()
+
   const theme = useTheme()
-  const { contrastText } = theme.palette.primary
+  const contrastText =
+    theme.palette.mode === 'dark'
+      ? theme.palette.primary.contrastText
+      : theme.palette.text.primary
 
   const suites: SuiteOption[] = [
     { id: 0, name: 'Not selected' },
@@ -45,10 +58,21 @@ export const TestCaseForm = memo(() => {
       }),
   ]
 
-  const [suite, setSuite] = useState<SuiteOption>(suites[0])
+  const defaultSuite = useMemo(() => {
+    return suiteId === undefined
+      ? suites[0]
+      : suites.find((suite) => suite.id.toString() === suiteId) || suites[0]
+  }, [location])
+
+  const [suite, setSuite] = useState<SuiteOption>(defaultSuite)
   const [suiteName, setSuiteName] = useState<SuiteOption['name']>(
-    suites[0].name,
+    defaultSuite.name,
   )
+
+  useEffect(() => {
+    setSuite(defaultSuite)
+    setSuiteName(defaultSuite.name)
+  }, [location])
 
   const handleChange = (
     _: React.SyntheticEvent<Element, Event>,
@@ -56,7 +80,7 @@ export const TestCaseForm = memo(() => {
   ) => {
     if (value) {
       setSuite(value)
-      setSuiteName(value.name)
+      // setSuiteName(value.name)
     }
   }
 
@@ -65,9 +89,8 @@ export const TestCaseForm = memo(() => {
     value: string,
     reason: AutocompleteInputChangeReason,
   ) => {
-    if (reason === 'reset') return
+    console.log('reason', reason, value)
     setSuiteName(value)
-    console.log('CHANGE', reason)
   }
 
   return (
@@ -88,7 +111,6 @@ export const TestCaseForm = memo(() => {
           id="projectsList"
           disablePortal
           forcePopupIcon={false}
-          clearIcon=""
           selectOnFocus
           clearOnEscape
           blurOnSelect
@@ -123,11 +145,8 @@ export const TestCaseForm = memo(() => {
                 margin="none"
                 InputProps={{
                   ...params.InputProps,
-                  className: 'contrast',
                 }}
-                sx={{ color: `${contrastText} !important` }}
                 variant="outlined"
-                style={{ color: `${contrastText} !important` }}
               />
             )
           }}
@@ -137,7 +156,7 @@ export const TestCaseForm = memo(() => {
         <Button
           size="large"
           variant="contained"
-          onClick={() => console.log('!')}
+          onClick={() => console.log('!', suite, suiteName)}
         >
           Create
         </Button>

@@ -50,7 +50,6 @@ function AppThemeProvider({
   )
 
   const currentTheme = useMemo(() => {
-    console.log(themes[themeName].palette)
     root.style.setProperty(
       '--mui-palette-primary-light',
       themes[themeName].palette.primary.main,

@@ -25,18 +25,15 @@ export const TreeNode = memo((props: TreeNodeProps) => {
 
   const handleToggle = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
-    console.log('HANDLE - ', id)
     props.onToggle(id)
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log(props.node)
     if (!droppable) {
-      console.log('!!!', id.toString())
       navigate(id.toString())
       e.stopPropagation()
     } else {
-      console.log('!!!SUITE', id.toString())
       navigate(`suite${id}`)
       e.stopPropagation()
     }
@@ -91,11 +88,11 @@ export const TreeNode = memo((props: TreeNodeProps) => {
             options={[
               {
                 label: 'Suite',
-                onSelect: () => console.log('suite'),
+                onSelect: () => navigate('suite'),
               },
               {
                 label: 'Case',
-                onSelect: () => console.log('cae'),
+                onSelect: () => navigate('create', { state: { id } }),
               },
             ]}
           />

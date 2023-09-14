@@ -1,8 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import {
-  CssBaseline,
-  Experimental_CssVarsProvider as CssVarsProvider,
-} from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import { AppThemeProvider } from 'app/providers/AppThemeProvider'
 import { ThemeName } from 'shared/consts/theme'
 
