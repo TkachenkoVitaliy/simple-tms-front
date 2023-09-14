@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 export interface TMSAutocompleteProps<T> {
   id: string
+  label?: string
   options: T[]
   fetchOptions?: () => Promise<T[]>
   value: T | null
@@ -10,11 +11,14 @@ export interface TMSAutocompleteProps<T> {
   getOptionLabel: (option: T) => string
   isOptionEqualToValue: (option: T, value: T) => boolean
   contrastText?: boolean
+  placeholder?: string
+  optionStyle?: (option: T) => React.CSSProperties
 }
 
 export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
   const {
     id,
+    label,
     options,
     fetchOptions,
     value,
@@ -22,6 +26,8 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
     getOptionLabel,
     isOptionEqualToValue,
     contrastText,
+    placeholder,
+    optionStyle,
   } = props
 
   const [localOptions, setLocalOptions] = useState<T[]>(options || [])
@@ -49,12 +55,13 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
       isOptionEqualToValue={isOptionEqualToValue}
       getOptionLabel={getOptionLabel}
       options={localOptions}
-      sx={{ minWidth: '18%' }}
+      sx={{ minWidth: '18%', color: '#fff' }}
       renderOption={(props, option) => {
         return (
           <li
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
+            style={optionStyle?.(option)}
           >
             {getOptionLabel(option)}
           </li>
@@ -65,13 +72,16 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
           <TextField
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
-            label="Test Suite"
+            label={label}
             fullWidth
             margin="none"
+            placeholder={placeholder}
             InputProps={{
               ...params.InputProps,
               className: contrastText ? 'contrast' : '',
             }}
+            sx={{ color: '#fff !important' }}
+            style={{ color: '#fff !important' }}
             variant="outlined"
           />
         )

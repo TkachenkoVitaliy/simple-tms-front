@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
 import { IAppRoute, RouteParams } from 'shared/types/routerTypes'
+import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete/TMSAutocomplete'
 
 function flattenRoutes(routes: IAppRoute[], parentPath?: string) {
   let flattenedRoutes: { path: string; onProjectChangePattern?: string }[] = []
@@ -40,14 +41,8 @@ export const ProjectSelect = observer(() => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const theme = useTheme()
-  const createColor = theme.palette.success.light
-  const { contrastText } = theme.palette.primary
 
-  const handleChange = (
-    _: React.SyntheticEvent<Element, Event>,
-    value: IProject | null,
-  ) => {
+  const handleChange = (value: IProject | null) => {
     if (value === null) return
     if (value.id === 0) {
       appStore.setActiveProject(null)
@@ -57,7 +52,6 @@ export const ProjectSelect = observer(() => {
     if (value.id !== 0) {
       const id = value.id.toString()
       const { pathname } = location
-      const routes = flattenRoutes(appRoutes)
       const routeObj = flattenRoutes(appRoutes).find((item) =>
         matchPath(item.path, pathname),
       )
@@ -73,58 +67,28 @@ export const ProjectSelect = observer(() => {
     appStore.setActiveProject(value)
   }
 
+  const theme = useTheme()
+  const createColor = theme.palette.success.light
+
+  const createStyle = (option: IProject) => {
+    return option.id === 0 ? { color: createColor } : {}
+  }
+
   return (
-    <Autocomplete
-      id="projectsList"
-      disablePortal
-      forcePopupIcon={false}
-      clearIcon=""
-      selectOnFocus
-      blurOnSelect
-      clearOnBlur
-      handleHomeEndKeys
-      value={appStore.activeProject}
-      onChange={handleChange}
-      inputValue={appStore.activeProject?.name || ''}
-      isOptionEqualToValue={(option, value) => {
-        return option.id === value.id
-      }}
-      getOptionLabel={(option: IProject | null) => option?.name || ''}
+    <TMSAutocomplete<IProject>
+      id="projectList"
       options={appStore.projects}
-      sx={{ minWidth: '18%', color: contrastText }}
-      renderOption={(props, option) => {
-        return (
-          <li
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
-            style={option.id === 0 ? { color: createColor } : {}}
-          >
-            {option.name}
-          </li>
-        )
-      }}
-      renderInput={(params) => {
-        return (
-          <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...params}
-            fullWidth
-            margin="none"
-            placeholder={
-              location.pathname === NEW_PROJECT_PATH
-                ? 'Creating new project'
-                : 'Select Project'
-            }
-            InputProps={{
-              ...params.InputProps,
-              className: 'contrast',
-            }}
-            sx={{ color: `${contrastText} !important` }}
-            variant="outlined"
-            style={{ color: `${contrastText} !important` }}
-          />
-        )
-      }}
+      onChange={handleChange}
+      contrastText
+      value={appStore.activeProject}
+      getOptionLabel={(option: IProject | null) => option?.name || ''}
+      isOptionEqualToValue={(option, val) => option.id === val.id}
+      placeholder={
+        location.pathname === NEW_PROJECT_PATH
+          ? 'Creating new project'
+          : 'Select Project'
+      }
+      optionStyle={createStyle}
     />
   )
 })

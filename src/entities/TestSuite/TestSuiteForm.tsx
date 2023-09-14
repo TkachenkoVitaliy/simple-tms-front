@@ -27,6 +27,7 @@ export const TestSuiteForm = memo(() => {
     <div>
       <TMSAutocomplete<IPost>
         id="testTMSAutocomplete"
+        label="test"
         options={[]}
         fetchOptions={fetchData}
         onChange={onChange}
