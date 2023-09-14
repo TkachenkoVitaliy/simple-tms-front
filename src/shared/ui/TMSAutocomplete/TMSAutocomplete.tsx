@@ -21,6 +21,7 @@ export interface TMSAutocompleteProps<T> {
   contrastText?: boolean
   placeholder?: string
   optionStyle?: (option: T) => React.CSSProperties
+  required?: boolean
 }
 
 export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
@@ -36,6 +37,7 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
     contrastText,
     placeholder,
     optionStyle,
+    required,
   } = props
 
   const [localOptions, setLocalOptions] = useState<T[]>(options || [])
@@ -82,6 +84,7 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
             {...params}
             label={label}
             fullWidth
+            required={required}
             margin="none"
             placeholder={placeholder}
             InputProps={{

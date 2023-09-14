@@ -17,6 +17,7 @@ export const TestSuiteForm = memo(() => {
         label="Parent suite"
         options={suites}
         onChange={onChange}
+        required
         value={value}
         getOptionLabel={(option) => option.name}
         isOptionEqualToValue={(option, val) => option.id === val.id}

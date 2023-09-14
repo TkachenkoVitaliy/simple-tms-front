@@ -12,6 +12,7 @@ import React, { memo, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Location } from 'history'
 import { SuiteOption } from 'shared/types/autocompleteTypes'
+import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete/TMSAutocomplete'
 
 interface LocationState {
   id?: string | number
@@ -35,43 +36,27 @@ export const TestCaseForm = memo(() => {
 
   const suiteId = location.state?.id?.toString()
 
-  const theme = useTheme()
-  const contrastText =
-    theme.palette.mode === 'dark'
-      ? theme.palette.primary.contrastText
-      : theme.palette.text.primary
-
   const defaultSuite = useMemo(() => {
     return suiteId === undefined
       ? suites[0]
       : suites.find((suite) => suite.id.toString() === suiteId) || suites[0]
   }, [location])
 
-  const [suite, setSuite] = useState<SuiteOption>(defaultSuite)
+  const [suite, setSuite] = useState<SuiteOption | null>(defaultSuite)
   const [suiteName, setSuiteName] = useState<SuiteOption['name']>(
     defaultSuite.name,
   )
+
+  const onChange = (newValue: SuiteOption | null) => {
+    if (newValue) {
+      setSuite(newValue)
+    }
+  }
 
   useEffect(() => {
     setSuite(defaultSuite)
     setSuiteName(defaultSuite.name)
   }, [location])
-
-  const handleChange = (
-    _: React.SyntheticEvent<Element, Event>,
-    value: SuiteOption | null,
-  ) => {
-    if (value) {
-      setSuite(value)
-    }
-  }
-
-  const handleChangeInput = (
-    _: React.SyntheticEvent<Element, Event>,
-    value: string,
-  ) => {
-    setSuiteName(value)
-  }
 
   return (
     <Card
@@ -87,7 +72,17 @@ export const TestCaseForm = memo(() => {
       }}
     >
       <CardContent>
-        <Autocomplete
+        <TMSAutocomplete
+          id="testCaseFormSelectParentSuite"
+          label="Parent suite"
+          options={suites}
+          onChange={onChange}
+          required
+          value={suite}
+          getOptionLabel={(option) => option.name}
+          isOptionEqualToValue={(option, val) => option.id === val.id}
+        />
+        {/* <Autocomplete
           id="projectsList"
           disablePortal
           forcePopupIcon={false}
@@ -129,7 +124,7 @@ export const TestCaseForm = memo(() => {
               />
             )
           }}
-        />
+        /> */}
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
