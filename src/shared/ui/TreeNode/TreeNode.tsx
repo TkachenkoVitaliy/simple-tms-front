@@ -7,9 +7,11 @@ import { IconButton, Typography } from '@mui/material'
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
 import { TreeData } from 'shared/types/treeData'
 import { useNavigate } from 'react-router-dom'
-import styles from './TreeNode.module.scss'
+import { LocationState } from 'shared/types/routerTypes'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 import { TMSMenu } from '../TMSMenu/TMSMenu'
+
+import styles from './TreeNode.module.scss'
 
 export interface TreeNodeProps {
   node: NodeModel<TreeData>
@@ -19,7 +21,7 @@ export interface TreeNodeProps {
 }
 
 export const TreeNode = memo((props: TreeNodeProps) => {
-  const { id, droppable, data } = props.node
+  const { id, droppable, data, parent, text } = props.node
   const indent = props.depth * 24
   const navigate = useNavigate()
 
@@ -29,9 +31,12 @@ export const TreeNode = memo((props: TreeNodeProps) => {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log(props.node)
     if (!droppable) {
-      navigate(id.toString())
+      const locationState: LocationState = {
+        parentId: parent,
+        title: text,
+      }
+      navigate(id.toString(), { state: locationState })
       e.stopPropagation()
     } else {
       navigate(`suite/${id}`)
@@ -92,7 +97,7 @@ export const TreeNode = memo((props: TreeNodeProps) => {
               },
               {
                 label: 'Case',
-                onSelect: () => navigate('create', { state: { id } }),
+                onSelect: () => navigate('create', { state: { parentId: id } }),
               },
             ]}
           />

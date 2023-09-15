@@ -22,4 +22,10 @@ export interface IRoute {
   children?: IRoute[]
 }
 
+export interface LocationState {
+  id?: string | number
+  parentId?: string | number
+  title?: string
+}
+
 export type RouteParams = 'projectId' | 'testSuiteId' | 'testCaseId'

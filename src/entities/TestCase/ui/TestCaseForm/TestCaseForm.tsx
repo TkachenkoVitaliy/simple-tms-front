@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Button, Card, CardActions, CardHeader } from '@mui/material'
 import { suites } from 'mock/sample_data'
 import { memo, useEffect, useState } from 'react'
@@ -9,17 +10,15 @@ import { priorities } from 'shared/consts/priorities'
 import { TMSCardContent } from 'shared/ui/TMSCardContent/TMSCardContent'
 import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup/TMSToggleButtonGroup'
 import { testTypes } from 'shared/consts/testTypes'
-
-interface LocationState {
-  id?: string | number
-}
+import { LocationState } from 'shared/types/routerTypes'
+import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
 
 export const TestCaseForm = memo(() => {
   // <>
   //   !!!<div>TestSuite-Select</div>
   //   !!!<div>Priority-Select</div>
   //   !!!<div>Type-Select</div>
-  //   <div>Title-TextField</div>
+  //   !!!<div>Title-TextField</div>
   //   <div>Preconditions-TextField</div>
   //   <div>
   //     Steps-List
@@ -30,7 +29,8 @@ export const TestCaseForm = memo(() => {
 
   const location = useLocation() as Location<LocationState>
 
-  const suiteId = location.state?.id?.toString()
+  const suiteId = location.state?.parentId?.toString()
+  const headerTitle = location.state?.title || 'Create Test Case'
 
   const [suite, setSuite] = useState<SuiteOption | null>(
     suiteId === undefined
@@ -51,6 +51,8 @@ export const TestCaseForm = memo(() => {
   const [testType, setTestType] = useState<ToggleButtonOption['value']>(
     testTypes[0].value,
   )
+
+  const [caseTitle, setCaseTitle] = useState<string>('')
 
   // RESET
   useEffect(() => {
@@ -79,7 +81,7 @@ export const TestCaseForm = memo(() => {
     >
       <CardHeader
         style={{ flexWrap: 'wrap', rowGap: '20px' }}
-        title="Create New Test Case"
+        title={headerTitle}
         titleTypographyProps={{
           noWrap: true,
           variant: 'h5',
@@ -115,12 +117,31 @@ export const TestCaseForm = memo(() => {
           getOptionLabel={(option) => option.name}
           isOptionEqualToValue={(option, val) => option.id === val.id}
         />
+        <TMSTextField
+          required
+          fullWidth
+          forceTrim
+          label="Title"
+          value={caseTitle}
+          onChange={(val) => setCaseTitle(val)}
+          errorText="Min length Title is 2 symbols"
+          validateFunc={(newValue) => !!newValue && newValue.length >= 2}
+        />
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
           size="large"
           variant="contained"
-          onClick={() => console.log('!', suite)}
+          onClick={() =>
+            console.log(
+              '!',
+              suite,
+              priority,
+              testType,
+              caseTitle,
+              caseTitle.length,
+            )
+          }
         >
           Create
         </Button>
