@@ -44,7 +44,7 @@ function TestsPage() {
           height: '100%',
         }}
         maxWidth="78%"
-        minWidth="22%"
+        minWidth="27%"
         enable={{
           top: false,
           right: false,

@@ -21,3 +21,9 @@
 .contrast {
   color: #fff !important;
 }
+
+.MuiCardHeader-content {
+  overflow: clip;
+  min-width: 0;
+  max-width: 465px;
+}

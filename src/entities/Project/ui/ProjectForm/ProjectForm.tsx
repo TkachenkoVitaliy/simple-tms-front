@@ -1,16 +1,11 @@
 /* eslint-disable max-lines */
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  TextField,
-} from '@mui/material'
+import { Button, Card, CardActions, TextField } from '@mui/material'
 import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
+import { TMSCardContent } from 'shared/ui/TMSCardContent/TMSCardContent'
 
 interface ProjectFormProps {
   project?: IProject
@@ -131,7 +126,7 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
         padding: '16px',
       }}
     >
-      <CardContent>
+      <TMSCardContent>
         <TextField
           type="text"
           autoComplete="off"
@@ -144,7 +139,6 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
           onChange={onNameChange}
           onBlur={onBlurName}
           helperText={isNameValid ? ' ' : 'Name is required'}
-          sx={{ mb: 3 }}
         />
         <TextField
           type="text"
@@ -158,7 +152,7 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
           onChange={onDescriptionChange}
           helperText=" "
         />
-      </CardContent>
+      </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
           disabled={!isFormValid}

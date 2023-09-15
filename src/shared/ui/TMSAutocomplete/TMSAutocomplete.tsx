@@ -18,6 +18,7 @@ export interface TMSAutocompleteProps<T> {
   value: T | null
   onChange: (value: T | null) => void
   getOptionLabel: (option: T) => string
+  getOptionIcon?: (option: T) => JSX.Element
   isOptionEqualToValue: (option: T, value: T) => boolean
   contrastText?: boolean
   placeholder?: string
@@ -34,6 +35,7 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
     value,
     onChange,
     getOptionLabel,
+    getOptionIcon,
     isOptionEqualToValue,
     contrastText,
     placeholder,
@@ -73,6 +75,7 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
             {...props}
             style={optionStyle?.(option)}
           >
+            {getOptionIcon?.(option)}
             {getOptionLabel(option)}
           </li>
         )

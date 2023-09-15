@@ -1,5 +1,5 @@
 import { Dashboard, Dataset, Grading } from '@mui/icons-material'
-import { TestCaseForm } from 'entities/TestCase/ui/TestCaseForm/TestCaseForm'
+import { TestCaseForm } from 'entities/TestCase'
 import { TestSuiteForm } from 'entities/TestSuite/TestSuiteForm'
 import { DashboardPage } from 'pages/DashboardPage'
 import ProjectPage from 'pages/ProjectPage/ui/ProjectPage'
