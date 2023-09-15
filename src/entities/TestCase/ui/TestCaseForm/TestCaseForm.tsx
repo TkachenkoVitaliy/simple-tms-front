@@ -12,6 +12,7 @@ import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup/TMSToggleBu
 import { testTypes } from 'shared/consts/testTypes'
 import { LocationState } from 'shared/types/routerTypes'
 import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
+import MDEditor from '@uiw/react-md-editor'
 
 export const TestCaseForm = memo(() => {
   // <>
@@ -53,6 +54,8 @@ export const TestCaseForm = memo(() => {
   )
 
   const [caseTitle, setCaseTitle] = useState<string>('')
+
+  const [preconditions, setPreconditions] = useState<string>('')
 
   // RESET
   useEffect(() => {
@@ -126,6 +129,12 @@ export const TestCaseForm = memo(() => {
           onChange={(val) => setCaseTitle(val)}
           errorText="Min length Title is 2 symbols"
           validateFunc={(newValue) => !!newValue && newValue.length >= 2}
+        />
+        <MDEditor
+          style={{ minHeight: '250px' }}
+          value={preconditions}
+          onChange={(newVal) => setPreconditions(newVal || '')}
+          preview="edit"
         />
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>

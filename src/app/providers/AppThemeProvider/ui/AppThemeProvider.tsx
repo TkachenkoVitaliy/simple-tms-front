@@ -51,6 +51,7 @@ function AppThemeProvider({
 
   const currentTheme = useMemo(() => {
     console.log(themes[themeName].palette)
+    root.setAttribute('data-color-mode', themeName)
     root.style.setProperty(
       '--mui-palette-text-primary',
       themes[themeName].palette.text.primary,

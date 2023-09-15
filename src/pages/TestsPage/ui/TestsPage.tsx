@@ -41,7 +41,7 @@ function TestsPage() {
         style={{ ...style, display: outlet ? 'block' : 'none' }}
         defaultSize={{
           width: '70%',
-          height: '100%',
+          height: 'auto',
         }}
         maxWidth="78%"
         minWidth="27%"
@@ -58,7 +58,6 @@ function TestsPage() {
       >
         <div
           style={{
-            ...style,
             width: '100%',
             minWidth: '1px',
             padding: '0',
