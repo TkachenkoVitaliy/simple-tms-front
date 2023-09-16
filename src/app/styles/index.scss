@@ -1,5 +1,6 @@
 @import 'reset';
 @import 'variables';
+@import 'mdeditor';
 
 .app {
   min-height: 100vh;
@@ -28,10 +29,49 @@
   max-width: 465px;
 }
 
-.MuiStack-root .w-md-editor-fullscreen {
+.app .MuiStack-root .w-md-editor-fullscreen {
   overflow: hidden;
   position: absolute;
   z-index: 99999;
-  inset: -20px 0 0;
+  inset: -24px 0 0;
   height: 100% !important;
+}
+
+.MuiStack-root .w-md-editor-toolbar {
+  background-image: linear-gradient(
+    var(--color-border-default),
+    var(--color-border-default)
+  );
+}
+
+.MuiStack-root .wmde-markdown {
+  background-image: linear-gradient(
+    var(--color-border-default),
+    var(--color-border-default)
+  );
+  background-color: var(--md-editor-background-color);
+}
+
+.MuiStack-root .w-md-editor {
+  background-image: linear-gradient(
+    var(--color-border-default),
+    var(--color-border-default)
+  );
+  text-align: left;
+  border-radius: 3px;
+  padding-bottom: 1px;
+  position: relative;
+  color: var(--color-fg-default);
+  --md-editor-font-family: inherit;
+  --md-editor-background-color: var(--md-editor-background-color);
+  --md-editor-box-shadow-color: var(--color-border-default, #d0d7de);
+  --color-border-default: var(--color-border-default);
+  box-shadow:
+    0 0 0 1px var(--md-editor-box-shadow-color),
+    0 0 0 var(--md-editor-box-shadow-color),
+    0 1px 1px var(--md-editor-box-shadow-color);
+  background-color: var(--md-editor-background-color);
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
 }

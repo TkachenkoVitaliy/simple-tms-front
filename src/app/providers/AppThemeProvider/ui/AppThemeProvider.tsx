@@ -4,6 +4,7 @@ import { ReactNode, useMemo, useState } from 'react'
 import { LOCAL_STORAGE_THEME_KEY } from 'shared/consts/localstorage'
 import { ThemeName } from 'shared/consts/theme'
 import { ThemeContext } from 'shared/lib/context/ThemeContext'
+import { setMdEditorTheme } from '../lib/mdEditorStyle'
 
 const root = document.documentElement
 
@@ -51,7 +52,9 @@ function AppThemeProvider({
 
   const currentTheme = useMemo(() => {
     console.log(themes[themeName].palette)
-    root.setAttribute('data-color-mode', themeName)
+
+    setMdEditorTheme(themeName)
+
     root.style.setProperty(
       '--mui-palette-text-primary',
       themes[themeName].palette.text.primary,

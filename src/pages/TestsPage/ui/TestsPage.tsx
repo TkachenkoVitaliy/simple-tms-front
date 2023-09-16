@@ -29,7 +29,13 @@ function TestsPage() {
           overflowY: 'auto',
         }}
       >
-        <div style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            overflowX: 'hidden',
+          }}
+        >
           <TestsTree />
         </div>
       </div>
@@ -38,7 +44,11 @@ function TestsPage() {
         orientation="vertical"
       />
       <Resizable
-        style={{ ...style, display: outlet ? 'block' : 'none' }}
+        style={{
+          ...style,
+          display: outlet ? 'block' : 'none',
+          overflowY: 'auto',
+        }}
         defaultSize={{
           width: '70%',
           height: 'auto',

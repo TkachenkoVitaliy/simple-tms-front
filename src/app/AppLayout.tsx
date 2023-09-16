@@ -4,7 +4,7 @@ import { Sidebar } from 'widgets/Sidebar'
 
 export function AppLayout() {
   return (
-    <div className="app">
+    <div className="app wmde-markdown-var">
       <Navbar />
       <div className="content-page">
         <Sidebar />
