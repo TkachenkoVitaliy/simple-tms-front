@@ -7,6 +7,7 @@ const style = {
   minHeight: '100%',
   height: '100%',
   padding: '16px',
+  overflow: 'auto',
 }
 
 function TestsPage() {
@@ -26,7 +27,6 @@ function TestsPage() {
           ...style,
           width: '100%',
           minWidth: '1px',
-          overflowY: 'auto',
         }}
       >
         <div style={{ width: '100%', height: '100%', overflowX: 'hidden' }}>

@@ -61,6 +61,14 @@ function AppThemeProvider({
       themes[themeName].palette.primary.main,
     )
     root.style.setProperty(
+      '--mui-palette-divider',
+      themes[themeName].palette.divider,
+    )
+    root.style.setProperty(
+      '--mui-palatte-background-default',
+      themes[themeName].palette.background.default,
+    )
+    root.style.setProperty(
       '--mui-palette-background-paper',
       // themes[themeName].palette.divider,
       themeName === 'dark'

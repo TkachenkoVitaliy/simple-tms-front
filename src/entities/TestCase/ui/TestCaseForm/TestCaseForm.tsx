@@ -1,5 +1,12 @@
 /* eslint-disable max-lines */
-import { Button, Card, CardActions, CardHeader } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardActions,
+  CardHeader,
+  Divider,
+  Typography,
+} from '@mui/material'
 import { suites } from 'mock/sample_data'
 import { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -130,12 +137,19 @@ export const TestCaseForm = memo(() => {
           errorText="Min length Title is 2 symbols"
           validateFunc={(newValue) => !!newValue && newValue.length >= 2}
         />
-        <MDEditor
-          style={{ minHeight: '250px' }}
-          value={preconditions}
-          onChange={(newVal) => setPreconditions(newVal || '')}
-          preview="edit"
-        />
+        <Divider style={{ marginTop: '0' }} />
+        <div style={{ marginTop: '18px' }}>
+          <Typography>Preconditions</Typography>
+          <MDEditor
+            style={{ minHeight: '200px' }}
+            height="100%"
+            visibleDragbar={false}
+            value={preconditions}
+            onChange={(newVal) => setPreconditions(newVal || '')}
+            preview="edit"
+          />
+        </div>
+        <Divider />
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
