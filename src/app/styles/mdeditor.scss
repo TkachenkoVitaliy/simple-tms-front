@@ -26,6 +26,15 @@
     background-image: inherit;
   }
 
+  .w-md-editor-content {
+    flex: 1;
+  }
+
+  .wmde-markdown {
+    background-color: inherit;
+    background-image: inherit;
+  }
+
   &.w-md-editor-fullscreen {
     position: absolute;
     margin-top: 0px;
