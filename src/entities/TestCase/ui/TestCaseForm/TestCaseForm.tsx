@@ -150,6 +150,9 @@ export const TestCaseForm = memo(() => {
           />
         </div>
         <Divider />
+        <div style={{ marginTop: '18px' }}>
+          <Typography>Steps</Typography>
+        </div>
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
         <Button
