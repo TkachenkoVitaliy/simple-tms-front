@@ -20,7 +20,6 @@ import { testTypes } from 'shared/consts/testTypes'
 import { LocationState } from 'shared/types/routerTypes'
 import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
 import { PreconditionsEditor } from '../PreconditionsEditor/PreconditionsEditor'
-import { PreviewType } from '@uiw/react-md-editor'
 
 export const TestCaseForm = memo(() => {
   // <>
@@ -93,6 +92,7 @@ export const TestCaseForm = memo(() => {
       }}
     >
       <CardHeader
+        key={location.pathname}
         style={{ flexWrap: 'wrap', rowGap: '20px' }}
         title={headerTitle}
         titleTypographyProps={{
@@ -101,6 +101,7 @@ export const TestCaseForm = memo(() => {
         }}
         avatar={
           <TMSToggleButtonGroup
+            key={location.pathname}
             options={testTypes}
             value={testType}
             onChange={(v) => setTestType(v)}
@@ -109,6 +110,7 @@ export const TestCaseForm = memo(() => {
         }
         action={
           <TMSToggleButtonGroup
+            key={location.pathname}
             options={priorities}
             value={priority}
             onChange={(v) => setPriority(v)}
@@ -141,6 +143,7 @@ export const TestCaseForm = memo(() => {
         />
         <Divider style={{ marginTop: '0' }} />
         <PreconditionsEditor
+          key={location.pathname}
           preconditions={preconditions}
           setPreconditions={setPreconditions}
         />
