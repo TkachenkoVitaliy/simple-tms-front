@@ -19,7 +19,8 @@ import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup/TMSToggleBu
 import { testTypes } from 'shared/consts/testTypes'
 import { LocationState } from 'shared/types/routerTypes'
 import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
-import MDEditor from '@uiw/react-md-editor'
+import { PreconditionsEditor } from '../PreconditionsEditor/PreconditionsEditor'
+import { PreviewType } from '@uiw/react-md-editor'
 
 export const TestCaseForm = memo(() => {
   // <>
@@ -27,13 +28,13 @@ export const TestCaseForm = memo(() => {
   //   !!!<div>Priority-Select</div>
   //   !!!<div>Type-Select</div>
   //   !!!<div>Title-TextField</div>
-  //   <div>Preconditions-TextField</div>
+  //   !!!<div>Preconditions-TextField</div>
   //   <div>
   //     Steps-List
   //     <div>Action-TextField-multiline</div>
   //     <div>ExpectedResult-TextField-multiline</div>
-  //   </div>s
-  // </>s
+  //   </div>
+  // </>
 
   const location = useLocation() as Location<LocationState>
 
@@ -72,6 +73,8 @@ export const TestCaseForm = memo(() => {
         : suites.find((suite) => suite.id.toString() === suiteId) || suites[0],
     )
     setPriority(priorities[1].value)
+    setCaseTitle('')
+    setPreconditions('')
   }, [location])
 
   return (
@@ -115,7 +118,6 @@ export const TestCaseForm = memo(() => {
           />
         }
       />
-
       <TMSCardContent>
         <TMSAutocomplete<SuiteOption>
           id="testCaseFormSelectParentSuite"
@@ -138,17 +140,10 @@ export const TestCaseForm = memo(() => {
           validateFunc={(newValue) => !!newValue && newValue.length >= 2}
         />
         <Divider style={{ marginTop: '0' }} />
-        <div style={{ marginTop: '18px' }}>
-          <Typography>Preconditions</Typography>
-          <MDEditor
-            style={{ minHeight: '200px' }}
-            height="100%"
-            visibleDragbar={false}
-            value={preconditions}
-            onChange={(newVal) => setPreconditions(newVal || '')}
-            preview="edit"
-          />
-        </div>
+        <PreconditionsEditor
+          preconditions={preconditions}
+          setPreconditions={setPreconditions}
+        />
         <Divider />
         <div style={{ marginTop: '18px' }}>
           <Typography>Steps</Typography>
