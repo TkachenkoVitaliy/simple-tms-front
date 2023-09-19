@@ -20,6 +20,7 @@ import { testTypes } from 'shared/consts/testTypes'
 import { LocationState } from 'shared/types/routerTypes'
 import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
 import { PreconditionsEditor } from '../PreconditionsEditor/PreconditionsEditor'
+import { StepsEditor } from '../StepsEditor/StepsEditor'
 
 export const TestCaseForm = memo(() => {
   // <>
@@ -149,7 +150,7 @@ export const TestCaseForm = memo(() => {
         />
         <Divider />
         <div style={{ marginTop: '18px' }}>
-          <Typography>Steps</Typography>
+          <StepsEditor />
         </div>
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
