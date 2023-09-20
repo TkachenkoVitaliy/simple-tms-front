@@ -2,14 +2,13 @@ import type { Identifier, XYCoord } from 'dnd-core'
 import React, { CSSProperties, ReactElement, RefObject, useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
-interface DragItem {
+export interface DragItem {
   id: string
   index: number
   type: string
 }
 
 export interface DraggableProps {
-  content: ReactElement
   // <{
   //   style?: CSSProperties
   //   ref?: RefObject<HTMLElement>
@@ -18,10 +17,11 @@ export interface DraggableProps {
   move: (dragIndex: number, hoverIndex: number) => void
   index: number
   id: string
+  children: React.ReactNode
 }
 
 export const Draggable = (props: DraggableProps) => {
-  const { id, content, move, index } = props
+  const { id, move, index, children } = props
   const type = 'Draggable'
 
   const ref = useRef<HTMLDivElement>(null)
@@ -102,7 +102,7 @@ export const Draggable = (props: DraggableProps) => {
         style={{ opacity, margin: '10px' }}
         data-handler-id={handlerId}
       >
-        {content}
+        {children}
       </div>
     )
   }
