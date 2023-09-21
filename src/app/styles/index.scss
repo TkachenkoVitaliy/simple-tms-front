@@ -33,6 +33,21 @@
   opacity: 0;
 }
 
+.side {
+  overflow-x: hidden;
+  transition: width 0.2s ease-in-out;
+
+  &:not(.collapsed) {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  &.collapsed {
+    width: 50px;
+    min-width: 50px;
+  }
+}
+
 // .MuiStack-root .w-md-editor-fullscreen {
 //   overflow: hidden;
 //   position: absolute;

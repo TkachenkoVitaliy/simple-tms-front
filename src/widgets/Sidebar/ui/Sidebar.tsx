@@ -9,6 +9,7 @@ import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { ArrowBackIosNew } from '@mui/icons-material'
 import { LOCAL_STORAGE_COLLAPSED } from 'shared/consts/localstorage'
+import { classNames } from 'utils/classNames/classNames'
 import { SidebarNavItem } from './SidebarNavItem'
 
 import styles from './Sidebar.module.scss'
@@ -31,17 +32,26 @@ export const Sidebar = memo(
 
     return (
       <aside
-        className={styles.sidebar}
-        style={{ width: collapsed ? '50px' : '200px', transition: 'all 0.3s' }}
+        className={classNames(
+          styles.sidebar,
+          {
+            collapsed,
+          },
+          ['side'],
+        )}
       >
         <Drawer
           variant="permanent"
           sx={{
             width: collapsed ? '50px' : '200px',
+            transition: 'width 0.2s ease-in-out',
             flexShrink: 0,
+            overflowX: 'hidden',
             '& .MuiDrawer-paper': {
               width: collapsed ? '50px' : '200px',
               boxSizing: 'border-box',
+              transition: 'width 0.2s ease-in-out',
+              overflowX: 'hidden',
             },
           }}
         >
@@ -86,8 +96,8 @@ export const Sidebar = memo(
                 <ArrowBackIosNew
                   sx={
                     collapsed
-                      ? { rotate: '180deg', transition: 'all 0.3s' }
-                      : { transition: 'all 0.3s' }
+                      ? { rotate: '180deg', transition: 'all 0.2s ease-in-out' }
+                      : { transition: 'all 0.2s ease-in-out' }
                   }
                 />
               </IconButton>

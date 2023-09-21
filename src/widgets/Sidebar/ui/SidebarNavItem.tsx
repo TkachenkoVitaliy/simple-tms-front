@@ -54,7 +54,7 @@ export const SidebarNavItem = memo((props: SidebarNavItemProps) => {
             >
               <Icon />
             </ListItemIcon>
-            {collapsed || <ListItemText primary={label} />}
+            {!collapsed && <ListItemText primary={label} />}
           </ListItemButton>
         )}
       </NavLink>
