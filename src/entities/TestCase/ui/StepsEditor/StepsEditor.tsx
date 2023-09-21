@@ -21,18 +21,18 @@ export function StepsEditor() {
       id: '1',
       text: '11111',
     },
-    {
-      id: '2',
-      text: '22222',
-    },
-    {
-      id: '3',
-      text: '33333',
-    },
-    {
-      id: '4',
-      text: '4444',
-    },
+    // {
+    //   id: '2',
+    //   text: '22222',
+    // },
+    // {
+    //   id: '3',
+    //   text: '33333',
+    // },
+    // {
+    //   id: '4',
+    //   text: '4444',
+    // },
   ])
 
   // const move = useCallback((dragIndex: number, hoverIndex: number) => {
@@ -69,18 +69,23 @@ export function StepsEditor() {
   // )
 
   const onReord = (newItems: ReordItem[]) => {
-    console.log(newItems)
+    const newData: IData[] = []
+    newItems.forEach((item) => {
+      const foundedDataItem = data.find((dataItem) => dataItem.id === item.id)
+      if (foundedDataItem) {
+        newData.push(foundedDataItem)
+      }
+    })
+    setData(newData)
   }
 
   return (
     <div>
-      EEEE
       <DraggableWrapper
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Wrapper={() => <div />}
+        Wrapper={<div />}
         onReordering={onReord}
       >
-        {data.map((item, index) => {
+        {data.map((item) => {
           return (
             <div
               key={item.id}
@@ -92,6 +97,20 @@ export function StepsEditor() {
           )
         })}
       </DraggableWrapper>
+      <button
+        type="button"
+        onClick={() =>
+          setData([
+            ...data,
+            {
+              id: (data.length + 1).toString(),
+              text: (data.length + 1).toString() + (data.length + 1).toString(),
+            },
+          ])
+        }
+      >
+        ADD
+      </button>
     </div>
   )
 }
