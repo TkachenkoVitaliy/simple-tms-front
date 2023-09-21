@@ -1,6 +1,13 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import React, { CSSProperties, ReactElement, RefObject, useRef } from 'react'
+import React, {
+  CSSProperties,
+  ReactElement,
+  RefObject,
+  useEffect,
+  useRef,
+} from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import { getEmptyImage } from 'react-dnd-html5-backend'
 
 export interface DragItem {
   id: string
@@ -72,7 +79,7 @@ export const Draggable = (props: DraggableProps) => {
     },
   })
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     type,
     item: () => {
       return { id, index }
@@ -85,6 +92,10 @@ export const Draggable = (props: DraggableProps) => {
   const opacity = isDragging ? 0 : 1
 
   drag(drop(ref))
+
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true })
+  }, [])
 
   const renderElement = () => {
     // return React.cloneElement(content, {

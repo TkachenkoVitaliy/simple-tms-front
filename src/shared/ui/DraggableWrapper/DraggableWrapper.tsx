@@ -1,10 +1,15 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable react/function-component-definition */
-import { DndProvider } from 'react-dnd'
+import { DndProvider, useDragLayer } from 'react-dnd'
 import { MultiBackend } from 'dnd-multi-backend'
+import { usePreview } from 'react-dnd-preview'
 import { useState, useCallback, useEffect } from 'react'
 import update from 'immutability-helper'
+import { Height } from '@mui/icons-material'
+import { getItemStyles } from 'shared/lib/itemStyles'
 import { Draggable } from '../Draggable/Draggable'
+import { DragLayer, DragLayerProps } from '../DragLayer/DragLayer'
 
 export interface DraggableWrapperProps {
   Wrapper: React.ReactElement<{ children?: React.ReactNode }>
@@ -13,10 +18,11 @@ export interface DraggableWrapperProps {
     | React.ReactElement<{ id: string }>
     | React.ReactElement<{ id: string }>[]
   onReordering: (newOrdering: { id: string }[]) => void
+  previewFunc?: DragLayerProps['previewFunc']
 }
 
 export const DraggableWrapper = (props: DraggableWrapperProps) => {
-  const { Wrapper, children, onReordering } = props
+  const { Wrapper, children, onReordering, previewFunc } = props
   const type = 'Draggable'
 
   let data = Array.isArray(children)
@@ -48,10 +54,21 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
     [children],
   )
 
-  console.log(children)
+  // const MyPreview = () => {
+  //   const preview = usePreview()
+  //   if (!preview.display) {
+  //     return null
+  //   }
+  //   const { itemType, item, style, monitor, ref } = preview
+  //   console.log(preview)
+  //   return <div style={{ ...style, height: '90px', zIndex: 100000 }}>ABRA </div>
+  // }
+
+  // console.log(children)
 
   return (
     <DndProvider backend={MultiBackend}>
+      {previewFunc ? <DragLayer previewFunc={previewFunc} /> : null}
       <Wrapper.type {...Wrapper.props}>
         {Array.isArray(children) ? (
           children.map((child, index) => {

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { DndProvider } from 'react-dnd'
 import { MultiBackend } from 'dnd-multi-backend'
 import update from 'immutability-helper'
@@ -96,6 +97,23 @@ export function StepsEditor() {
       <DraggableWrapper
         Wrapper={<div />}
         onReordering={onReord}
+        previewFunc={(index) => (
+          <div
+            style={{
+              border: '2px solid white',
+              padding: '20px',
+              width: '100%',
+            }}
+            id={data[index].id}
+          >
+            <TestInput
+              index={index + 1}
+              id={data[index].id}
+              value={data[index].text}
+              onChange={onChangeInputVal}
+            />
+          </div>
+        )}
       >
         {data.map((item, index) => {
           return (
