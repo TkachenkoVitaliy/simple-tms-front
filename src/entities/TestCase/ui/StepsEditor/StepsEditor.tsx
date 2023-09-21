@@ -5,6 +5,7 @@ import { Typography } from '@mui/material'
 import { memo, useCallback, useState } from 'react'
 import { Draggable } from 'shared/ui/Draggable/Draggable'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper/DraggableWrapper'
+import { TestInput } from 'shared/ui/TestInput'
 
 interface IData {
   id: string
@@ -79,20 +80,36 @@ export function StepsEditor() {
     setData(newData)
   }
 
+  const onChangeInputVal = (value: string, id?: string | number) => {
+    if (id !== undefined) {
+      const stringId = id.toString()
+      const newData: IData[] = data.map((item) => ({
+        id: item.id,
+        text: item.id === stringId ? value : item.text,
+      }))
+      setData(newData)
+    }
+  }
+
   return (
     <div>
       <DraggableWrapper
         Wrapper={<div />}
         onReordering={onReord}
       >
-        {data.map((item) => {
+        {data.map((item, index) => {
           return (
             <div
               key={item.id}
               style={{ border: '2px solid white', padding: '20px' }}
               id={item.id}
             >
-              <input value={item.text} />
+              <TestInput
+                index={index + 1}
+                id={item.id}
+                value={item.text}
+                onChange={onChangeInputVal}
+              />
             </div>
           )
         })}
