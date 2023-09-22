@@ -1,9 +1,4 @@
-import { DndProvider } from 'react-dnd'
-import { MultiBackend } from 'dnd-multi-backend'
-import update from 'immutability-helper'
-import { Typography } from '@mui/material'
-import { memo, useCallback, useState } from 'react'
-import { Draggable } from 'shared/ui/Draggable/Draggable'
+import { useState } from 'react'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper/DraggableWrapper'
 import { TestInput } from 'shared/ui/TestInput'
 
@@ -36,39 +31,6 @@ export function StepsEditor() {
     // },
   ])
 
-  // const move = useCallback((dragIndex: number, hoverIndex: number) => {
-  //   setData((prevData: IData[]) =>
-  //     update(prevData, {
-  //       $splice: [
-  //         [dragIndex, 1],
-  //         [hoverIndex, 0, prevData[dragIndex] as IData],
-  //       ],
-  //     }),
-  //   )
-  // }, [])
-
-  // return (
-  //   <div>
-  //     <Typography>Steps</Typography>
-  //     <DndProvider backend={MultiBackend}>
-  //       {data.map((item, index) => {
-  //         return (
-  //           <Draggable
-  //             id={item.id}
-  //             key={item.id}
-  //             move={move}
-  //             index={index}
-  //           >
-  //             <div style={{ border: '2px solid white', padding: '20px' }}>
-  //               <input value={item.text} />
-  //             </div>
-  //           </Draggable>
-  //         )
-  //       })}
-  //     </DndProvider>
-  //   </div>
-  // )
-
   const onReord = (newItems: ReordItem[]) => {
     const newData: IData[] = []
     newItems.forEach((item) => {
@@ -96,12 +58,31 @@ export function StepsEditor() {
       <DraggableWrapper
         Wrapper={<div />}
         onReordering={onReord}
+        renderDragLayer={(index) => (
+          <div
+            style={{
+              border: '2px solid white',
+              padding: '20px',
+            }}
+          >
+            <TestInput
+              index={index + 1}
+              id={data[index].id}
+              value={data[index].text}
+              onChange={onChangeInputVal}
+            />
+          </div>
+        )}
       >
         {data.map((item, index) => {
           return (
             <div
               key={item.id}
-              style={{ border: '2px solid white', padding: '20px' }}
+              style={{
+                border: '2px solid white',
+                padding: '20px',
+                margin: '20px',
+              }}
               id={item.id}
             >
               <TestInput

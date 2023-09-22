@@ -18,7 +18,7 @@ export const TestInput = memo((props: TestInputProps) => {
     <div>
       {index}
       <input
-        style={{ marginLeft: '20px' }}
+        style={{ marginLeft: '20px', width: '600px' }}
         value={value}
         onChange={changeHandler}
       />

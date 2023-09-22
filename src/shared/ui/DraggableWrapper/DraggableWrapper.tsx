@@ -1,22 +1,24 @@
-/* eslint-disable react/jsx-pascal-case */
-/* eslint-disable react/function-component-definition */
 import { DndProvider } from 'react-dnd'
 import { MultiBackend } from 'dnd-multi-backend'
-import { useState, useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import update from 'immutability-helper'
 import { Draggable } from '../Draggable/Draggable'
+import {
+  CustomDragLayer,
+  CustomDragLayerProps,
+} from '../CustomDragLayer/CustomDragLayer'
 
 export interface DraggableWrapperProps {
   Wrapper: React.ReactElement<{ children?: React.ReactNode }>
-  // children: React.ReactNode
   children:
     | React.ReactElement<{ id: string }>
     | React.ReactElement<{ id: string }>[]
   onReordering: (newOrdering: { id: string }[]) => void
+  renderDragLayer?: CustomDragLayerProps['previewFunc']
 }
 
 export const DraggableWrapper = (props: DraggableWrapperProps) => {
-  const { Wrapper, children, onReordering } = props
+  const { Wrapper, children, onReordering, renderDragLayer } = props
   const type = 'Draggable'
 
   let data = Array.isArray(children)
@@ -48,10 +50,9 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
     [children],
   )
 
-  console.log(children)
-
   return (
     <DndProvider backend={MultiBackend}>
+      {renderDragLayer && <CustomDragLayer previewFunc={renderDragLayer} />}
       <Wrapper.type {...Wrapper.props}>
         {Array.isArray(children) ? (
           children.map((child, index) => {
@@ -61,6 +62,7 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
                 move={move}
                 id={child.props.id}
                 index={index}
+                customDragLayer={!!renderDragLayer}
               >
                 <child.type {...child.props} />
               </Draggable>

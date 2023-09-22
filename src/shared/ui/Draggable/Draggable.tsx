@@ -1,6 +1,7 @@
 import type { Identifier, XYCoord } from 'dnd-core'
-import React, { CSSProperties, ReactElement, RefObject, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
+import { getEmptyImage } from 'react-dnd-html5-backend'
 
 export interface DragItem {
   id: string
@@ -9,21 +10,16 @@ export interface DragItem {
 }
 
 export interface DraggableProps {
-  // <{
-  //   style?: CSSProperties
-  //   ref?: RefObject<HTMLElement>
-  //   'data-handler-id'?: Identifier | null
-  // }>
   move: (dragIndex: number, hoverIndex: number) => void
   index: number
   id: string
-  children: React.ReactNode
+  children: React.ReactElement<{ index: number }>
+  customDragLayer?: boolean
 }
 
-export const Draggable = (props: DraggableProps) => {
-  const { id, move, index, children } = props
+export function Draggable(props: DraggableProps) {
+  const { id, move, index, children, customDragLayer } = props
   const type = 'Draggable'
-
   const ref = useRef<HTMLDivElement>(null)
 
   const [{ handlerId }, drop] = useDrop<
@@ -66,46 +62,41 @@ export const Draggable = (props: DraggableProps) => {
       }
 
       move(dragIndex, hoverIndex)
-
       // eslint-disable-next-line no-param-reassign
       item.index = hoverIndex
     },
   })
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     type,
     item: () => {
-      return { id, index }
+      return {
+        id,
+        index,
+        width: ref.current?.firstElementChild?.getBoundingClientRect().width,
+      }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   })
 
-  const opacity = isDragging ? 0 : 1
+  useEffect(() => {
+    if (customDragLayer) {
+      preview(getEmptyImage(), { captureDraggingState: true })
+    }
+  }, [customDragLayer])
 
   drag(drop(ref))
 
-  const renderElement = () => {
-    // return React.cloneElement(content, {
-    //   ref,
-    //   'data-handler-id': handlerId,
-    //   style: {
-    //     ...content.props.style,
-    //     opacity,
-    //   },
-    // })
-
-    return (
-      <div
-        ref={ref}
-        style={{ opacity, margin: '10px' }}
-        data-handler-id={handlerId}
-      >
-        {children}
-      </div>
-    )
-  }
-
-  return renderElement()
+  return (
+    <div
+      className="draggable"
+      ref={ref}
+      style={{ opacity: isDragging ? 0 : 1 }}
+      data-handler-id={handlerId}
+    >
+      {children}
+    </div>
+  )
 }
