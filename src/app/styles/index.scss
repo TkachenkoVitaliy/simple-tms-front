@@ -48,6 +48,14 @@
   }
 }
 
+.draggable {
+  cursor: move;
+}
+
+.draggable:active {
+  cursor: move !important;
+}
+
 // .MuiStack-root .w-md-editor-fullscreen {
 //   overflow: hidden;
 //   position: absolute;
