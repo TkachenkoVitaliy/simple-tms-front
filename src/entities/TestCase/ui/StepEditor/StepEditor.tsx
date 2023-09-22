@@ -40,7 +40,13 @@ export const StepEditor = memo((props: StepEditorProps) => {
           justifyContent: 'center',
         }}
       >
-        <Avatar>{index + 1}</Avatar>
+        <Avatar
+          sx={{
+            bgcolor: 'info.main',
+          }}
+        >
+          {index + 1}
+        </Avatar>
       </div>
       <div
         style={{
