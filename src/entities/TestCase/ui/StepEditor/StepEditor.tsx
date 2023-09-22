@@ -1,5 +1,5 @@
 import { Delete, DeleteForever } from '@mui/icons-material'
-import { IconButton } from '@mui/material'
+import { Avatar, Button, IconButton } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import { memo } from 'react'
 
@@ -40,7 +40,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
           justifyContent: 'center',
         }}
       >
-        {index + 1}
+        <Avatar>{index + 1}</Avatar>
       </div>
       <div
         style={{
@@ -51,7 +51,9 @@ export const StepEditor = memo((props: StepEditorProps) => {
       >
         <div style={{ marginBottom: '10px' }}>Action</div>
         <MDEditor
-          style={{ minHeight: EditorMinHeight }}
+          draggable
+          onDragStart={(event) => event.preventDefault()}
+          style={{ minHeight: EditorMinHeight, cursor: 'default' }}
           height="100%"
           visibleDragbar={false}
           value={value.action}
@@ -70,7 +72,9 @@ export const StepEditor = memo((props: StepEditorProps) => {
       >
         <div style={{ marginBottom: '10px' }}>Expected</div>
         <MDEditor
-          style={{ minHeight: EditorMinHeight }}
+          draggable
+          onDragStart={(event) => event.preventDefault()}
+          style={{ minHeight: EditorMinHeight, cursor: 'default' }}
           height="100%"
           visibleDragbar={false}
           value={value.expected}
@@ -87,7 +91,11 @@ export const StepEditor = memo((props: StepEditorProps) => {
           justifyContent: 'center',
         }}
       >
-        <IconButton className="delete">
+        <IconButton
+          className="delete"
+          draggable
+          onDragStart={(event) => event.preventDefault()}
+        >
           <DeleteForever />
         </IconButton>
       </div>
