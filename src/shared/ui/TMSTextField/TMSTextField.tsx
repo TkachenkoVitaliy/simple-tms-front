@@ -1,6 +1,5 @@
 import { TextField } from '@mui/material'
-import { errorMonitor } from 'events'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 export interface TMSTextFieldProps {
   required?: boolean
@@ -32,12 +31,12 @@ export function TMSTextField(props: TMSTextFieldProps) {
   const [haveChanges, setHaveChanges] = useState<boolean>(false)
 
   const updateErrorAndChanges = useCallback(
-    (value: string) => {
-      setHaveChanges(firstValue.current !== value)
+    (newValue: string) => {
+      setHaveChanges(firstValue.current !== newValue)
       if (validateFunc) {
-        setError(!validateFunc(value))
+        setError(!validateFunc(newValue))
       } else if (required) {
-        setError(!value || value.length < 1)
+        setError(!newValue || newValue.length < 1)
       }
     },
     [firstValue, setHaveChanges, setError],

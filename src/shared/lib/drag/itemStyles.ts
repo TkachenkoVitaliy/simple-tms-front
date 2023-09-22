@@ -17,12 +17,9 @@ export function getItemStyles(currentOffset: XYCoord | null) {
     position: 'fixed',
     pointerEvents: 'none',
     zIndex: 1000000,
-    // top,
     top: '0px',
-    // left,
     left: '0px',
   }
 
-  console.log(styles)
   return styles
 }

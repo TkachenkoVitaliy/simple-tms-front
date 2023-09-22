@@ -37,7 +37,6 @@ export function TMSToggleButtonGroup(props: TMSToggleButtonGroupProps) {
         value={value}
         exclusive
         onChange={(_, val) => {
-          console.log(val)
           if (val !== null) onChange(val)
         }}
       >

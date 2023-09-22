@@ -50,7 +50,6 @@ function AppThemeProvider({
   )
 
   const currentTheme = useMemo(() => {
-    console.log(themes[themeName].palette)
     root.setAttribute('data-color-mode', themeName)
     root.style.setProperty(
       '--mui-palette-text-primary',
@@ -70,7 +69,6 @@ function AppThemeProvider({
     )
     root.style.setProperty(
       '--mui-palette-background-paper',
-      // themes[themeName].palette.divider,
       themeName === 'dark'
         ? 'rgba(255, 255, 255, 0.08)'
         : 'rgba(0, 0, 0, 0.04)',

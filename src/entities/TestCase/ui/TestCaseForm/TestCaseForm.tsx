@@ -1,12 +1,5 @@
 /* eslint-disable max-lines */
-import {
-  Button,
-  Card,
-  CardActions,
-  CardHeader,
-  Divider,
-  Typography,
-} from '@mui/material'
+import { Button, Card, CardActions, CardHeader, Divider } from '@mui/material'
 import { suites } from 'mock/sample_data'
 import { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -157,16 +150,7 @@ export const TestCaseForm = memo(() => {
         <Button
           size="large"
           variant="contained"
-          onClick={() =>
-            console.log(
-              '!',
-              suite,
-              priority,
-              testType,
-              caseTitle,
-              caseTitle.length,
-            )
-          }
+          onClick={() => {}}
         >
           Create
         </Button>
