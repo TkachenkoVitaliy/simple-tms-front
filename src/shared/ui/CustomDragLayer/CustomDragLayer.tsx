@@ -36,8 +36,8 @@ export function CustomDragLayer(
   return (
     <div
       style={{
-        backgroundImage:
-          'linear-gradient(var(--mui-palatte-background-default), var(--mui-palatte-background-default))',
+        backgroundImage: 'linear-gradient(#2F2F2F, #2F2F2F)',
+        boxShadow: '10px 10px 10px 1px #121212',
         width: 'fit-content',
         height: 'fit-content',
         ...getItemStyles(currentOffset),

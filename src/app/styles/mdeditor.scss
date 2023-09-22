@@ -38,8 +38,11 @@
   }
 
   &.w-md-editor-fullscreen {
-    position: absolute;
+    position: fixed;
+    z-index: 100000000;
     margin-top: 0;
+    top: var(--resize-top);
+    left: var(--resize-left);
   }
 
   // .w-md-editor-text {

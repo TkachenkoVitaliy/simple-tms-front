@@ -76,9 +76,9 @@ export const TestCaseForm = memo(() => {
       raised
       sx={{
         minWidth: '420px',
-        width: '90%',
-        maxWidth: '1000px',
-        margin: '16px auto',
+        width: '100%',
+        maxWidth: '1800px',
+        margin: '16px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '10px',

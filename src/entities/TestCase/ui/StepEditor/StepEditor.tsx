@@ -1,3 +1,5 @@
+import { Delete, DeleteForever } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import { memo } from 'react'
 
@@ -16,13 +18,40 @@ export interface StepEditorProps {
 export const StepEditor = memo((props: StepEditorProps) => {
   const { value, onChange, id, index } = props
 
+  const EditorMinHeight = '100px'
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <div>{index + 1}</div>
-      <div>
-        Action
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'min-content 1fr 1fr min-content',
+        gap: '10px',
+        padding: '20px',
+        border: '1px solid',
+        borderRadius: '6px',
+        borderColor: 'var(--mui-palette-divider)',
+        margin: '10px 0',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        {index + 1}
+      </div>
+      <div
+        style={{
+          height: '100%',
+          display: 'grid',
+          gridTemplateRows: 'min-content 1fr',
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>Action</div>
         <MDEditor
-          style={{ minHeight: '200px' }}
+          style={{ minHeight: EditorMinHeight }}
           height="100%"
           visibleDragbar={false}
           value={value.action}
@@ -32,10 +61,16 @@ export const StepEditor = memo((props: StepEditorProps) => {
           preview="edit"
         />
       </div>
-      <div>
-        Expected
+      <div
+        style={{
+          height: '100%',
+          display: 'grid',
+          gridTemplateRows: 'min-content 1fr',
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>Expected</div>
         <MDEditor
-          style={{ minHeight: '200px' }}
+          style={{ minHeight: EditorMinHeight }}
           height="100%"
           visibleDragbar={false}
           value={value.expected}
@@ -44,6 +79,17 @@ export const StepEditor = memo((props: StepEditorProps) => {
           }
           preview="edit"
         />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <IconButton className="delete">
+          <DeleteForever />
+        </IconButton>
       </div>
     </div>
   )

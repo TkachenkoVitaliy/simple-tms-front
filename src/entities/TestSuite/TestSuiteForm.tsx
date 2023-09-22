@@ -18,7 +18,7 @@ export const TestSuiteForm = memo(() => {
       raised
       sx={{
         width: '65%',
-        margin: '16px auto',
+        margin: '16px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '10px',

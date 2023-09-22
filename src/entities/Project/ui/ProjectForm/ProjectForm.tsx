@@ -119,7 +119,7 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
       raised
       sx={{
         width: '35%',
-        margin: '16px auto',
+        margin: '16px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '10px',

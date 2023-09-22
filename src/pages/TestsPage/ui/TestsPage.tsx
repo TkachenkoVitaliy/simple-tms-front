@@ -2,6 +2,7 @@ import { Divider } from '@mui/material'
 import { TestsTree } from 'features/TestsTree'
 import { Resizable } from 're-resizable'
 import { Outlet, useOutlet } from 'react-router-dom'
+import { setResizeCssVars } from 'shared/lib/resize/setResizeCssVars'
 
 const style = {
   minHeight: '100%',
@@ -38,6 +39,11 @@ function TestsPage() {
         orientation="vertical"
       />
       <Resizable
+        ref={(ref) => {
+          if (ref?.resizable) {
+            setResizeCssVars(ref.resizable)
+          }
+        }}
         style={{ ...style, display: outlet ? 'block' : 'none' }}
         defaultSize={{
           width: '70%',
@@ -55,12 +61,18 @@ function TestsPage() {
           bottomLeft: false,
           topLeft: false,
         }}
+        onResize={(e, d, ref) => {
+          setResizeCssVars(ref)
+        }}
       >
         <div
           style={{
             width: '100%',
             minWidth: '1px',
             padding: '0',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
           }}
         >
           <Outlet />

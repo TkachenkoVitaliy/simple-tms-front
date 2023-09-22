@@ -27,12 +27,16 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
       }))
     : [{ id: children.props.id }]
 
+  console.log('INIT', data)
+
   useEffect(() => {
+    console.log('EFFECT CHILDREN', children)
     data = Array.isArray(children)
       ? children.map((child) => ({
           id: child.props.id,
         }))
       : [{ id: children.props.id }]
+    console.log('EFFECT', data)
   }, [children])
 
   const move = useCallback(

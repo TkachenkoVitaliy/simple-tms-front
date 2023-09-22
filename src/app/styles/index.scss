@@ -56,6 +56,18 @@
   cursor: move !important;
 }
 
+.app .MuiIconButton-root:hover.delete:hover {
+  background-color: #eb0014;
+
+  svg {
+    fill: white;
+  }
+}
+
+.wrapper {
+  margin: 20px 0;
+}
+
 // .MuiStack-root .w-md-editor-fullscreen {
 //   overflow: hidden;
 //   position: absolute;
