@@ -1,5 +1,5 @@
-import { Delete, DeleteForever } from '@mui/icons-material'
-import { Avatar, Button, IconButton } from '@mui/material'
+import { DeleteForever } from '@mui/icons-material'
+import { Avatar, IconButton } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import { memo } from 'react'
 
@@ -13,10 +13,11 @@ export interface StepEditorProps {
   onChange: (value: StepValue, id?: number | string | undefined) => void
   id?: number | string
   index: number
+  margin?: string
 }
 
 export const StepEditor = memo((props: StepEditorProps) => {
-  const { value, onChange, id, index } = props
+  const { value, onChange, id, index, margin } = props
 
   const EditorMinHeight = '100px'
 
@@ -30,7 +31,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
         border: '1px solid',
         borderRadius: '6px',
         borderColor: 'var(--mui-palette-divider)',
-        margin: '10px 0',
+        margin,
       }}
     >
       <div
@@ -42,7 +43,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
       >
         <Avatar
           sx={{
-            bgcolor: 'info.main',
+            bgcolor: 'text.primary',
           }}
         >
           {index + 1}

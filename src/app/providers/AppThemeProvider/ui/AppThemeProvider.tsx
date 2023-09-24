@@ -51,6 +51,17 @@ function AppThemeProvider({
 
   const currentTheme = useMemo(() => {
     root.setAttribute('data-color-mode', themeName)
+
+    root.style.setProperty(
+      '--drag-layer-bg',
+      themeName === 'dark' ? '#2f2f2f' : '#ffffff',
+    )
+
+    root.style.setProperty(
+      '--drag-layer-shadow',
+      themeName === 'dark' ? '#121212' : '#f5f5f5',
+    )
+
     root.style.setProperty(
       '--mui-palette-text-primary',
       themes[themeName].palette.text.primary,

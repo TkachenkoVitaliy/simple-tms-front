@@ -48,28 +48,6 @@ export function StepsEditor() {
     setData(newData)
   }
 
-  // const onReord = (newItems: ReordItem[]) => {
-  //   const newData: IData[] = []
-  //   newItems.forEach((item) => {
-  //     const foundedDataItem = data.find((dataItem) => dataItem.id === item.id)
-  //     if (foundedDataItem) {
-  //       newData.push(foundedDataItem)
-  //     }
-  //   })
-  //   setData(newData)
-  // }
-
-  // const onChangeInputVal = (value: string, id?: string | number) => {
-  //   if (id !== undefined) {
-  //     const stringId = id.toString()
-  //     const newData: IData[] = data.map((item) => ({
-  //       id: item.id,
-  //       text: item.id === stringId ? value : item.text,
-  //     }))
-  //     setData(newData)
-  //   }
-  // }
-
   return (
     <div>
       <Typography>{title}</Typography>
@@ -77,8 +55,6 @@ export function StepsEditor() {
         Wrapper={<div className="wrapper" />}
         onReordering={onReord}
         renderDragLayer={(index) => {
-          console.log(index, data[index], data)
-
           return (
             <div>
               <StepEditor
@@ -103,27 +79,10 @@ export function StepsEditor() {
                 onChange={onChangeStep}
                 id={item.id}
                 index={index}
+                margin="20px 0"
               />
             </div>
           )
-          // (
-          //   <div
-          //     key={item.id}
-          //     style={{
-          //       border: '2px solid white',
-          //       padding: '20px',
-          //       margin: '20px',
-          //     }}
-          //     id={item.id}
-          //   >
-          //     <TestInput
-          //       index={index + 1}
-          //       id={item.id}
-          //       value={item.text}
-          //       onChange={onChangeInputVal}
-          //     />
-          //   </div>
-          // )
         })}
       </DraggableWrapper>
       <Button

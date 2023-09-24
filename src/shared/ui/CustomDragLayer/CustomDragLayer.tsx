@@ -36,8 +36,10 @@ export function CustomDragLayer(
   return (
     <div
       style={{
-        backgroundImage: 'linear-gradient(#2F2F2F, #2F2F2F)',
+        backgroundImage:
+          'linear-gradient(var(--drag-layer-bg), var(--drag-layer-bg))',
         boxShadow: '10px 10px 10px 1px #121212',
+        borderRadius: '6px',
         width: 'fit-content',
         height: 'fit-content',
         ...getItemStyles(currentOffset),
