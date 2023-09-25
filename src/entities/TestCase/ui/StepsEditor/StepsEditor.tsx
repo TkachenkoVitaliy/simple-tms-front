@@ -47,6 +47,10 @@ export function StepsEditor(props: StepsEditorProps) {
     setData(swapArrayItems(data, itemIndex, otherItemIndex))
   }
 
+  const removeItem = (index: number) => {
+    setData(data.splice(index, 1))
+  }
+
   return (
     <div>
       <Typography>{title}</Typography>
@@ -58,11 +62,9 @@ export function StepsEditor(props: StepsEditorProps) {
             <div>
               <StepEditor
                 value={data[index]?.step}
-                onChange={onChangeStep}
                 id={data[index]?.id}
                 index={index}
                 lastIndex={data.length - 1}
-                swapItem={swapItem}
               />
             </div>
           )
@@ -83,6 +85,7 @@ export function StepsEditor(props: StepsEditorProps) {
                 margin="20px 0"
                 lastIndex={data.length - 1}
                 swapItem={swapItem}
+                removeItem={removeItem}
               />
             </div>
           )

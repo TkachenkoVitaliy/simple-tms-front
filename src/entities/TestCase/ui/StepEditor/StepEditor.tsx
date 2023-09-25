@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { DeleteForever } from '@mui/icons-material'
 import { Avatar, IconButton } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
@@ -12,29 +13,43 @@ export interface StepValue {
 
 export interface StepEditorProps {
   value: StepValue
-  onChange: (value: StepValue, id?: number | string | undefined) => void
+  onChange?: (value: StepValue, id?: number | string | undefined) => void
   id?: number | string
   index: number
   margin?: string
   lastIndex: number
-  swapItem: (indexFirst: number, indexSecond: number) => void
+  swapItem?: (indexFirst: number, indexSecond: number) => void
+  removeItem?: (index: number) => void
 }
 
 export const StepEditor = memo((props: StepEditorProps) => {
-  const { value, onChange, id, index, margin, lastIndex, swapItem } = props
+  const {
+    value,
+    onChange,
+    id,
+    index,
+    margin,
+    lastIndex,
+    swapItem,
+    removeItem,
+  } = props
 
   const EditorMinHeight = '100px'
 
   const swapWithPrev = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    swapItem(index, index - 1)
+    if (swapItem) {
+      swapItem(index, index - 1)
+    }
   }
 
   const swapWithNext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    swapItem(index, index + 1)
+    if (swapItem) {
+      swapItem(index, index + 1)
+    }
   }
 
   return (
@@ -100,9 +115,9 @@ export const StepEditor = memo((props: StepEditorProps) => {
           height="100%"
           visibleDragbar={false}
           value={value.action}
-          onChange={(newVal) =>
-            onChange({ action: newVal || '', expected: value.expected }, id)
-          }
+          onChange={(newVal) => {
+            onChange?.({ action: newVal || '', expected: value.expected }, id)
+          }}
           preview="edit"
         />
       </div>
@@ -121,9 +136,9 @@ export const StepEditor = memo((props: StepEditorProps) => {
           height="100%"
           visibleDragbar={false}
           value={value.expected}
-          onChange={(newVal) =>
-            onChange({ action: value.action, expected: newVal || '' }, id)
-          }
+          onChange={(newVal) => {
+            onChange?.({ action: value.action, expected: newVal || '' }, id)
+          }}
           preview="edit"
         />
       </div>
@@ -135,9 +150,11 @@ export const StepEditor = memo((props: StepEditorProps) => {
         }}
       >
         <IconButton
-          className="delete"
           draggable
           onDragStart={(event) => event.preventDefault()}
+          onClick={() => removeItem?.(index)}
+          disabled={lastIndex < 1}
+          className={lastIndex < 1 ? 'disabledTms delete' : 'delete'}
         >
           <DeleteForever />
         </IconButton>
