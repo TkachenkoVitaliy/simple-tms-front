@@ -13,22 +13,9 @@ import { testTypes } from 'shared/consts/testTypes'
 import { LocationState } from 'shared/types/routerTypes'
 import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
 import { PreconditionsEditor } from '../PreconditionsEditor/PreconditionsEditor'
-import { StepsEditor } from '../StepsEditor/StepsEditor'
+import { StepData, StepsEditor } from '../StepsEditor/StepsEditor'
 
 export const TestCaseForm = memo(() => {
-  // <>
-  //   !!!<div>TestSuite-Select</div>
-  //   !!!<div>Priority-Select</div>
-  //   !!!<div>Type-Select</div>
-  //   !!!<div>Title-TextField</div>
-  //   !!!<div>Preconditions-TextField</div>
-  //   <div>
-  //     Steps-List
-  //     <div>Action-TextField-multiline</div>
-  //     <div>ExpectedResult-TextField-multiline</div>
-  //   </div>
-  // </>
-
   const location = useLocation() as Location<LocationState>
 
   const suiteId = location.state?.parentId?.toString()
@@ -58,6 +45,16 @@ export const TestCaseForm = memo(() => {
 
   const [preconditions, setPreconditions] = useState<string>('')
 
+  const [steps, setSteps] = useState<StepData[]>([
+    {
+      id: '0',
+      step: {
+        action: '',
+        expected: '',
+      },
+    },
+  ])
+
   // RESET
   useEffect(() => {
     setSuite(
@@ -68,6 +65,15 @@ export const TestCaseForm = memo(() => {
     setPriority(priorities[1].value)
     setCaseTitle('')
     setPreconditions('')
+    setSteps([
+      {
+        id: '0',
+        step: {
+          action: '',
+          expected: '',
+        },
+      },
+    ])
   }, [location])
 
   return (
@@ -143,7 +149,10 @@ export const TestCaseForm = memo(() => {
         />
         <Divider />
         <div style={{ marginTop: '18px' }}>
-          <StepsEditor />
+          <StepsEditor
+            data={steps}
+            setData={setSteps}
+          />
         </div>
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
