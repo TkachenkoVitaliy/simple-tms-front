@@ -68,6 +68,14 @@
   margin: 20px 0;
 }
 
+.disabledTms {
+  opacity: 0.5;
+
+  button {
+    cursor: default;
+  }
+}
+
 // .MuiStack-root .w-md-editor-fullscreen {
 //   overflow: hidden;
 //   position: absolute;

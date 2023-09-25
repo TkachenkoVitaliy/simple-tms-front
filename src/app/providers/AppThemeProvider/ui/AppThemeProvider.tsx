@@ -63,6 +63,11 @@ function AppThemeProvider({
     )
 
     root.style.setProperty(
+      '--mui-contrast-text',
+      themes[themeName].palette.primary.contrastText,
+    )
+
+    root.style.setProperty(
       '--mui-palette-text-primary',
       themes[themeName].palette.text.primary,
     )

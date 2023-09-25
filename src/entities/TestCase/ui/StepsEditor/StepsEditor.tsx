@@ -62,6 +62,7 @@ export function StepsEditor() {
                 onChange={onChangeStep}
                 id={data[index]?.id}
                 index={index}
+                lastIndex={data.length - 1}
               />
             </div>
           )
@@ -80,6 +81,7 @@ export function StepsEditor() {
                 id={item.id}
                 index={index}
                 margin="20px 0"
+                lastIndex={data.length - 1}
               />
             </div>
           )

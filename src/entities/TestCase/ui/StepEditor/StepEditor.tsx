@@ -2,6 +2,8 @@ import { DeleteForever } from '@mui/icons-material'
 import { Avatar, IconButton } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 import { memo } from 'react'
+import ArrowUp from 'shared/assets/arrows/arrow-up.svg'
+import ArrowDown from 'shared/assets/arrows/arrow-down.svg'
 
 export interface StepValue {
   action: string
@@ -14,10 +16,11 @@ export interface StepEditorProps {
   id?: number | string
   index: number
   margin?: string
+  lastIndex: number
 }
 
 export const StepEditor = memo((props: StepEditorProps) => {
-  const { value, onChange, id, index, margin } = props
+  const { value, onChange, id, index, margin, lastIndex } = props
 
   const EditorMinHeight = '100px'
 
@@ -39,15 +42,33 @@ export const StepEditor = memo((props: StepEditorProps) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
+          gap: '8px',
         }}
       >
+        <IconButton
+          draggable
+          onDragStart={(event) => event.preventDefault()}
+          disabled={index < 1}
+          className={index < 1 ? 'disabledTms' : ''}
+        >
+          <ArrowUp fill="var(--mui-palette-text-primary)" />
+        </IconButton>
         <Avatar
           sx={{
-            bgcolor: 'text.primary',
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
           }}
         >
           {index + 1}
         </Avatar>
+        <IconButton
+          draggable
+          onDragStart={(event) => event.preventDefault()}
+          disabled={index >= lastIndex}
+          className={index >= lastIndex ? 'disabledTms' : ''}
+        >
+          <ArrowDown fill="var(--mui-palette-text-primary)" />
+        </IconButton>
       </div>
       <div
         style={{
