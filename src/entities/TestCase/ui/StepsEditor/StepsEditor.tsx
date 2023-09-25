@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper/DraggableWrapper'
-import { TestInput } from 'shared/ui/TestInput'
 import { Button, Typography } from '@mui/material'
 import { swapArrayItems } from 'shared/lib/arrayHelper'
+import { useLocation } from 'react-router-dom'
 import { StepEditor, StepValue } from '../StepEditor/StepEditor'
 
 interface StepData {
@@ -24,6 +24,21 @@ export function StepsEditor() {
       },
     },
   ])
+
+  const location = useLocation()
+
+  // RESET
+  useEffect(() => {
+    setData([
+      {
+        id: '0',
+        step: {
+          action: '',
+          expected: '',
+        },
+      },
+    ])
+  }, [location])
 
   const title = 'Steps'
 
