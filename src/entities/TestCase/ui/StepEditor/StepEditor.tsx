@@ -17,12 +17,25 @@ export interface StepEditorProps {
   index: number
   margin?: string
   lastIndex: number
+  swapItem: (indexFirst: number, indexSecond: number) => void
 }
 
 export const StepEditor = memo((props: StepEditorProps) => {
-  const { value, onChange, id, index, margin, lastIndex } = props
+  const { value, onChange, id, index, margin, lastIndex, swapItem } = props
 
   const EditorMinHeight = '100px'
+
+  const swapWithPrev = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    swapItem(index, index - 1)
+  }
+
+  const swapWithNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    swapItem(index, index + 1)
+  }
 
   return (
     <div
@@ -50,6 +63,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
           onDragStart={(event) => event.preventDefault()}
           disabled={index < 1}
           className={index < 1 ? 'disabledTms' : ''}
+          onClick={swapWithPrev}
         >
           <ArrowUp fill="var(--mui-palette-text-primary)" />
         </IconButton>
@@ -66,6 +80,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
           onDragStart={(event) => event.preventDefault()}
           disabled={index >= lastIndex}
           className={index >= lastIndex ? 'disabledTms' : ''}
+          onClick={swapWithNext}
         >
           <ArrowDown fill="var(--mui-palette-text-primary)" />
         </IconButton>

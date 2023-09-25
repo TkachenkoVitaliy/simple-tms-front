@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper/DraggableWrapper'
 import { TestInput } from 'shared/ui/TestInput'
 import { Button, Typography } from '@mui/material'
+import { swapArrayItems } from 'shared/lib/arrayHelper'
 import { StepEditor, StepValue } from '../StepEditor/StepEditor'
 
 interface StepData {
@@ -48,6 +49,10 @@ export function StepsEditor() {
     setData(newData)
   }
 
+  const swapItem = (itemIndex: number, otherItemIndex: number) => {
+    setData(swapArrayItems(data, itemIndex, otherItemIndex))
+  }
+
   return (
     <div>
       <Typography>{title}</Typography>
@@ -63,6 +68,7 @@ export function StepsEditor() {
                 id={data[index]?.id}
                 index={index}
                 lastIndex={data.length - 1}
+                swapItem={swapItem}
               />
             </div>
           )
@@ -82,6 +88,7 @@ export function StepsEditor() {
                 index={index}
                 margin="20px 0"
                 lastIndex={data.length - 1}
+                swapItem={swapItem}
               />
             </div>
           )
