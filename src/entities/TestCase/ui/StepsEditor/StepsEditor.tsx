@@ -48,7 +48,9 @@ export function StepsEditor(props: StepsEditorProps) {
   }
 
   const removeItem = (index: number) => {
-    setData(data.splice(index, 1))
+    const newArr = [...data]
+    newArr.splice(index, 1)
+    setData(newArr)
   }
 
   return (

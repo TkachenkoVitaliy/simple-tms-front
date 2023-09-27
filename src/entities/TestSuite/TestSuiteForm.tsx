@@ -9,6 +9,7 @@ import { TMSTextField } from 'shared/ui/TMSTextField/TMSTextField'
 export const TestSuiteForm = memo(() => {
   const [parentSuite, setParentSuite] = useState<SuiteOption | null>(suites[0])
   const [suiteTitle, setSuiteTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
   const onChangeParentSuite = (newValue: SuiteOption | null) => {
     setParentSuite(newValue)
@@ -48,6 +49,13 @@ export const TestSuiteForm = memo(() => {
           onChange={(val) => setSuiteTitle(val)}
           errorText="Min length Title is 2 symbols"
           validateFunc={(newValue) => !!newValue && newValue.length >= 2}
+        />
+        <TMSTextField
+          multiline
+          fullWidth
+          label="Description"
+          value={description}
+          onChange={(val) => setDescription(val)}
         />
       </TMSCardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>

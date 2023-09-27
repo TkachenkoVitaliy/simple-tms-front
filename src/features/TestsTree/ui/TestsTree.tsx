@@ -98,7 +98,6 @@ export const TestsTree = memo(() => {
             style={{ borderRightColor: 'inherit' }}
           >
             <UnfoldLess />
-            all
           </Button>
           <Button
             onClick={handleOpenAll}
@@ -106,7 +105,6 @@ export const TestsTree = memo(() => {
             disabled={allSuitesIsOpened}
           >
             <UnfoldMore />
-            all
           </Button>
         </ButtonGroup>
       </div>

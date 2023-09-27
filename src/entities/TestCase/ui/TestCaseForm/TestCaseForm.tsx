@@ -60,7 +60,8 @@ export const TestCaseForm = memo(() => {
     setSuite(
       suiteId === undefined
         ? suites[0]
-        : suites.find((suite) => suite.id.toString() === suiteId) || suites[0],
+        : suites.find((suiteItem) => suiteItem.id.toString() === suiteId) ||
+            suites[0],
     )
     setPriority(priorities[1].value)
     setCaseTitle('')
@@ -93,7 +94,12 @@ export const TestCaseForm = memo(() => {
     >
       <CardHeader
         key={location.pathname}
-        style={{ flexWrap: 'wrap', rowGap: '20px' }}
+        style={{
+          flexWrap: 'wrap',
+          rowGap: '20px',
+          display: 'grid',
+          gridTemplateColumns: 'max-content 1fr max-content',
+        }}
         title={headerTitle}
         titleTypographyProps={{
           noWrap: true,

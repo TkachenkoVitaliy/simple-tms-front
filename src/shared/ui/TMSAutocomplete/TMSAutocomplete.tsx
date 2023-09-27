@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Autocomplete, TextField } from '@mui/material'
-import { useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import { useEffect, useState } from 'react'
 
 // TODO: Для примера
 // const fetchData = async (): Promise<IPost[]> => {
@@ -26,7 +27,7 @@ export interface TMSAutocompleteProps<T> {
   required?: boolean
 }
 
-export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
+function TMSAutoComplete<T>(props: TMSAutocompleteProps<T>) {
   const {
     id,
     label,
@@ -52,6 +53,10 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
     setFetched(true)
   }
 
+  useEffect(() => {
+    setLocalOptions(options)
+  }, [options])
+
   return (
     <Autocomplete
       id={id}
@@ -64,7 +69,11 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
       blurOnSelect
       handleHomeEndKeys
       value={value}
-      onChange={(_, newValue) => onChange(newValue)}
+      onChange={(_, newValue) => {
+        if (!required || newValue !== null) {
+          onChange(newValue)
+        }
+      }}
       isOptionEqualToValue={isOptionEqualToValue}
       getOptionLabel={getOptionLabel}
       options={localOptions}
@@ -102,3 +111,5 @@ export function TMSAutocomplete<T>(props: TMSAutocompleteProps<T>) {
     />
   )
 }
+
+export const TMSAutocomplete = observer(TMSAutoComplete)

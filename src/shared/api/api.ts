@@ -1,12 +1,20 @@
 import axios from 'axios'
 
-const baseURL = __IS_DEV__ ? 'http://localhost:8080' : 'http://back:8080'
+const baseURL = __IS_DEV__
+  ? 'http://localhost:8000/api/v1'
+  : 'http://back:8000/api/v1'
 
 const API = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
+    'Accept-Language': 'en',
   },
+})
+
+API.interceptors.request.use((config) => {
+  config.headers.set('Accept-Language', 'ru', true)
+  return config
 })
 
 export default API
