@@ -5,7 +5,8 @@ import { useEffect } from 'react'
 
 function ProjectsPage() {
   useEffect(() => {
-    appStore.loadProjects()
+    console.log('PROJECTS PAGE USE EFFECT')
+    appStore.loadProjects().then()
   }, [])
 
   return (

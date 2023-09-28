@@ -81,34 +81,22 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
     )
   }
 
-  const saveForm = () => {
+  const saveForm = async () => {
     if (FORM_TYPE === FormType.CREATE) {
-      const maxId = appStore.projects
-        .map((proj) => proj.id)
-        .reduce((a, b) => Math.max(a, b), -Infinity)
-      const projectWithId = {
-        id: maxId + 1,
+      const createdProject = {
+        id: 0,
         name: project.name.trim(),
         description: project.description,
       }
-      appStore.setProjects([projectWithId, ...appStore.projects])
-      appStore.setActiveProject(projectWithId)
+      await appStore.createProject(createdProject)
     }
     if (FORM_TYPE === FormType.EDIT) {
-      const newProjects: IProject[] = []
-      appStore.projects.forEach((item) => {
-        if (item.id === project.id) {
-          newProjects.push({
-            id: project.id,
-            name: project.name.trim(),
-            description: project.description,
-          })
-        } else {
-          newProjects.push(item)
-        }
-      })
-      appStore.setProjects(newProjects)
-      appStore.setActiveProject(project)
+      const editedProject = {
+        id: project.id,
+        name: project.name.trim(),
+        description: project.description,
+      }
+      await appStore.updateProject(editedProject)
     }
     navigate('/projects')
   }

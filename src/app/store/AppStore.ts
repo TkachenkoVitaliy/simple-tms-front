@@ -1,17 +1,14 @@
-import { AxiosInstance } from 'axios'
+import { ProjectAPI } from 'entities/Project/api/projectApi'
 import { makeAutoObservable } from 'mobx'
-import API from 'shared/api/api'
 import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
 import { IProject } from 'shared/types/projectTypes'
 
 class AppStore {
-  api: AxiosInstance
-
   activeProject: IProject | null = null
 
   projects: IProject[] = []
 
-  setActiveProject(project: IProject | null) {
+  async setActiveProject(project: IProject | null) {
     if (project !== null) {
       const projectsNew: IProject[] = []
       let index = -1
@@ -24,11 +21,9 @@ class AppStore {
       })
 
       if (index >= 0) {
-        this.api.get(`/projects/${project.id}`).then((response) => {
-          projectsNew[index] = response.data
-          this.setProjects(projectsNew)
-          this.activeProject = this.projects[index]
-        })
+        projectsNew[index] = await ProjectAPI.getProject(project.id)
+        this.setProjects(projectsNew)
+        this.activeProject = this.projects[index]
         localStorage.setItem(
           LOCAL_STORAGE_ACTIVE_PROJECT,
           project.id.toString(),
@@ -44,10 +39,20 @@ class AppStore {
     this.projects = projects
   }
 
+  async createProject(newProject: IProject) {
+    const createdProject = await ProjectAPI.createProject(newProject)
+    this.setActiveProject(createdProject)
+  }
+
+  async updateProject(editedProject: IProject) {
+    const updatedProject = await ProjectAPI.updateProject(editedProject)
+    this.setActiveProject(updatedProject)
+  }
+
   async loadProjects() {
-    const response = await this.api.get('/projects')
+    const data = await ProjectAPI.getAllProjects()
     this.setProjects(
-      [{ id: 0, name: 'New Project', description: '' }, ...response.data].sort(
+      [{ id: 0, name: 'New Project', description: '' }, ...data].sort(
         (first, second) => second.id - first.id,
       ),
     )
@@ -65,11 +70,10 @@ class AppStore {
     }
   }
 
-  constructor(api: AxiosInstance) {
+  constructor() {
     makeAutoObservable(this)
-    this.api = api
     this.loadProjects()
   }
 }
 
-export const appStore = new AppStore(API)
+export const appStore = new AppStore()
