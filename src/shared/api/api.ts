@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const siteUrl = window.location.hostname
+
 const baseURL = __IS_DEV__
-  ? 'http://localhost:8000/api/v1'
+  ? `http://${siteUrl}:8000/api/v1`
   : 'http://back:8000/api/v1'
 
 const API = axios.create({

@@ -23,19 +23,22 @@ export const NewProjectItem = memo(
       <Card
         variant="elevation"
         raised
+        sx={{
+          height: '100%',
+        }}
       >
         <Button
           fullWidth
           component="div"
           sx={{
-            height: '206px',
+            height: '100%',
             display: 'flex',
             flexDirection: 'column',
             textTransform: 'none',
-            padding: '0',
+            padding: '4px',
             color: theme.palette.text.primary,
             borderRadius: '4px',
-            border: `6px solid ${createColor}`,
+            border: `4px solid ${createColor}`,
           }}
           onClick={cardClick}
         >

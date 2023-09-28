@@ -27,17 +27,41 @@ export const ProjectItem = memo(
       appStore.setActiveProject(project)
     }
 
-    const cardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const selectCard = async (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
       e.stopPropagation()
-      appStore.setActiveProject(project)
+      await appStore.setActiveProject(project)
+      // navigate(`../projects/${project.id}`)
+    }
+
+    const editCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+      e.stopPropagation()
       navigate(`../projects/${project.id}`)
+    }
+
+    const deleteCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+      e.stopPropagation()
+      await appStore.deleteProject(project.id)
+      await appStore.loadProjects()
+      if (appStore.activeProject?.id === project.id) {
+        appStore.setActiveProject(null)
+      }
     }
 
     return (
       <Card
         variant="elevation"
         raised
+        sx={{
+          padding: project.id === appStore.activeProject?.id ? '4px' : '8px',
+          border:
+            project.id === appStore.activeProject?.id
+              ? `4px solid ${borderColor}`
+              : undefined,
+          borderRadius: '4px',
+        }}
       >
         <Button
           fullWidth
@@ -46,15 +70,8 @@ export const ProjectItem = memo(
             display: 'flex',
             flexDirection: 'column',
             textTransform: 'none',
-            padding: project.id === appStore.activeProject?.id ? '0px' : '6px',
-            color: theme.palette.text.primary,
-            border:
-              project.id === appStore.activeProject?.id
-                ? `6px solid ${borderColor}`
-                : undefined,
-            borderRadius: '4px',
           }}
-          onClick={cardClick}
+          onClick={selectCard}
         >
           <CardHeader
             title={name}
@@ -78,6 +95,29 @@ export const ProjectItem = memo(
             </div>
           </CardContent>
         </Button>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '10px',
+            marginTop: '4px',
+          }}
+        >
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={editCard}
+          >
+            EDIT
+          </Button>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={deleteCard}
+          >
+            DELETE
+          </Button>
+        </div>
       </Card>
     )
   }),

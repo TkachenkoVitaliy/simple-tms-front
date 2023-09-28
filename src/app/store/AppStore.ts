@@ -49,6 +49,11 @@ class AppStore {
     this.setActiveProject(updatedProject)
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  async deleteProject(id: number) {
+    await ProjectAPI.deleteProject(id)
+  }
+
   async loadProjects() {
     const data = await ProjectAPI.getAllProjects()
     this.setProjects(
