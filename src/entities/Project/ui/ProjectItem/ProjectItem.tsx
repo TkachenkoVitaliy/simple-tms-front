@@ -100,7 +100,7 @@ export const ProjectItem = memo(
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: '10px',
-            marginTop: '4px',
+            marginTop: '8px',
           }}
         >
           <Button
