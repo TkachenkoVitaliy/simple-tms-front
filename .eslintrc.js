@@ -21,7 +21,7 @@ module.exports = {
   rules: {
     // indent: ['error', 2],
     semi: ['error', 'never'],
-    quotes: ['error', 'single'],
+    quotes: ['error', 'single', { avoidEscape: true }],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
     'no-underscore-dangle': 'off',
