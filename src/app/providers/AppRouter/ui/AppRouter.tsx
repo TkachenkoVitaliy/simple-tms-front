@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import { IAppRoute, IRoute } from 'shared/types/routerTypes'
 import { AppLayout } from 'app/AppLayout'
-import { appStore } from 'app/store/AppStore'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { appRoutes } from '../model/appRoutes'
 
 const AppRouter = memo(() => {
@@ -21,7 +21,7 @@ const AppRouter = memo(() => {
         children: children ? children.map(mapToRoute) : undefined,
       }
     },
-    [appStore.activeProject],
+    [projectsStore.activeProject],
   )
 
   const routes: RouteObject[] = [

@@ -5,11 +5,11 @@ import Box from '@mui/material/Box'
 import { appRoutes } from 'app/providers/AppRouter/model/appRoutes'
 import { IconButton, List } from '@mui/material'
 import { ThemeSwitcher } from 'features/ThemeSwitcher/ui/ThemeSwitcher'
-import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { ArrowBackIosNew } from '@mui/icons-material'
 import { LOCAL_STORAGE_COLLAPSED } from 'shared/consts/localstorage'
 import { classNames } from 'utils/classNames/classNames'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { SidebarNavItem } from './SidebarNavItem'
 
 import styles from './Sidebar.module.scss'
@@ -68,7 +68,7 @@ export const Sidebar = memo(
               {appRoutes.map((item) => {
                 if (item.label !== undefined && item.Icon !== undefined) {
                   if (
-                    appStore.activeProject?.id.toString ||
+                    projectsStore.activeProject?.id.toString ||
                     item.showWithoutActiveProject
                   ) {
                     return (
@@ -79,7 +79,7 @@ export const Sidebar = memo(
                           .path()
                           .replace(
                             ':projectId',
-                            appStore.activeProject?.id.toString() || '0',
+                            projectsStore.activeProject?.id.toString() || '0',
                           )}
                         label={item.label}
                         Icon={item.Icon}

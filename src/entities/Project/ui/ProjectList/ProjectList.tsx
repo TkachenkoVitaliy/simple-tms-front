@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material'
 import { memo } from 'react'
-import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { ProjectItem } from '../ProjectItem/ProjectItem'
 import { NewProjectItem } from '../NewProjectItem/NewProjectItem'
+import { projectsStore } from '../../model/projectsStore'
 
 export const ProjectList = memo(
   observer(() => {
@@ -19,7 +19,7 @@ export const ProjectList = memo(
         >
           <NewProjectItem />
         </Grid>
-        {appStore.projects
+        {projectsStore.projects
           .filter((project) => project.id !== 0)
           .map((project) => (
             <Grid

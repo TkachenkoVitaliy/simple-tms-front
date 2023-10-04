@@ -1,11 +1,10 @@
 import { Button, CardContent, CardHeader, useTheme } from '@mui/material'
 import Card from '@mui/material/Card'
-import { appStore } from 'app/store/AppStore'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
 import { IProject } from 'shared/types/projectTypes'
+import { projectsStore } from '../../model/projectsStore'
 
 interface ProjectItemProps {
   project: IProject
@@ -17,37 +16,22 @@ export const ProjectItem = memo(
     const theme = useTheme()
     const navigate = useNavigate()
     const borderColor = theme.palette.info.main
-    const localStorageActiveProject = localStorage.getItem(
-      LOCAL_STORAGE_ACTIVE_PROJECT,
-    )
-    if (
-      project.id.toString() === localStorageActiveProject &&
-      localStorageActiveProject !== appStore.activeProject?.id.toString()
-    ) {
-      appStore.setActiveProject(project)
-    }
 
-    const selectCard = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const selectCard = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
-      e.stopPropagation()
-      await appStore.setActiveProject(project)
-      // navigate(`../projects/${project.id}`)
+      projectsStore.setActiveProject(project)
     }
 
     const editCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
-      e.stopPropagation()
+      projectsStore.setActiveProject(project)
       navigate(`../projects/${project.id}`)
     }
 
     const deleteCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
-      e.stopPropagation()
-      await appStore.deleteProject(project.id)
-      await appStore.loadProjects()
-      if (appStore.activeProject?.id === project.id) {
-        appStore.setActiveProject(null)
-      }
+      await projectsStore.deleteProject(project.id)
+      await projectsStore.initProjects()
     }
 
     return (
@@ -55,9 +39,10 @@ export const ProjectItem = memo(
         variant="elevation"
         raised
         sx={{
-          padding: project.id === appStore.activeProject?.id ? '4px' : '8px',
+          padding:
+            project.id === projectsStore.activeProject?.id ? '4px' : '8px',
           border:
-            project.id === appStore.activeProject?.id
+            project.id === projectsStore.activeProject?.id
               ? `4px solid ${borderColor}`
               : undefined,
           borderRadius: '4px',

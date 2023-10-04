@@ -1,12 +1,11 @@
 import { Container } from '@mui/material'
-import { appStore } from 'app/store/AppStore'
 import { ProjectList } from 'entities/Project'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { useEffect } from 'react'
 
 function ProjectsPage() {
   useEffect(() => {
-    console.log('PROJECTS PAGE USE EFFECT')
-    appStore.loadProjects().then()
+    projectsStore.initProjects()
   }, [])
 
   return (

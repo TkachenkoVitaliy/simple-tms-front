@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material'
 import { Button, CardContent, useTheme } from '@mui/material'
 import Card from '@mui/material/Card'
-import { appStore } from 'app/store/AppStore'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -14,9 +14,8 @@ export const NewProjectItem = memo(
 
     const cardClick = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
-      e.stopPropagation()
+      projectsStore.setActiveProject(null)
       navigate('/projects/0')
-      appStore.setActiveProject(null)
     }
 
     return (

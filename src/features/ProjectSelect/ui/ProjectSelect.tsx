@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material'
 import { appRoutes } from 'app/providers/AppRouter/model/appRoutes'
-import { appStore } from 'app/store/AppStore'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { observer } from 'mobx-react-lite'
 import {
   generatePath,
@@ -45,7 +45,7 @@ export const ProjectSelect = observer(() => {
   const handleChange = (value: IProject | null) => {
     if (value === null) return
     if (value.id === 0) {
-      appStore.setActiveProject(null)
+      projectsStore.setActiveProject(null)
       navigate(NEW_PROJECT_PATH)
       return
     }
@@ -64,7 +64,7 @@ export const ProjectSelect = observer(() => {
         )
       }
     }
-    appStore.setActiveProject(value)
+    projectsStore.setActiveProject(value)
   }
 
   const theme = useTheme()
@@ -77,10 +77,10 @@ export const ProjectSelect = observer(() => {
   return (
     <TMSAutocomplete<IProject>
       id="projectList"
-      options={appStore.projects}
+      options={projectsStore.projects}
       onChange={handleChange}
       contrastText
-      value={appStore.activeProject}
+      value={projectsStore.activeProject}
       getOptionLabel={(option: IProject | null) => option?.name || ''}
       isOptionEqualToValue={(option, val) => option.id === val.id}
       placeholder={

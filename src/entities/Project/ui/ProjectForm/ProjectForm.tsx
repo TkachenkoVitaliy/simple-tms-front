@@ -1,40 +1,34 @@
 /* eslint-disable max-lines */
 import { Button, Card, CardActions, TextField } from '@mui/material'
-import { appStore } from 'app/store/AppStore'
+import { projectsStore } from 'entities/Project/model/projectsStore'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
 import { TMSCardContent } from 'shared/ui/TMSCardContent/TMSCardContent'
 
-interface ProjectFormProps {
-  project?: IProject
-}
-
 enum FormType {
   EDIT = 'save',
   CREATE = 'create',
 }
+const NAME = 'Name'
+const DESCRIPTION = 'Description'
+const NEW_PROJECT = {
+  id: -1,
+  name: '',
+  description: '',
+}
 
-export const ProjectForm = observer((props: ProjectFormProps) => {
-  const FORM_TYPE: FormType = props?.project?.id
+export const ProjectForm = observer(() => {
+  const FORM_TYPE: FormType = projectsStore.activeProject?.id
     ? FormType.EDIT
     : FormType.CREATE
-  const NAME = 'Name'
-  const DESCRIPTION = 'Description'
 
-  const [project, setProject] = useState<IProject>(
-    props.project || { id: -1, name: '', description: '' },
-  )
+  const [project, setProject] = useState<IProject>({ ...NEW_PROJECT })
 
   useEffect(() => {
-    if (project.id !== -1 && props.project === undefined) {
-      setProject({ id: -1, name: '', description: '' })
-    }
-    if (props.project !== undefined) {
-      setProject(props.project)
-    }
-  }, [props])
+    setProject(projectsStore.activeProject || { ...NEW_PROJECT })
+  }, [projectsStore.activeProject])
 
   const [isNameValid, setNameValidity] = useState<boolean>(true)
   const [haveChanges, setHaveChanges] = useState<boolean>(false)
@@ -60,8 +54,8 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
     validateName(e.target.value.trim())
     setProject({ ...project, name: e.target.value })
     setHaveChanges(
-      props?.project?.name !== e.target.value ||
-        props?.project?.description !== project.description,
+      projectsStore.activeProject?.name !== e.target.value ||
+        projectsStore.activeProject?.description !== project.description,
     )
   }
 
@@ -76,28 +70,21 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
   ) => {
     setProject({ ...project, description: e.target.value })
     setHaveChanges(
-      props?.project?.name !== project.name ||
-        props?.project?.description !== e.target.value,
+      projectsStore.activeProject?.name !== project.name ||
+        projectsStore.activeProject?.description !== e.target.value,
     )
   }
 
   const saveForm = async () => {
-    if (FORM_TYPE === FormType.CREATE) {
-      const createdProject = {
-        id: 0,
-        name: project.name.trim(),
-        description: project.description,
-      }
-      await appStore.createProject(createdProject)
+    const projectForSave = {
+      id: FORM_TYPE === FormType.EDIT ? project.id : 0,
+      name: project.name.trim(),
+      description: project.description,
     }
-    if (FORM_TYPE === FormType.EDIT) {
-      const editedProject = {
-        id: project.id,
-        name: project.name.trim(),
-        description: project.description,
-      }
-      await appStore.updateProject(editedProject)
-    }
+    if (FORM_TYPE === FormType.EDIT)
+      await projectsStore.updateProject(projectForSave)
+    if (FORM_TYPE === FormType.CREATE)
+      await projectsStore.createProject(projectForSave)
     navigate('/projects')
   }
 

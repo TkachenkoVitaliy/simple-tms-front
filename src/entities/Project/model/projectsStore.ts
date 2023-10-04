@@ -14,13 +14,18 @@ class ProjectsStore {
 
   setActiveProject(project: IProject | null) {
     this.activeProject = project
+    if (project === null) {
+      localStorage.removeItem(LOCAL_STORAGE_ACTIVE_PROJECT)
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_ACTIVE_PROJECT, project.id.toString())
+    }
   }
 
   async loadProjects() {
     const projects = await ProjectAPI.getAllProjects()
     this.setProjects([
-      { id: 0, name: 'New Project', description: '' },
       ...projects,
+      { id: 0, name: 'New Project', description: '' },
     ])
   }
 
@@ -28,29 +33,33 @@ class ProjectsStore {
     await ProjectAPI.deleteProject(id)
     if (this.activeProject?.id === id) {
       this.setActiveProject(null)
-      localStorage.removeItem(LOCAL_STORAGE_ACTIVE_PROJECT)
     }
-    await this.loadProjects()
   }
 
-  initActiveProject() {
+  async createProject(project: IProject) {
+    const createdProject = await ProjectAPI.createProject(project)
+    this.setActiveProject(createdProject)
+  }
+
+  async updateProject(project: IProject) {
+    const updatedProject = await ProjectAPI.updateProject(project)
+    this.setActiveProject(updatedProject)
+  }
+
+  async initProjects() {
+    await this.loadProjects()
     const activeProjectId = localStorage.getItem(LOCAL_STORAGE_ACTIVE_PROJECT)
     if (activeProjectId) {
       const activeProject = this.projects.find(
         (project) => project.id.toString() === activeProjectId,
       )
-      if (!activeProject) {
-        throw new Error("Can't initialize active project")
-        localStorage.removeItem(LOCAL_STORAGE_ACTIVE_PROJECT)
-      }
       this.setActiveProject(activeProject || null)
     }
   }
 
   constructor() {
     makeAutoObservable(this)
-    this.loadProjects()
-    this.initActiveProject()
+    this.initProjects()
   }
 }
 
