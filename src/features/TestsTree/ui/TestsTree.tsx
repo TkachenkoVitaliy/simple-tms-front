@@ -8,7 +8,7 @@ import {
   TreeMethods,
   getBackendOptions,
 } from '@minoru/react-dnd-treeview'
-import { memo, useCallback, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { sampleData } from 'mock/sample_data'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
@@ -18,13 +18,24 @@ import { Button, ButtonGroup } from '@mui/material'
 import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
 import { useNavigate } from 'react-router-dom'
+import API from 'shared/api/api'
+import { AxiosResponse } from 'axios'
+
 import styles from './TestsTree.module.scss'
 
 export const TestsTree = memo(() => {
   const navigate = useNavigate()
-  const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(
-    createChildren(sampleData),
-  )
+  const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>([])
+
+  useEffect(() => {
+    API.get('/tests/1').then(({ data }: AxiosResponse<NodeModel<TreeData>[]>) =>
+      setTreeData(data),
+    )
+  }, [])
+
+  // const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(
+  //   createChildren(sampleData),
+  // )
 
   const calculateSuiteCount = useCallback(() => {
     return treeData.reduce((count, treeNode) => {
