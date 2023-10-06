@@ -9,6 +9,7 @@ import {
 import { IAppRoute, IRoute } from 'shared/types/routerTypes'
 import { AppLayout } from 'app/AppLayout'
 import { projectsStore } from 'entities/Project/model/projectsStore'
+import { Loader } from 'shared/ui/Loader/Loader'
 import { appRoutes } from '../model/appRoutes'
 
 const AppRouter = memo(() => {
@@ -17,7 +18,7 @@ const AppRouter = memo(() => {
       const { path, element, children } = appRoute
       return {
         path: path(),
-        element: <Suspense fallback="loading...">{element}</Suspense>,
+        element: <Suspense fallback={<Loader />}>{element}</Suspense>,
         children: children ? children.map(mapToRoute) : undefined,
       }
     },
@@ -28,12 +29,12 @@ const AppRouter = memo(() => {
     {
       path: '/',
       element: (
-        <Suspense fallback="loading...">
+        <Suspense fallback={<Loader />}>
           <AppLayout />
         </Suspense>
       ),
       errorElement: (
-        <Suspense fallback="loading...">
+        <Suspense fallback={<Loader />}>
           <ErrorPage />
         </Suspense>
       ),

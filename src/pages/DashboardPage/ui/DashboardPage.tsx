@@ -1,70 +1,74 @@
+import { Loader } from 'shared/ui/Loader/Loader'
+
 function DashboardPage() {
   return (
-    <div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-      <div>Dashboard</div>
-    </div>
+    <Loader />
+
+    // <div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    //   <div>Dashboard</div>
+    // </div>
   )
 }
 
