@@ -1,5 +1,5 @@
 import { Add } from '@mui/icons-material'
-import { Button, CardContent, useTheme } from '@mui/material'
+import { Button, CardContent } from '@mui/material'
 import Card from '@mui/material/Card'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { observer } from 'mobx-react-lite'
@@ -9,9 +9,7 @@ import styles from './NewProjectItem.module.scss'
 
 export const NewProjectItem = memo(
   observer(() => {
-    const theme = useTheme()
     const navigate = useNavigate()
-    const createColor = theme.palette.success.light
 
     const cardClick = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
