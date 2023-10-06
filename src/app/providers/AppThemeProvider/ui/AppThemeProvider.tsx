@@ -68,9 +68,20 @@ function AppThemeProvider({
     )
 
     root.style.setProperty(
+      '--mui-success-light',
+      themes[themeName].palette.success.light,
+    )
+
+    root.style.setProperty(
       '--mui-palette-text-primary',
       themes[themeName].palette.text.primary,
     )
+
+    root.style.setProperty(
+      '--mui-palette-text-secondary',
+      themes[themeName].palette.text.secondary,
+    )
+
     root.style.setProperty(
       '--mui-palette-primary-main',
       themes[themeName].palette.primary.main,

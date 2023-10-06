@@ -3,6 +3,8 @@ import { IProject } from 'shared/types/projectTypes'
 import { LOCAL_STORAGE_ACTIVE_PROJECT } from 'shared/consts/localstorage'
 import { ProjectAPI } from '../api/projectApi'
 
+const NEW_PROJECT_DEFAULT = { id: 0, name: 'New Project', description: '' }
+
 class ProjectsStore {
   projects: IProject[] = []
 
@@ -23,10 +25,7 @@ class ProjectsStore {
 
   async loadProjects() {
     const projects = await ProjectAPI.getAllProjects()
-    this.setProjects([
-      ...projects,
-      { id: 0, name: 'New Project', description: '' },
-    ])
+    this.setProjects([...projects, NEW_PROJECT_DEFAULT])
   }
 
   async deleteProject(id: number) {

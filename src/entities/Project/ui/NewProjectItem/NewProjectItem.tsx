@@ -5,6 +5,7 @@ import { projectsStore } from 'entities/Project/model/projectsStore'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styles from './NewProjectItem.module.scss'
 
 export const NewProjectItem = memo(
   observer(() => {
@@ -22,30 +23,19 @@ export const NewProjectItem = memo(
       <Card
         variant="elevation"
         raised
-        sx={{
-          height: '100%',
-        }}
+        className={styles.card}
       >
         <Button
           fullWidth
           component="div"
-          sx={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            textTransform: 'none',
-            padding: '4px',
-            color: theme.palette.text.primary,
-            borderRadius: '4px',
-            border: `4px solid ${createColor}`,
-          }}
+          className={styles.btn}
           onClick={cardClick}
         >
           <CardContent
             component="div"
-            sx={{ height: '130px', color: theme.palette.text.secondary }}
+            className={styles.content}
           >
-            <Add style={{ height: '100%', width: '100%', fill: createColor }} />
+            <Add className={styles.add_svg} />
           </CardContent>
         </Button>
       </Card>
