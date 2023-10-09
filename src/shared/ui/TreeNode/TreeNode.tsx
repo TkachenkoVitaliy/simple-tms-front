@@ -92,7 +92,7 @@ export const TreeNode = memo((props: TreeNodeProps) => {
               },
               {
                 label: 'Case',
-                onSelect: () => navigate('create', { state: { parentId: id } }),
+                onSelect: () => navigate('case', { state: { parentId: id } }),
               },
             ]}
           />
