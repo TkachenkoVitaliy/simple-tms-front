@@ -31,17 +31,12 @@ export const TreeNode = memo((props: TreeNodeProps) => {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!droppable) {
-      const locationState: LocationState = {
-        parentId: parent,
-        title: text,
-      }
-      navigate(id.toString(), { state: locationState })
-      e.stopPropagation()
-    } else {
-      navigate(`suite/${id}`)
-      e.stopPropagation()
+    const locationState: LocationState = {
+      parentId: parent,
+      title: text,
     }
+    navigate(id.toString(), { state: locationState })
+    e.stopPropagation()
   }
 
   const dragOverProps = useDragOver(id, props.isOpen, props.onToggle)
@@ -102,9 +97,6 @@ export const TreeNode = memo((props: TreeNodeProps) => {
             ]}
           />
         )}
-        {/* <IconButton size="small">
-          <Add />
-        </IconButton> */}
         <IconButton size="small">
           <Edit />
         </IconButton>

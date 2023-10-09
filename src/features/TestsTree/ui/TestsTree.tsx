@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable react/no-unstable-nested-components */
 import {
   DndProvider,
@@ -10,32 +11,31 @@ import {
 } from '@minoru/react-dnd-treeview'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
-import { sampleData } from 'mock/sample_data'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { TreeData } from 'shared/types/treeData'
-import { createChildren, updateChildren } from 'shared/lib/tree'
+import { updateChildren } from 'shared/lib/tree'
 import { Button, ButtonGroup } from '@mui/material'
 import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
-import { useNavigate } from 'react-router-dom'
-import API from 'shared/api/api'
-import { AxiosResponse } from 'axios'
+import { useNavigate, useParams } from 'react-router-dom'
+import { projectsStore } from 'entities/Project/model/projectsStore'
+import { RouteParams } from 'shared/types/routerTypes'
+import { TestsAPI } from '../api/testsApi'
 
 import styles from './TestsTree.module.scss'
 
 export const TestsTree = memo(() => {
   const navigate = useNavigate()
+  const { projectId } = useParams<RouteParams>()
   const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>([])
 
   useEffect(() => {
-    API.get('/tests/1').then(({ data }: AxiosResponse<NodeModel<TreeData>[]>) =>
-      setTreeData(data),
-    )
-  }, [])
-
-  // const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>(
-  //   createChildren(sampleData),
-  // )
+    if (projectsStore.activeProject?.id) {
+      TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
+        (data) => setTreeData(data),
+      )
+    }
+  }, [projectId])
 
   const calculateSuiteCount = useCallback(() => {
     return treeData.reduce((count, treeNode) => {
@@ -59,6 +59,8 @@ export const TestsTree = memo(() => {
   ) => {
     const { dragSource, dropTargetId } = options
 
+    console.log(newTree, options)
+
     if (dragSource !== undefined)
       setTreeData(
         updateChildren(dragSource.id, dragSource.parent, dropTargetId, newTree),
@@ -68,14 +70,8 @@ export const TestsTree = memo(() => {
   const handleCloseAll = () => ref.current?.closeAll()
 
   return (
-    <div style={{ height: 'max-content' }}>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
-          marginBottom: '16px',
-        }}
-      >
+    <div className={styles.wrapper}>
+      <div className={styles.content}>
         <TMSMenu
           id="create-root"
           icon={<Add />}
@@ -129,7 +125,7 @@ export const TestsTree = memo(() => {
             onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
             ref={ref}
             tree={treeData}
-            rootId={0}
+            rootId="0"
             render={(node, { depth, isOpen, onToggle }) => (
               <TreeNode
                 node={node}

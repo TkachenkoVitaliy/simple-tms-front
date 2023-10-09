@@ -16,7 +16,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     text: 'Test 1 aaaaaaaaaa bbbbbbbbbbbb ccccccccccccc dddddddddddd',
     data: {
       children: [],
-      type: 'case',
+      type: 'CASE',
     },
   },
   {
@@ -26,7 +26,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     text: 'Test 2',
     data: {
       children: [],
-      type: 'case',
+      type: 'CASE',
     },
   },
   {
@@ -48,7 +48,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     text: 'Test 3',
     data: {
       children: [],
-      type: 'case',
+      type: 'CASE',
     },
   },
   {
@@ -58,7 +58,7 @@ export const sampleData: NodeModel<TreeData>[] = [
     text: 'Test 4',
     data: {
       children: [],
-      type: 'case',
+      type: 'CASE',
     },
   },
   {

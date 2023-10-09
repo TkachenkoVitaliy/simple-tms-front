@@ -13,7 +13,7 @@ export const TypeIcon = memo((props: TypeIconProps) => {
   }
 
   switch (props.type) {
-    case 'case':
+    case 'CASE':
       return <Description />
     default:
       return null
