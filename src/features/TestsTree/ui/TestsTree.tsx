@@ -20,6 +20,7 @@ import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
 import { useNavigate, useParams } from 'react-router-dom'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { RouteParams } from 'shared/types/routerTypes'
+import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
 import { TestsAPI } from '../api/testsApi'
 
 import styles from './TestsTree.module.scss'
@@ -116,37 +117,24 @@ export const TestsTree = memo(() => {
         </ButtonGroup>
       </div>
 
-      <DndProvider
-        backend={MultiBackend}
-        options={getBackendOptions()}
-      >
-        <div className={styles.treeApp}>
-          <Tree
-            onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
-            ref={ref}
-            tree={treeData}
-            rootId="0"
-            render={(node, { depth, isOpen, onToggle }) => (
-              <TreeNode
-                node={node}
-                depth={depth}
-                isOpen={isOpen}
-                onToggle={onToggle}
-              />
-            )}
-            dragPreviewRender={(monitorProps) => (
-              <TreeNodeDrag monitorProps={monitorProps} />
-            )}
-            onDrop={handleDrop}
-            enableAnimateExpand
-            classes={{
-              root: styles.treeRoot,
-              draggingSource: styles.draggingSource,
-              dropTarget: styles.dropTarget,
-            }}
+      <TMSTree
+        nodes={treeData}
+        onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
+        onDrop={handleDrop}
+        rootId="0"
+        ref={ref}
+        nodeRender={(node, { depth, isOpen, onToggle }) => (
+          <TreeNode
+            node={node}
+            depth={depth}
+            isOpen={isOpen}
+            onToggle={onToggle}
           />
-        </div>
-      </DndProvider>
+        )}
+        dragPreviewRender={(monitorProps) => (
+          <TreeNodeDrag monitorProps={monitorProps} />
+        )}
+      />
     </div>
   )
 })
