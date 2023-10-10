@@ -17,6 +17,7 @@ export function createChildren(
               children: [],
               id: parent.id,
               type: parent.droppable ? 'SUITE' : 'CASE',
+              parentId: 0,
             }
         parent.data.children.push(node.id)
       }
@@ -48,6 +49,7 @@ export function updateChildren(
             children: [],
             id: prevParent.id,
             type: prevParent.droppable ? 'SUITE' : 'CASE',
+            parentId: 0,
           }
     }
 
@@ -66,6 +68,7 @@ export function updateChildren(
             children: [],
             id: newParent.id,
             type: newParent.droppable ? 'SUITE' : 'CASE',
+            parentId: 0,
           }
     }
 

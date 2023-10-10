@@ -9,17 +9,17 @@ export const sampleData: NodeModel<TreeData>[] = [
     droppable: true,
     text: 'Suite 1',
   },
-  {
-    id: 2,
-    parent: 1,
-    droppable: false,
-    text: 'Test 1 aaaaaaaaaa bbbbbbbbbbbb ccccccccccccc dddddddddddd',
-    data: {
-      children: [],
-      type: 'CASE',
-      id: 2,
-    },
-  },
+  // {
+  //   id: 2,
+  //   parent: 1,
+  //   droppable: false,
+  //   text: 'Test 1 aaaaaaaaaa bbbbbbbbbbbb ccccccccccccc dddddddddddd',
+  //   data: {
+  //     children: [],
+  //     type: 'CASE',
+  //     id: 2,
+  //   },
+  // },
   {
     id: 3,
     parent: 1,
@@ -29,6 +29,7 @@ export const sampleData: NodeModel<TreeData>[] = [
       children: [],
       type: 'CASE',
       id: 3,
+      parentId: 0,
     },
   },
   {
@@ -52,6 +53,7 @@ export const sampleData: NodeModel<TreeData>[] = [
       children: [],
       type: 'CASE',
       id: 6,
+      parentId: 0,
     },
   },
   {
@@ -63,10 +65,11 @@ export const sampleData: NodeModel<TreeData>[] = [
       children: [],
       type: 'CASE',
       id: 7,
+      parentId: 0,
     },
   },
   {
-    id: 8,
+    id: 2,
     parent: 0,
     droppable: true,
     text: 'Suite 4',

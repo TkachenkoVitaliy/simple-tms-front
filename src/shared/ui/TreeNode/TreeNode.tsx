@@ -32,7 +32,7 @@ export const TreeNode = memo((props: TreeNodeProps) => {
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const locationState: LocationState = {
-      parentId: parent,
+      parentId: parent.toString().replace('case/', '').replace('suite/', ''),
       title: text,
     }
     navigate(id.toString(), { state: locationState })

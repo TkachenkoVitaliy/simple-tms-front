@@ -18,6 +18,8 @@ import { StepData, StepsEditor } from '../StepsEditor/StepsEditor'
 export const TestCaseForm = memo(() => {
   const location = useLocation() as Location<LocationState>
 
+  console.log(suites)
+
   const suiteId = location.state?.parentId?.toString()
 
   const headerTitle = location.state?.title || 'Create Test Case'
