@@ -11,7 +11,13 @@ export function createChildren(
     if (node.parent !== 0) {
       const parent = map.get(node.parent)
       if (parent && !parent?.data?.children) {
-        parent.data = parent?.data ? parent.data : { children: [] }
+        parent.data = parent?.data
+          ? parent.data
+          : {
+              children: [],
+              id: parent.id,
+              type: parent.droppable ? 'SUITE' : 'CASE',
+            }
         parent.data.children.push(node.id)
       }
     }
@@ -36,7 +42,13 @@ export function updateChildren(
 
   if (prevParent) {
     if (!prevParent?.data?.children) {
-      prevParent.data = prevParent?.data ? prevParent.data : { children: [] }
+      prevParent.data = prevParent?.data
+        ? prevParent.data
+        : {
+            children: [],
+            id: prevParent.id,
+            type: prevParent.droppable ? 'SUITE' : 'CASE',
+          }
     }
 
     const { children } = prevParent.data
@@ -48,7 +60,13 @@ export function updateChildren(
 
   if (newParent) {
     if (!newParent?.data?.children) {
-      newParent.data = newParent?.data ? newParent.data : { children: [] }
+      newParent.data = newParent?.data
+        ? newParent.data
+        : {
+            children: [],
+            id: newParent.id,
+            type: newParent.droppable ? 'SUITE' : 'CASE',
+          }
     }
 
     newParent.data.children.push(dragSourceId)

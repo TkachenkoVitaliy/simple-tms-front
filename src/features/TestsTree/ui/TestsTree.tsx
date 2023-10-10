@@ -21,7 +21,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { RouteParams } from 'shared/types/routerTypes'
 import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
-import { TestsAPI } from '../api/testsApi'
+import { TestsAPI, UpdateTestsNodeParent } from '../api/testsApi'
 
 import styles from './TestsTree.module.scss'
 
@@ -54,18 +54,32 @@ export const TestsTree = memo(() => {
   const allSuitesIsClosed = useMemo(() => openedSuites === 0, [openedSuites])
 
   const ref = useRef<TreeMethods>(null)
-  const handleDrop = (
+  const handleDrop = async (
     newTree: NodeModel<TreeData>[],
     options: DropOptions<TreeData>,
   ) => {
-    const { dragSource, dropTargetId } = options
+    const { dragSource, dropTargetId, dropTarget } = options
 
-    console.log(newTree, options)
+    if (dragSource !== undefined && dragSource.parent !== dropTargetId) {
+      console.log(options)
 
-    if (dragSource !== undefined)
-      setTreeData(
-        updateChildren(dragSource.id, dragSource.parent, dropTargetId, newTree),
-      )
+      if (projectsStore.activeProject?.id && dragSource.data && dropTargetId) {
+        const update: UpdateTestsNodeParent = {
+          nodeId: Number(dragSource.data.id),
+          parentId: dropTarget?.data ? Number(dropTarget.data.id) : null,
+          type: dragSource.data.type,
+        }
+        await TestsAPI.updateTestsNodeParent(update)
+
+        TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
+          (data) => setTreeData(data),
+        )
+      }
+
+      // setTreeData(
+      //   updateChildren(dragSource.id, dragSource.parent, dropTargetId, newTree),
+      // )
+    }
   }
   const handleOpenAll = () => ref.current?.openAll()
   const handleCloseAll = () => ref.current?.closeAll()
