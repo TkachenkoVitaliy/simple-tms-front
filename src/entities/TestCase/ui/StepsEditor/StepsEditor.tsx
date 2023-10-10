@@ -1,6 +1,7 @@
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper/DraggableWrapper'
 import { Button, Typography } from '@mui/material'
 import { swapArrayItems } from 'shared/lib/arrayHelper'
+import { useCallback, useEffect } from 'react'
 import { StepEditor, StepValue } from '../StepEditor/StepEditor'
 
 export interface StepData {
@@ -59,39 +60,36 @@ export function StepsEditor(props: StepsEditorProps) {
       <DraggableWrapper
         Wrapper={<div className="wrapper" />}
         onReordering={onReord}
-        renderDragLayer={(index) => {
-          return (
-            <div>
-              <StepEditor
-                value={data[index]?.step}
-                id={data[index]?.id}
-                index={index}
-                lastIndex={data.length - 1}
-              />
-            </div>
-          )
-        }}
+        type="StepsEditor"
+        renderDragLayer={(index) => (
+          <div>
+            <StepEditor
+              value={data[index]?.step}
+              id={data[index]?.id}
+              index={index}
+              lastIndex={data.length - 1}
+            />
+          </div>
+        )}
       >
-        {data.map((item, index) => {
-          return (
-            <div
+        {data.map((item, index) => (
+          <div
+            key={item.id}
+            id={item.id}
+          >
+            <StepEditor
               key={item.id}
+              value={item.step}
+              onChange={onChangeStep}
               id={item.id}
-            >
-              <StepEditor
-                key={item.id}
-                value={item.step}
-                onChange={onChangeStep}
-                id={item.id}
-                index={index}
-                margin="20px 0"
-                lastIndex={data.length - 1}
-                swapItem={swapItem}
-                removeItem={removeItem}
-              />
-            </div>
-          )
-        })}
+              index={index}
+              margin="20px 0"
+              lastIndex={data.length - 1}
+              swapItem={swapItem}
+              removeItem={removeItem}
+            />
+          </div>
+        ))}
       </DraggableWrapper>
       <Button
         variant="outlined"

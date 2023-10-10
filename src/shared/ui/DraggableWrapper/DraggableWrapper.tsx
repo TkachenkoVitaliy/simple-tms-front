@@ -15,11 +15,11 @@ export interface DraggableWrapperProps {
     | React.ReactElement<{ id: string }>[]
   onReordering: (newOrdering: { id: string }[]) => void
   renderDragLayer?: CustomDragLayerProps['previewFunc']
+  type: string
 }
 
 export const DraggableWrapper = (props: DraggableWrapperProps) => {
-  const { Wrapper, children, onReordering, renderDragLayer } = props
-  const type = 'Draggable'
+  const { Wrapper, children, onReordering, renderDragLayer, type } = props
 
   let data = Array.isArray(children)
     ? children.map((child) => ({
@@ -52,7 +52,12 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
 
   return (
     <DndProvider backend={MultiBackend}>
-      {renderDragLayer && <CustomDragLayer previewFunc={renderDragLayer} />}
+      {renderDragLayer && (
+        <CustomDragLayer
+          previewFunc={renderDragLayer}
+          type={type}
+        />
+      )}
       <Wrapper.type {...Wrapper.props}>
         {Array.isArray(children) ? (
           children.map((child, index) => {
@@ -63,6 +68,7 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
                 id={child.props.id}
                 index={index}
                 customDragLayer={!!renderDragLayer}
+                type={type}
               >
                 <child.type {...child.props} />
               </Draggable>
@@ -74,6 +80,7 @@ export const DraggableWrapper = (props: DraggableWrapperProps) => {
             move={move}
             id={children.props.id}
             index={0}
+            type={type}
           >
             <children.type {...children.props} />
           </Draggable>

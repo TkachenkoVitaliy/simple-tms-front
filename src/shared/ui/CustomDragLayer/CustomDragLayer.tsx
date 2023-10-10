@@ -4,12 +4,13 @@ import React from 'react'
 
 export interface CustomDragLayerProps {
   previewFunc: (index: number) => React.ReactElement
+  type: string
 }
 
 export function CustomDragLayer(
   props: CustomDragLayerProps,
 ): JSX.Element | null {
-  const { previewFunc } = props
+  const { previewFunc, type } = props
 
   const dragLayer = useDragLayer((monitor) => ({
     item: monitor.getItem(),
@@ -19,7 +20,7 @@ export function CustomDragLayer(
 
   const { isDragging, item, currentOffset } = dragLayer
 
-  if (!isDragging) {
+  if (!isDragging || item?.type !== type) {
     return null
   }
 

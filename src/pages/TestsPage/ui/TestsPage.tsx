@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material'
-import { TestsTree } from 'features/TestsTree'
+import { TestsLayout } from 'features/TestsTree/ui/TestsLayout'
 import { Resizable } from 're-resizable'
 import { Outlet, useOutlet } from 'react-router-dom'
 import { setResizeCssVars } from 'shared/lib/resize/setResizeCssVars'
@@ -31,7 +31,7 @@ function TestsPage() {
         }}
       >
         <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-          <TestsTree />
+          <TestsLayout />
         </div>
       </div>
       <Divider

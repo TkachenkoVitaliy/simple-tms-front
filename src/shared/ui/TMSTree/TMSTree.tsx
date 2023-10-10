@@ -67,10 +67,6 @@ function TMSTreeInner<T>(
   )
 }
 
-// export const TMSTree = forwardRef(TMSTreeInner) as <T>(
-//   props: TMSTreeProps<T> & { ref?: React.ForwardedRef<TreeMethods> },
-// ) => ReturnType<typeof TMSTreeInner>
-
 export const TMSTree = forwardRef<TreeMethods, TMSTreeProps<unknown>>(
   TMSTreeInner,
 ) as <T>(

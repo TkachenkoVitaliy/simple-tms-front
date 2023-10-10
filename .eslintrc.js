@@ -40,6 +40,12 @@ module.exports = {
         namedComponents: ['function-declaration', 'arrow-function'],
       },
     ],
+    'react/no-unstable-nested-components': [
+      'warn',
+      {
+        allowAsProps: true,
+      },
+    ],
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',

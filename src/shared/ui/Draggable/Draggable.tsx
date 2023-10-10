@@ -15,11 +15,11 @@ export interface DraggableProps {
   id: string
   children: React.ReactElement<{ index: number }>
   customDragLayer?: boolean
+  type: string
 }
 
 export function Draggable(props: DraggableProps) {
-  const { id, move, index, children, customDragLayer } = props
-  const type = 'Draggable'
+  const { id, move, index, children, customDragLayer, type } = props
   const ref = useRef<HTMLDivElement>(null)
 
   const [{ handlerId }, drop] = useDrop<
@@ -74,6 +74,7 @@ export function Draggable(props: DraggableProps) {
         id,
         index,
         width: ref.current?.firstElementChild?.getBoundingClientRect().width,
+        type,
       }
     },
     collect: (monitor) => ({

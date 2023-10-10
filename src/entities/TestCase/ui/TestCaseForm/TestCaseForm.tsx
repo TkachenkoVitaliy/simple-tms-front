@@ -20,8 +20,6 @@ export const TestCaseForm = memo(() => {
 
   const suiteId = location.state?.parentId?.toString()
 
-  console.log(location)
-
   const headerTitle = location.state?.title || 'Create Test Case'
 
   const [suite, setSuite] = useState<SuiteOption | null>(

@@ -1,32 +1,19 @@
 /* eslint-disable max-lines */
-/* eslint-disable react/no-unstable-nested-components */
-import {
-  DndProvider,
-  DropOptions,
-  MultiBackend,
-  NodeModel,
-  Tree,
-  TreeMethods,
-  getBackendOptions,
-} from '@minoru/react-dnd-treeview'
+import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { TreeData } from 'shared/types/treeData'
-import { updateChildren } from 'shared/lib/tree'
-import { Button, ButtonGroup } from '@mui/material'
-import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
-import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { RouteParams } from 'shared/types/routerTypes'
 import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
 import { TestsAPI, UpdateTestsNodeParent } from '../api/testsApi'
 
 import styles from './TestsTree.module.scss'
+import { TestsActions } from './TestsActions'
 
-export const TestsTree = memo(() => {
-  const navigate = useNavigate()
+export const TestsLayout = memo(() => {
   const { projectId } = useParams<RouteParams>()
   const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>([])
 
@@ -61,8 +48,6 @@ export const TestsTree = memo(() => {
     const { dragSource, dropTargetId, dropTarget } = options
 
     if (dragSource !== undefined && dragSource.parent !== dropTargetId) {
-      console.log(options)
-
       if (projectsStore.activeProject?.id && dragSource.data && dropTargetId) {
         const update: UpdateTestsNodeParent = {
           nodeId: Number(dragSource.data.id),
@@ -75,33 +60,42 @@ export const TestsTree = memo(() => {
           (data) => setTreeData(data),
         )
       }
-
-      // setTreeData(
-      //   updateChildren(dragSource.id, dragSource.parent, dropTargetId, newTree),
-      // )
     }
   }
-  const handleOpenAll = () => ref.current?.openAll()
-  const handleCloseAll = () => ref.current?.closeAll()
+  const handleOpenAll = () => {
+    ref.current?.openAll()
+  }
+  const handleCloseAll = () => {
+    ref.current?.closeAll()
+  }
 
   return (
-    <TMSTree
-      nodes={treeData}
-      onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
-      onDrop={handleDrop}
-      rootId="0"
-      ref={ref}
-      nodeRender={(node, { depth, isOpen, onToggle }) => (
-        <TreeNode
-          node={node}
-          depth={depth}
-          isOpen={isOpen}
-          onToggle={onToggle}
-        />
-      )}
-      dragPreviewRender={(monitorProps) => (
-        <TreeNodeDrag monitorProps={monitorProps} />
-      )}
-    />
+    <div className={styles.wrapper}>
+      <TestsActions
+        canExpand={!allSuitesIsOpened}
+        canCollapse={!allSuitesIsClosed}
+        onExpand={handleOpenAll}
+        onCollapse={handleCloseAll}
+      />
+
+      <TMSTree
+        nodes={treeData}
+        onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
+        onDrop={handleDrop}
+        rootId="0"
+        ref={ref}
+        nodeRender={(node, { depth, isOpen, onToggle }) => (
+          <TreeNode
+            node={node}
+            depth={depth}
+            isOpen={isOpen}
+            onToggle={onToggle}
+          />
+        )}
+        dragPreviewRender={(monitorProps) => (
+          <TreeNodeDrag monitorProps={monitorProps} />
+        )}
+      />
+    </div>
   )
 })

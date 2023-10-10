@@ -85,23 +85,70 @@ export const TestsTree = memo(() => {
   const handleCloseAll = () => ref.current?.closeAll()
 
   return (
-    <TMSTree
-      nodes={treeData}
-      onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
-      onDrop={handleDrop}
-      rootId="0"
-      ref={ref}
-      nodeRender={(node, { depth, isOpen, onToggle }) => (
-        <TreeNode
-          node={node}
-          depth={depth}
-          isOpen={isOpen}
-          onToggle={onToggle}
+    <div className={styles.wrapper}>
+      <div className={styles.actions}>
+        <TMSMenu
+          id="create-root"
+          icon={<Add />}
+          label="Create"
+          options={[
+            {
+              label: 'Suite',
+              onSelect: () => {
+                navigate('suite/0')
+              },
+            },
+            {
+              label: 'Case',
+              onSelect: () => {
+                navigate('create')
+              },
+            },
+          ]}
         />
-      )}
-      dragPreviewRender={(monitorProps) => (
-        <TreeNodeDrag monitorProps={monitorProps} />
-      )}
-    />
+        <div />
+        <ButtonGroup
+          size="small"
+          variant="outlined"
+          color="inherit"
+          disableElevation
+        >
+          <Button
+            onClick={handleCloseAll}
+            component="button"
+            disabled={allSuitesIsClosed}
+            style={{ borderRightColor: 'inherit' }}
+          >
+            <UnfoldLess />
+          </Button>
+          <Button
+            onClick={handleOpenAll}
+            component="button"
+            disabled={allSuitesIsOpened}
+          >
+            <UnfoldMore />
+          </Button>
+        </ButtonGroup>
+      </div>
+
+      <TMSTree
+        nodes={treeData}
+        onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
+        onDrop={handleDrop}
+        rootId="0"
+        ref={ref}
+        nodeRender={(node, { depth, isOpen, onToggle }) => (
+          <TreeNode
+            node={node}
+            depth={depth}
+            isOpen={isOpen}
+            onToggle={onToggle}
+          />
+        )}
+        dragPreviewRender={(monitorProps) => (
+          <TreeNodeDrag monitorProps={monitorProps} />
+        )}
+      />
+    </div>
   )
 })
