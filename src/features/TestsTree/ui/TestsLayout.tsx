@@ -56,9 +56,13 @@ export const TestsLayout = memo(() => {
         }
         await TestsAPI.updateTestsNodeParent(update)
 
-        TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
-          (data) => setTreeData(data),
+        // TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
+        //   (data) => setTreeData(data),
+        // )
+        const data = await TestsAPI.getProjectTestsNodes(
+          projectsStore.activeProject.id,
         )
+        setTreeData(data)
       }
     }
   }
