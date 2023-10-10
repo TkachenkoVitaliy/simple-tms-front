@@ -20,6 +20,6 @@ export const TestsAPI = {
   },
 
   updateTestsNodeParent: async (update: UpdateTestsNodeParent) => {
-    const response = await API.patch(`${URL}/${update.nodeId}`, update)
+    await API.patch(`${URL}/${update.nodeId}`, update)
   },
 }
