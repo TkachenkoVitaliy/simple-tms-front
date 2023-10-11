@@ -2,7 +2,7 @@ import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
 import { memo, useEffect, useRef } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { RouteParams } from 'shared/types/routerTypes'
 import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
@@ -12,6 +12,7 @@ import {
 } from 'entities/TestNode/model/types'
 import { testNodeStore } from 'entities/TestNode/model/testNodeStore'
 import { observer } from 'mobx-react-lite'
+import { testSuiteStore } from 'entities/TestNode/TestSuite/model/testSuiteStore'
 import { TestsActions } from './TestsActions'
 
 import styles from './TestsLayout.module.scss'
@@ -31,6 +32,7 @@ export const TestsLayout = memo(
       }
     }, [projectId])
 
+    const navigate = useNavigate()
     const ref = useRef<TreeMethods>(null)
     const handleDrop = async (
       _newTree: NodeModel<TestNodeData>[],
@@ -83,6 +85,12 @@ export const TestsLayout = memo(
               depth={depth}
               isOpen={isOpen}
               onToggle={onToggle}
+              onClick={async () => {
+                if (node.data && node.data.type === 'SUITE') {
+                  await testSuiteStore.setEditSuite(node.data.id as number)
+                  navigate(node.data.id.toString())
+                }
+              }}
             />
           )}
           dragPreviewRender={(monitorProps) => (

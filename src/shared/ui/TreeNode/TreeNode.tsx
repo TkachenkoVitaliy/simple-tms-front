@@ -18,9 +18,11 @@ export interface TreeNodeProps {
   depth: number
   isOpen: boolean
   onToggle: (id: NodeModel['id']) => void
+  onClick?: () => void
 }
 
 export const TreeNode = memo((props: TreeNodeProps) => {
+  const { onClick } = props
   const { id, droppable, data, parent, text } = props.node
   const indent = props.depth * 24
   const navigate = useNavigate()
@@ -31,12 +33,13 @@ export const TreeNode = memo((props: TreeNodeProps) => {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const locationState: LocationState = {
-      parentId: parent.toString().replace('case/', '').replace('suite/', ''),
-      title: text,
-    }
-    navigate(id.toString(), { state: locationState })
-    e.stopPropagation()
+    onClick?.()
+    // const locationState: LocationState = {
+    //   parentId: parent.toString().replace('case/', '').replace('suite/', ''),
+    //   title: text,
+    // }
+    // navigate(id.toString(), { state: locationState })
+    // e.stopPropagation()
   }
 
   const dragOverProps = useDragOver(id, props.isOpen, props.onToggle)

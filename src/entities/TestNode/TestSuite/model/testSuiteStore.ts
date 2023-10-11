@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { TestSuite } from './types'
+import { TestSuiteAPI } from '../api/testSuiteApi'
 
 class TestSuiteStore {
   id: TestSuite['id'] = null
@@ -28,9 +29,17 @@ class TestSuiteStore {
 
   createChildSuite(parentSuiteId: TestSuite['parentSuiteId']) {
     this.setId(null)
-    this.parentSuiteId = parentSuiteId
-    this.name = ''
-    this.description = ''
+    this.setParentSuiteId(parentSuiteId)
+    this.setName('')
+    this.setDescription('')
+  }
+
+  async setEditSuite(suiteId: number) {
+    const testSuite: TestSuite = await TestSuiteAPI.getTestSuite(suiteId)
+    this.setId(testSuite.id)
+    this.setParentSuiteId(testSuite.parentSuiteId)
+    this.setName(testSuite.name)
+    this.setDescription(testSuite.description)
   }
 
   // TODO: fetch suite from API
