@@ -5,16 +5,16 @@ import { memo } from 'react'
 import { Add, ArrowRight, Edit } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
-import { TreeData } from 'shared/types/treeData'
 import { useNavigate } from 'react-router-dom'
 import { LocationState } from 'shared/types/routerTypes'
+import { TestNodeData } from 'entities/TestNode/model/types'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 import { TMSMenu } from '../TMSMenu/TMSMenu'
 
 import styles from './TreeNode.module.scss'
 
 export interface TreeNodeProps {
-  node: NodeModel<TreeData>
+  node: NodeModel<TestNodeData>
   depth: number
   isOpen: boolean
   onToggle: (id: NodeModel['id']) => void

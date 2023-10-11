@@ -1,20 +1,14 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
 import { AxiosResponse } from 'axios'
 import API from 'shared/api/api'
-import { TreeData } from 'shared/types/treeData'
+import { TestNodeData, UpdateTestsNodeParent } from '../model/types'
 
 const URL = '/tests'
 
-export interface UpdateTestsNodeParent {
-  nodeId: number | null
-  parentId: number | null
-  type: 'CASE' | 'SUITE'
-}
-
 export const TestsAPI = {
-  getProjectTestsNodes: async (id: number) => {
-    const { data }: AxiosResponse<NodeModel<TreeData>[]> = await API.get(
-      `${URL}/${id}`,
+  getProjectTestsNodes: async (projectId: number) => {
+    const { data }: AxiosResponse<NodeModel<TestNodeData>[]> = await API.get(
+      `${URL}/${projectId}`,
     )
     return data
   },

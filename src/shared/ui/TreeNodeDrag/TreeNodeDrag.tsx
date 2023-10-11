@@ -1,11 +1,11 @@
 import { memo } from 'react'
 import { DragLayerMonitorProps } from '@minoru/react-dnd-treeview'
-import { TreeData } from 'shared/types/treeData'
+import { TestNodeData } from 'entities/TestNode/model/types'
 import styles from './TreeNodeDrag.module.scss'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 
 export interface TreeNodeDragProps {
-  monitorProps: DragLayerMonitorProps<TreeData>
+  monitorProps: DragLayerMonitorProps<TestNodeData>
 }
 
 export const TreeNodeDrag = memo((props: TreeNodeDragProps) => {

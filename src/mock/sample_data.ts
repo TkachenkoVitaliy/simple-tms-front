@@ -1,8 +1,8 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
+import { TestNodeData } from 'entities/TestNode/model/types'
 import { SuiteOption } from 'shared/types/autocompleteTypes'
-import { TreeData } from 'shared/types/treeData'
 
-export const sampleData: NodeModel<TreeData>[] = [
+export const sampleData: NodeModel<TestNodeData>[] = [
   {
     id: 1,
     parent: 0,

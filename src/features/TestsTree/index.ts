@@ -1,3 +1,3 @@
-import { TestsTree } from './ui/TestsTree'
+import { TestsLayout } from './ui/TestsLayout'
 
-export { TestsTree }
+export { TestsLayout }

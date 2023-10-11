@@ -1,10 +1,10 @@
 import { Description, Folder } from '@mui/icons-material'
+import { TestNodeData } from 'entities/TestNode/model/types'
 import { memo } from 'react'
-import { TreeData } from 'shared/types/treeData'
 
 export interface TypeIconProps {
   droppable: boolean
-  type?: TreeData['type']
+  type?: TestNodeData['type']
 }
 
 export const TypeIcon = memo((props: TypeIconProps) => {

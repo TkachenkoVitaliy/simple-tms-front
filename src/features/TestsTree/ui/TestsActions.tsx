@@ -6,7 +6,7 @@ import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
 import { useNavigate } from 'react-router-dom'
 
-import styles from './TestsTree.module.scss'
+import styles from './TestsLayout.module.scss'
 
 export interface TestsActionsProps {
   canExpand: boolean

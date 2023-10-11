@@ -1,10 +1,11 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
-import { TreeData } from 'shared/types/treeData'
+import { TestNodeData } from 'entities/TestNode/model/types'
 
 export function createChildren(
-  models: NodeModel<TreeData>[],
-): NodeModel<TreeData>[] {
-  const map = new Map<string | number, NodeModel<TreeData>>()
+  models: NodeModel<TestNodeData>[],
+): NodeModel<TestNodeData>[] {
+  console.log('create')
+  const map = new Map<string | number, NodeModel<TestNodeData>>()
   models.forEach((node) => map.set(node.id, node))
 
   models.forEach((node) => {
@@ -31,9 +32,9 @@ export function updateChildren(
   dragSourceId: string | number,
   dragSourceParent: string | number,
   dropTargetId: string | number,
-  models: NodeModel<TreeData>[],
+  models: NodeModel<TestNodeData>[],
 ) {
-  const map = new Map<string | number, NodeModel<TreeData>>()
+  const map = new Map<string | number, NodeModel<TestNodeData>>()
   models.forEach((node) => {
     if (node.id === dragSourceParent || node.id === dropTargetId)
       map.set(node.id, node)

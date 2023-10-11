@@ -3,22 +3,30 @@ import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
-import { TreeData } from 'shared/types/treeData'
 import { useParams } from 'react-router-dom'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { RouteParams } from 'shared/types/routerTypes'
 import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
-import { TestsAPI, UpdateTestsNodeParent } from '../api/testsApi'
-
-import styles from './TestsTree.module.scss'
+import {
+  TestNodeData,
+  UpdateTestsNodeParent,
+} from 'entities/TestNode/model/types'
+import { TestsAPI } from '../../../entities/TestNode/api/testsApi'
 import { TestsActions } from './TestsActions'
+
+import styles from './TestsLayout.module.scss'
 
 export const TestsLayout = memo(() => {
   const { projectId } = useParams<RouteParams>()
-  const [treeData, setTreeData] = useState<NodeModel<TreeData>[]>([])
+  const [treeData, setTreeData] = useState<NodeModel<TestNodeData>[]>([])
 
   useEffect(() => {
-    if (projectsStore.activeProject?.id) {
+    if (
+      !!projectId &&
+      projectId !== projectsStore.activeProject?.id.toString()
+    ) {
+      projectsStore.setActiveProjectById(projectId)
+    } else if (projectsStore.activeProject?.id) {
       TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
         (data) => setTreeData(data),
       )
@@ -42,8 +50,8 @@ export const TestsLayout = memo(() => {
 
   const ref = useRef<TreeMethods>(null)
   const handleDrop = async (
-    newTree: NodeModel<TreeData>[],
-    options: DropOptions<TreeData>,
+    newTree: NodeModel<TestNodeData>[],
+    options: DropOptions<TestNodeData>,
   ) => {
     const { dragSource, dropTargetId, dropTarget } = options
 
@@ -55,10 +63,6 @@ export const TestsLayout = memo(() => {
           type: dragSource.data.type,
         }
         await TestsAPI.updateTestsNodeParent(update)
-
-        // TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
-        //   (data) => setTreeData(data),
-        // )
         const data = await TestsAPI.getProjectTestsNodes(
           projectsStore.activeProject.id,
         )

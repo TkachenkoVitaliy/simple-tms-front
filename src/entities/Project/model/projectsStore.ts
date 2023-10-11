@@ -23,6 +23,11 @@ class ProjectsStore {
     }
   }
 
+  setActiveProjectById(projectId: string) {
+    localStorage.setItem(LOCAL_STORAGE_ACTIVE_PROJECT, projectId)
+    this.initProjects()
+  }
+
   async loadProjects() {
     const projects = await ProjectAPI.getAllProjects()
     this.setProjects([...projects, NEW_PROJECT_DEFAULT])
@@ -63,3 +68,5 @@ class ProjectsStore {
 }
 
 export const projectsStore = new ProjectsStore()
+
+// TODO: придумать как синхронизировать с react-router (при узменении в url pathparam - projectId)
