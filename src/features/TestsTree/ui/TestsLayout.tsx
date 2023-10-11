@@ -1,6 +1,5 @@
-/* eslint-disable max-lines */
 import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { useParams } from 'react-router-dom'
@@ -11,99 +10,86 @@ import {
   TestNodeData,
   UpdateTestsNodeParent,
 } from 'entities/TestNode/model/types'
-import { TestsAPI } from '../../../entities/TestNode/api/testsApi'
+import { testNodeStore } from 'entities/TestNode/model/testNodeStore'
+import { observer } from 'mobx-react-lite'
 import { TestsActions } from './TestsActions'
 
 import styles from './TestsLayout.module.scss'
 
-export const TestsLayout = memo(() => {
-  const { projectId } = useParams<RouteParams>()
-  const [treeData, setTreeData] = useState<NodeModel<TestNodeData>[]>([])
+export const TestsLayout = memo(
+  observer(() => {
+    const { projectId } = useParams<RouteParams>()
 
-  useEffect(() => {
-    if (
-      !!projectId &&
-      projectId !== projectsStore.activeProject?.id.toString()
-    ) {
-      projectsStore.setActiveProjectById(projectId)
-    } else if (projectsStore.activeProject?.id) {
-      TestsAPI.getProjectTestsNodes(projectsStore.activeProject.id).then(
-        (data) => setTreeData(data),
-      )
-    }
-  }, [projectId])
-
-  const calculateSuiteCount = useCallback(() => {
-    return treeData.reduce((count, treeNode) => {
-      if ((treeNode.data?.children.length || 0) > 0) {
-        return count + 1
+    useEffect(() => {
+      if (
+        !!projectId &&
+        projectId !== projectsStore.activeProject?.id.toString()
+      ) {
+        projectsStore.setActiveProjectById(projectId)
+      } else if (projectsStore.activeProject?.id) {
+        testNodeStore.fetchNodes()
       }
-      return count
-    }, 0)
-  }, [treeData])
+    }, [projectId])
 
-  const [openedSuites, setOpenedSuites] = useState<number>(0)
-  const allSuitesIsOpened = useMemo(() => {
-    return openedSuites >= calculateSuiteCount()
-  }, [treeData, openedSuites])
-  const allSuitesIsClosed = useMemo(() => openedSuites === 0, [openedSuites])
+    const ref = useRef<TreeMethods>(null)
+    const handleDrop = async (
+      _newTree: NodeModel<TestNodeData>[],
+      options: DropOptions<TestNodeData>,
+    ) => {
+      const { dragSource, dropTargetId, dropTarget } = options
 
-  const ref = useRef<TreeMethods>(null)
-  const handleDrop = async (
-    newTree: NodeModel<TestNodeData>[],
-    options: DropOptions<TestNodeData>,
-  ) => {
-    const { dragSource, dropTargetId, dropTarget } = options
-
-    if (dragSource !== undefined && dragSource.parent !== dropTargetId) {
-      if (projectsStore.activeProject?.id && dragSource.data && dropTargetId) {
-        const update: UpdateTestsNodeParent = {
-          nodeId: Number(dragSource.data.id),
-          parentId: dropTarget?.data ? Number(dropTarget.data.id) : null,
-          type: dragSource.data.type,
+      if (dragSource !== undefined && dragSource.parent !== dropTargetId) {
+        if (
+          projectsStore.activeProject?.id &&
+          dragSource.data &&
+          dropTargetId
+        ) {
+          const update: UpdateTestsNodeParent = {
+            nodeId: Number(dragSource.data.id),
+            parentId: dropTarget?.data ? Number(dropTarget.data.id) : null,
+            type: dragSource.data.type,
+          }
+          testNodeStore.updateTestNode(update)
         }
-        await TestsAPI.updateTestsNodeParent(update)
-        const data = await TestsAPI.getProjectTestsNodes(
-          projectsStore.activeProject.id,
-        )
-        setTreeData(data)
       }
     }
-  }
-  const handleOpenAll = () => {
-    ref.current?.openAll()
-  }
-  const handleCloseAll = () => {
-    ref.current?.closeAll()
-  }
+    const handleOpenAll = () => {
+      ref.current?.openAll()
+    }
+    const handleCloseAll = () => {
+      ref.current?.closeAll()
+    }
 
-  return (
-    <div className={styles.wrapper}>
-      <TestsActions
-        canExpand={!allSuitesIsOpened}
-        canCollapse={!allSuitesIsClosed}
-        onExpand={handleOpenAll}
-        onCollapse={handleCloseAll}
-      />
+    return (
+      <div className={styles.wrapper}>
+        <TestsActions
+          canExpand={!testNodeStore.isAllSuitesOpened}
+          canCollapse={!testNodeStore.isAllSuitesClosed}
+          onExpand={handleOpenAll}
+          onCollapse={handleCloseAll}
+        />
 
-      <TMSTree
-        nodes={treeData}
-        onChangeOpen={(newOpenIds) => setOpenedSuites(newOpenIds.length)}
-        onDrop={handleDrop}
-        rootId="0"
-        ref={ref}
-        nodeRender={(node, { depth, isOpen, onToggle }) => (
-          <TreeNode
-            node={node}
-            depth={depth}
-            isOpen={isOpen}
-            onToggle={onToggle}
-          />
-        )}
-        dragPreviewRender={(monitorProps) => (
-          <TreeNodeDrag monitorProps={monitorProps} />
-        )}
-      />
-    </div>
-  )
-})
+        <TMSTree
+          nodes={testNodeStore.nodes}
+          onChangeOpen={(newOpenIds) =>
+            testNodeStore.setOpenedSuite(newOpenIds.length)
+          }
+          onDrop={handleDrop}
+          rootId="0"
+          ref={ref}
+          nodeRender={(node, { depth, isOpen, onToggle }) => (
+            <TreeNode
+              node={node}
+              depth={depth}
+              isOpen={isOpen}
+              onToggle={onToggle}
+            />
+          )}
+          dragPreviewRender={(monitorProps) => (
+            <TreeNodeDrag monitorProps={monitorProps} />
+          )}
+        />
+      </div>
+    )
+  }),
+)

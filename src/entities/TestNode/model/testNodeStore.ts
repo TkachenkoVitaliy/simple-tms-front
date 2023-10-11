@@ -60,7 +60,7 @@ class TestNodeStore {
 
   constructor() {
     makeAutoObservable(this)
-    this.fetchNodes()
+    // this.fetchNodes()
   }
 }
 
