@@ -16,4 +16,14 @@ export const TestSuiteAPI = {
     const { data }: AxiosResponse<TestSuite> = await API.get(`${URL}/${id}`)
     return data
   },
+
+  createTestSuite: async (testSuite: TestSuite) => {
+    const { data }: AxiosResponse<TestSuite> = await API.post(URL, testSuite)
+    return data
+  },
+
+  updateTestSuite: async (testSuite: TestSuite) => {
+    const { data }: AxiosResponse<TestSuite> = await API.put(URL, testSuite)
+    return data
+  },
 }

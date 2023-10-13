@@ -68,7 +68,7 @@ export const Sidebar = memo(
               {appRoutes.map((item) => {
                 if (item.label !== undefined && item.Icon !== undefined) {
                   if (
-                    projectsStore.activeProject?.id.toString ||
+                    projectsStore.activeProject?.id?.toString() ||
                     item.showWithoutActiveProject
                   ) {
                     return (
@@ -79,7 +79,7 @@ export const Sidebar = memo(
                           .path()
                           .replace(
                             ':projectId',
-                            projectsStore.activeProject?.id.toString() || '0',
+                            projectsStore.activeProject?.id?.toString() || '0',
                           )}
                         label={item.label}
                         Icon={item.Icon}

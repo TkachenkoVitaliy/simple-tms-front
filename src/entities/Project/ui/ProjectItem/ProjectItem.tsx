@@ -30,8 +30,10 @@ export const ProjectItem = memo(
 
     const deleteCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
-      await projectsStore.deleteProject(project.id)
-      await projectsStore.initProjects()
+      if (project.id !== null) {
+        await projectsStore.deleteProject(project.id)
+        await projectsStore.initProjects()
+      }
     }
 
     return (

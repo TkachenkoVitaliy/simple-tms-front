@@ -88,7 +88,7 @@ export const TestsLayout = memo(
               onClick={async () => {
                 if (node.data && node.data.type === 'SUITE') {
                   await testSuiteStore.setEditSuite(node.data.id as number)
-                  navigate(node.data.id.toString())
+                  navigate(node.id.toString())
                 }
               }}
             />

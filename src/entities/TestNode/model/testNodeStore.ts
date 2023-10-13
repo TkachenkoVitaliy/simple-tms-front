@@ -8,7 +8,13 @@ import { TestSuiteShort } from '../TestSuite/model/types'
 class TestNodeStore {
   nodes: NodeModel<TestNodeData>[] = []
 
-  suites: TestSuiteShort[] = []
+  suites: TestSuiteShort[] = [
+    {
+      id: 0,
+      name: 'Not selected',
+      syntheticId: '0',
+    },
+  ]
 
   openedSuites: number = 0
 
@@ -17,7 +23,14 @@ class TestNodeStore {
   }
 
   setSuites(suites: TestSuiteShort[]) {
-    this.suites = suites
+    this.suites = [
+      {
+        id: 0,
+        name: 'Not selected',
+        syntheticId: '0',
+      },
+      ...suites,
+    ]
   }
 
   setOpenedSuite(openedSuitesCount: number) {

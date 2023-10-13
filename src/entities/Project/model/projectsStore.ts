@@ -16,7 +16,7 @@ class ProjectsStore {
 
   setActiveProject(project: IProject | null) {
     this.activeProject = project
-    if (project === null) {
+    if (project === null || project.id === null) {
       localStorage.removeItem(LOCAL_STORAGE_ACTIVE_PROJECT)
     } else {
       localStorage.setItem(LOCAL_STORAGE_ACTIVE_PROJECT, project.id.toString())
@@ -41,7 +41,10 @@ class ProjectsStore {
   }
 
   async createProject(project: IProject) {
-    const createdProject = await ProjectAPI.createProject(project)
+    const createdProject = await ProjectAPI.createProject({
+      ...project,
+      id: null,
+    })
     this.setActiveProject(createdProject)
   }
 

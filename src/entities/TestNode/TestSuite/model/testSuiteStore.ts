@@ -1,11 +1,18 @@
 import { makeAutoObservable } from 'mobx'
-import { TestSuite } from './types'
+import { projectsStore } from 'entities/Project/model/projectsStore'
+import { TestSuite, TestSuiteShort } from './types'
 import { TestSuiteAPI } from '../api/testSuiteApi'
 
 class TestSuiteStore {
-  id: TestSuite['id'] = null
+  id: TestSuite['id'] = 0
 
   parentSuiteId: TestSuite['parentSuiteId'] = null
+
+  parentSuite: TestSuiteShort = {
+    id: 0,
+    name: 'Not selected',
+    syntheticId: '0',
+  }
 
   name: TestSuite['name'] = ''
 
@@ -19,6 +26,18 @@ class TestSuiteStore {
     this.parentSuiteId = parentSuiteId
   }
 
+  setParentSuite = (parentSuite: TestSuiteShort | null) => {
+    this.parentSuite =
+      parentSuite === null
+        ? {
+            id: 0,
+            name: 'Not selected',
+            syntheticId: '0',
+          }
+        : parentSuite
+    this.setParentSuiteId(parentSuite?.id || null)
+  }
+
   setName(name: TestSuite['name']) {
     this.name = name.trim()
   }
@@ -28,7 +47,7 @@ class TestSuiteStore {
   }
 
   createChildSuite(parentSuiteId: TestSuite['parentSuiteId']) {
-    this.setId(null)
+    this.setId(0)
     this.setParentSuiteId(parentSuiteId)
     this.setName('')
     this.setDescription('')
@@ -40,6 +59,18 @@ class TestSuiteStore {
     this.setParentSuiteId(testSuite.parentSuiteId)
     this.setName(testSuite.name)
     this.setDescription(testSuite.description)
+  }
+
+  async saveCreatedSuite() {
+    if (projectsStore.activeProject) {
+      await TestSuiteAPI.createTestSuite({
+        id: this.id,
+        parentSuiteId: this.parentSuiteId,
+        name: this.name,
+        description: this.description,
+        projectId: projectsStore.activeProject.id,
+      })
+    }
   }
 
   // TODO: fetch suite from API

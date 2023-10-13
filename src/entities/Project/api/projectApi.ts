@@ -4,6 +4,8 @@ import { IProject } from 'shared/types/projectTypes'
 
 const URL = '/projects'
 
+export type NewEntity<T> = Omit<T, 'id'> & { id: null }
+
 export const ProjectAPI = {
   getAllProjects: async () => {
     const { data }: AxiosResponse<IProject[]> = await API.get(URL)
@@ -15,7 +17,7 @@ export const ProjectAPI = {
     return data
   },
 
-  createProject: async (project: IProject) => {
+  createProject: async (project: NewEntity<IProject>) => {
     const { data }: AxiosResponse<IProject> = await API.post(URL, project)
     return data
   },
