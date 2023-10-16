@@ -1,16 +1,19 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+// Тип для переопределния типа поля id для всех новых Entity
+type NewEntity<T> = Omit<T, 'id'> & { id: null }
+
 // Интерфейс Проекта
 interface Project {
-  id: number // 0 для созданных
+  id: number
   name: string
   description: string
 }
 
 // Интерфейс ТестСьюита
 interface TestSuite {
-  id: number // 0 для созданных
+  id: number
   parentSuiteId: number | null // null - при нахождении в корне
   name: string
   description: string
@@ -19,7 +22,7 @@ interface TestSuite {
 
 // Интерфейс ТестКейса
 interface TestCase {
-  id: number // 0 для созданных
+  id: number
   parentSuiteId: number | null // null - при нахождении в корне
   name: string
   preconditions: string

@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'warn',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off',
+    'class-methods-use-this': 'warn',
     'max-lines': [
       'warn',
       { max: 100, skipBlankLines: false, skipComments: true },

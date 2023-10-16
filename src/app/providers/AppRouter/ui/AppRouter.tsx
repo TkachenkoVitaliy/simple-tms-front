@@ -1,5 +1,5 @@
 import { ErrorPage } from 'pages/ErrorPage'
-import { Suspense, memo, useCallback } from 'react'
+import { Suspense, memo, useCallback, useMemo } from 'react'
 import {
   Navigate,
   RouteObject,
@@ -10,9 +10,12 @@ import { IAppRoute, IRoute } from 'shared/types/routerTypes'
 import { AppLayout } from 'app/AppLayout'
 import { projectsStore } from 'entities/Project/model/projectsStore'
 import { Loader } from 'shared/ui/Loader/Loader'
+import { AppRouterContext } from 'shared/lib/context/AppRouterContext'
 import { appRoutes } from '../model/appRoutes'
 
 const AppRouter = memo(() => {
+  const providerValue = useMemo(() => ({ routes: appRoutes }), [])
+
   const mapToRoute = useCallback(
     (appRoute: IAppRoute): IRoute => {
       const { path, element, children } = appRoute
@@ -54,7 +57,11 @@ const AppRouter = memo(() => {
 
   const router = createBrowserRouter(routes)
 
-  return <RouterProvider router={router} />
+  return (
+    <AppRouterContext.Provider value={providerValue}>
+      <RouterProvider router={router} />
+    </AppRouterContext.Provider>
+  )
 })
 
 export default AppRouter

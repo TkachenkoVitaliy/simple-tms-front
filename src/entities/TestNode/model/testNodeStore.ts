@@ -4,6 +4,7 @@ import { projectsStore } from 'entities/Project/model/projectsStore'
 import { TestNodeData, UpdateTestsNodeParent } from './types'
 import { TestsAPI } from '../api/testsApi'
 import { TestSuiteShort } from '../TestSuite/model/types'
+import { testSuiteStore } from '../TestSuite/model/testSuiteStore'
 
 class TestNodeStore {
   nodes: NodeModel<TestNodeData>[] = []
@@ -48,6 +49,9 @@ class TestNodeStore {
   async updateTestNode(update: UpdateTestsNodeParent) {
     await TestsAPI.updateTestsNodeParent(update)
     await this.fetchNodes()
+    if (update.nodeId === testSuiteStore.id) {
+      testSuiteStore.setEditSuite(update.nodeId)
+    }
   }
 
   async fetchNodes() {

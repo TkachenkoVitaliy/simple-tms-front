@@ -1,10 +1,9 @@
 import { AxiosResponse } from 'axios'
 import API from 'shared/api/api'
+import { NewEntity } from 'shared/types/apiHelpTypes'
 import { IProject } from 'shared/types/projectTypes'
 
 const URL = '/projects'
-
-export type NewEntity<T> = Omit<T, 'id'> & { id: null }
 
 export const ProjectAPI = {
   getAllProjects: async () => {

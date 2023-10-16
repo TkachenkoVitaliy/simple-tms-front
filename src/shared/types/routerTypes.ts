@@ -28,4 +28,11 @@ export interface LocationState {
   title?: string
 }
 
-export type RouteParams = 'projectId' | 'testSuiteId' | 'testCaseId'
+// export type RouteParams = 'projectId' | 'testSuiteId' | 'testCaseId'
+export enum RouteParamsEnum {
+  projectId = 'projectId',
+  testSuiteId = 'testSuiteId',
+  testCaseId = 'testCaseId',
+}
+
+export type RouteParams = Record<RouteParamsEnum, string | undefined>

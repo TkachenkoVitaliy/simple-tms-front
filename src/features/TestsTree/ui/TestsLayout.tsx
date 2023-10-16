@@ -87,7 +87,6 @@ export const TestsLayout = memo(
               onToggle={onToggle}
               onClick={async () => {
                 if (node.data && node.data.type === 'SUITE') {
-                  await testSuiteStore.setEditSuite(node.data.id as number)
                   navigate(node.id.toString())
                 }
               }}

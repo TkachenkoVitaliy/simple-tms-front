@@ -5,9 +5,9 @@ import { DashboardPage } from 'pages/DashboardPage'
 import ProjectPage from 'pages/ProjectPage/ui/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestsPage } from 'pages/TestsPage'
-import { IAppRoute } from 'shared/types/routerTypes'
+import { AppRoute } from 'shared/lib/context/AppRouterContext'
 
-export const appRoutes: IAppRoute[] = [
+export const appRoutes: AppRoute[] = [
   {
     path: () => 'projects',
     element: <ProjectsPage />,
@@ -40,7 +40,7 @@ export const appRoutes: IAppRoute[] = [
         onProjectChangePattern: 'projects/:projectId/tests',
       },
       {
-        path: () => 'suite/:suiteId',
+        path: () => 'suite/:testSuiteId',
         element: <TestSuiteForm />,
         onProjectChangePattern: 'projects/:projectId/tests',
       },

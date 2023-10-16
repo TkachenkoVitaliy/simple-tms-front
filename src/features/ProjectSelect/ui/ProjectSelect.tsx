@@ -6,6 +6,7 @@ import {
   generatePath,
   matchPath,
   useLocation,
+  useMatches,
   useNavigate,
   useParams,
 } from 'react-router-dom'
@@ -38,6 +39,10 @@ function flattenRoutes(routes: IAppRoute[], parentPath?: string) {
 export const ProjectSelect = observer(() => {
   const NEW_PROJECT_PATH = '/projects/0'
   const params = useParams<RouteParams>()
+
+  const matches = useMatches()
+
+  console.log(matches)
 
   const navigate = useNavigate()
   const location = useLocation()

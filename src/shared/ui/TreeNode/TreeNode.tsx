@@ -8,6 +8,7 @@ import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
 import { useNavigate } from 'react-router-dom'
 import { LocationState } from 'shared/types/routerTypes'
 import { TestNodeData } from 'entities/TestNode/model/types'
+import { testSuiteStore } from 'entities/TestNode/TestSuite/model/testSuiteStore'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 import { TMSMenu } from '../TMSMenu/TMSMenu'
 
@@ -91,7 +92,13 @@ export const TreeNode = memo((props: TreeNodeProps) => {
             options={[
               {
                 label: 'Suite',
-                onSelect: () => navigate('suite'),
+                onSelect: () => {
+                  if (data?.id) {
+                    const id = Number(data.id)
+                    testSuiteStore.setCreateSuite(id)
+                  }
+                  navigate('suite')
+                },
               },
               {
                 label: 'Case',

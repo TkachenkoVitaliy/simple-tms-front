@@ -17,7 +17,7 @@ export const TestSuiteAPI = {
     return data
   },
 
-  createTestSuite: async (testSuite: TestSuite) => {
+  createTestSuite: async (testSuite: NewEntity<TestSuite>) => {
     const { data }: AxiosResponse<TestSuite> = await API.post(URL, testSuite)
     return data
   },

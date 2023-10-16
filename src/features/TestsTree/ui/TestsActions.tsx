@@ -4,8 +4,11 @@ import { memo } from 'react'
 import { Button, ButtonGroup } from '@mui/material'
 import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { TMSMenu } from 'shared/ui/TMSMenu/TMSMenu'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
+import { testSuiteStore } from 'entities/TestNode/TestSuite/model/testSuiteStore'
+import { RouteParams } from 'shared/types/routerTypes'
+import { useAppRouter } from 'shared/lib/hooks/useAppRouter'
 import styles from './TestsLayout.module.scss'
 
 export interface TestsActionsProps {
@@ -18,6 +21,7 @@ export interface TestsActionsProps {
 export const TestsActions = memo((props: TestsActionsProps) => {
   const { canExpand, canCollapse, onExpand, onCollapse } = props
   const navigate = useNavigate()
+  const routes = useAppRouter()
 
   return (
     <div className={styles.actions}>
@@ -29,6 +33,7 @@ export const TestsActions = memo((props: TestsActionsProps) => {
           {
             label: 'Suite',
             onSelect: () => {
+              testSuiteStore.setCreateSuite()
               navigate('suite/0')
             },
           },
@@ -40,6 +45,12 @@ export const TestsActions = memo((props: TestsActionsProps) => {
           },
         ]}
       />
+      <Button
+        onClick={() => console.log(routes)}
+        component="button"
+      >
+        CLICK
+      </Button>
       <div />
       <ButtonGroup
         size="small"
