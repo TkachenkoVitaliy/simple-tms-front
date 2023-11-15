@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material'
 import { appRoutes } from 'app/providers/AppRouter/model/appRoutes'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { observer } from 'mobx-react-lite'
 import {
   generatePath,

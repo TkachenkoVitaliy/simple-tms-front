@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { testNodeStore } from 'entities/TestNode/model/testNodeStore'
 import { TestSuite, TestSuiteShort } from './types'
 import { TestSuiteAPI } from '../api/testSuiteApi'
@@ -76,7 +76,11 @@ class TestSuiteStore {
 
   async setEditSuite(suiteId: TestSuite['id']) {
     const testSuite: TestSuite = await TestSuiteAPI.getTestSuite(suiteId)
-    this.setSuite(testSuite)
+    this.setSuite(
+      testSuite.projectId !== projectsStore.activeProject?.id
+        ? NEW_SUITE
+        : testSuite,
+    )
   }
 
   setCreateSuite(parentSuiteId?: TestSuite['parentSuiteId']) {

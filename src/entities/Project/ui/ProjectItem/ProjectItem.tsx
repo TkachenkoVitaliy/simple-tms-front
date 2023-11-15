@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from 'shared/types/projectTypes'
-import { projectsStore } from '../../model/projectsStore'
+import { projectsStore } from '../../model/projectsStore old'
 
 interface ProjectItemProps {
   project: IProject

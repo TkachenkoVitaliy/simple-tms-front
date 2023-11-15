@@ -3,7 +3,7 @@ import { memo } from 'react'
 import { observer } from 'mobx-react-lite'
 import { ProjectItem } from '../ProjectItem/ProjectItem'
 import { NewProjectItem } from '../NewProjectItem/NewProjectItem'
-import { projectsStore } from '../../model/projectsStore'
+import { projectsStore } from '../../model/projectsStore old'
 
 export const ProjectList = memo(
   observer(() => {

@@ -3,7 +3,7 @@ import { memo, useEffect, useRef } from 'react'
 import { TreeNode } from 'shared/ui/TreeNode/TreeNode'
 import { TreeNodeDrag } from 'shared/ui/TreeNodeDrag/TreeNodeDrag'
 import { useNavigate, useParams } from 'react-router-dom'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { RouteParams } from 'shared/types/routerTypes'
 import { TMSTree } from 'shared/ui/TMSTree/TMSTree'
 import {

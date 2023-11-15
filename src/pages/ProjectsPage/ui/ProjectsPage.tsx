@@ -1,6 +1,6 @@
 import { Container } from '@mui/material'
 import { ProjectList } from 'entities/Project'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { useEffect } from 'react'
 
 function ProjectsPage() {

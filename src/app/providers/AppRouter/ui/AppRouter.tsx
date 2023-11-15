@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import { IAppRoute, IRoute } from 'shared/types/routerTypes'
 import { AppLayout } from 'app/AppLayout'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { Loader } from 'shared/ui/Loader/Loader'
 import { AppRouterContext } from 'shared/lib/context/AppRouterContext'
 import { appRoutes } from '../model/appRoutes'

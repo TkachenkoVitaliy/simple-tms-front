@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { Button, Card, CardActions, TextField } from '@mui/material'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'

@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material'
 import { Button, CardContent } from '@mui/material'
 import Card from '@mui/material/Card'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'

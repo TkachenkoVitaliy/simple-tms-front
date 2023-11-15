@@ -8,68 +8,45 @@ const NEW_PROJECT_DEFAULT = { id: 0, name: 'New Project', description: '' }
 class ProjectsStore {
   projects: IProject[] = []
 
-  activeProject: IProject | null = null
+  private activeProjectId: string | null = null
 
-  setProjects(projects: IProject[]) {
+  private setProjects(projects: IProject[]) {
     this.projects = projects
   }
 
-  setActiveProject(project: IProject | null) {
-    this.activeProject = project
-    if (project === null || project.id === null) {
-      localStorage.removeItem(LOCAL_STORAGE_ACTIVE_PROJECT)
-    } else {
-      localStorage.setItem(LOCAL_STORAGE_ACTIVE_PROJECT, project.id.toString())
-    }
+  setActiveProjectId(activeProjectId: string | null) {
+    this.activeProjectId = activeProjectId
   }
 
-  setActiveProjectById(projectId: string) {
-    localStorage.setItem(LOCAL_STORAGE_ACTIVE_PROJECT, projectId)
-    this.initProjects()
+  get getActiveProjectId() {
+    const id = Number(localStorage.getItem(LOCAL_STORAGE_ACTIVE_PROJECT))
+    return Number.isNaN(id) ? null : id
   }
 
-  async loadProjects() {
+  get activeProject() {
+    return this.projects.filter(
+      (project) => project.id.toString() === this.activeProjectId,
+    )
+  }
+
+  get projectsWithCreateItem() {
+    return [...this.projects, NEW_PROJECT_DEFAULT]
+  }
+
+  async fetchProjects() {
     const projects = await ProjectAPI.getAllProjects()
-    this.setProjects([...projects, NEW_PROJECT_DEFAULT])
+    this.setProjects(projects)
   }
 
-  async deleteProject(id: number) {
-    await ProjectAPI.deleteProject(id)
-    if (this.activeProject?.id === id) {
-      this.setActiveProject(null)
-    }
-  }
-
-  async createProject(project: IProject) {
-    const createdProject = await ProjectAPI.createProject({
-      ...project,
-      id: null,
-    })
-    this.setActiveProject(createdProject)
-  }
-
-  async updateProject(project: IProject) {
-    const updatedProject = await ProjectAPI.updateProject(project)
-    this.setActiveProject(updatedProject)
-  }
-
-  async initProjects() {
-    await this.loadProjects()
-    const activeProjectId = localStorage.getItem(LOCAL_STORAGE_ACTIVE_PROJECT)
-    if (activeProjectId) {
-      const activeProject = this.projects.find(
-        (project) => project.id.toString() === activeProjectId,
-      )
-      this.setActiveProject(activeProject || null)
+  init(projectIdPathParam: string | null) {
+    if (projectIdPathParam != null) {
+      this.setActiveProjectId(projectIdPathParam)
     }
   }
 
   constructor() {
     makeAutoObservable(this)
-    this.initProjects()
   }
 }
 
 export const projectsStore = new ProjectsStore()
-
-// TODO: придумать как синхронизировать с react-router (при узменении в url pathparam - projectId)

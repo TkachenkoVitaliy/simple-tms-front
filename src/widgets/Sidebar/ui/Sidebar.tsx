@@ -9,7 +9,7 @@ import { observer } from 'mobx-react-lite'
 import { ArrowBackIosNew } from '@mui/icons-material'
 import { LOCAL_STORAGE_COLLAPSED } from 'shared/consts/localstorage'
 import { classNames } from 'utils/classNames/classNames'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { SidebarNavItem } from './SidebarNavItem'
 
 import styles from './Sidebar.module.scss'

@@ -1,6 +1,6 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
 import { makeAutoObservable } from 'mobx'
-import { projectsStore } from 'entities/Project/model/projectsStore'
+import { projectsStore } from 'entities/Project/model/projectsStore old'
 import { TestNodeData, UpdateTestsNodeParent } from './types'
 import { TestsAPI } from '../api/testsApi'
 import { TestSuiteShort } from '../TestSuite/model/types'
