@@ -19,7 +19,8 @@ class ProjectsStore {
   }
 
   get getActiveProjectId() {
-    return Number.isNaN()
+    const id = Number(localStorage.getItem(LOCAL_STORAGE_ACTIVE_PROJECT))
+    return Number.isNaN(id) ? null : id
   }
 
   get activeProject() {
@@ -39,7 +40,7 @@ class ProjectsStore {
 
   init(projectIdPathParam: string | null) {
     if (projectIdPathParam != null) {
-      this.setActiveProjectId = projectIdPathParam
+      this.setActiveProjectId(projectIdPathParam)
     }
   }
 
