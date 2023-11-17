@@ -1,4 +1,9 @@
 .app .wmde-markdown-var.w-md-editor {
+  --color-border-default: var(--mui-palette-divider);
+  --md-editor-font-family: var(--font-family-main);
+  --md-editor-background-color: var(--mui-palatte-background-default);
+  --md-editor-box-shadow-color: var(--color-border-default, #d0d7de);
+
   background-image: linear-gradient(
     rgb(255 255 255 / 12%),
     rgb(255 255 255 / 12%)
@@ -8,12 +13,6 @@
   padding-bottom: 1px;
   position: relative;
   color: var(--mui-palette-text-primary);
-
-  --color-border-default: var(--mui-palette-divider);
-  --md-editor-font-family: var(--font-family-main);
-  --md-editor-background-color: var(--mui-palatte-background-default);
-  --md-editor-box-shadow-color: var(--color-border-default, #d0d7de);
-
   box-shadow:
     0 0 0 1px var(--md-editor-box-shadow-color),
     0 0 0 var(--md-editor-box-shadow-color),
@@ -44,13 +43,6 @@
     top: var(--resize-top);
     left: var(--resize-left);
   }
-
-  // .w-md-editor-text {
-  //   // font-size: 16px !important;
-  //   line-height: unset !important;
-  //   font-size: unset !important;
-  //   font-weight: unset !important;
-  // }
 
   .w-md-editor-text {
     min-height: 44px;
