@@ -7,13 +7,16 @@ enum AppLocalStorageItems {
 }
 
 export const appLocalStorage = {
-  getTheme(): ThemeName {
+  getTheme(): ThemeName | null {
     const localThemeName = localStorage.getItem(AppLocalStorageItems.THEME)
-    if (localThemeName !== ThemeName.DARK) {
-      localStorage.setItem(AppLocalStorageItems.THEME, ThemeName.LIGHT)
-      return ThemeName.LIGHT
+    if (
+      localThemeName !== ThemeName.DARK &&
+      localThemeName !== ThemeName.LIGHT
+    ) {
+      localStorage.removeItem(AppLocalStorageItems.THEME)
+      return null
     }
-    return ThemeName.DARK
+    return localThemeName
   },
   setTheme(themeName: ThemeName) {
     localStorage.setItem(AppLocalStorageItems.THEME, themeName)
@@ -51,5 +54,11 @@ export const appLocalStorage = {
     }
     localStorage.setItem(AppLocalStorageItems.SIDEBAR_STATE, 'expanded')
     return false
+  },
+  setSideBarCollapsed(collapsed: boolean) {
+    localStorage.setItem(
+      AppLocalStorageItems.SIDEBAR_STATE,
+      collapsed ? 'collapsed' : 'expanded',
+    )
   },
 }

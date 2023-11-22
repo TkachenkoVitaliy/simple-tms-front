@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 
 // TODO: создать Navbar, Sidebar
-export function AppLayout() {
+function AppLayout() {
   return (
     <div className="app">
       {/* <Navbar /> */}
@@ -14,3 +14,5 @@ export function AppLayout() {
     </div>
   )
 }
+
+export default AppLayout
