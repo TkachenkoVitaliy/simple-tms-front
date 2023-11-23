@@ -16,4 +16,8 @@ export type AppRoute = Omit<RouteObject, 'children'> & {
   end?: boolean
 }
 
+export type FlatAppRoute = Omit<AppRoute, 'children'> & {
+  fullPath?: string
+}
+
 export type RouteParams = Record<RouteParamKeys, string | undefined>

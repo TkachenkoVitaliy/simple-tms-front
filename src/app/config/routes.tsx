@@ -7,7 +7,7 @@ import { AppRoute } from 'shared/types/router'
 
 export const appRoutes: AppRoute[] = [
   {
-    path: '/',
+    path: '',
     element: <AppLayout />,
     errorElement: <ErrorPage />,
     children: [

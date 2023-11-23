@@ -1,0 +1,16 @@
+.sidebar {
+  height: calc(100vh - var(--navbar-height));
+
+  .drawer {
+    transition: width 0.2s ease-in-out;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+}

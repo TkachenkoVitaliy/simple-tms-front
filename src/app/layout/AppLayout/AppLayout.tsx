@@ -1,12 +1,14 @@
 import { Outlet } from 'react-router-dom'
+import { Header } from 'widgets/Header'
+import { Sidebar } from 'widgets/Sidebar'
 
-// TODO: создать Navbar, Sidebar
+// TODO: создать Sidebar
 function AppLayout() {
   return (
     <div className="app">
-      {/* <Navbar /> */}
+      <Header />
       <div className="content-page">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <main className="main">
           <Outlet />
         </main>

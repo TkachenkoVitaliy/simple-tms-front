@@ -1,0 +1,20 @@
+.header {
+  position: sticky;
+
+  .toolbar {
+    justify-content: space-between;
+
+    .logoBtn {
+      text-transform: none;
+
+      .logoText {
+        padding-left: 10px;
+        color: #fff;
+      }
+    }
+
+    .authBtn {
+      color: inherit;
+    }
+  }
+}
