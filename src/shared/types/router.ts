@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom'
 import { RouteParamKeys } from 'shared/consts/routeParams'
 
 export type AppRoute = Omit<RouteObject, 'children'> & {
+  fallback?: React.ReactNode | null
   children?: AppRoute[]
   label?: string
   Icon?:

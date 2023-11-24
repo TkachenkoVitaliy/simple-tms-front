@@ -2,14 +2,20 @@ import { Typography, TypographyProps, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Oval } from 'react-loader-spinner'
 
+import { classNames } from 'shared/lib/utils'
 import styles from './Loader.module.scss'
 
 export interface LoaderProps {
+  className?: string
   size?: number
   typography?: TypographyProps['variant']
 }
 
-export const Loader = ({ size = 110, typography = 'h5' }: LoaderProps) => {
+export const Loader = ({
+  size = 110,
+  typography = 'h5',
+  className,
+}: LoaderProps) => {
   const LOADING = 'Loading'
 
   const [text, setText] = useState<string>(`${LOADING}...`)
@@ -26,7 +32,7 @@ export const Loader = ({ size = 110, typography = 'h5' }: LoaderProps) => {
   }, [])
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classNames(styles.wrapper, {}, [className])}>
       <Typography
         variant={typography}
         sx={{ marginBottom: `${size / 7.5}px` }}

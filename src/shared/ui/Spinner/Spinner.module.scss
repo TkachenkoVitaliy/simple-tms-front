@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+  z-index: 10000;
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    opacity: 1;
+  }
+}

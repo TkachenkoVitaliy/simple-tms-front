@@ -2,7 +2,7 @@ type Mods = Record<string, boolean | ((...args: unknown[]) => boolean)>
 export function classNames(
   cls: string,
   mods?: Mods,
-  additional?: string[],
+  additional?: (string | undefined)[],
 ): string {
   const modsParam = mods || {}
   const additionalParam = additional || []

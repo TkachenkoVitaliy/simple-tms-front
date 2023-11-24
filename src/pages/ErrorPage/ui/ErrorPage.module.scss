@@ -1,0 +1,23 @@
+.errorPage {
+  min-height: 100vh;
+  min-width: 100vw;
+  border: solid 1px transparent;
+}
+
+.wrapper {
+  margin: 20vh auto;
+  text-align: center;
+  color: var(--mui-palette-text-primary);
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .text {
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    margin-top: 20px;
+  }
+}
