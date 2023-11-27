@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { memo, useMemo, useState } from 'react'
 import { appLocalStorage, classNames } from 'shared/lib/utils'
-import { Box, Drawer, List, Toolbar } from '@mui/material'
+import { Drawer, Toolbar } from '@mui/material'
 import { useFlatAppRouter } from 'shared/lib/hooks/useFlatAppRouter'
+import { Navigation, NavigationItem } from '../Navigation/Navigation'
 import styles from './Sidebar.module.scss'
 
 export const Sidebar = memo(
@@ -20,13 +21,22 @@ export const Sidebar = memo(
       })
     }
 
-    const getSidebarItems = useMemo(() => {
-      return flatAppRoutes.map((route) => {
-        if (route.label !== undefined && route.Icon !== undefined) {
-          return <div>{route.label}</div>
+    const getNavigationItems = useMemo((): NavigationItem[] => {
+      const navigationItems: NavigationItem[] = []
+
+      flatAppRoutes.forEach((route) => {
+        if (route.label && route.Icon && route.path) {
+          navigationItems.push({
+            path: route.path,
+            label: route.label,
+            Icon: route.Icon,
+            showWithoutActiveProject: route.showWithoutActiveProject,
+            end: route.end,
+          })
         }
-        return null
       })
+
+      return navigationItems
     }, [flatAppRoutes])
 
     return (
@@ -52,19 +62,11 @@ export const Sidebar = memo(
           }}
         >
           <Toolbar />
-          <Box
+          <Navigation
             className={styles.box}
-            // sx={{
-            //   display: 'flex',
-            //   flexDirection: 'column',
-            //   justifyContent: 'space-between',
-            //   height: '100%',
-            // }}
-          >
-            <List sx={{ paddingTop: '2px', paddingBottom: '2px' }}>
-              {getSidebarItems}
-            </List>
-          </Box>
+            items={getNavigationItems}
+            isCollapsed={isCollapsed}
+          />
         </Drawer>
       </aside>
     )

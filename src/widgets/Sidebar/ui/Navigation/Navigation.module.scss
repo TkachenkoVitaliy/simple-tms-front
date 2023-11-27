@@ -1,0 +1,10 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .list {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
