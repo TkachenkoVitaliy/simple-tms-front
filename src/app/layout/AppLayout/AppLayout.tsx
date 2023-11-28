@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { projectStore } from 'entities/Project/model/store/projectStore'
+import { useEffect, useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { Header } from 'widgets/Header'
 import { Sidebar } from 'widgets/Sidebar'
@@ -6,10 +7,22 @@ import { Sidebar } from 'widgets/Sidebar'
 // TODO: создать Sidebar
 function AppLayout() {
   const params = useParams()
-  console.log(params)
+
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    console.log('projectId', params.projectId)
+    if (error != null) {
+      throw new Error(error)
+    }
+  }, [error])
+
+  useEffect(() => {
+    const projectId = Number(params.projectId)
+    projectStore
+      .initActiveProject(Number.isNaN(projectId) ? undefined : projectId)
+      .catch((catchedError: Error) => {
+        setError(catchedError.message)
+      })
   }, [params.projectId])
 
   return (

@@ -22,7 +22,7 @@ export const appLocalStorage = {
     localStorage.setItem(AppLocalStorageItems.THEME, themeName)
   },
   getActiveProjectId(): number | null {
-    const localActiveProject = localStorage.getItem(
+    const localActiveProject = window.localStorage.getItem(
       AppLocalStorageItems.ACTIVE_PROJECT,
     )
     if (localActiveProject == null) {

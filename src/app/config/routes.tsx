@@ -28,7 +28,7 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId',
-        element: <div />, // <ProjectPage />,
+        element: <div>SSS</div>, // <ProjectPage />,
       },
       {
         path: 'projects/:projectId/dashboard',

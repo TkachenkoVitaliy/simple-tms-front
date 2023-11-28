@@ -38,7 +38,7 @@ export const Navigation = observer((props: NavigationProps) => {
             key={item.label}
             path={item.path?.replace(
               ':projectId',
-              projectStore.activeProject?.id?.toString() || '0',
+              projectStore.activeProjectId?.toString() || '0',
             )}
             label={item.label}
             Icon={item.Icon}

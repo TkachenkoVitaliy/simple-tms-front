@@ -42,8 +42,6 @@ const AppRouterProvider = (props: AppRouterProviderProps) => {
     //   Type 'true' is not assignable to type 'false'.ts(2322)
   }, [])
 
-  console.log(routes.map(mapToRouteObjects))
-
   const router = createBrowserRouter(routes.map(mapToRouteObjects))
 
   return (
