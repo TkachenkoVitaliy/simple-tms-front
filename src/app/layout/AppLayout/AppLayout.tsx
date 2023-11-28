@@ -4,10 +4,10 @@ import { Outlet, useParams } from 'react-router-dom'
 import { Header } from 'widgets/Header'
 import { Sidebar } from 'widgets/Sidebar'
 
-// TODO: создать Sidebar
 function AppLayout() {
   const params = useParams()
 
+  // TODO: по-хорошему перенести обработку ошибок в вышестоящий компонент App, который будет стоять над всеми Layout
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
