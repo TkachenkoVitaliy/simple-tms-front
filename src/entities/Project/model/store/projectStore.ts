@@ -1,7 +1,6 @@
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 import { appLocalStorage } from 'shared/lib/utils'
 import { ProjectAPI } from 'entities/Project/api/projectApi'
-import { resolve } from 'path'
 import { Project } from '../types/project'
 
 class ProjectStore {
@@ -37,7 +36,6 @@ class ProjectStore {
   }
 
   setActiveProjectId = (id: number | null) => {
-    console.log('setActiveProjectId', id)
     if (id !== null && this.projectsRegistry.get(id) === undefined) {
       throw new Error(`Not found project with id - ${id}`)
     }
@@ -49,13 +47,11 @@ class ProjectStore {
     this.isLoading = true
     return ProjectAPI.getAll()
       .then(({ data }) => {
-        console.log('data', data)
         this.projectsRegistry.clear()
         data.forEach((project) =>
           this.projectsRegistry.set(project.id, project),
         )
         this.setRegistryInited(true)
-        console.log(this.isRegistryInited)
       })
       .finally(() => {
         this.setLoading(false)
@@ -67,8 +63,6 @@ class ProjectStore {
     if (!this.isRegistryInited) {
       await this.loadProjects()
     }
-
-    console.log('init', projectId)
 
     if (projectId !== undefined && projectId !== this.activeProjectId) {
       this.setActiveProjectId(projectId)
@@ -82,7 +76,6 @@ class ProjectStore {
 
   constructor() {
     makeAutoObservable(this)
-    console.log('constructor')
   }
 }
 

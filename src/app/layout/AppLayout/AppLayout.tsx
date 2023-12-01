@@ -1,11 +1,12 @@
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { useEffect, useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
+import { RouteParams } from 'shared/types/router'
 import { Header } from 'widgets/Header'
 import { Sidebar } from 'widgets/Sidebar'
 
 function AppLayout() {
-  const params = useParams()
+  const params = useParams<RouteParams>()
 
   // TODO: по-хорошему перенести обработку ошибок в вышестоящий компонент App, который будет стоять над всеми Layout
   const [error, setError] = useState<string | null>(null)
@@ -18,8 +19,11 @@ function AppLayout() {
 
   useEffect(() => {
     const projectId = Number(params.projectId)
+    if (params.projectId !== undefined && Number.isNaN(projectId)) {
+      window.history.pushState({}, '', '/projects')
+    }
     projectStore
-      .initActiveProject(Number.isNaN(projectId) ? undefined : projectId)
+      .initActiveProject(params.projectId === undefined ? undefined : projectId)
       .catch((catchedError: Error) => {
         setError(catchedError.message)
       })
