@@ -2,6 +2,7 @@ import { Dashboard, Dataset, Grading } from '@mui/icons-material'
 import { AppLayout } from 'app/layout/AppLayout'
 import { AuthLayout } from 'app/layout/AuthLayout'
 import { ErrorPage } from 'pages/ErrorPage'
+import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
 import { Navigate } from 'react-router-dom'
 import { AppRoute } from 'shared/types/router'
@@ -27,8 +28,12 @@ export const appRoutes: AppRoute[] = [
         end: true,
       },
       {
+        path: 'projects/new',
+        element: <ProjectPage isNew />,
+      },
+      {
         path: 'projects/:projectId',
-        element: <div>SSS</div>, // <ProjectPage />,
+        element: <ProjectPage />, // <ProjectPage />,
       },
       {
         path: 'projects/:projectId/dashboard',

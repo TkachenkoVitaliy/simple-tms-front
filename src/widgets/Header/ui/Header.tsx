@@ -4,6 +4,7 @@ import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SimpleLogo from 'shared/assets/svg/s-logo.svg'
 import styles from './Header.module.scss'
+import { ProjectSelect } from 'features/ProjectSelect'
 
 export const Header = memo(
   observer(() => {
@@ -38,8 +39,7 @@ export const Header = memo(
               SimpleTMS
             </Typography>
           </Button>
-          ProjecctSelect
-          {/* <ProjectSelect /> */}
+          <ProjectSelect />
           <Button
             className={styles.authBtn}
             component="button"

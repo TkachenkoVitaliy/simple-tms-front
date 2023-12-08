@@ -1,7 +1,7 @@
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 import { appLocalStorage } from 'shared/lib/utils'
 import { ProjectAPI } from 'entities/Project/api/projectApi'
-import { Project } from '../types/project'
+import { NewProject, Project } from '../types/project'
 
 class ProjectStore {
   isRegistryInited: boolean = false
@@ -9,6 +9,12 @@ class ProjectStore {
   isLoading: boolean = false
 
   activeProjectId: number | null = null
+
+  newProject: Project = {
+    id: 0,
+    name: 'Create new project',
+    description: '',
+  }
 
   projectsRegistry: ObservableMap<Project['id'], Project> = observable.map()
 
