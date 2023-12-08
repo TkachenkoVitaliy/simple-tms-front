@@ -13,7 +13,7 @@ export interface AppRouterProviderProps {
   pageFallback?: React.ReactNode
 }
 
-const AppRouterProvider = (props: AppRouterProviderProps) => {
+export const AppRouterProvider = (props: AppRouterProviderProps) => {
   const { routes, pageFallback } = props
 
   const providerValue = useMemo(() => ({ routes }), [])
@@ -50,5 +50,3 @@ const AppRouterProvider = (props: AppRouterProviderProps) => {
     </AppRouterContext.Provider>
   )
 }
-
-export default AppRouterProvider

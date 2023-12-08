@@ -22,7 +22,7 @@ const themes = {
   [ThemeName.DARK]: darkTheme,
 }
 
-interface AppThemeProviderProps {
+export interface AppThemeProviderProps {
   initialThemeName: ThemeName
   children: ReactNode
 }

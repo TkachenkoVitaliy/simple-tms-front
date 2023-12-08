@@ -1,7 +1,7 @@
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 import { appLocalStorage } from 'shared/lib/utils'
 import { ProjectAPI } from 'entities/Project/api/projectApi'
-import { NewProject, Project } from '../types/project'
+import { Project } from '../types/project'
 
 class ProjectStore {
   isRegistryInited: boolean = false
@@ -20,6 +20,11 @@ class ProjectStore {
 
   setRegistryInited(isInited: boolean) {
     this.isRegistryInited = isInited
+  }
+
+  // TODO: мб и не нужен этот метод, нужно подумать
+  addOrUpdateRegistryProject(project: Project) {
+    this.projectsRegistry.set(project.id, project)
   }
 
   setLoading(isLoading: boolean) {

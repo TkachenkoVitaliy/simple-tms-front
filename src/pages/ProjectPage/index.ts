@@ -1,1 +1,3 @@
-export { ProjectPage } from './ui/ProjectPage'
+import ProjectPage from './ui/ProjectPage'
+
+export { ProjectPage }

@@ -45,29 +45,29 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId/tests',
-        element: <div />, // <TestsPage />,
+        element: <div>TESTS PAGE</div>, // <TestsPage />,
         label: 'Тесты',
         Icon: Grading,
         showWithoutActiveProject: false,
         children: [
           {
             path: 'suite',
-            element: <div />, // <TestSuiteForm />,
+            element: <div>TEST SUITE FORM</div>, // <TestSuiteForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
             path: 'suite/:testSuiteId',
-            element: <div />, // <TestSuiteForm />,
+            element: <div>TEST SUITE FORM + ID</div>, // <TestSuiteForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
             path: 'case',
-            element: <div />, // <TestCaseForm />,
+            element: <div>TEST CASE FORM</div>, // <TestCaseForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
             path: 'case/:testCaseId',
-            element: <div />, // <TestCaseForm />,
+            element: <div>TEST CASE FORM + ID</div>, // <TestCaseForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
         ],
