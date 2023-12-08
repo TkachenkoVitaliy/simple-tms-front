@@ -38,22 +38,22 @@ export const Navigation = observer((props: NavigationProps) => {
   }, [projectStore.activeProjectId])
 
   return (
-    <Box className={classNames(styles.navigation, {}, [className])}>
-      <List className={styles.list}>
-        {showedItems.map((item) => (
-          <NavigationItem
-            collapsed={isCollapsed}
-            key={item.label}
-            path={item.path?.replace(
-              ':projectId',
-              projectStore.activeProjectId?.toString() || '0',
-            )}
-            label={item.label}
-            Icon={item.Icon}
-            end={!!item.end}
-          />
-        ))}
-      </List>
-    </Box>
+    // <Box className={classNames(styles.navigation, {}, [className])}>
+    <List className={styles.list}>
+      {showedItems.map((item) => (
+        <NavigationItem
+          collapsed={isCollapsed}
+          key={item.label}
+          path={item.path?.replace(
+            ':projectId',
+            projectStore.activeProjectId?.toString() || '0',
+          )}
+          label={item.label}
+          Icon={item.Icon}
+          end={!!item.end}
+        />
+      ))}
+    </List>
+    // </Box>
   )
 })

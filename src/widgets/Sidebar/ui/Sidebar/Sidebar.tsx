@@ -1,10 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import { memo, useMemo, useState } from 'react'
 import { appLocalStorage, classNames } from 'shared/lib/utils'
-import { Drawer, Toolbar } from '@mui/material'
+import { Box, Drawer, Toolbar } from '@mui/material'
 import { useFlatAppRouter } from 'shared/lib/hooks/useFlatAppRouter'
 import { Navigation, NavigationItem } from '../Navigation/Navigation'
 import styles from './Sidebar.module.scss'
+import { CollapseBtn } from '../CollapseBtn/CollapseBtn'
+import { ThemeSwitcher } from '../ThemeSwitcher/ThemeSwitcher'
 
 export const Sidebar = memo(
   observer(() => {
@@ -62,11 +64,18 @@ export const Sidebar = memo(
           }}
         >
           <Toolbar />
-          <Navigation
-            className={styles.box}
-            items={getNavigationItems}
-            isCollapsed={isCollapsed}
-          />
+          <Box className={styles.container}>
+            <Navigation
+              className={styles.box}
+              items={getNavigationItems}
+              isCollapsed={isCollapsed}
+            />
+            <CollapseBtn
+              toggleCollapsed={toggleCollapsed}
+              isCollapsed={isCollapsed}
+            />
+            <ThemeSwitcher />
+          </Box>
         </Drawer>
       </aside>
     )
