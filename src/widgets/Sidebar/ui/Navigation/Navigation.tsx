@@ -5,6 +5,7 @@ import { AppRoute } from 'shared/types/router'
 
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import { projectStore } from 'entities/Project/model/store/projectStore'
+import { useMemo } from 'react'
 import { NavigationItem } from '../NavigationItem/ui/NavigationItem'
 import styles from './Navigation.module.scss'
 
@@ -29,10 +30,17 @@ export interface NavigationProps {
 export const Navigation = observer((props: NavigationProps) => {
   const { className, items, isCollapsed } = props
 
+  const showedItems = useMemo(() => {
+    return items.filter(
+      (item) =>
+        projectStore.activeProject !== null || item.showWithoutActiveProject,
+    )
+  }, [projectStore.activeProjectId])
+
   return (
     <Box className={classNames(styles.navigation, {}, [className])}>
       <List className={styles.list}>
-        {items.map((item) => (
+        {showedItems.map((item) => (
           <NavigationItem
             collapsed={isCollapsed}
             key={item.label}

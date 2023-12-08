@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material'
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
@@ -14,7 +15,6 @@ import { RequiredFields } from 'shared/types/helperTypes'
 import { AppRoute, RouteParams } from 'shared/types/router'
 import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete'
 
-// TODO: выглядит как гавно идея, нужно продумать другой вариант
 const NEW_PROJECT_PATH = '/projects/new'
 
 export const ProjectSelect = observer(() => {
@@ -22,41 +22,37 @@ export const ProjectSelect = observer(() => {
   const navigate = useNavigate()
   const location = useLocation()
   const flatAppRoutes = useFlatAppRouter()
-  // return <div>ProjectSelect</div>
+  const theme = useTheme()
 
   const createStyle = (option: Project) => {
-    return option.id === 0 ? { color: 'todo sdelat' } : {}
+    return option.id === 0 ? { color: theme.palette.success.light } : {}
   }
 
-  const handleChange = useCallback(
-    (value: Project | null) => {
-      if (value === null) return
-      if (value.id === 0) {
-        navigate(NEW_PROJECT_PATH)
-      } else {
-        const { pathname } = location
+  const handleChange = (value: Project | null) => {
+    if (value === null) return
+    if (value.id === 0) {
+      navigate(NEW_PROJECT_PATH)
+    } else {
+      const { pathname } = location
 
-        if (params.projectId === undefined) {
-          projectStore.setActiveProjectId(value.id)
-          return
-        }
-
-        const routeObj = flatAppRoutes.find(
-          (route) =>
-            route.path !== undefined && matchPath(route.path, pathname),
-        ) as RequiredFields<AppRoute, 'path'> | undefined
-        if (routeObj) {
-          navigate(
-            generatePath(routeObj.onProjectChangePattern || routeObj.path, {
-              ...params,
-              projectId: value.id.toString(),
-            }),
-          )
-        }
+      if (params.projectId === undefined && pathname !== NEW_PROJECT_PATH) {
+        projectStore.setActiveProjectId(value.id)
+        return
       }
-    },
-    [projectStore.setActiveProjectId, params, location],
-  )
+
+      const routeObj = flatAppRoutes.find(
+        (route) => route.path !== undefined && matchPath(route.path, pathname),
+      ) as RequiredFields<AppRoute, 'path'> | undefined
+      if (routeObj) {
+        navigate(
+          generatePath(routeObj.onProjectChangePattern || routeObj.path, {
+            ...params,
+            projectId: value.id.toString(),
+          }),
+        )
+      }
+    }
+  }
 
   return (
     <TMSAutocomplete<Project>

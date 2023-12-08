@@ -42,6 +42,8 @@ class ProjectStore {
   }
 
   setActiveProjectId = (id: number | null) => {
+    if (!this.isRegistryInited) return
+    console.log('setActiveProjectId')
     if (id !== null && this.projectsRegistry.get(id) === undefined) {
       throw new Error(`Not found project with id - ${id}`)
     }
@@ -60,6 +62,7 @@ class ProjectStore {
         this.setRegistryInited(true)
       })
       .finally(() => {
+        console.log('loadProjects', this.projects)
         this.setLoading(false)
       })
   }
@@ -78,6 +81,7 @@ class ProjectStore {
       const localActiveProjectId = appLocalStorage.getActiveProjectId()
       this.setActiveProjectId(localActiveProjectId)
     }
+    console.log('initActiveProject')
   }
 
   constructor() {

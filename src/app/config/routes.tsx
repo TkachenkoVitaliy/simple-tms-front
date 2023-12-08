@@ -30,6 +30,7 @@ export const appRoutes: AppRoute[] = [
       {
         path: 'projects/new',
         element: <ProjectPage isNew />,
+        onProjectChangePattern: 'projects/:projectId',
       },
       {
         path: 'projects/:projectId',
@@ -37,7 +38,7 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId/dashboard',
-        element: <div />, // <DashboardPage />,
+        element: <div>DASHBOARD PAGE</div>, // <DashboardPage />,
         label: 'Главная',
         Icon: Dashboard,
         showWithoutActiveProject: false,
