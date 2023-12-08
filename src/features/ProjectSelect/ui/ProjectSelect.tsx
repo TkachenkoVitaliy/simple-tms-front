@@ -61,7 +61,9 @@ export const ProjectSelect = observer(() => {
       onChange={handleChange}
       contrastText
       value={projectStore.activeProject}
-      getOptionLabel={(option: Project | null) => option?.name || ''}
+      getOptionLabel={(option: Project | null) =>
+        option?.name || 'Create new project'
+      }
       isOptionEqualToValue={(option, val) => option.id === val.id}
       placeholder={
         location.pathname === NEW_PROJECT_PATH

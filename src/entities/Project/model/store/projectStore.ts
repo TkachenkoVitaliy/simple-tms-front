@@ -12,7 +12,13 @@ class ProjectStore {
 
   newProject: Project = {
     id: 0,
-    name: 'Create new project',
+    name: '',
+    description: '',
+  }
+
+  editableProject: Project = {
+    id: 0,
+    name: '',
     description: '',
   }
 
@@ -29,6 +35,10 @@ class ProjectStore {
 
   setLoading(isLoading: boolean) {
     this.isLoading = isLoading
+  }
+
+  setEditableProject(project: Project) {
+    this.editableProject = project
   }
 
   get activeProject(): Project | null {
