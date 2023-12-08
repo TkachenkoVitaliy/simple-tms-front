@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SimpleLogo from 'shared/assets/svg/s-logo.svg'
-import styles from './Header.module.scss'
 import { ProjectSelect } from 'features/ProjectSelect'
+import styles from './Header.module.scss'
 
 export const Header = memo(
   observer(() => {
