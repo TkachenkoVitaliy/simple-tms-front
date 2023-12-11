@@ -1,3 +1,1 @@
-import ProjectPage from './ui/ProjectPage'
-
-export { ProjectPage }
+export { ProjectPageAsync as ProjectPage } from './ui/ProjectPageAsync'

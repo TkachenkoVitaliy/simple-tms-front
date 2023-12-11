@@ -1,9 +1,11 @@
+import { Card } from '@mui/material'
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { ProjectForm } from 'entities/Project/ui/ProjectForm'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { RouteParams } from 'shared/types/router'
+import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 export interface ProjectPageProps {
   isNew?: boolean
@@ -23,13 +25,29 @@ function ProjectPage(props: ProjectPageProps) {
   }, [isNew])
 
   useEffect(() => {
-    console.log('useEffect', projectId)
+    if (projectId !== null) {
+      projectStore.loadEditableProject(projectId)
+    } else {
+      projectStore.setEditableProject({ ...projectStore.newProject })
+    }
+    console.log('useEffect', JSON.stringify(projectStore.editableProject))
   }, [projectId])
 
   return (
-    <div>
-      <p>Project Page</p>
-      <ProjectForm projectId={projectId} />
+    <div
+      style={{
+        width: '50%',
+        margin: '0 auto',
+      }}
+    >
+      <TMSSkeleton
+        isLoading={projectStore.isLoading}
+        width="100%"
+        height="100%"
+        variant="rounded"
+      >
+        <ProjectForm project={projectStore.editableProject} />
+      </TMSSkeleton>
     </div>
   )
 }
