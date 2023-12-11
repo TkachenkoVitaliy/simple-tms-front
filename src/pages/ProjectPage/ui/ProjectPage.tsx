@@ -1,4 +1,5 @@
 import { projectStore } from 'entities/Project/model/store/projectStore'
+import { ProjectForm } from 'entities/Project/ui/ProjectForm'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
@@ -21,10 +22,14 @@ function ProjectPage(props: ProjectPageProps) {
     projectStore.setActiveProjectId(projectId)
   }, [isNew])
 
+  useEffect(() => {
+    console.log('useEffect', projectId)
+  }, [projectId])
+
   return (
     <div>
-      Project Page - {projectId || 'null'} -{' '}
-      {JSON.stringify(projectStore.activeProject)}
+      <p>Project Page</p>
+      <ProjectForm projectId={projectId} />
     </div>
   )
 }

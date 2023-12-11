@@ -17,9 +17,7 @@ class ProjectStore {
   }
 
   editableProject: Project = {
-    id: 0,
-    name: '',
-    description: '',
+    ...this.newProject,
   }
 
   projectsRegistry: ObservableMap<Project['id'], Project> = observable.map()
@@ -39,6 +37,15 @@ class ProjectStore {
 
   setEditableProject(project: Project) {
     this.editableProject = project
+  }
+
+  loadEditableProject = async (projectId: number) => {
+    this.setLoading(true)
+    ProjectAPI.getById(projectId)
+      .then((response) => {
+        this.setEditableProject(response.data)
+      })
+      .finally(() => this.setLoading(false))
   }
 
   get activeProject(): Project | null {
