@@ -1,5 +1,5 @@
 import { Button, Card, CardActions } from '@mui/material'
-import { Project } from 'entities/Project/model/types/project'
+import { NewProject, Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useState } from 'react'
 import { FieldValues, FormProvider, useForm } from 'react-hook-form'
@@ -96,7 +96,13 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
             size="large"
             variant="contained"
             onClick={handleSubmit((val) => {
-              console.log('value', values, val)
+              if (editedProject != null) {
+                const res: Project | NewProject = {
+                  id: editedProject.id || null,
+                  ...val,
+                }
+                console.log('value', res)
+              }
             })}
           >
             SAVE
