@@ -1,47 +1,54 @@
-import { Button, Card, CardActions, TextField } from '@mui/material'
-import { projectStore } from 'entities/Project/model/store/projectStore'
+import { Button, Card, CardActions } from '@mui/material'
 import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { FieldValues, FormProvider, useForm } from 'react-hook-form'
+import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 
 const NAME = 'Name'
 const DESCRIPTION = 'Description'
 
-const isNameValid = true
-const isFormValid = true
-
 export interface ProjectFormProps {
   project: Project
+}
+
+interface FormInputs extends FieldValues {
+  name: string
+  description: string
 }
 
 export const ProjectForm = observer((props: ProjectFormProps) => {
   const { project } = props
 
-  const [editedProject, setEditedProject] = useState<Project>({
-    ...projectStore.newProject,
-  })
+  const [editedProject, setEditedProject] = useState<Project | null>(null)
 
   useEffect(() => {
-    console.log(project)
     setEditedProject(project)
   }, [project])
 
-  const onNameChange = () => {
-    console.log('a')
-  }
+  const methods = useForm<FormInputs>({
+    mode: 'onTouched',
+    values: {
+      name: editedProject?.name || '',
+      description: editedProject?.description || '',
+    },
+  })
 
-  const onBlurName = () => {
-    console.log('b')
-  }
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = methods
 
-  const onDescriptionChange = () => {
-    console.log('c')
-  }
+  const values = methods.watch()
 
-  const saveForm = () => {
-    console.log('save', editedProject)
-  }
+  const canSave = useMemo(() => {
+    const haveChanges =
+      values.name.trim() !== editedProject?.name ||
+      values.description !== editedProject?.description
+    return isValid && haveChanges
+  }, [values, editedProject, isValid])
 
   return (
     <Card
@@ -55,43 +62,47 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
         padding: '16px',
       }}
     >
-      <TMSCardContent>
-        <TextField
-          type="text"
-          autoComplete="off"
-          error={!isNameValid}
-          required
-          fullWidth
-          label={NAME}
-          variant="outlined"
-          value={editedProject.name}
-          onChange={onNameChange}
-          onBlur={onBlurName}
-          helperText={isNameValid ? ' ' : 'Name is required'}
-        />
-        <TextField
-          type="text"
-          autoComplete="off"
-          fullWidth
-          multiline
-          minRows={4}
-          label={DESCRIPTION}
-          variant="outlined"
-          value={editedProject.description}
-          onChange={onDescriptionChange}
-          helperText=" "
-        />
-      </TMSCardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
-        <Button
-          disabled={!isFormValid}
-          size="large"
-          variant="contained"
-          onClick={saveForm}
-        >
-          SAVE
-        </Button>
-      </CardActions>
+      <FormProvider
+        {...methods}
+        key={editedProject?.id}
+      >
+        <TMSCardContent>
+          <FormTextField
+            name="name"
+            control={control}
+            label={NAME}
+            rules={{
+              minLength: {
+                value: 3,
+                message: 'Name require length > 2',
+              },
+              required: 'This field is required',
+            }}
+            emptyHelperText=""
+            validateOnFocus
+          />
+          <FormTextField
+            name="description"
+            control={control}
+            label={DESCRIPTION}
+            emptyHelperText=""
+            multiline
+            minRows={4}
+          />
+        </TMSCardContent>
+        <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <Button
+            disabled={!canSave}
+            size="large"
+            variant="contained"
+            onClick={handleSubmit((val) => {
+              console.log('value', values, val)
+            })}
+          >
+            SAVE
+          </Button>
+        </CardActions>
+      </FormProvider>
     </Card>
   )
 })
