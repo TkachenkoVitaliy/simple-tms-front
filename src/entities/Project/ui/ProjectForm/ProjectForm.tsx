@@ -5,9 +5,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { FieldValues, FormProvider, useForm } from 'react-hook-form'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
-
-const NAME = 'Name'
-const DESCRIPTION = 'Description'
+import styles from './ProjectForm.module.scss'
+import { projectStore } from 'entities/Project/model/store/projectStore'
 
 export interface ProjectFormProps {
   project: Project
@@ -54,61 +53,55 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
     <Card
       variant="elevation"
       raised
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        borderRadius: '10px',
-        padding: '16px',
-      }}
+      className={styles.card}
     >
-      <FormProvider
+      {/* <FormProvider
         {...methods}
         key={editedProject?.id}
-      >
-        <TMSCardContent>
-          <FormTextField
-            name="name"
-            control={control}
-            label={NAME}
-            rules={{
-              minLength: {
-                value: 3,
-                message: 'Name require length > 2',
-              },
-              required: 'This field is required',
-            }}
-            emptyHelperText=""
-            validateOnFocus
-          />
-          <FormTextField
-            name="description"
-            control={control}
-            label={DESCRIPTION}
-            emptyHelperText=""
-            multiline
-            minRows={4}
-          />
-        </TMSCardContent>
-        <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button
-            disabled={!canSave}
-            size="large"
-            variant="contained"
-            onClick={handleSubmit((val) => {
-              if (editedProject != null) {
-                const res: Project | NewProject = {
-                  id: editedProject.id || null,
-                  ...val,
-                }
-                console.log('value', res)
+      > */}
+      <TMSCardContent>
+        <FormTextField
+          name="name"
+          control={control}
+          label="Name"
+          rules={{
+            minLength: {
+              value: 3,
+              message: 'Name require length > 2',
+            },
+            required: 'This field is required',
+          }}
+          emptyHelperText=""
+          validateOnFocus
+        />
+        <FormTextField
+          name="description"
+          control={control}
+          label="Description"
+          emptyHelperText=""
+          multiline
+          minRows={4}
+        />
+      </TMSCardContent>
+      <CardActions className={styles.actions}>
+        <Button
+          disabled={!canSave}
+          size="large"
+          variant="contained"
+          onClick={handleSubmit((val) => {
+            if (editedProject != null) {
+              const project: Project | NewProject = {
+                id: editedProject.id || null,
+                ...val,
               }
-            })}
-          >
-            SAVE
-          </Button>
-        </CardActions>
-      </FormProvider>
+              projectStore.saveProject(project)
+            }
+          })}
+        >
+          SAVE
+        </Button>
+      </CardActions>
+      {/* </FormProvider> */}
     </Card>
   )
 })

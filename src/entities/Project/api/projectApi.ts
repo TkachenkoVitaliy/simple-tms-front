@@ -11,6 +11,9 @@ export const ProjectAPI = {
   getById(id: number): Promise<AxiosResponse<Project>> {
     return API.get(`${URL}/${id}`)
   },
+  save(project: Project | NewProject): Promise<AxiosResponse<Project>> {
+    return API.post(URL, project)
+  },
   create(project: NewProject): Promise<AxiosResponse<Project>> {
     return API.post(URL, project)
   },
