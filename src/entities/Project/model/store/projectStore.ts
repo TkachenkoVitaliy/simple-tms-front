@@ -1,7 +1,7 @@
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 import { appLocalStorage } from 'shared/lib/utils'
 import { ProjectAPI } from 'entities/Project/api/projectApi'
-import { NewProject, Project } from '../types/project'
+import { Project } from '../types/project'
 
 class ProjectStore {
   isRegistryInited: boolean = false
@@ -24,11 +24,6 @@ class ProjectStore {
 
   setRegistryInited(isInited: boolean) {
     this.isRegistryInited = isInited
-  }
-
-  // TODO: мб и не нужен этот метод, нужно подумать
-  addOrUpdateRegistryProject(project: Project) {
-    this.projectsRegistry.set(project.id, project)
   }
 
   setLoading(isLoading: boolean) {
@@ -66,17 +61,23 @@ class ProjectStore {
   setActiveProjectId = (id: number | null) => {
     if (!this.isRegistryInited) return
     if (id !== null && this.projectsRegistry.get(id) === undefined) {
+      const localId = appLocalStorage.getActiveProjectId()
+      if (localId === id) {
+        appLocalStorage.setActiveProjectId(null)
+      }
       throw new Error(`Not found project with id - ${id}`)
     }
     appLocalStorage.setActiveProjectId(id)
     this.activeProjectId = id
   }
 
-  saveProject = async (project: Project | NewProject) => {
+  saveProject = async (project: Project) => {
     this.isLoading = true
-    const response = await ProjectAPI.save(project)
+    const response = await ProjectAPI.save({
+      ...project,
+      id: project.id || null,
+    })
     const savedProject = response.data
-    console.log('saved project', savedProject)
     // reload projects registry
     await this.loadProjects()
     // update edited project
@@ -84,8 +85,6 @@ class ProjectStore {
       // нужно нормально отработать ситуацию когда не нашелся проект с таким id
       this.projectsRegistry.get(savedProject.id) || this.newProject,
     )
-    this.isLoading = false
-    console.log('update registry')
   }
 
   loadProjects = async () => {

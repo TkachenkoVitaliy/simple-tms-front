@@ -1,36 +1,33 @@
 import { Button, Card, CardActions } from '@mui/material'
-import { NewProject, Project } from 'entities/Project/model/types/project'
+import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useMemo, useState } from 'react'
-import { FieldValues, FormProvider, useForm } from 'react-hook-form'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
-import styles from './ProjectForm.module.scss'
 import { projectStore } from 'entities/Project/model/store/projectStore'
+import { useNavigate } from 'react-router-dom'
+import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+import { classNames } from 'shared/lib/utils'
+import styles from './ProjectForm.module.scss'
 
 export interface ProjectFormProps {
+  className?: string
   project: Project
 }
 
-interface FormInputs extends FieldValues {
-  name: string
-  description: string
-}
+type FormInputs = Omit<Project, 'id'>
 
 export const ProjectForm = observer((props: ProjectFormProps) => {
-  const { project } = props
+  const { className, project } = props
 
-  const [editedProject, setEditedProject] = useState<Project | null>(null)
-
-  useEffect(() => {
-    setEditedProject(project)
-  }, [project])
+  const navigate = useNavigate()
 
   const methods = useForm<FormInputs>({
     mode: 'onTouched',
     values: {
-      name: editedProject?.name || '',
-      description: editedProject?.description || '',
+      name: project.name || '',
+      description: project.description || '',
     },
   })
 
@@ -44,64 +41,67 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
 
   const canSave = useMemo(() => {
     const haveChanges =
-      values.name.trim() !== editedProject?.name ||
-      values.description !== editedProject?.description
+      values.name.trim() !== project.name ||
+      values.description !== project.description
     return isValid && haveChanges
-  }, [values, editedProject, isValid])
+  }, [values, project, isValid])
+
+  const submitForm = async (formValue: FormInputs) => {
+    const projectForSave: Project = {
+      id: project.id,
+      name: formValue.name.trim(),
+      description: formValue.description,
+    }
+    await projectStore.saveProject(projectForSave)
+    navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
+  }
 
   return (
-    <Card
-      variant="elevation"
-      raised
-      className={styles.card}
+    <TMSSkeleton
+      className={classNames(styles.skeleton, {}, [className])}
+      isLoading={projectStore.isLoading}
+      width="50%"
     >
-      {/* <FormProvider
-        {...methods}
-        key={editedProject?.id}
-      > */}
-      <TMSCardContent>
-        <FormTextField
-          name="name"
-          control={control}
-          label="Name"
-          rules={{
-            minLength: {
-              value: 3,
-              message: 'Name require length > 2',
-            },
-            required: 'This field is required',
-          }}
-          emptyHelperText=""
-          validateOnFocus
-        />
-        <FormTextField
-          name="description"
-          control={control}
-          label="Description"
-          emptyHelperText=""
-          multiline
-          minRows={4}
-        />
-      </TMSCardContent>
-      <CardActions className={styles.actions}>
-        <Button
-          disabled={!canSave}
-          size="large"
-          variant="contained"
-          onClick={handleSubmit((val) => {
-            if (editedProject != null) {
-              const project: Project | NewProject = {
-                id: editedProject.id || null,
-                ...val,
-              }
-              projectStore.saveProject(project)
-            }
-          })}
-        >
-          SAVE
-        </Button>
-      </CardActions>
-      {/* </FormProvider> */}
-    </Card>
+      <Card
+        variant="elevation"
+        raised
+        className={classNames(styles.card, {}, [className])}
+      >
+        <TMSCardContent>
+          <FormTextField
+            name="name"
+            control={control}
+            label="Name"
+            rules={{
+              minLength: {
+                value: 3,
+                message: 'Name require length > 2',
+              },
+              required: 'This field is required',
+            }}
+            emptyHelperText=""
+            validateOnFocus
+          />
+          <FormTextField
+            name="description"
+            control={control}
+            label="Description"
+            emptyHelperText=""
+            multiline
+            minRows={4}
+          />
+        </TMSCardContent>
+        <CardActions className={styles.actions}>
+          <Button
+            disabled={!canSave}
+            size="large"
+            variant="contained"
+            onClick={handleSubmit(submitForm)}
+          >
+            SAVE
+          </Button>
+        </CardActions>
+      </Card>
+    </TMSSkeleton>
   )
 })

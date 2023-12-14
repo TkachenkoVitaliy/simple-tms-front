@@ -2,7 +2,6 @@ import { useTheme } from '@mui/material'
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
-import { useCallback } from 'react'
 import {
   generatePath,
   matchPath,
@@ -15,6 +14,7 @@ import { RequiredFields } from 'shared/types/helperTypes'
 import { AppRoute, RouteParams } from 'shared/types/router'
 import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete'
 
+// TODO: возможно вынести в отдельный файл constant (использовать так же в ProjectForm)
 const NEW_PROJECT_PATH = '/projects/new'
 
 export const ProjectSelect = observer(() => {
@@ -31,6 +31,7 @@ export const ProjectSelect = observer(() => {
   const handleChange = (value: Project | null) => {
     if (value === null) return
     if (value.id === 0) {
+      projectStore.setEditableProject({ ...projectStore.newProject })
       navigate(NEW_PROJECT_PATH)
     } else {
       const { pathname } = location

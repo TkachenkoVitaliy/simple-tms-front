@@ -1,7 +1,8 @@
 import { Skeleton, SkeletonProps } from '@mui/material'
 
 export interface TMSSkeletonProps {
-  children: SkeletonProps['children']
+  className?: string
+  children?: SkeletonProps['children']
   animation?: SkeletonProps['animation']
   height?: SkeletonProps['height']
   width?: SkeletonProps['width']
@@ -10,14 +11,15 @@ export interface TMSSkeletonProps {
 }
 
 export const TMSSkeleton = (props: TMSSkeletonProps) => {
-  const { children, animation, height, width, variant, isLoading } = props
+  const { className, children, animation, height, width, variant, isLoading } =
+    props
   return isLoading ? (
     <Skeleton
-      sx={{ margin: '0 auto', borderRadius: '10px' }}
+      className={className}
       animation={animation || 'wave'}
       height={height}
       width={width}
-      variant={variant || 'rectangular'}
+      variant={variant || 'rounded'}
       component="div"
     >
       {children}
