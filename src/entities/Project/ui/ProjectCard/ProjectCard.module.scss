@@ -20,6 +20,12 @@
     .content {
       height: 130px;
       color: var(--mui-palette-text-secondary);
+
+      .description {
+        height: 70px;
+        overflow-y: clip;
+        white-space: pre-wrap;
+      }
     }
   }
 }

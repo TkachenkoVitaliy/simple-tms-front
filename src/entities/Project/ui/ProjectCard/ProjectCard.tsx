@@ -62,15 +62,7 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
           component="div"
           className={styles.content}
         >
-          <div
-            style={{
-              height: '70px',
-              overflowY: 'clip',
-              whiteSpace: 'pre-wrap',
-            }}
-          >
-            {description}
-          </div>
+          <div className={styles.description}>{description}</div>
         </CardContent>
       </Button>
       <div
