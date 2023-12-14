@@ -65,6 +65,7 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
           <div className={styles.description}>{description}</div>
         </CardContent>
       </Button>
+      {/* Стоить вынести отдельно как ActionPanel или Actions */}
       <div
         style={{
           display: 'grid',
