@@ -2,7 +2,8 @@ import { Theme } from '@mui/material'
 
 export function updateCss(theme: Theme) {
   const root = document.documentElement
-  const { mode, primary, success, text, divider, background } = theme.palette
+  const { mode, primary, success, text, divider, background, info } =
+    theme.palette
 
   root.setAttribute('data-color-mode', mode)
 
@@ -15,6 +16,8 @@ export function updateCss(theme: Theme) {
     '--drag-layer-shadow',
     mode === 'dark' ? '#121212' : '#f5f5f5',
   )
+
+  root.style.setProperty('--mui-pallete-info-main', info.main)
 
   root.style.setProperty('--mui-contrast-text', primary.contrastText)
 
