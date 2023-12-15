@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 module.exports = {
   env: {
     browser: true,
@@ -105,7 +106,7 @@ module.exports = {
     'class-methods-use-this': 'warn',
     'max-lines': [
       'warn',
-      { max: 100, skipBlankLines: false, skipComments: true },
+      { max: 100, skipBlankLines: true, skipComments: true },
     ],
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
