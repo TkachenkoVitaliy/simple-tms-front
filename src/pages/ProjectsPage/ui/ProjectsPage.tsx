@@ -1,13 +1,11 @@
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { ProjectCard } from 'entities/Project/ui/ProjectCard'
+import { ProjectCardsGrid } from 'entities/Project/ui/ProjectCardsGrid'
 import { observer } from 'mobx-react-lite'
+import styles from './ProjectsPage.module.scss'
 
 const ProjectsPage = observer(() => {
   return (
-    <div style={{ minHeight: '100%', height: '100%' }}>
-      {projectStore.projects.map((project) => (
-        <ProjectCard project={project} />
-      ))}
+    <div className={styles.container}>
+      <ProjectCardsGrid />
     </div>
   )
 })

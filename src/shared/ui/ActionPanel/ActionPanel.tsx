@@ -5,7 +5,7 @@ export interface ActionBtn {
   onClick: ButtonProps['onClick']
   color?: ButtonProps['color']
   variant?: ButtonProps['variant']
-  text?: string
+  text: string
 }
 
 export interface ActionPanelProps {
@@ -20,6 +20,7 @@ export const ActionPanel = (props: ActionPanelProps) => {
     <div className={classNames('', {}, [className])}>
       {actionBtns.map(({ onClick, color, variant, text }) => (
         <Button
+          key={text}
           onClick={onClick}
           color={color}
           variant={variant || 'outlined'}

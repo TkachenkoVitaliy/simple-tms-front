@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { classNames } from 'shared/lib/utils'
 import { ActionBtn, ActionPanel } from 'shared/ui/ActionPanel'
+import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 import styles from './ProjectCard.module.scss'
 
 export interface ProjectCardProps {
@@ -23,7 +24,7 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
 
   const editCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    projectStore.setActiveProjectId(project.id)
+    // projectStore.setEditableProject(project)
     navigate(`../projects/${project.id}`)
   }
 
@@ -52,32 +53,37 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
   }, [project, projectStore.activeProjectId])
 
   return (
-    <Card
-      variant="elevation"
-      raised
-      className={classNames(styles.container, { [styles.active]: isActive })}
+    <TMSSkeleton
+      isLoading={projectStore.isLoading}
+      width="100%"
     >
-      <Button
-        fullWidth
-        component="div"
-        className={styles.cardBtn}
-        onClick={selectCard}
+      <Card
+        variant="elevation"
+        raised
+        className={classNames(styles.container, { [styles.active]: isActive })}
       >
-        <CardHeader
-          title={project.name}
-          className={styles.header}
-        />
-        <CardContent
+        <Button
+          fullWidth
           component="div"
-          className={styles.content}
+          className={styles.cardBtn}
+          onClick={selectCard}
         >
-          <div className={styles.description}>{project.description}</div>
-        </CardContent>
-      </Button>
-      <ActionPanel
-        className={styles.actionPanel}
-        actionBtns={actions}
-      />
-    </Card>
+          <CardHeader
+            title={project.name}
+            className={styles.header}
+          />
+          <CardContent
+            component="div"
+            className={styles.content}
+          >
+            <div className={styles.description}>{project.description}</div>
+          </CardContent>
+        </Button>
+        <ActionPanel
+          className={styles.actionPanel}
+          actionBtns={actions}
+        />
+      </Card>
+    </TMSSkeleton>
   )
 })
