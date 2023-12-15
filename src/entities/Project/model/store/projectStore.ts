@@ -87,6 +87,12 @@ class ProjectStore {
     )
   }
 
+  deleteProject = async (projectId: Project['id']) => {
+    this.isLoading = true
+    await ProjectAPI.delete(projectId)
+    await this.loadProjects()
+  }
+
   loadProjects = async () => {
     this.isLoading = true
     return ProjectAPI.getAll()

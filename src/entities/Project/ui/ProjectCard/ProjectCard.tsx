@@ -1,10 +1,11 @@
-import { Button, Card, CardContent, CardHeader, useTheme } from '@mui/material'
+import { Button, Card, CardContent, CardHeader } from '@mui/material'
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { classNames } from 'shared/lib/utils'
+import { ActionBtn, ActionPanel } from 'shared/ui/ActionPanel'
 import styles from './ProjectCard.module.scss'
 
 export interface ProjectCardProps {
@@ -13,11 +14,7 @@ export interface ProjectCardProps {
 
 export const ProjectCard = observer((props: ProjectCardProps) => {
   const { project } = props
-
-  const { name, description } = project
-  const theme = useTheme()
   const navigate = useNavigate()
-  const borderColor = theme.palette.info.main
 
   const selectCard = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -33,10 +30,22 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
   const deleteCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (project.id !== null) {
-      // await projectStore.deleteProject(project.id)
-      // await projectStore.initProjects()
+      await projectStore.deleteProject(project.id)
     }
   }
+
+  const actions: ActionBtn[] = [
+    {
+      onClick: editCard,
+      text: 'EDIT',
+      color: 'primary',
+    },
+    {
+      onClick: deleteCard,
+      text: 'DELETE',
+      color: 'error',
+    },
+  ]
 
   const isActive = useMemo(() => {
     return project.id === projectStore.activeProjectId
@@ -55,40 +64,20 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
         onClick={selectCard}
       >
         <CardHeader
-          title={name}
+          title={project.name}
           className={styles.header}
         />
         <CardContent
           component="div"
           className={styles.content}
         >
-          <div className={styles.description}>{description}</div>
+          <div className={styles.description}>{project.description}</div>
         </CardContent>
       </Button>
-      {/* Стоить вынести отдельно как ActionPanel или Actions */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '10px',
-          marginTop: '8px',
-        }}
-      >
-        <Button
-          color="primary"
-          variant="outlined"
-          onClick={editCard}
-        >
-          EDIT
-        </Button>
-        <Button
-          color="error"
-          variant="outlined"
-          onClick={deleteCard}
-        >
-          DELETE
-        </Button>
-      </div>
+      <ActionPanel
+        className={styles.actionPanel}
+        actionBtns={actions}
+      />
     </Card>
   )
 })
