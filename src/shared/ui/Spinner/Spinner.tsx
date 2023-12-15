@@ -1,8 +1,10 @@
+import { useMemo } from 'react'
+
 import { useTheme } from '@mui/material'
 import { Oval } from 'react-loader-spinner'
 
 import { classNames } from 'shared/lib/utils'
-import { useMemo } from 'react'
+
 import styles from './Spinner.module.scss'
 
 export interface SprinnerProps {

@@ -1,9 +1,12 @@
-import { Grid } from '@mui/material'
 import { observer } from 'mobx-react-lite'
-import { Project } from 'entities/Project/model/types/project'
+
+import { Grid } from '@mui/material'
+
 import { projectStore } from 'entities/Project/model/store/projectStore'
-import { ProjectCard } from '../ProjectCard/ProjectCard'
+import { Project } from 'entities/Project/model/types/project'
+
 import { NewProjectCard } from '../NewProjectCard'
+import { ProjectCard } from '../ProjectCard/ProjectCard'
 
 export interface ProjectCardsGridProps {}
 

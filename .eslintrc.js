@@ -19,7 +19,83 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    // indent: ['error', 2],
+    'import/order': [
+      'error',
+      {
+        warnOnUnassignedImports: true,
+        groups: [
+          // Встроенные в ноду модули, типо `fs` или `path`
+          'builtin',
+          // Внешние библиотеки из `package.json`
+          'external',
+          // Внутренние модули с путями, тут path-aliases
+          'internal',
+          // Из какой-то из родительских директорий
+          'parent',
+          // Из соседней директории
+          'sibling',
+          // Индексный файл из текущей директории (довольно редкий кейс)
+          'index',
+          'object',
+          'type',
+        ],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
+            pattern: 'react-dom',
+            group: 'builtin',
+          },
+          {
+            pattern: 'mobx-react-lite',
+            group: 'builtin',
+          },
+          {
+            pattern: 'app/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'pages/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'widgets/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'features/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'entities/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: 'shared/**',
+            group: 'internal',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: [
+          'react',
+          'react-dom',
+          'mobx-react-lite',
+        ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
     semi: ['error', 'never'],
     quotes: ['error', 'single', { avoidEscape: true }],
     'no-shadow': 'off',

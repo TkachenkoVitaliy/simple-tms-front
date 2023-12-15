@@ -1,6 +1,8 @@
-import ThemeProvider from '@mui/material/styles/ThemeProvider'
-import createTheme from '@mui/material/styles/createTheme'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
+
+import createTheme from '@mui/material/styles/createTheme'
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
+
 import { ThemeName } from 'shared/consts/themeNames'
 import { ThemeContext } from 'shared/lib/context/ThemeContext'
 import { appLocalStorage, updateCss } from 'shared/lib/utils'

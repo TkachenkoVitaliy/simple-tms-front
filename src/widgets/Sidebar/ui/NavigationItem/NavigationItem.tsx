@@ -1,11 +1,16 @@
+import { memo } from 'react'
+
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import { SvgIconTypeMap } from '@mui/material/SvgIcon'
-import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
+
+import { classNames } from 'shared/lib/utils'
+
+import styles from './NavigationItem.module.scss'
 
 export interface NavigationItemProps {
   collapsed: boolean
@@ -25,33 +30,19 @@ export const NavigationItem = memo((props: NavigationItemProps) => {
   return (
     <ListItem disablePadding>
       <NavLink
+        className={styles.navLink}
         to={path}
         end={!!end}
         key={label}
-        style={{
-          width: '100%',
-          height: '50px',
-          display: 'flex',
-          alignItems: 'center',
-        }}
       >
         {({ isActive }) => (
           <ListItemButton
+            className={classNames(styles.btn, {
+              [styles.collapsed]: collapsed,
+            })}
             selected={isActive}
-            sx={collapsed ? { padding: '8px 0', width: '49px' } : {}}
           >
-            <ListItemIcon
-              sx={
-                collapsed
-                  ? {
-                      width: '49px',
-                      minWidth: '49px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }
-                  : {}
-              }
-            >
+            <ListItemIcon className={styles.icon}>
               <Icon />
             </ListItemIcon>
             {!collapsed && <ListItemText primary={label} />}

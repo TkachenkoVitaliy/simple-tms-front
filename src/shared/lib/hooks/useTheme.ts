@@ -1,5 +1,7 @@
 import { useContext } from 'react'
+
 import { ThemeName } from 'shared/consts/themeNames'
+
 import { ThemeContext } from '../context/ThemeContext'
 import { appLocalStorage } from '../utils'
 

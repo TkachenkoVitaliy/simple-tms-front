@@ -1,5 +1,7 @@
-import { AppRoute, FlatAppRoute } from 'shared/types/router'
 import { useCallback, useContext } from 'react'
+
+import { AppRoute, FlatAppRoute } from 'shared/types/router'
+
 import { AppRouterContext } from '../context/AppRouterContext'
 
 export function useFlatAppRouter(): AppRoute[] {

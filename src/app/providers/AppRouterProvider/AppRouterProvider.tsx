@@ -1,9 +1,11 @@
 import { Suspense, useCallback, useMemo } from 'react'
+
 import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom'
+
 import { AppRouterContext } from 'shared/lib/context/AppRouterContext'
 import { AppRoute } from 'shared/types/router'
 import { Spinner } from 'shared/ui/Spinner'

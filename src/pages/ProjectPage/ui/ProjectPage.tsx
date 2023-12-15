@@ -1,9 +1,14 @@
+import { useEffect, useMemo } from 'react'
+
+import { observer } from 'mobx-react-lite'
+
+import { useParams } from 'react-router-dom'
+
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { ProjectForm } from 'entities/Project/ui/ProjectForm'
-import { observer } from 'mobx-react-lite'
-import { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+
 import { RouteParams } from 'shared/types/router'
+
 import styles from './ProjectPage.module.scss'
 
 export interface ProjectPageProps {

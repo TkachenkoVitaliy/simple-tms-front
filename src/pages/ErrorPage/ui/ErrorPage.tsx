@@ -1,6 +1,7 @@
-import { useRouteError } from 'react-router-dom'
-import { Button } from '@mui/material'
 import { Replay } from '@mui/icons-material'
+import { Button } from '@mui/material'
+import { useRouteError } from 'react-router-dom'
+
 import styles from './ErrorPage.module.scss'
 
 interface RouterError {

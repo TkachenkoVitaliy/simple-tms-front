@@ -1,5 +1,7 @@
-import { ProjectCardsGrid } from 'entities/Project/ui/ProjectCardsGrid'
 import { observer } from 'mobx-react-lite'
+
+import { ProjectCardsGrid } from 'entities/Project/ui/ProjectCardsGrid'
+
 import styles from './ProjectsPage.module.scss'
 
 const ProjectsPage = observer(() => {

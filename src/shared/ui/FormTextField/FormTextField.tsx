@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO: Временно чтобы не забыть все доступные свойтсва
-import { TextField, TextFieldProps } from '@mui/material'
 import { observer } from 'mobx-react-lite'
+
+import { TextField, TextFieldProps } from '@mui/material'
 import { Controller } from 'react-hook-form'
 import {
   Control,

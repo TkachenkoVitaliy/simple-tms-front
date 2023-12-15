@@ -1,6 +1,8 @@
+import { memo } from 'react'
+
 import { ArrowBackIosNew } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
-import { memo } from 'react'
+
 import styles from './CollapseBtn.module.scss'
 
 export interface CollapseBtnProps {

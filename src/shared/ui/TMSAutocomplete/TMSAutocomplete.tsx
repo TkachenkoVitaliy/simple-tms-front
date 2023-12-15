@@ -1,7 +1,10 @@
 /* eslint-disable max-lines */
-import { Autocomplete, TextField } from '@mui/material'
-import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
+
+import { observer } from 'mobx-react-lite'
+
+import { Autocomplete, TextField } from '@mui/material'
+
 import styles from './TMSAutocomplete.module.scss'
 
 export interface TMSAutocompleteProps<T> {

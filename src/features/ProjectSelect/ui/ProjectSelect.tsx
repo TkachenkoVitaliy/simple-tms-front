@@ -1,7 +1,6 @@
-import { useTheme } from '@mui/material'
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { Project } from 'entities/Project/model/types/project'
 import { observer } from 'mobx-react-lite'
+
+import { useTheme } from '@mui/material'
 import {
   generatePath,
   matchPath,
@@ -9,6 +8,10 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom'
+
+import { projectStore } from 'entities/Project/model/store/projectStore'
+import { Project } from 'entities/Project/model/types/project'
+
 import { useFlatAppRouter } from 'shared/lib/hooks/useFlatAppRouter'
 import { RequiredFields } from 'shared/types/helperTypes'
 import { AppRoute, RouteParams } from 'shared/types/router'

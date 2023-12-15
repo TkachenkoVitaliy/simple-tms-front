@@ -1,9 +1,13 @@
-import { projectStore } from 'entities/Project/model/store/projectStore'
 import { useEffect, useState } from 'react'
+
 import { Outlet, useParams } from 'react-router-dom'
-import { RouteParams } from 'shared/types/router'
+
 import { Header } from 'widgets/Header'
 import { Sidebar } from 'widgets/Sidebar'
+
+import { projectStore } from 'entities/Project/model/store/projectStore'
+
+import { RouteParams } from 'shared/types/router'
 
 function AppLayout() {
   const params = useParams<RouteParams>()

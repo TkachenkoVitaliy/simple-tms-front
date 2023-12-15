@@ -1,12 +1,14 @@
-import { Box, List, SvgIconTypeMap } from '@mui/material'
-import { observer } from 'mobx-react-lite'
-import { classNames } from 'shared/lib/utils'
-import { AppRoute } from 'shared/types/router'
-
-import { OverridableComponent } from '@mui/material/OverridableComponent'
-import { projectStore } from 'entities/Project/model/store/projectStore'
 import { useMemo } from 'react'
-import { NavigationItem } from '../NavigationItem/ui/NavigationItem'
+
+import { observer } from 'mobx-react-lite'
+
+import { List, SvgIconTypeMap } from '@mui/material'
+import { OverridableComponent } from '@mui/material/OverridableComponent'
+
+import { projectStore } from 'entities/Project'
+
+import { NavigationItem } from '../NavigationItem/NavigationItem'
+
 import styles from './Navigation.module.scss'
 
 export interface NavigationItem {
@@ -38,7 +40,6 @@ export const Navigation = observer((props: NavigationProps) => {
   }, [projectStore.activeProjectId])
 
   return (
-    // <Box className={classNames(styles.navigation, {}, [className])}>
     <List className={styles.list}>
       {showedItems.map((item) => (
         <NavigationItem
@@ -54,6 +55,5 @@ export const Navigation = observer((props: NavigationProps) => {
         />
       ))}
     </List>
-    // </Box>
   )
 })

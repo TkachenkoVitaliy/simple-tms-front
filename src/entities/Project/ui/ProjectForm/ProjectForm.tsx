@@ -1,14 +1,19 @@
-import { Button, Card, CardActions } from '@mui/material'
-import { Project } from 'entities/Project/model/types/project'
-import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
+
+import { observer } from 'mobx-react-lite'
+
+import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { projectStore } from 'entities/Project/model/store/projectStore'
+import { Project } from 'entities/Project/model/types/project'
+
+import { classNames } from 'shared/lib/utils'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { useNavigate } from 'react-router-dom'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
-import { classNames } from 'shared/lib/utils'
+
 import styles from './ProjectForm.module.scss'
 
 export interface ProjectFormProps {

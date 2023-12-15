@@ -1,4 +1,5 @@
 import { createContext } from 'react'
+
 import { AppRoute } from 'shared/types/router'
 
 export interface AppRouterContextProps {

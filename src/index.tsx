@@ -1,12 +1,15 @@
-import { createRoot } from 'react-dom/client'
 import { CssBaseline } from '@mui/material'
-import { ThemeName } from 'shared/consts/themeNames'
-import { AppThemeProvider } from 'app/providers/AppThemeProvider'
+import { createRoot } from 'react-dom/client'
+
 import { appRoutes } from 'app/config/routes'
+import { AppRouterProvider } from 'app/providers/AppRouterProvider'
+import { AppThemeProvider } from 'app/providers/AppThemeProvider'
+
+import { PageLoader } from 'widgets/PageLoader'
+
+import { ThemeName } from 'shared/consts/themeNames'
 
 import './app/styles/index.scss'
-import { PageLoader } from 'widgets/PageLoader'
-import { AppRouterProvider } from 'app/providers/AppRouterProvider'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

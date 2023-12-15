@@ -1,12 +1,17 @@
+import { useMemo } from 'react'
+
+import { observer } from 'mobx-react-lite'
+
 import { Button, Card, CardContent, CardHeader } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
 import { projectStore } from 'entities/Project/model/store/projectStore'
 import { Project } from 'entities/Project/model/types/project'
-import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+
 import { classNames } from 'shared/lib/utils'
 import { ActionBtn, ActionPanel } from 'shared/ui/ActionPanel'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+
 import styles from './ProjectCard.module.scss'
 
 export interface ProjectCardProps {

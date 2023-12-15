@@ -1,5 +1,7 @@
-import { API } from 'shared/api'
 import { AxiosResponse } from 'axios'
+
+import { API } from 'shared/api'
+
 import { NewProject, Project } from '../model/types/project'
 
 const URL = '/projects'

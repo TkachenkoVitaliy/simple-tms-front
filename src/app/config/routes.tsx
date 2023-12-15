@@ -1,12 +1,16 @@
 import { Dashboard, Dataset, Grading } from '@mui/icons-material'
+import { Navigate } from 'react-router-dom'
+
 import { AppLayout } from 'app/layout/AppLayout'
 import { AuthLayout } from 'app/layout/AuthLayout'
+
 import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
-import { Navigate } from 'react-router-dom'
-import { AppRoute } from 'shared/types/router'
+
 import { PageLoader } from 'widgets/PageLoader'
+
+import { AppRoute } from 'shared/types/router'
 
 export const appRoutes: AppRoute[] = [
   {

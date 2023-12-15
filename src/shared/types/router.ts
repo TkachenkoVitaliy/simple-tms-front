@@ -1,6 +1,7 @@
 import { SvgIconTypeMap } from '@mui/material'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import { RouteObject } from 'react-router-dom'
+
 import { RouteParamKeys } from 'shared/consts/routeParams'
 
 export type AppRoute = Omit<RouteObject, 'children'> & {

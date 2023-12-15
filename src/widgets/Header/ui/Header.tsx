@@ -1,9 +1,14 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
-import { observer } from 'mobx-react-lite'
 import { memo } from 'react'
+
+import { observer } from 'mobx-react-lite'
+
+import { AppBar, Button, Toolbar, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import SimpleLogo from 'shared/assets/svg/s-logo.svg'
+
 import { ProjectSelect } from 'features/ProjectSelect'
+
+import SimpleLogo from 'shared/assets/svg/s-logo.svg'
+
 import styles from './Header.module.scss'
 
 export const Header = memo(
