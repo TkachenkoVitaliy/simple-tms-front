@@ -7,6 +7,7 @@ import { AuthLayout } from 'app/layout/AuthLayout'
 import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
+import { TestsPage } from 'pages/TestsPage'
 
 import { PageLoader } from 'widgets/PageLoader'
 
@@ -49,7 +50,7 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId/tests',
-        element: <div>TESTS PAGE</div>, // <TestsPage />,
+        element: <TestsPage />,
         label: 'Тесты',
         Icon: Grading,
         showWithoutActiveProject: false,
