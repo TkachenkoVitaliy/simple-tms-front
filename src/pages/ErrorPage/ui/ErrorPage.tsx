@@ -2,6 +2,8 @@ import { Replay } from '@mui/icons-material'
 import { Button } from '@mui/material'
 import { useRouteError } from 'react-router-dom'
 
+import { PageFrame } from 'shared/ui/PageFrame'
+
 import styles from './ErrorPage.module.scss'
 
 interface RouterError {
@@ -18,24 +20,28 @@ function ErrorPage() {
   }
 
   return (
-    <div className={styles.errorPage}>
-      <div className={styles.wrapper}>
-        <h1 className={styles.header}>Oops!</h1>
-        <p className={styles.text}>Sorry, an unexpected error has occurred.</p>
-        <p className={styles.text}>
-          <i>{error.statusText || error.message}</i>
-        </p>
-        <Button
-          className={styles.btn}
-          color="primary"
-          variant="contained"
-          onClick={reload}
-          startIcon={<Replay />}
-        >
-          Reload Page
-        </Button>
+    <PageFrame>
+      <div className={styles.errorPage}>
+        <div className={styles.wrapper}>
+          <h1 className={styles.header}>Oops!</h1>
+          <p className={styles.text}>
+            Sorry, an unexpected error has occurred.
+          </p>
+          <p className={styles.text}>
+            <i>{error.statusText || error.message}</i>
+          </p>
+          <Button
+            className={styles.btn}
+            color="primary"
+            variant="contained"
+            onClick={reload}
+            startIcon={<Replay />}
+          >
+            Reload Page
+          </Button>
+        </div>
       </div>
-    </div>
+    </PageFrame>
   )
 }
 

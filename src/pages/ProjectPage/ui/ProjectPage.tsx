@@ -8,6 +8,7 @@ import { projectStore } from 'entities/Project/model/store/projectStore'
 import { ProjectForm } from 'entities/Project/ui/ProjectForm'
 
 import { RouteParams } from 'shared/types/router'
+import { PageFrame } from 'shared/ui/PageFrame'
 
 import styles from './ProjectPage.module.scss'
 
@@ -37,11 +38,13 @@ function ProjectPage(props: ProjectPageProps) {
   }, [projectId])
 
   return (
-    <ProjectForm
-      className={styles.container}
-      project={projectStore.editableProject}
-      key={projectStore.editableProject.id}
-    />
+    <PageFrame>
+      <ProjectForm
+        className={styles.container}
+        project={projectStore.editableProject}
+        key={projectStore.editableProject.id}
+      />
+    </PageFrame>
   )
 }
 

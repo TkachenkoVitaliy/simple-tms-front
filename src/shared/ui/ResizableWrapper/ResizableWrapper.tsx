@@ -6,7 +6,6 @@ import { setResizeCssVars } from 'shared/lib/utils'
 const style = {
   minHeight: '100%',
   height: '100%',
-  padding: '16px',
   overflow: 'auto',
 }
 

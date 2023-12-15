@@ -18,9 +18,6 @@
   margin-top: var(--navbar-height);
   height: calc(100vh - var(--navbar-height));
   width: 100%;
-
-  // TODO: возможно убрать и сделать как-то иначе отступы (изза скролла)
-  padding: 25px;
 }
 
 .contrast {
