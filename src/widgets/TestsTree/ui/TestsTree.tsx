@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { PageLoader } from 'widgets/PageLoader'
 import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
@@ -18,6 +19,7 @@ import { RouteParams } from 'shared/types/router'
 import { TMSTree } from 'shared/ui/TMSTree'
 
 import styles from './TestsTree.module.scss'
+import { TestsTreeActionsPanel } from 'features/TestsTreeActionsPanel'
 
 // TODO: refactor
 
@@ -25,12 +27,16 @@ export const TestsTree = observer(() => {
   const { projectId } = useParams<RouteParams>()
 
   useEffect(() => {
-    if (!!projectId && projectStore.activeProjectId?.toString()) {
-      projectStore.setActiveProjectId(Number(projectId))
+    if (!!projectId && projectId !== projectStore.activeProjectId?.toString()) {
+      const projectIdValue = Number(projectId)
+      if (Number.isNaN(projectIdValue)) {
+        throw new Error(`Wrong project id - ${projectId}`)
+      }
+      projectStore.setActiveProjectId(projectIdValue)
     } else if (projectStore.activeProjectId) {
-      testNodeStore.fetchNodes()
+      testNodeStore.loadNodes()
     }
-  }, [projectId])
+  }, [projectId, projectStore.activeProjectId])
 
   const navigate = useNavigate()
   const ref = useRef<TreeMethods>(null)
@@ -60,19 +66,22 @@ export const TestsTree = observer(() => {
     ref.current?.closeAll()
   }
 
+  if (testNodeStore.isLoading) {
+    return <PageLoader message="" />
+  }
+
   return (
     <div className={styles.wrapper}>
-      {/* <TestsActions
+      <TestsTreeActionsPanel
         canExpand={!testNodeStore.isAllSuitesOpened}
         canCollapse={!testNodeStore.isAllSuitesClosed}
         onExpand={handleOpenAll}
         onCollapse={handleCloseAll}
-      /> */}
-
-      {/* <TMSTree
+      />
+      <TMSTree
         nodes={testNodeStore.nodes}
         onChangeOpen={(newOpenIds) =>
-          testNodeStore.setOpenedSuite(newOpenIds.length)
+          testNodeStore.setOpenedSuites(newOpenIds.length)
         }
         onDrop={handleDrop}
         rootId="0"
@@ -93,7 +102,7 @@ export const TestsTree = observer(() => {
         dragPreviewRender={(monitorProps) => (
           <TreeNodeDrag monitorProps={monitorProps} />
         )}
-      /> */}
+      />
     </div>
   )
 })

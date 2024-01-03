@@ -1,10 +1,17 @@
+import { TestsTree } from 'widgets/TestsTree'
+
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 
 function TestsPage() {
+  // const left = (
+  //   <PageFrame>
+  //     <div style={{ width: '100%' }}>LEFT</div>
+  //   </PageFrame>
+  // )
   const left = (
     <PageFrame>
-      <div style={{ width: '100%' }}>LEFT</div>
+      <TestsTree />
     </PageFrame>
   )
 

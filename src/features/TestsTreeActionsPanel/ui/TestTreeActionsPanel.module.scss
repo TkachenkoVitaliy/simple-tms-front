@@ -1,0 +1,42 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  margin-bottom: 16px;
+}
+
+.treeApp {
+  height: 100%;
+  overflow-y: auto;
+  padding: 4px 0;
+
+  li {
+    margin: 4px 0;
+  }
+
+  ul {
+    margin: 4px 0;
+    height: calc(100% - 8px);
+  }
+}
+
+.treeRoot {
+  height: 100%;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  // background-color: #729fec;
+  // background-color: rgba(25, 118, 210, 0.8);
+  background-color: var(--mui-palette-primary-main);
+
+  // background-color: #1976d2;
+}

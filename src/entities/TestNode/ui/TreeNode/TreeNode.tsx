@@ -46,6 +46,7 @@ export const TreeNode = (props: TreeNodeProps) => {
   return (
     <div
       className={classNames(`tree-node ${styles.root}`, {}, [className])}
+      style={{ marginInlineStart: indent }}
       {...dragOverProps}
     >
       <div
