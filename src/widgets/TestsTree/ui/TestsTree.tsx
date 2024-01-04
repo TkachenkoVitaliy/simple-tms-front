@@ -13,6 +13,7 @@ import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
   testNodeStore,
+  TestNodeType,
   TreeNode,
   TreeNodeDrag,
   UpdateTestNodeParent,
@@ -77,11 +78,11 @@ export const TestsTree = observer(() => {
     <div
       className={styles.wrapper}
       // TODO: подумать как сделать лучше
-      ref={(ref) => {
-        if (ref?.offsetTop) {
+      ref={(wrapperRef) => {
+        if (wrapperRef?.offsetTop) {
           root.style.setProperty(
             '--tests-tree-top-offset',
-            `${ref.offsetTop}px`,
+            `${wrapperRef.offsetTop}px`,
           )
         }
       }}
@@ -108,7 +109,10 @@ export const TestsTree = observer(() => {
             isOpen={isOpen}
             onToggle={onToggle}
             onClick={async () => {
-              if (node.data && node.data.type === 'SUITE') {
+              if (node.data && node.data.type === TestNodeType.SUITE) {
+                navigate(node.id.toString())
+              }
+              if (node.data && node.data.type === TestNodeType.CASE) {
                 navigate(node.id.toString())
               }
             }}

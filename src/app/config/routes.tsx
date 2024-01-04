@@ -12,6 +12,7 @@ import { TestsPage } from 'pages/TestsPage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
+import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -56,17 +57,17 @@ export const appRoutes: AppRoute[] = [
         showWithoutActiveProject: false,
         children: [
           {
-            path: 'suite',
-            element: <div>TEST SUITE FORM</div>, // <TestSuiteForm />,
+            path: 'suite/new',
+            element: <TestSuitePage isNew />, // <TestSuiteForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
             path: 'suite/:testSuiteId',
-            element: <div>TEST SUITE FORM + ID</div>, // <TestSuiteForm />,
+            element: <TestSuitePage />, // <TestSuiteForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
-            path: 'case',
+            path: 'case/new',
             element: <div>TEST CASE FORM</div>, // <TestCaseForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },

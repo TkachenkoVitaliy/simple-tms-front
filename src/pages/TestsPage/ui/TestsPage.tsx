@@ -1,20 +1,25 @@
+import { Outlet, useOutlet } from 'react-router-dom'
+
 import { TestsTree } from 'widgets/TestsTree'
 
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 
 function TestsPage() {
+  const outlet = useOutlet()
+
   const left = (
     <PageFrame>
       <TestsTree />
     </PageFrame>
   )
 
-  const right = (
+  const right = outlet ? (
     <PageFrame>
-      <div style={{ width: '100%' }}>RIGHT</div>
+      <Outlet />
+      {/* <div style={{ width: '100%' }}>RIGHT</div> */}
     </PageFrame>
-  )
+  ) : null
 
   return (
     <ResizableWrapper

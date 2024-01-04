@@ -2,7 +2,6 @@ import { Add, UnfoldLess, UnfoldMore } from '@mui/icons-material'
 import { Button, ButtonGroup } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppRouter } from 'shared/lib/hooks/useAppRouter'
 import { TMSMenu } from 'shared/ui/TMSMenu'
 
 import styles from './TestTreeActionsPanel.module.scss'
@@ -19,7 +18,6 @@ export interface TestsTreeActionsPanelProps {
 export const TestsTreeActionsPanel = (props: TestsTreeActionsPanelProps) => {
   const { canExpand, canCollapse, onExpand, onCollapse } = props
   const navigate = useNavigate()
-  const routes = useAppRouter()
 
   return (
     <div className={styles.actions}>
@@ -32,23 +30,17 @@ export const TestsTreeActionsPanel = (props: TestsTreeActionsPanelProps) => {
             label: 'Suite',
             onSelect: () => {
               // testSuiteStore.setCreateSuite()
-              navigate('suite/0')
+              navigate('suite/new')
             },
           },
           {
             label: 'Case',
             onSelect: () => {
-              navigate('create')
+              navigate('case/new')
             },
           },
         ]}
       />
-      {/* <Button
-        onClick={() => console.log(routes)}
-        component="button"
-      >
-        CLICK
-      </Button> */}
       <div />
       <ButtonGroup
         size="small"

@@ -94,17 +94,16 @@ export const TreeNode = (props: TreeNodeProps) => {
               {
                 label: 'Suite',
                 onSelect: () => {
-                  if (data?.id) {
-                    const id = Number(data.id)
-                    // testSuiteStore.setCreateSuite(id)
-                    console.log(`testSuiteStore.setCreateSuite(${id})`)
-                  }
-                  navigate('suite')
+                  console.log(`testSuiteStore.setCreateSuite(${data?.id})`)
+                  navigate('suite/new', { state: { parentId: data?.id } })
                 },
               },
               {
                 label: 'Case',
-                onSelect: () => navigate('case', { state: { parentId: id } }),
+                onSelect: () => {
+                  console.log(`testSuiteStore.setCreateCase(${data?.id})`)
+                  navigate('case/new', { state: { parentId: data?.id } })
+                },
               },
             ]}
           />
