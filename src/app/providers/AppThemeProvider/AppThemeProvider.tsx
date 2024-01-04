@@ -37,6 +37,12 @@ export const AppThemeProvider = (props: AppThemeProviderProps) => {
     localThemeName || initialThemeName,
   )
 
+  // TODO: вынести куда-то отдельно
+  window.onresize = () => {
+    const root = document.documentElement
+    root.style.setProperty('--window-height', `${window.innerHeight}px`)
+  }
+
   const defaultProps = useMemo(
     () => ({
       theme: themeName,

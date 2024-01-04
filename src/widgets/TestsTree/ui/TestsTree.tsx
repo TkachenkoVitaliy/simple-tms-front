@@ -6,6 +6,9 @@ import { DropOptions, NodeModel, TreeMethods } from '@minoru/react-dnd-treeview'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
+
+import { TestsTreeActionsPanel } from 'features/TestsTreeActionsPanel'
+
 import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
@@ -19,12 +22,12 @@ import { RouteParams } from 'shared/types/router'
 import { TMSTree } from 'shared/ui/TMSTree'
 
 import styles from './TestsTree.module.scss'
-import { TestsTreeActionsPanel } from 'features/TestsTreeActionsPanel'
 
 // TODO: refactor
 
 export const TestsTree = observer(() => {
   const { projectId } = useParams<RouteParams>()
+  const root = document.documentElement
 
   useEffect(() => {
     if (!!projectId && projectId !== projectStore.activeProjectId?.toString()) {
@@ -71,7 +74,18 @@ export const TestsTree = observer(() => {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      // TODO: подумать как сделать лучше
+      ref={(ref) => {
+        if (ref?.offsetTop) {
+          root.style.setProperty(
+            '--tests-tree-top-offset',
+            `${ref.offsetTop}px`,
+          )
+        }
+      }}
+    >
       <TestsTreeActionsPanel
         canExpand={!testNodeStore.isAllSuitesOpened}
         canCollapse={!testNodeStore.isAllSuitesClosed}
@@ -79,6 +93,7 @@ export const TestsTree = observer(() => {
         onCollapse={handleCloseAll}
       />
       <TMSTree
+        className={styles.border}
         nodes={testNodeStore.nodes}
         onChangeOpen={(newOpenIds) =>
           testNodeStore.setOpenedSuites(newOpenIds.length)

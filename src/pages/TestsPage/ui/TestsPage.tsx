@@ -4,11 +4,6 @@ import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 
 function TestsPage() {
-  // const left = (
-  //   <PageFrame>
-  //     <div style={{ width: '100%' }}>LEFT</div>
-  //   </PageFrame>
-  // )
   const left = (
     <PageFrame>
       <TestsTree />
@@ -27,8 +22,8 @@ function TestsPage() {
       secondElement={right}
       secondElementWidth={{
         default: '50%',
-        min: '10%',
-        max: '90%',
+        min: '20%',
+        max: '80%',
       }}
     />
   )
