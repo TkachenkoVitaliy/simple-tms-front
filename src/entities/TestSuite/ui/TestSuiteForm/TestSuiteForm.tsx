@@ -6,33 +6,32 @@ import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { Project } from 'entities/Project/model/types/project'
+import { TestSuite } from 'entities/TestSuite/model/types/testSuite'
 
 import { classNames } from 'shared/lib/utils'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
-import styles from './ProjectForm.module.scss'
+import styles from './TestSuiteForm.module.scss'
 
-export interface ProjectFormProps {
+export interface TestSuiteFormProps {
   className?: string
-  project: Project
+  testSuite: TestSuite
 }
 
-type FormInputs = Omit<Project, 'id'>
+type FormInputs = Omit<TestSuite, 'id' | 'projectId' | 'parentSuiteId'>
 
-export const ProjectForm = observer((props: ProjectFormProps) => {
-  const { className, project } = props
+export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
+  const { className, testSuite } = props
 
   const navigate = useNavigate()
 
   const methods = useForm<FormInputs>({
     mode: 'onTouched',
     values: {
-      name: project.name || '',
-      description: project.description || '',
+      name: testSuite.name || '',
+      description: testSuite.description || '',
     },
   })
 
@@ -46,25 +45,29 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
 
   const canSave = useMemo(() => {
     const haveChanges =
-      formValues.name.trim() !== project.name ||
-      formValues.description !== project.description
+      formValues.name.trim() !== testSuite.name ||
+      formValues.description !== testSuite.description
     return isValid && haveChanges
-  }, [formValues, project, isValid])
+  }, [formValues, testSuite, isValid])
 
   const submitForm = async (formValues: FormInputs) => {
-    const projectForSave: Project = {
-      id: project.id,
+    const testSuiteForSave: TestSuite = {
+      id: testSuite.id,
+      projectId: testSuite.projectId,
+      parentSuiteId: 1111, // TODO нужно брать из селекта
       name: formValues.name.trim(),
       description: formValues.description,
     }
-    await projectStore.saveProject(projectForSave)
-    navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
+    // await projectStore.saveProject(projectForSave)
+    // navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
+    console.log(testSuiteForSave)
+    navigate(`../${testSuite.id}`, { relative: 'path' })
   }
 
   return (
     <TMSSkeleton
       className={classNames(styles.skeleton, {}, [className])}
-      isLoading={projectStore.isLoading}
+      isLoading={false}
       width="50%"
     >
       <Card

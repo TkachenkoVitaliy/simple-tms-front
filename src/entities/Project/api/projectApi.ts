@@ -16,9 +16,11 @@ export const ProjectAPI = {
   save(project: Project | NewProject): Promise<AxiosResponse<Project>> {
     return API.post(URL, project)
   },
+  // TODO: мб убрать
   create(project: NewProject): Promise<AxiosResponse<Project>> {
     return API.post(URL, project)
   },
+  // TODO: мб убрать
   update(project: Project): Promise<AxiosResponse<Project>> {
     return API.put(URL, project)
   },

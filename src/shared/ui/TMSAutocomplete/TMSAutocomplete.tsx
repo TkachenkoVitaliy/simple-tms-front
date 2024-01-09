@@ -5,9 +5,12 @@ import { observer } from 'mobx-react-lite'
 
 import { Autocomplete, TextField } from '@mui/material'
 
+import { classNames } from 'shared/lib/utils'
+
 import styles from './TMSAutocomplete.module.scss'
 
 export interface TMSAutocompleteProps<T> {
+  className?: string
   id: string
   label?: string
   options: T[]
@@ -27,6 +30,7 @@ export interface TMSAutocompleteProps<T> {
 
 function TMSAutoComplete<T>(props: TMSAutocompleteProps<T>) {
   const {
+    className,
     id,
     label,
     options,
@@ -58,7 +62,8 @@ function TMSAutoComplete<T>(props: TMSAutocompleteProps<T>) {
   return (
     <Autocomplete
       id={id}
-      className={styles.autocomplete}
+      className={classNames(styles.autocomplete, {}, [className])}
+      // className={styles.autocomplete}
       disableClearable={!required}
       disablePortal
       forcePopupIcon
