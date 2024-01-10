@@ -11,7 +11,9 @@ export const TestSuiteAPI = {
     return API.get(`${URL}/${id}`)
   },
   save(testSuite: TestSuite | NewTestSuite): Promise<AxiosResponse<TestSuite>> {
-    return API.post(URL, testSuite)
+    return testSuite.id === null
+      ? this.create(testSuite)
+      : this.update(testSuite)
   },
   // TODO: мб убрать
   create(testSuite: NewTestSuite): Promise<AxiosResponse<TestSuite>> {

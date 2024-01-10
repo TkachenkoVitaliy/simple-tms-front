@@ -14,7 +14,7 @@ export const ProjectAPI = {
     return API.get(`${URL}/${id}`)
   },
   save(project: Project | NewProject): Promise<AxiosResponse<Project>> {
-    return API.post(URL, project)
+    return project.id === null ? this.create(project) : this.update(project)
   },
   // TODO: мб убрать
   create(project: NewProject): Promise<AxiosResponse<Project>> {

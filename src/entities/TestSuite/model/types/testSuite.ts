@@ -8,4 +8,9 @@ export interface TestSuite {
   description: string
 }
 
+export type TestSuiteShort = Omit<
+  TestSuite,
+  'projectId' | 'parentSuiteId' | 'description'
+>
+
 export type NewTestSuite = NewEntity<TestSuite>

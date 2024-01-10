@@ -3,6 +3,7 @@ import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 
 import { projectStore } from 'entities/Project'
 import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
+import { TestSuiteShort } from 'entities/TestSuite/model/types/testSuite'
 
 import {
   TestNodeData,
@@ -32,9 +33,11 @@ class TestNodeStore {
     return Array.from(this.nodesRegistry.values())
   }
 
-  get suites(): NodeModel<TestNodeData>[] {
-    return Array.from(this.nodesRegistry.values()).filter(
-      (node) => node.data && node.data.type === TestNodeType.SUITE,
+  get shortSuites(): TestSuiteShort[] {
+    return Array.from(this.nodesRegistry.values()).flatMap((node) =>
+      node.data && node.data.type === TestNodeType.SUITE
+        ? [{ id: node.data.id, name: node.text }]
+        : [],
     )
   }
 
@@ -52,11 +55,11 @@ class TestNodeStore {
     return count
   }
 
-  get cases(): NodeModel<TestNodeData>[] {
-    return Array.from(this.nodesRegistry.values()).filter(
-      (node) => node.data && node.data.type === TestNodeType.CASE,
-    )
-  }
+  // get cases(): NodeModel<TestNodeData>[] {
+  //   return Array.from(this.nodesRegistry.values()).filter(
+  //     (node) => node.data && node.data.type === TestNodeType.CASE,
+  //   )
+  // }
 
   openedSuites: number = 0
 
@@ -73,6 +76,7 @@ class TestNodeStore {
   }
 
   loadNodes = async () => {
+    console.log('loadNodes')
     this.isLoading = true
     const projectId = projectStore.activeProjectId
     if (projectId) {

@@ -23,3 +23,7 @@ export type FlatAppRoute = Omit<AppRoute, 'children'> & {
 }
 
 export type RouteParams = Record<RouteParamKeys, string | undefined>
+
+export interface LocationState {
+  parentId?: number
+}

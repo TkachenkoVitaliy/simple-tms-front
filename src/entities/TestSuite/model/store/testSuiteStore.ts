@@ -20,7 +20,7 @@ export const NEW_SUITE = {
 }
 
 class TestSuiteStore {
-  isLoading: boolean = true
+  isLoading: boolean = false
 
   setIsLoading = (loading: boolean) => {
     this.isLoading = loading
@@ -33,15 +33,18 @@ class TestSuiteStore {
   }
 
   loadSuite = async (suiteId: TestSuite['id']) => {
+    this.setIsLoading(true)
     const testSuite: TestSuite = (await TestSuiteAPI.getById(suiteId)).data
     if (testSuite.projectId !== projectStore.activeProjectId) {
       throw new Error('Bad projectId')
     }
+    this.setIsLoading(false)
     this.setTestSuite(testSuite)
   }
 
   setNewSuite = (parentSuiteId?: TestSuite['parentSuiteId']) => {
     this.setTestSuite({ ...NEW_SUITE, parentSuiteId: parentSuiteId || null })
+    this.setIsLoading(false)
   }
 
   saveSuite = async (testSuite: TestSuite) => {
@@ -52,8 +55,9 @@ class TestSuiteStore {
         id: testSuite.id || null,
       })
     ).data
-    this.setIsLoading(false)
+    this.setTestSuite(savedSuite)
     await testNodeStore.loadNodes()
+    this.setIsLoading(false)
   }
 
   constructor() {

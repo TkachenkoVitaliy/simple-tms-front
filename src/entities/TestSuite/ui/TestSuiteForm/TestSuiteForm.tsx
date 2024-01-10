@@ -6,9 +6,17 @@ import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { TestSuite } from 'entities/TestSuite/model/types/testSuite'
+import { projectStore } from 'entities/Project'
+import { testNodeStore } from 'entities/TestNode'
+import { NULL_PARENT } from 'entities/TestSuite/model/consts'
+import { testSuiteStore } from 'entities/TestSuite/model/store/testSuiteStore'
+import {
+  TestSuite,
+  TestSuiteShort,
+} from 'entities/TestSuite/model/types/testSuite'
 
 import { classNames } from 'shared/lib/utils'
+import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
@@ -20,7 +28,9 @@ export interface TestSuiteFormProps {
   testSuite: TestSuite
 }
 
-type FormInputs = Omit<TestSuite, 'id' | 'projectId' | 'parentSuiteId'>
+type FormInputs = Omit<TestSuite, 'id' | 'projectId' | 'parentSuiteId'> & {
+  parentSuite: TestSuiteShort
+}
 
 export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   const { className, testSuite } = props
@@ -30,8 +40,12 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   const methods = useForm<FormInputs>({
     mode: 'onTouched',
     values: {
-      name: testSuite.name || '',
-      description: testSuite.description || '',
+      parentSuite:
+        testNodeStore.shortSuites.find(
+          (shortSuite) => shortSuite.id === testSuite.parentSuiteId,
+        ) || NULL_PARENT,
+      name: testSuite.name,
+      description: testSuite.description,
     },
   })
 
@@ -46,22 +60,33 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   const canSave = useMemo(() => {
     const haveChanges =
       formValues.name.trim() !== testSuite.name ||
-      formValues.description !== testSuite.description
+      formValues.description !== testSuite.description ||
+      testSuite.parentSuiteId === null
+        ? formValues.parentSuite !== null
+        : testSuite.parentSuiteId !== formValues.parentSuite?.id
     return isValid && haveChanges
   }, [formValues, testSuite, isValid])
 
   const submitForm = async (formValues: FormInputs) => {
+    if (projectStore.activeProjectId === null) {
+      throw new Error('Please select active project')
+    }
+
     const testSuiteForSave: TestSuite = {
       id: testSuite.id,
-      projectId: testSuite.projectId,
-      parentSuiteId: 1111, // TODO нужно брать из селекта
+      projectId: testSuite.projectId || projectStore.activeProjectId,
+      parentSuiteId: formValues.parentSuite.id || null, // TODO нужно брать из селекта
       name: formValues.name.trim(),
       description: formValues.description,
     }
     // await projectStore.saveProject(projectForSave)
     // navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
     console.log(testSuiteForSave)
-    navigate(`../${testSuite.id}`, { relative: 'path' })
+    await testSuiteStore.saveSuite(testSuiteForSave)
+    navigate(`../${testSuiteStore.testSuite.id.toString()}`, {
+      relative: 'path',
+    })
+    // navigate(`../${testSuite.id}`, { relative: 'path' })
   }
 
   return (
@@ -76,6 +101,23 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
         className={classNames(styles.card, {}, [className])}
       >
         <TMSCardContent>
+          <FormAutocomplete<TestSuiteShort, FormInputs>
+            id="testSuiteFormSelectParentSuite"
+            label="Parent suite"
+            options={testNodeStore.shortSuites}
+            defaultValue={{
+              id: 0,
+              name: 'Not selected',
+            }}
+            rules={{
+              required: true,
+            }}
+            getOptionLabel={(option) => option.name}
+            isOptionEqualToValue={(option, val) => option.id === val.id}
+            emptyHelperText=" "
+            name="parentSuite"
+            control={control}
+          />
           <FormTextField
             name="name"
             control={control}
@@ -87,14 +129,14 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
               },
               required: 'This field is required',
             }}
-            emptyHelperText=""
+            emptyHelperText=" "
             validateOnFocus
           />
           <FormTextField
             name="description"
             control={control}
             label="Description"
-            emptyHelperText=""
+            emptyHelperText=" "
             multiline
             minRows={4}
           />

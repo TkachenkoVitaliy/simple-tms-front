@@ -93,35 +93,37 @@ export const TestsTree = observer(() => {
         onExpand={handleOpenAll}
         onCollapse={handleCloseAll}
       />
-      <TMSTree
-        className={styles.border}
-        nodes={testNodeStore.nodes}
-        onChangeOpen={(newOpenIds) =>
-          testNodeStore.setOpenedSuites(newOpenIds.length)
-        }
-        onDrop={handleDrop}
-        rootId="0"
-        ref={ref}
-        nodeRender={(node, { depth, isOpen, onToggle }) => (
-          <TreeNode
-            node={node}
-            depth={depth}
-            isOpen={isOpen}
-            onToggle={onToggle}
-            onClick={async () => {
-              if (node.data && node.data.type === TestNodeType.SUITE) {
-                navigate(node.id.toString())
-              }
-              if (node.data && node.data.type === TestNodeType.CASE) {
-                navigate(node.id.toString())
-              }
-            }}
-          />
-        )}
-        dragPreviewRender={(monitorProps) => (
-          <TreeNodeDrag monitorProps={monitorProps} />
-        )}
-      />
+      {testNodeStore.nodes.length < 1 ? null : (
+        <TMSTree
+          className={styles.border}
+          nodes={testNodeStore.nodes}
+          onChangeOpen={(newOpenIds) =>
+            testNodeStore.setOpenedSuites(newOpenIds.length)
+          }
+          onDrop={handleDrop}
+          rootId="0"
+          ref={ref}
+          nodeRender={(node, { depth, isOpen, onToggle }) => (
+            <TreeNode
+              node={node}
+              depth={depth}
+              isOpen={isOpen}
+              onToggle={onToggle}
+              onClick={async () => {
+                if (node.data && node.data.type === TestNodeType.SUITE) {
+                  navigate(node.id.toString())
+                }
+                if (node.data && node.data.type === TestNodeType.CASE) {
+                  navigate(node.id.toString())
+                }
+              }}
+            />
+          )}
+          dragPreviewRender={(monitorProps) => (
+            <TreeNodeDrag monitorProps={monitorProps} />
+          )}
+        />
+      )}
     </div>
   )
 })

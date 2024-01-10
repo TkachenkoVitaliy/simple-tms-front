@@ -10,9 +10,9 @@ export enum TestNodeType {
 
 export interface TestNodeData {
   children: string[]
-  id: string
+  id: number
   type: TestNodeType
-  parentId: string | null
+  parentId: number | null
 }
 
 export interface UpdateTestNodeParent {

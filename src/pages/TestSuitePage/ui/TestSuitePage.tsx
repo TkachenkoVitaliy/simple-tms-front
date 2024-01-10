@@ -1,10 +1,17 @@
+import { useEffect } from 'react'
+
 import { observer } from 'mobx-react-lite'
 
+import { Location } from 'history'
 import { useLocation, useParams } from 'react-router-dom'
 
-import { TestSuiteForm } from 'entities/TestSuite'
+import { PageLoader } from 'widgets/PageLoader'
 
-import { RouteParams } from 'shared/types/router'
+import { testNodeStore } from 'entities/TestNode'
+import { TestSuiteForm } from 'entities/TestSuite'
+import { testSuiteStore } from 'entities/TestSuite/model/store/testSuiteStore'
+
+import { LocationState, RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
 
 export interface TestSuitePageProps {
@@ -13,22 +20,24 @@ export interface TestSuitePageProps {
 
 function TestSuitePage(props: TestSuitePageProps) {
   const { isNew } = props
-  const location = useLocation()
+  const location = useLocation() as Location<LocationState>
   const { testSuiteId } = useParams<RouteParams>()
 
-  console.log(testSuiteId)
+  useEffect(() => {
+    if (isNew) {
+      testSuiteStore.setNewSuite(location.state?.parentId)
+    } else {
+      testSuiteStore.loadSuite(Number(testSuiteId))
+    }
+  }, [testSuiteId, isNew, location.state])
 
   return (
     <PageFrame>
-      <TestSuiteForm
-        testSuite={{
-          id: 1,
-          projectId: 33,
-          parentSuiteId: null,
-          name: 'TestSuiteTEST',
-          description: '',
-        }}
-      />
+      {testSuiteStore.isLoading || testNodeStore.isLoading ? (
+        <PageLoader />
+      ) : (
+        <TestSuiteForm testSuite={testSuiteStore.testSuite} />
+      )}
     </PageFrame>
   )
 
