@@ -8,11 +8,11 @@ import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestsPage } from 'pages/TestsPage'
+import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
-import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 
 export const appRoutes: AppRoute[] = [
   {
