@@ -7,6 +7,7 @@ import { AuthLayout } from 'app/layout/AuthLayout'
 import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
+import { TestCasePage } from 'pages/TestCasePage'
 import { TestsPage } from 'pages/TestsPage'
 import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 
@@ -68,12 +69,12 @@ export const appRoutes: AppRoute[] = [
           },
           {
             path: 'case/new',
-            element: <div>TEST CASE FORM</div>, // <TestCaseForm />,
+            element: <TestCasePage isNew />, // <TestCaseForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
           {
             path: 'case/:testCaseId',
-            element: <div>TEST CASE FORM + ID</div>, // <TestCaseForm />,
+            element: <TestCasePage />, // <TestCaseForm />,
             onProjectChangePattern: 'projects/:projectId/tests',
           },
         ],

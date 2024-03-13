@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
 import { testNodeStore } from 'entities/TestNode'
+import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
 import { classNames } from 'shared/lib/utils'
 import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
@@ -15,23 +16,25 @@ import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
-import { NULL_PARENT } from '../../model/consts'
-import { testSuiteStore } from '../../model/store/testSuiteStore'
-import { TestSuite, TestSuiteShort } from '../../model/types/testSuite'
+import { testCaseStore } from '../../model/store/testCaseStore'
+import { TestCase } from '../../model/types/testCase'
 
-import styles from './TestSuiteForm.module.scss'
+import styles from './TestCaseForm.module.scss'
 
-export interface TestSuiteFormProps {
+export interface TestCaseFormProps {
   className?: string
-  testSuite: TestSuite
+  testCase: TestCase
 }
 
-type FormInputs = Omit<TestSuite, 'id' | 'projectId' | 'parentSuiteId'> & {
+type FormInputs = Omit<
+  TestCase,
+  'id' | 'projectId' | 'parentSuiteId' | 'testSteps'
+> & {
   parentSuite: TestSuiteShort
 }
 
-export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
-  const { className, testSuite } = props
+export const TestCaseForm = observer((props: TestCaseFormProps) => {
+  const { className, testCase } = props
 
   const navigate = useNavigate()
 
@@ -40,10 +43,10 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
     values: {
       parentSuite:
         testNodeStore.shortSuites.find(
-          (shortSuite) => shortSuite.id === testSuite.parentSuiteId,
+          (shortSuite) => shortSuite.id === testCase.parentSuiteId,
         ) || NULL_PARENT,
-      name: testSuite.name,
-      description: testSuite.description,
+      name: testCase.name,
+      preconditions: testCase.preconditions,
     },
   })
 
@@ -57,34 +60,33 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
 
   const canSave = useMemo(() => {
     const haveChanges =
-      formValues.name.trim() !== testSuite.name ||
-      formValues.description !== testSuite.description ||
-      (testSuite.parentSuiteId === null
+      formValues.name.trim() !== testCase.name ||
+      formValues.preconditions !== testCase.preconditions ||
+      (testCase.parentSuiteId == null
         ? formValues.parentSuite !== null
-        : testSuite.parentSuiteId !== formValues.parentSuite?.id)
+        : testCase.parentSuiteId !== formValues.parentSuite?.id)
     return isValid && haveChanges
-  }, [formValues, testSuite, isValid])
+  }, [formValues, testCase, isValid])
 
   const submitForm = async (formValues: FormInputs) => {
     if (projectStore.activeProjectId === null) {
       throw new Error('Please select active project')
     }
 
-    const testSuiteForSave: TestSuite = {
-      id: testSuite.id,
-      projectId: testSuite.projectId || projectStore.activeProjectId,
-      parentSuiteId: formValues.parentSuite.id || null, // TODO нужно брать из селекта
+    const testCaseForSave: TestCase = {
+      id: testCase.id,
+      projectId: testCase.projectId || projectStore.activeProjectId,
+      parentSuiteId: formValues.parentSuite.id || null,
       name: formValues.name.trim(),
-      description: formValues.description,
+      preconditions: formValues.preconditions,
+      testSteps: [],
     }
-    // await projectStore.saveProject(projectForSave)
-    // navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
-    console.log(testSuiteForSave)
-    await testSuiteStore.saveSuite(testSuiteForSave)
-    navigate(`../${testSuiteStore.testSuite.id.toString()}`, {
+
+    console.log(testCaseForSave)
+    await testCaseStore.saveCase(testCaseForSave)
+    navigate(`../${testCaseStore.testCase.id.toString()}`, {
       relative: 'path',
     })
-    // navigate(`../${testSuite.id}`, { relative: 'path' })
   }
 
   return (
@@ -100,11 +102,9 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
       >
         <TMSCardContent>
           <FormAutocomplete<TestSuiteShort, FormInputs>
-            id="testSuiteFormSelectParentSuite"
+            id="testCaseFormSelectParentSuite"
             label="Parent suite"
-            options={testNodeStore.shortSuites.filter(
-              (s) => s.id !== testSuite.id,
-            )}
+            options={testNodeStore.shortSuites}
             defaultValue={{
               id: 0,
               name: 'Not selected',
@@ -133,9 +133,9 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
             validateOnFocus
           />
           <FormTextField
-            name="description"
+            name="preconditions"
             control={control}
-            label="Description"
+            label="Preconditions"
             emptyHelperText=" "
             multiline
             minRows={4}

@@ -8,8 +8,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { testNodeStore } from 'entities/TestNode'
-import { TestSuiteForm } from 'entities/TestSuite'
-import { testSuiteStore } from 'entities/TestSuite/model/store/testSuiteStore'
+import { TestSuiteForm, testSuiteStore } from 'entities/TestSuite'
 
 import { LocationState, RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
