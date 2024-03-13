@@ -17,7 +17,7 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import { testCaseStore } from '../../model/store/testCaseStore'
-import { TestCase } from '../../model/types/testCase'
+import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
 
 import styles from './TestCaseForm.module.scss'
 
@@ -46,6 +46,8 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           (shortSuite) => shortSuite.id === testCase.parentSuiteId,
         ) || NULL_PARENT,
       name: testCase.name,
+      type: testCase.type,
+      priority: testCase.priority,
       preconditions: testCase.preconditions,
     },
   })
@@ -78,6 +80,8 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       projectId: testCase.projectId || projectStore.activeProjectId,
       parentSuiteId: formValues.parentSuite.id || null,
       name: formValues.name.trim(),
+      type: testCase.type || CaseType.AUTO,
+      priority: testCase.priority || CasePriority.NORMAL,
       preconditions: formValues.preconditions,
       testSteps: [],
     }

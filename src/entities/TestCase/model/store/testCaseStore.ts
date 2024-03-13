@@ -4,12 +4,14 @@ import { projectStore } from 'entities/Project'
 import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
 import { testNodeStore } from 'entities/TestNode'
 
-import { TestCase } from '../types/testCase'
+import { CasePriority, CaseType, TestCase } from '../types/testCase'
 
 export const NEW_CASE: TestCase = {
   id: 0,
   parentSuiteId: null,
   name: '',
+  type: CaseType.MANUAL,
+  priority: CasePriority.NORMAL,
   preconditions: '',
   testSteps: [],
 }

@@ -1,11 +1,11 @@
 import { NewEntity } from 'shared/types/api'
 
-enum CaseType {
+export enum CaseType {
   MANUAL = 'manual',
   AUTO = 'auto',
 }
 
-enum CasePriority {
+export enum CasePriority {
   LOW = 'low',
   NORMAL = 'normal',
   HIGH = 'high',
