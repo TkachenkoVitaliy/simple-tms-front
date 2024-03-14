@@ -3,6 +3,12 @@
   flex-direction: column;
   border-radius: 10px;
   padding: 16px;
+
+  .header {
+    row-gap: 20px;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+  }
 }
 
 .actions {
@@ -12,11 +18,4 @@
 
 .skeleton {
   border-radius: 10px;
-}
-
-.header {
-  flex-wrap: wrap;
-  row-gap: 20px;
-  display: grid;
-  grid-template-columns: max-content 1fr max-content;
 }

@@ -60,7 +60,7 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
       formValues.name.trim() !== testSuite.name ||
       formValues.description !== testSuite.description ||
       (testSuite.parentSuiteId === null
-        ? formValues.parentSuite !== null
+        ? formValues.parentSuite.id !== 0
         : testSuite.parentSuiteId !== formValues.parentSuite?.id)
     return isValid && haveChanges
   }, [formValues, testSuite, isValid])

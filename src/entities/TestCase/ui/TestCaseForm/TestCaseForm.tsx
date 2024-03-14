@@ -8,16 +8,19 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
-import { testCaseTypes } from 'entities/TestCase/model/consts'
+import {
+  testCasePriorities,
+  testCaseTypes,
+} from 'entities/TestCase/model/consts'
 import { testNodeStore } from 'entities/TestNode'
 import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
 import { classNames } from 'shared/lib/utils'
 import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
 import { FormTextField } from 'shared/ui/FormTextField'
+import { FormToggleButtonGroup } from 'shared/ui/FormToggleButtonGroup'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
-import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup'
 
 import { testCaseStore } from '../../model/store/testCaseStore'
 import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
@@ -76,9 +79,17 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       formValues.type !== testCase.type ||
       formValues.priority !== testCase.priority ||
       formValues.preconditions !== testCase.preconditions ||
-      (testCase.parentSuiteId == null
-        ? formValues.parentSuite !== null
+      (testCase.parentSuiteId === null
+        ? formValues.parentSuite.id !== 0
         : testCase.parentSuiteId !== formValues.parentSuite?.id)
+
+    console.log(
+      'canSave',
+      isValid,
+      haveChanges,
+      JSON.stringify(formValues),
+      JSON.stringify(testCase),
+    )
     return isValid && haveChanges
   }, [formValues, testCase, isValid])
 
@@ -87,13 +98,16 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       throw new Error('Please select active project')
     }
 
+    console.log('formValues', formValues)
+    console.log('testCase', testCase)
+
     const testCaseForSave: TestCase = {
       id: testCase.id,
       projectId: testCase.projectId || projectStore.activeProjectId,
       parentSuiteId: formValues.parentSuite.id || null,
       name: formValues.name.trim(),
-      type: testCase.type || CaseType.AUTO,
-      priority: testCase.priority || CasePriority.NORMAL,
+      type: formValues.type || CaseType.AUTO,
+      priority: formValues.priority || CasePriority.NORMAL,
       preconditions: formValues.preconditions,
       testSteps: [],
     }
@@ -129,11 +143,19 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           title={headerTitle}
           titleTypographyProps={{ titleTypographyProps }}
           avatar={
-            <TMSToggleButtonGroup<CaseType>
+            <FormToggleButtonGroup
+              name="type"
+              control={control}
               options={testCaseTypes}
-              value={testCase.type}
-              onChange={(v) => console.log(v)} // TODO переделать (v) => (formValues.type = v)
-              buttonAlign="center"
+            />
+          }
+          action={
+            <FormToggleButtonGroup
+              name="priority"
+              control={control}
+              options={testCasePriorities}
+              marginBetween="10px"
+              buttonWidth="120px"
             />
           }
         />
