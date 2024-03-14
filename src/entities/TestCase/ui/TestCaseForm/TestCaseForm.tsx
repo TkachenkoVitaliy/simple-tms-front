@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
@@ -83,13 +82,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
         ? formValues.parentSuite.id !== 0
         : testCase.parentSuiteId !== formValues.parentSuite?.id)
 
-    console.log(
-      'canSave',
-      isValid,
-      haveChanges,
-      JSON.stringify(formValues),
-      JSON.stringify(testCase),
-    )
     return isValid && haveChanges
   }, [formValues, testCase, isValid])
 
@@ -97,10 +89,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
     if (projectStore.activeProjectId === null) {
       throw new Error('Please select active project')
     }
-
-    console.log('formValues', formValues)
-    console.log('testCase', testCase)
-
     const testCaseForSave: TestCase = {
       id: testCase.id,
       projectId: testCase.projectId || projectStore.activeProjectId,
@@ -111,8 +99,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       preconditions: formValues.preconditions,
       testSteps: [],
     }
-
-    console.log(testCaseForSave)
     await testCaseStore.saveCase(testCaseForSave)
     navigate(`../${testCaseStore.testCase.id.toString()}`, {
       relative: 'path',
@@ -120,7 +106,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
   }
 
   const headerTitle = useMemo(() => {
-    console.log(JSON.stringify(testCase))
     return testCase.id === 0 || testCase.id === null
       ? CREATE_HEADER
       : EDIT_HEADER

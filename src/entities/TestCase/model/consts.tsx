@@ -9,12 +9,15 @@ import { CasePriority, CaseType } from './types/testCase'
 
 const WIDTH = '24px'
 const HEIGHT = '24px'
-const FILL = 'var(--mui-palette-text-primary)'
+const FILL_DEFAULT = 'var(--mui-palette-text-primary)'
 const STYLE = {
   width: WIDTH,
   height: HEIGHT,
-  fill: FILL,
+  fill: FILL_DEFAULT,
 }
+const FILL_RED = '#d32f2f'
+const FILL_BLUE = '#42a5f5'
+const FILL_GREEN = '#81c784'
 
 export const testCaseTypes: ToggleButtonOption<CaseType>[] = [
   {
@@ -30,28 +33,18 @@ export const testCaseTypes: ToggleButtonOption<CaseType>[] = [
 export const testCasePriorities: ToggleButtonOption<CasePriority>[] = [
   {
     value: CasePriority.HIGH,
-    icon: (
-      <HighPriority
-        style={{ width: '24px', height: '24px', fill: '#d32f2f' }}
-      />
-    ),
+    icon: <HighPriority style={{ ...STYLE, fill: FILL_RED }} />,
     name: CasePriority.HIGH,
   },
 
   {
     value: CasePriority.NORMAL,
-    icon: (
-      <NormalPriority
-        style={{ width: '24px', height: '24px', fill: '#42a5f5' }}
-      />
-    ),
+    icon: <NormalPriority style={{ ...STYLE, fill: FILL_BLUE }} />,
     name: CasePriority.NORMAL,
   },
   {
     value: CasePriority.LOW,
-    icon: (
-      <LowPriority style={{ width: '24px', height: '24px', fill: '#81c784' }} />
-    ),
+    icon: <LowPriority style={{ ...STYLE, fill: FILL_GREEN }} />,
     name: CasePriority.LOW,
   },
 ]
