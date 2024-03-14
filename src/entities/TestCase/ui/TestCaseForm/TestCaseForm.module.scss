@@ -13,3 +13,10 @@
 .skeleton {
   border-radius: 10px;
 }
+
+.header {
+  flex-wrap: wrap;
+  row-gap: 20px;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+}

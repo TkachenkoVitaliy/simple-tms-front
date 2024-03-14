@@ -1,14 +1,14 @@
 import { NewEntity } from 'shared/types/api'
 
 export enum CaseType {
-  MANUAL = 'manual',
-  AUTO = 'auto',
+  MANUAL = 'MANUAL',
+  AUTO = 'AUTO',
 }
 
 export enum CasePriority {
-  LOW = 'low',
-  NORMAL = 'normal',
-  HIGH = 'high',
+  LOW = 'LOW',
+  NORMAL = 'NORMAL',
+  HIGH = 'HIGH',
 }
 
 interface TestStepAbstract {

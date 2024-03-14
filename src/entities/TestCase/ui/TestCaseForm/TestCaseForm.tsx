@@ -1,8 +1,9 @@
+/* eslint-disable max-lines */
 import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Button, Card, CardActions } from '@mui/material'
+import { Button, Card, CardActions, CardHeader } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,6 +21,9 @@ import { testCaseStore } from '../../model/store/testCaseStore'
 import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
 
 import styles from './TestCaseForm.module.scss'
+import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup'
+import { testCaseTypes } from 'entities/TestCase/model/consts'
+import test from 'node:test'
 
 export interface TestCaseFormProps {
   className?: string
@@ -31,6 +35,13 @@ type FormInputs = Omit<
   'id' | 'projectId' | 'parentSuiteId' | 'testSteps'
 > & {
   parentSuite: TestSuiteShort
+}
+
+const EDIT_HEADER = 'Edit Test Case'
+const CREATE_HEADER = 'Create Test Case'
+const titleTypographyProps = {
+  noWrap: true,
+  variant: 'h5',
 }
 
 export const TestCaseForm = observer((props: TestCaseFormProps) => {
@@ -63,6 +74,8 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
   const canSave = useMemo(() => {
     const haveChanges =
       formValues.name.trim() !== testCase.name ||
+      formValues.type !== testCase.type ||
+      formValues.priority !== testCase.priority ||
       formValues.preconditions !== testCase.preconditions ||
       (testCase.parentSuiteId == null
         ? formValues.parentSuite !== null
@@ -93,6 +106,13 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
     })
   }
 
+  const headerTitle = useMemo(() => {
+    console.log(JSON.stringify(testCase))
+    return testCase.id === 0 || testCase.id === null
+      ? CREATE_HEADER
+      : EDIT_HEADER
+  }, [testCase])
+
   return (
     <TMSSkeleton
       className={classNames(styles.skeleton, {}, [className])}
@@ -104,6 +124,19 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
         raised
         className={classNames(styles.card, {}, [className])}
       >
+        <CardHeader
+          className={styles.header}
+          title={headerTitle}
+          titleTypographyProps={{ titleTypographyProps }}
+          avatar={
+            <TMSToggleButtonGroup<CaseType>
+              options={testCaseTypes}
+              value={testCase.type}
+              onChange={(v) => console.log(v)}
+              buttonAlign="center"
+            />
+          }
+        />
         <TMSCardContent>
           <FormAutocomplete<TestSuiteShort, FormInputs>
             id="testCaseFormSelectParentSuite"
