@@ -27,6 +27,10 @@ export function TMSToggleButtonGroup<T>(props: TMSToggleButtonGroupProps<T>) {
     stackWidth,
   } = props
 
+  const groupOnChange = (_: unknown, val: ToggleButtonOption<T>['value']) => {
+    if (val !== null) onChange(val)
+  }
+
   return (
     <Stack
       direction={direction || 'row'}
@@ -37,6 +41,7 @@ export function TMSToggleButtonGroup<T>(props: TMSToggleButtonGroupProps<T>) {
         orientation={direction === 'column' ? 'vertical' : 'horizontal'}
         value={value}
         exclusive
+        onChange={groupOnChange}
       >
         {options.map((option) => (
           <ToggleButton

@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
+import { testCaseTypes } from 'entities/TestCase/model/consts'
 import { testNodeStore } from 'entities/TestNode'
 import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
@@ -16,14 +17,12 @@ import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup'
 
 import { testCaseStore } from '../../model/store/testCaseStore'
 import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
 
 import styles from './TestCaseForm.module.scss'
-import { TMSToggleButtonGroup } from 'shared/ui/TMSToggleButtonGroup'
-import { testCaseTypes } from 'entities/TestCase/model/consts'
-import test from 'node:test'
 
 export interface TestCaseFormProps {
   className?: string
@@ -121,6 +120,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
     >
       <Card
         variant="elevation"
+        data-testid="card"
         raised
         className={classNames(styles.card, {}, [className])}
       >
@@ -132,7 +132,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
             <TMSToggleButtonGroup<CaseType>
               options={testCaseTypes}
               value={testCase.type}
-              onChange={(v) => console.log(v)}
+              onChange={(v) => console.log(v)} // TODO переделать (v) => (formValues.type = v)
               buttonAlign="center"
             />
           }
