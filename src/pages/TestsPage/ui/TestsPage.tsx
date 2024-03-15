@@ -17,7 +17,6 @@ function TestsPage() {
   const right = outlet ? (
     <PageFrame>
       <Outlet />
-      {/* <div style={{ width: '100%' }}>RIGHT</div> */}
     </PageFrame>
   ) : null
 
@@ -27,7 +26,7 @@ function TestsPage() {
       secondElement={right}
       secondElementWidth={{
         default: '50%',
-        min: '20%',
+        min: '30%',
         max: '80%',
       }}
     />

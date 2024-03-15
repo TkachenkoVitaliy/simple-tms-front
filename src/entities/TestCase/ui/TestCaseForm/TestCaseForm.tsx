@@ -1,8 +1,9 @@
+/* eslint-disable max-lines */
 import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Button, Card, CardActions, CardHeader } from '@mui/material'
+import { Button, Card, CardActions, CardHeader, Divider } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -40,10 +41,6 @@ type FormInputs = Omit<
 
 const EDIT_HEADER = 'Edit Test Case'
 const CREATE_HEADER = 'Create Test Case'
-const titleTypographyProps = {
-  noWrap: true,
-  variant: 'h5',
-}
 
 export const TestCaseForm = observer((props: TestCaseFormProps) => {
   const { className, testCase } = props
@@ -126,7 +123,10 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
         <CardHeader
           className={styles.header}
           title={headerTitle}
-          titleTypographyProps={{ titleTypographyProps }}
+          titleTypographyProps={{
+            noWrap: true,
+            variant: 'h5',
+          }}
           avatar={
             <FormToggleButtonGroup
               name="type"
@@ -165,7 +165,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           <FormTextField
             name="name"
             control={control}
-            label="Name"
+            label="Title"
             rules={{
               minLength: {
                 value: 3,
@@ -176,6 +176,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
             emptyHelperText=" "
             validateOnFocus
           />
+          <Divider style={{ marginTop: '0' }} />
           <FormTextField
             name="preconditions"
             control={control}

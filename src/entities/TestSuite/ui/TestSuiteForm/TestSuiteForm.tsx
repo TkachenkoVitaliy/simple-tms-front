@@ -120,7 +120,7 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
           <FormTextField
             name="name"
             control={control}
-            label="Name"
+            label="Title"
             rules={{
               minLength: {
                 value: 3,
