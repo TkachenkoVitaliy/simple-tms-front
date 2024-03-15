@@ -26,6 +26,7 @@ import { testCaseStore } from '../../model/store/testCaseStore'
 import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
 
 import styles from './TestCaseForm.module.scss'
+import { FormMarkdownEditor } from 'shared/ui/FormMarkdownEditor'
 
 export interface TestCaseFormProps {
   className?: string
@@ -177,13 +178,10 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
             validateOnFocus
           />
           <Divider style={{ marginTop: '0' }} />
-          <FormTextField
+          <FormMarkdownEditor
+            title="Preconditions"
             name="preconditions"
             control={control}
-            label="Preconditions"
-            emptyHelperText=" "
-            multiline
-            minRows={4}
           />
         </TMSCardContent>
         <CardActions className={styles.actions}>
