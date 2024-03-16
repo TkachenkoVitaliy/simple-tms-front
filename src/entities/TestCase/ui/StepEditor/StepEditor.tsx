@@ -17,7 +17,6 @@ const EDITOR_MIN_HEIGHT = '100px'
 export interface StepEditorProps {
   value: TestStep | NewTestStep
   onChange?: (value: TestStep | NewTestStep, orderNumber: number) => void
-  id: string
   index: number
   lastIndex: number
   margin?: string
@@ -30,7 +29,6 @@ export const StepEditor = memo((props: StepEditorProps) => {
   const {
     value,
     onChange,
-    id,
     index,
     lastIndex,
     margin,

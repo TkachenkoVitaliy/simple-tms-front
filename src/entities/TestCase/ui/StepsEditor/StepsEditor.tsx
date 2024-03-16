@@ -157,7 +157,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
           <div>
             <StepEditor
               value={data[index]?.item.testStep}
-              id={data[index]?.id}
               index={index}
               lastIndex={data.length - 1}
               preview="preview"
@@ -174,7 +173,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
               key={item.id}
               value={item.item.testStep}
               onChange={onChangeStep}
-              id={item.id}
               index={index}
               margin="20px 0"
               lastIndex={data.length - 1}
