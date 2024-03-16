@@ -28,11 +28,13 @@ interface TestStepRepeatable extends TestStepAbstract {
   name: string
 }
 
-type TestStep = TestStepNonRepeatable | TestStepRepeatable
+export type TestStep = TestStepNonRepeatable | TestStepRepeatable
 
-interface TestCaseStep {
+export type NewTestStep = NewEntity<TestStep>
+
+export interface TestCaseStep {
   orderNumber: number
-  testStep: TestStep
+  testStep: TestStep | NewTestStep
 }
 
 export interface TestCase {

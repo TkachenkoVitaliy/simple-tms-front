@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -17,16 +17,22 @@ import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
 import { classNames } from 'shared/lib/utils'
 import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
+import { FormMarkdownEditor } from 'shared/ui/FormMarkdownEditor'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { FormToggleButtonGroup } from 'shared/ui/FormToggleButtonGroup'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import { testCaseStore } from '../../model/store/testCaseStore'
-import { CasePriority, CaseType, TestCase } from '../../model/types/testCase'
+import {
+  CasePriority,
+  CaseType,
+  TestCase,
+  TestCaseStep,
+} from '../../model/types/testCase'
+import { StepsEditor } from '../StepsEditor/StepsEditor'
 
 import styles from './TestCaseForm.module.scss'
-import { FormMarkdownEditor } from 'shared/ui/FormMarkdownEditor'
 
 export interface TestCaseFormProps {
   className?: string
@@ -45,6 +51,8 @@ const CREATE_HEADER = 'Create Test Case'
 
 export const TestCaseForm = observer((props: TestCaseFormProps) => {
   const { className, testCase } = props
+
+  const [steps, setSteps] = useState<TestCaseStep[]>(testCase.testSteps)
 
   const navigate = useNavigate()
 
@@ -95,7 +103,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       type: formValues.type || CaseType.AUTO,
       priority: formValues.priority || CasePriority.NORMAL,
       preconditions: formValues.preconditions,
-      testSteps: [],
+      testSteps: steps,
     }
     await testCaseStore.saveCase(testCaseForSave)
     navigate(`../${testCaseStore.testCase.id.toString()}`, {
@@ -183,6 +191,12 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
             name="preconditions"
             control={control}
           />
+          <div style={{ marginTop: '18px' }}>
+            <StepsEditor
+              values={steps}
+              setValues={setSteps}
+            />
+          </div>
         </TMSCardContent>
         <CardActions className={styles.actions}>
           <Button
