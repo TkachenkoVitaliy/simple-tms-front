@@ -33,7 +33,11 @@ class TestCaseStore {
     this.setIsLoading(true)
     const testCase: TestCase = (await TestCaseAPI.getById(caseId)).data
     if (testCase.projectId !== projectStore.activeProjectId) {
-      throw new Error('Bad projectId')
+      throw new Error(
+        `Bad projectId. TestCase - ${JSON.stringify(
+          testCase,
+        )}. ActiveProjectId - ${projectStore.activeProjectId}`,
+      )
     }
     this.setIsLoading(false)
     this.setTestCase(testCase)

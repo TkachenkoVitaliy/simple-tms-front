@@ -1,7 +1,10 @@
+/* eslint-disable max-lines */
 import { memo, useMemo, useState } from 'react'
 
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
+
+import { projectStore } from 'entities/Project'
 
 import { swapArrayItems } from 'shared/lib/utils'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper'
@@ -25,7 +28,7 @@ type WrappedTestCaseStep = ReordItem & { item: TestCaseStep }
 export const StepsEditor = memo((props: StepsEditorProps) => {
   const { values, setValues } = props
 
-  const startValues = values
+  console.log('values', values)
 
   const [data, setData] = useState<WrappedTestCaseStep[]>(
     values.map((item) => ({
@@ -97,6 +100,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     swappedArray[itemIndex].item.orderNumber = itemIndex + 1
     swappedArray[otherItemIndex].item.orderNumber = otherItemIndex + 1
     updateState(swappedArray)
+    console.log(JSON.stringify(swappedArray))
     // const swappedArray = swapArrayItems(values, itemIndex, otherItemIndex)
     // swappedArray[itemIndex].orderNumber = itemIndex + 1
     // swappedArray[otherItemIndex].orderNumber = otherItemIndex + 1
@@ -118,6 +122,28 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     //   newArray[i].orderNumber = i + 1
     // }
     // setValues(newArray)
+  }
+
+  const addItem = () => {
+    const newUuid = uuidv4()
+    const newState: WrappedTestCaseStep[] = [
+      ...data,
+      {
+        id: newUuid,
+        item: {
+          orderNumber: data.length + 1,
+          testStep: {
+            id: null,
+            name: null,
+            repeatable: false,
+            action: '',
+            expected: '',
+            projectId: projectStore.activeProjectId || undefined,
+          },
+        },
+      },
+    ]
+    updateState(newState)
   }
 
   return (
@@ -158,6 +184,12 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
           </div>
         ))}
       </DraggableWrapper>
+      <Button
+        variant="outlined"
+        onClick={addItem}
+      >
+        ADD
+      </Button>
     </div>
   )
 })

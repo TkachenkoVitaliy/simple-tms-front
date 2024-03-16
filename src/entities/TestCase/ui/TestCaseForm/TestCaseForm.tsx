@@ -52,7 +52,14 @@ const CREATE_HEADER = 'Create Test Case'
 export const TestCaseForm = observer((props: TestCaseFormProps) => {
   const { className, testCase } = props
 
-  const [steps, setSteps] = useState<TestCaseStep[]>(testCase.testSteps)
+  const testCaseCopy: TestCase = JSON.parse(JSON.stringify(testCase))
+
+  const [steps, setSteps] = useState<TestCaseStep[]>(testCaseCopy.testSteps)
+
+  const setTestSteps = (val: TestCaseStep[]) => {
+    console.log('setTestSteps', JSON.stringify(val))
+    setSteps(val)
+  }
 
   const navigate = useNavigate()
 
@@ -86,15 +93,17 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       formValues.preconditions !== testCase.preconditions ||
       (testCase.parentSuiteId === null
         ? formValues.parentSuite.id !== 0
-        : testCase.parentSuiteId !== formValues.parentSuite?.id)
+        : testCase.parentSuiteId !== formValues.parentSuite?.id) ||
+      JSON.stringify(testCase.testSteps) !== JSON.stringify(steps)
 
     return isValid && haveChanges
-  }, [formValues, testCase, isValid])
+  }, [formValues, testCase, isValid, steps])
 
   const submitForm = async (formValues: FormInputs) => {
     if (projectStore.activeProjectId === null) {
       throw new Error('Please select active project')
     }
+    console.log(JSON.stringify(steps))
     const testCaseForSave: TestCase = {
       id: testCase.id,
       projectId: testCase.projectId || projectStore.activeProjectId,
@@ -105,6 +114,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       preconditions: formValues.preconditions,
       testSteps: steps,
     }
+    console.log(JSON.stringify({ ...testCaseForSave }))
     await testCaseStore.saveCase(testCaseForSave)
     navigate(`../${testCaseStore.testCase.id.toString()}`, {
       relative: 'path',
@@ -194,7 +204,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           <div style={{ marginTop: '18px' }}>
             <StepsEditor
               values={steps}
-              setValues={setSteps}
+              setValues={setTestSteps}
             />
           </div>
         </TMSCardContent>
