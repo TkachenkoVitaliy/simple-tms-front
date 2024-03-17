@@ -1,28 +1,18 @@
 /* eslint-disable max-lines */
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 
 import { DeleteForever } from '@mui/icons-material'
-import { Avatar, IconButton } from '@mui/material'
+import { Avatar, IconButton, TextField } from '@mui/material'
 import MDEditor, { PreviewType } from '@uiw/react-md-editor'
-import { useForm } from 'react-hook-form'
 
 import ArrowDown from 'shared/assets/svg/arrows/arrow-down.svg'
 import ArrowUp from 'shared/assets/svg/arrows/arrow-up.svg'
-import { FormTextField } from 'shared/ui/FormTextField'
 
-import {
-  NewTestStep,
-  TestStep,
-  TestStepRepeatable,
-} from '../../model/types/testCase'
+import { NewTestStep, TestStep } from '../../model/types/testCase'
 
 import styles from './StepEditor.module.scss'
 
 const EDITOR_MIN_HEIGHT = '100px'
-
-type FormInputs = {
-  name: TestStepRepeatable['name']
-}
 
 export interface StepEditorProps {
   value: TestStep | NewTestStep
@@ -33,7 +23,6 @@ export interface StepEditorProps {
   swapItem?: (indexFirst: number, indexSecond: number) => void
   removeItem?: (index: number) => void
   preview?: PreviewType
-  setItemValidity?: (isValid: boolean, index: number) => void
 }
 
 export const StepEditor = memo((props: StepEditorProps) => {
@@ -46,42 +35,31 @@ export const StepEditor = memo((props: StepEditorProps) => {
     swapItem,
     removeItem,
     preview,
-    setItemValidity,
   } = props
 
   let titleElement = null
 
   if (value.repeatable) {
-    const methods = useForm<FormInputs>({
-      mode: 'onTouched',
-      values: {
-        name: value.name as string,
-      },
-    })
-
-    const {
-      control,
-      formState: { isValid },
-    } = methods
-
-    const formValues = methods.watch()
-
-    useEffect(() => {
-      setItemValidity?.(isValid, index)
-    }, [isValid])
-
-    useEffect(() => {
-      onChange?.({ ...value, name: formValues.name }, index + 1)
-    }, [formValues])
+    const onChangeName = (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+      onChange?.({ ...value, name: event.target.value }, index + 1)
+    }
 
     titleElement = (
-      <FormTextField
-        name="name"
-        control={control}
-        rules={{ required: 'This field is required' }}
-        emptyHelperText=" "
-        validateOnFocus
-        disableDrag
+      <TextField
+        draggable
+        onDragStart={(event) => event.preventDefault()}
+        type="text"
+        autoComplete="off"
+        fullWidth
+        label="name"
+        required
+        helperText={!value.name ? 'Required' : ' '}
+        error={!value.name}
+        variant="outlined"
+        value={value.name}
+        onChange={onChangeName}
       />
     )
   }

@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
@@ -21,13 +21,12 @@ interface ReordItem {
 export interface StepsEditorProps {
   values: TestCaseStep[]
   setValues: (values: TestCaseStep[]) => void
-  setValid: (isValid: boolean) => void
 }
 
 type WrappedTestCaseStep = ReordItem & { item: TestCaseStep }
 
 export const StepsEditor = memo((props: StepsEditorProps) => {
-  const { values, setValues, setValid } = props
+  const { values, setValues } = props
 
   console.log('values', values)
 
@@ -38,19 +37,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     })),
   )
 
-  const [validity, setValidity] = useState<boolean[]>(values.map(() => true))
-
-  const updateItemValidity = (isValid: boolean, index: number) => {
-    const newValidity = [...validity]
-    newValidity[index] = isValid
-    setValidity(newValidity)
-  }
-
-  useEffect(() => {
-    const isValid = validity.every(Boolean)
-    setValid(isValid)
-  }, [validity])
-
   const mapToValues = (data: WrappedTestCaseStep[]) => {
     return data.map((item) => item.item)
   }
@@ -59,13 +45,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     setValues(mapToValues(newState))
     setData(newState)
   }
-
-  // const data: WrappedTestCaseStep[] = useMemo(() => {
-  //   return values.map((item) => ({
-  //     id: uuidv4(),
-  //     item,
-  //   }))
-  // }, [values])
 
   const onChangeStep = (
     newStepValue: TestCaseStep['testStep'],
@@ -97,16 +76,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
       }
     })
     updateState(reoderedData)
-    // newItems.forEach((item, index) => {
-    //   const foundedDataItem = data.find((dataItem) => dataItem.id === item.id)
-    //   if (foundedDataItem) {
-    //     reoderedValues.push({
-    //       orderNumber: index + 1,
-    //       testStep: foundedDataItem.item.testStep,
-    //     })
-    //   }
-    // })
-    // setValues(reoderedValues)
   }
 
   const swapItem = (itemIndex: number, otherItemIndex: number) => {
@@ -114,11 +83,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     swappedArray[itemIndex].item.orderNumber = itemIndex + 1
     swappedArray[otherItemIndex].item.orderNumber = otherItemIndex + 1
     updateState(swappedArray)
-    console.log(JSON.stringify(swappedArray))
-    // const swappedArray = swapArrayItems(values, itemIndex, otherItemIndex)
-    // swappedArray[itemIndex].orderNumber = itemIndex + 1
-    // swappedArray[otherItemIndex].orderNumber = otherItemIndex + 1
-    // setValues(swappedArray)
   }
 
   const removeItem = (index: number) => {
@@ -129,13 +93,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
       newArray[i].item.orderNumber = i + 1
     }
     updateState(newArray)
-    // const newArray = [...values]
-    // newArray.splice(index, 1)
-    // // eslint-disable-next-line no-plusplus
-    // for (let i = index; i < newArray.length; i++) {
-    //   newArray[i].orderNumber = i + 1
-    // }
-    // setValues(newArray)
   }
 
   const addItem = () => {
@@ -192,7 +149,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
               lastIndex={data.length - 1}
               swapItem={swapItem}
               removeItem={removeItem}
-              setItemValidity={updateItemValidity}
             />
           </div>
         ))}

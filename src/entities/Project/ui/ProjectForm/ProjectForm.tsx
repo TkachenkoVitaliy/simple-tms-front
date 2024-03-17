@@ -84,14 +84,14 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
               },
               required: 'This field is required',
             }}
-            emptyHelperText=""
+            emptyHelperText=" "
             validateOnFocus
           />
           <FormTextField
             name="description"
             control={control}
             label="Description"
-            emptyHelperText=""
+            emptyHelperText=" "
             multiline
             minRows={4}
           />

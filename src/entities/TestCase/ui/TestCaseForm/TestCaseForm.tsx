@@ -56,8 +56,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
 
   const [steps, setSteps] = useState<TestCaseStep[]>(testCaseCopy.testSteps)
 
-  const [stepsValid, setStepsValid] = useState<boolean>(true)
-
   const navigate = useNavigate()
 
   const methods = useForm<FormInputs>({
@@ -82,6 +80,18 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
 
   const formValues = methods.watch()
 
+  const repeatableStepsIsValid = useMemo(() => {
+    const repeatableSteps = steps.filter((step) => step.testStep.repeatable)
+
+    if (repeatableSteps.length < 1) {
+      return true
+    }
+
+    return repeatableSteps
+      .map((step) => step.testStep.name)
+      .every((name) => !!name)
+  }, [steps])
+
   const canSave = useMemo(() => {
     const haveChanges =
       formValues.name.trim() !== testCase.name ||
@@ -93,7 +103,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
         : testCase.parentSuiteId !== formValues.parentSuite?.id) ||
       JSON.stringify(testCase.testSteps) !== JSON.stringify(steps)
 
-    return isValid && haveChanges
+    return isValid && haveChanges && repeatableStepsIsValid
   }, [formValues, testCase, isValid, steps])
 
   const submitForm = async (formValues: FormInputs) => {
@@ -202,7 +212,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
             <StepsEditor
               values={steps}
               setValues={setSteps}
-              setValid={setStepsValid}
             />
           </div>
         </TMSCardContent>
