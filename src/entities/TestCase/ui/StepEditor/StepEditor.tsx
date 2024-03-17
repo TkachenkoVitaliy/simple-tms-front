@@ -55,7 +55,7 @@ export const StepEditor = memo((props: StepEditorProps) => {
         fullWidth
         label="name"
         required
-        helperText={!value.name ? 'Required' : ' '}
+        helperText={!value.name ? 'This field is required' : ' '}
         error={!value.name}
         variant="outlined"
         value={value.name}

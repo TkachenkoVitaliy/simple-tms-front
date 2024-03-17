@@ -12,6 +12,8 @@ import { DraggableWrapper } from 'shared/ui/DraggableWrapper'
 import { TestCaseStep } from '../../model/types/testCase'
 import { StepEditor } from '../StepEditor/StepEditor'
 
+import styles from './StepsEditor.module.scss'
+
 const TITLE = 'Steps'
 
 interface ReordItem {
@@ -95,7 +97,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     updateState(newArray)
   }
 
-  const addItem = () => {
+  const addItem = (repeatable: boolean) => {
     const newUuid = uuidv4()
     const newState: WrappedTestCaseStep[] = [
       ...data,
@@ -105,8 +107,8 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
           orderNumber: data.length + 1,
           testStep: {
             id: null,
-            name: null,
-            repeatable: false,
+            name: repeatable ? '' : null,
+            repeatable,
             action: '',
             expected: '',
             projectId: projectStore.activeProjectId || undefined,
@@ -116,6 +118,10 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     ]
     updateState(newState)
   }
+
+  const addSimpleStep = () => addItem(false)
+
+  const createRepeatableStep = () => addItem(true)
 
   return (
     <div>
@@ -153,12 +159,26 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
           </div>
         ))}
       </DraggableWrapper>
-      <Button
-        variant="outlined"
-        onClick={addItem}
-      >
-        ADD
-      </Button>
+      <div className={styles.actions}>
+        <Button
+          variant="outlined"
+          onClick={addSimpleStep}
+        >
+          ADD SIMPLE STEP
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => alert('Select repeatable step')}
+        >
+          ADD REPEATABLE STEP
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={createRepeatableStep}
+        >
+          CREATE REPEATABLE STEP
+        </Button>
+      </div>
     </div>
   )
 })

@@ -26,7 +26,7 @@ function TestsPage() {
       secondElement={right}
       secondElementWidth={{
         default: '50%',
-        min: '30%',
+        min: '42%',
         max: '80%',
       }}
     />
