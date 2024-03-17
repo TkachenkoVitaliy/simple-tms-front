@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
@@ -21,12 +21,13 @@ interface ReordItem {
 export interface StepsEditorProps {
   values: TestCaseStep[]
   setValues: (values: TestCaseStep[]) => void
+  setValid: (isValid: boolean) => void
 }
 
 type WrappedTestCaseStep = ReordItem & { item: TestCaseStep }
 
 export const StepsEditor = memo((props: StepsEditorProps) => {
-  const { values, setValues } = props
+  const { values, setValues, setValid } = props
 
   console.log('values', values)
 
@@ -36,6 +37,19 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
       item,
     })),
   )
+
+  const [validity, setValidity] = useState<boolean[]>(values.map(() => true))
+
+  const updateItemValidity = (isValid: boolean, index: number) => {
+    const newValidity = [...validity]
+    newValidity[index] = isValid
+    setValidity(newValidity)
+  }
+
+  useEffect(() => {
+    const isValid = validity.every(Boolean)
+    setValid(isValid)
+  }, [validity])
 
   const mapToValues = (data: WrappedTestCaseStep[]) => {
     return data.map((item) => item.item)
@@ -178,6 +192,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
               lastIndex={data.length - 1}
               swapItem={swapItem}
               removeItem={removeItem}
+              setItemValidity={updateItemValidity}
             />
           </div>
         ))}

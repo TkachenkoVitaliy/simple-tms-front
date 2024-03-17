@@ -1,11 +1,17 @@
 .stepWrapper {
-  display: grid;
-  grid-template-columns: min-content 1fr 1fr min-content;
-  gap: 10px;
+  // display: grid;
+  // grid-template-columns: min-content 1fr 1fr min-content;
+  // gap: 10px;
   padding: 20px;
   border: 1px solid;
   border-radius: 6px;
   border-color: var(--mui-palette-divider);
+
+  .step {
+    display: grid;
+    grid-template-columns: min-content 1fr 1fr min-content;
+    gap: 10px;
+  }
 
   .leftSide {
     display: flex;
@@ -19,4 +25,14 @@
     flex-direction: column;
     justify-content: center;
   }
+}
+
+.title {
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: var(--mui-palette-divider);
+  margin: 0 auto 10px;
+  text-align: center;
+  width: max-content;
+  padding: 4px 10px;
 }

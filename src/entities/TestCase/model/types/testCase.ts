@@ -23,7 +23,7 @@ interface TestStepNonRepeatable extends TestStepAbstract {
   name: null
 }
 
-interface TestStepRepeatable extends TestStepAbstract {
+export interface TestStepRepeatable extends TestStepAbstract {
   repeatable: true
   name: string
 }

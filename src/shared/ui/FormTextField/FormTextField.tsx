@@ -15,7 +15,7 @@ import {
 export interface FormTextFieldProps<FieldProps extends FieldValues> {
   name: Path<FieldProps>
   control: Control<FieldProps>
-  label: string
+  label?: string
   defaultValue?: PathValue<FieldProps, Path<FieldProps>>
   rules?: Omit<
     RegisterOptions<FieldProps, Path<FieldProps>>,
@@ -25,6 +25,7 @@ export interface FormTextFieldProps<FieldProps extends FieldValues> {
   minRows?: TextFieldProps['minRows']
   emptyHelperText?: string
   validateOnFocus?: boolean
+  disableDrag?: boolean
 }
 
 function FormInputTextField<FieldProps extends FieldValues>(
@@ -40,6 +41,7 @@ function FormInputTextField<FieldProps extends FieldValues>(
     minRows,
     emptyHelperText,
     validateOnFocus,
+    disableDrag,
   } = props
 
   return (
@@ -54,6 +56,12 @@ function FormInputTextField<FieldProps extends FieldValues>(
         formState,
       }) => (
         <TextField
+          draggable={disableDrag}
+          onDragStart={(event) => {
+            if (disableDrag) {
+              event.preventDefault()
+            }
+          }}
           type="text"
           autoComplete="off"
           fullWidth

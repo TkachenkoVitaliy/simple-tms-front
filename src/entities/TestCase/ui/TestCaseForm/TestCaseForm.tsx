@@ -56,10 +56,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
 
   const [steps, setSteps] = useState<TestCaseStep[]>(testCaseCopy.testSteps)
 
-  const setTestSteps = (val: TestCaseStep[]) => {
-    console.log('setTestSteps', JSON.stringify(val))
-    setSteps(val)
-  }
+  const [stepsValid, setStepsValid] = useState<boolean>(true)
 
   const navigate = useNavigate()
 
@@ -204,7 +201,8 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           <div style={{ marginTop: '18px' }}>
             <StepsEditor
               values={steps}
-              setValues={setTestSteps}
+              setValues={setSteps}
+              setValid={setStepsValid}
             />
           </div>
         </TMSCardContent>
