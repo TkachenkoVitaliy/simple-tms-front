@@ -66,7 +66,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     updateState(updatedValues)
   }
 
-  const onReord = (newItems: ReordItem[]) => {
+  const onReorder = (newItems: ReordItem[]) => {
     const reorderedData: WrappedTestCaseStep[] = []
     newItems.forEach((item, index) => {
       const foundItem = data.find(
@@ -128,7 +128,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
       <Typography>{TITLE}</Typography>
       <DraggableWrapper
         Wrapper={<div className="wrapper" />}
-        onReordering={onReord}
+        onReordering={onReorder}
         type="StepsEditor"
         renderDragLayer={(index) => (
           <div>
