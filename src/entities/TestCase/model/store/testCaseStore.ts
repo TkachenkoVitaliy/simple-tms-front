@@ -43,7 +43,7 @@ class TestCaseStore {
         }
         this.setIsLoading(false)
         this.setTestCase(testCase)
-      }, 10)
+      }, 15)
     } else {
       if (testCase.projectId !== projectStore.activeProjectId) {
         throw new Error(
