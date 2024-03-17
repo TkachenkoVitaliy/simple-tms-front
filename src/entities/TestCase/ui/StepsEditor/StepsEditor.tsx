@@ -67,17 +67,17 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
   }
 
   const onReord = (newItems: ReordItem[]) => {
-    const reoderedData: WrappedTestCaseStep[] = []
+    const reorderedData: WrappedTestCaseStep[] = []
     newItems.forEach((item, index) => {
       const foundItem = data.find(
         (wrappedTestCaseStep) => wrappedTestCaseStep.id === item.id,
       )
       if (foundItem) {
         foundItem.item.orderNumber = index + 1
-        reoderedData.push(foundItem)
+        reorderedData.push(foundItem)
       }
     })
-    updateState(reoderedData)
+    updateState(reorderedData)
   }
 
   const swapItem = (itemIndex: number, otherItemIndex: number) => {
