@@ -13,6 +13,7 @@ import { TestCaseStep } from '../../model/types/testCase'
 import { StepEditor } from '../StepEditor/StepEditor'
 
 import styles from './StepsEditor.module.scss'
+import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
 const TITLE = 'Steps'
 
@@ -29,6 +30,8 @@ type WrappedTestCaseStep = ReordItem & { item: TestCaseStep }
 
 export const StepsEditor = memo((props: StepsEditorProps) => {
   const { values, setValues } = props
+
+  const [showStepSelector, setShowStepSelector] = useState<boolean>(false)
 
   console.log('values', values)
 
@@ -168,7 +171,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
         </Button>
         <Button
           variant="outlined"
-          onClick={() => alert('Select repeatable step')}
+          onClick={() => setShowStepSelector(true)}
         >
           ADD REPEATABLE STEP
         </Button>
@@ -179,6 +182,10 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
           CREATE REPEATABLE STEP
         </Button>
       </div>
+      <RepeatableStepSelector
+        open={showStepSelector}
+        onClose={() => setShowStepSelector(false)}
+      />
     </div>
   )
 })

@@ -33,6 +33,7 @@ import {
 import { StepsEditor } from '../StepsEditor/StepsEditor'
 
 import styles from './TestCaseForm.module.scss'
+import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
 export interface TestCaseFormProps {
   className?: string
