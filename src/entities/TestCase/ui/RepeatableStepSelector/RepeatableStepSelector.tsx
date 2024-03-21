@@ -28,7 +28,6 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
     >
       <div
         style={{
-          backgroundColor: 'red',
           height: '80vh',
         }}
       >
