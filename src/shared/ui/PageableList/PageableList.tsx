@@ -1,3 +1,4 @@
+import { List } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 
@@ -21,8 +22,21 @@ export function PageableList<T, ID extends string | number>(
     item: T,
   ) => {
     if (onSelect === undefined) {
-      return <ListItem>{getLabel(item)}</ListItem>
+      return <ListItem key={getId(item)}>{getLabel(item)}</ListItem>
     }
-    return <ListItemButton>{getLabel(item)}</ListItemButton>
+    return (
+      <ListItemButton
+        key={getId(item)}
+        onClick={() => onSelect(getId(item))}
+      >
+        {getLabel(item)}
+      </ListItemButton>
+    )
   }
+
+  return (
+    <List>
+      {data.map((item) => createItem(onSelect, getId, getLabel, item))}
+    </List>
+  )
 }
