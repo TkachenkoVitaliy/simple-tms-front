@@ -72,9 +72,10 @@ export const TMSDataGrid = () => {
       sx={{
         '& .MuiDataGrid-virtualScrollerRenderZone': {
           width: '100%',
+          height: '100%',
         },
       }}
-      rowHeight={200}
+      rowHeight={2000}
       rowSelection={false}
       disableColumnMenu
       disableColumnSorting
