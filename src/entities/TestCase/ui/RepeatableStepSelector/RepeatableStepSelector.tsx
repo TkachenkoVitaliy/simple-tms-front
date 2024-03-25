@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 
+import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
 import {
   Button,
   Dialog,
@@ -8,16 +9,12 @@ import {
   List,
   Typography,
 } from '@mui/material'
+import ListItem from '@mui/material/ListItem'
 
 import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
 
 import { PageableList } from 'shared/ui/PageableList/PageableList'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
-import ListItemText from '@mui/material/ListItemText'
-import ListItem from '@mui/material/ListItem'
+import { TMSDataGrid } from 'shared/ui/TMSDataGrid/TMSDataGrid'
 
 export interface RepeatableStepSelectorProps {
   open: boolean
@@ -78,21 +75,11 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
   return (
     <Dialog
       fullWidth
+      maxWidth={false}
       open={open}
       onClose={handleCloseEvent}
     >
-      <div
-        style={{
-          height: '80vh',
-        }}
-      >
-        <PageableList
-          data={data}
-          getId={(item) => item.id}
-          getLabel={(item) => item.name}
-          itemRenderFunc={renderFunc}
-        />
-      </div>
+      <TMSDataGrid />
     </Dialog>
   )
 }
