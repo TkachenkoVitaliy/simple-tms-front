@@ -4,23 +4,32 @@ import { API } from 'shared/api'
 
 import { NewTestSuite, TestSuite } from '../model/types/testSuite'
 
-const URL = '/suites'
+const getProjectUrl = (projectId: number) => `projects/${projectId}/suites`
 
 export const TestSuiteAPI = {
-  getById(id: number): Promise<AxiosResponse<TestSuite>> {
-    return API.get(`${URL}/${id}`)
+  getById(projectId: number, id: number): Promise<AxiosResponse<TestSuite>> {
+    return API.get(`${getProjectUrl(projectId)}/${id}`)
   },
-  save(testSuite: TestSuite | NewTestSuite): Promise<AxiosResponse<TestSuite>> {
+  save(
+    projectId: number,
+    testSuite: TestSuite | NewTestSuite,
+  ): Promise<AxiosResponse<TestSuite>> {
     return testSuite.id === null
-      ? this.create(testSuite)
-      : this.update(testSuite)
+      ? this.create(projectId, testSuite)
+      : this.update(projectId, testSuite)
   },
   // TODO: мб убрать
-  create(testSuite: NewTestSuite): Promise<AxiosResponse<TestSuite>> {
-    return API.post(URL, testSuite)
+  create(
+    projectId: number,
+    testSuite: NewTestSuite,
+  ): Promise<AxiosResponse<TestSuite>> {
+    return API.post(getProjectUrl(projectId), testSuite)
   },
   // TODO: мб убрать
-  update(testSuite: TestSuite): Promise<AxiosResponse<TestSuite>> {
-    return API.put(URL, testSuite)
+  update(
+    projectId: number,
+    testSuite: TestSuite,
+  ): Promise<AxiosResponse<TestSuite>> {
+    return API.put(getProjectUrl(projectId), testSuite)
   },
 }

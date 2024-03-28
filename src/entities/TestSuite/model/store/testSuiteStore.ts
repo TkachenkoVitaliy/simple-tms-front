@@ -33,13 +33,17 @@ class TestSuiteStore {
   }
 
   loadSuite = async (suiteId: TestSuite['id']) => {
-    this.setIsLoading(true)
-    const testSuite: TestSuite = (await TestSuiteAPI.getById(suiteId)).data
-    if (testSuite.projectId !== projectStore.activeProjectId) {
-      throw new Error('Bad projectId')
+    if (projectStore.activeProjectId != null) {
+      this.setIsLoading(true)
+      const testSuite: TestSuite = (
+        await TestSuiteAPI.getById(projectStore.activeProjectId, suiteId)
+      ).data
+      if (testSuite.projectId !== projectStore.activeProjectId) {
+        throw new Error('Bad projectId')
+      }
+      this.setIsLoading(false)
+      this.setTestSuite(testSuite)
     }
-    this.setIsLoading(false)
-    this.setTestSuite(testSuite)
   }
 
   setNewSuite = (parentSuiteId?: TestSuite['parentSuiteId']) => {
@@ -48,16 +52,18 @@ class TestSuiteStore {
   }
 
   saveSuite = async (testSuite: TestSuite) => {
-    this.setIsLoading(true)
-    const savedSuite = (
-      await TestSuiteAPI.save({
-        ...testSuite,
-        id: testSuite.id || null,
-      })
-    ).data
-    this.setTestSuite(savedSuite)
-    await testNodeStore.loadNodes()
-    this.setIsLoading(false)
+    if (projectStore.activeProjectId != null) {
+      this.setIsLoading(true)
+      const savedSuite = (
+        await TestSuiteAPI.save(projectStore.activeProjectId, {
+          ...testSuite,
+          id: testSuite.id || null,
+        })
+      ).data
+      this.setTestSuite(savedSuite)
+      await testNodeStore.loadNodes()
+      this.setIsLoading(false)
+    }
   }
 
   constructor() {

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import { DataGrid, GridPaginationModel, GridRowProps } from '@mui/x-data-grid'
+import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
 import { RepeatableTestStepRow } from 'entities/TestCase/ui/RepeatableTestStepRow/RepeatableTestStepRow'
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 export interface TMSDataGridProps {}
 
