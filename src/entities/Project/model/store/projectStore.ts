@@ -128,6 +128,7 @@ class ProjectStore {
   }
 
   constructor() {
+    this.initActiveProject()
     makeAutoObservable(this)
   }
 }

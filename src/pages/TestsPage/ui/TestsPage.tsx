@@ -1,12 +1,19 @@
-import { Outlet, useOutlet } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
+
+import { Outlet, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { TestsTree } from 'widgets/TestsTree'
 
+import { projectStore } from 'entities/Project'
+
+import { RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 
 function TestsPage() {
   const outlet = useOutlet()
+  const navigate = useNavigate()
+  const { projectId } = useParams<RouteParams>()
 
   const left = (
     <PageFrame>
@@ -19,6 +26,13 @@ function TestsPage() {
       <Outlet />
     </PageFrame>
   ) : null
+
+  if (
+    projectStore.activeProjectId === null ||
+    projectStore.activeProjectId.toString() !== projectId
+  ) {
+    navigate('../../')
+  }
 
   return (
     <ResizableWrapper
@@ -33,4 +47,4 @@ function TestsPage() {
   )
 }
 
-export default TestsPage
+export default observer(TestsPage)
