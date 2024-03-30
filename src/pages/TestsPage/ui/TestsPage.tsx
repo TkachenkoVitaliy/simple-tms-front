@@ -42,6 +42,11 @@ function TestsPage() {
     return null
   }
 
+  if (projectStore.activeProjectId?.toString() !== projectId) {
+    navigate('../../')
+    return null
+  }
+
   return (
     <ProjectStoresContext.Provider value={projectEntitiesRootStore}>
       <ResizableWrapper
