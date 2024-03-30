@@ -7,9 +7,9 @@ import { useLocation, useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
-import { TestCaseForm, testCaseStore } from 'entities/TestCase'
-import { testNodeStore } from 'entities/TestNode'
+import { TestCaseForm } from 'entities/TestCase'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { LocationState, RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
 
@@ -19,6 +19,7 @@ export interface TestCasePageProps {
 
 function TestCasePage(props: TestCasePageProps) {
   const { isNew } = props
+  const { testCaseStore, testNodeStore } = useProjectStores()
   const location = useLocation() as Location<LocationState>
   const { testCaseId } = useParams<RouteParams>()
 

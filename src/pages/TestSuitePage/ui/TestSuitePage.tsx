@@ -7,9 +7,9 @@ import { useLocation, useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
-import { testNodeStore } from 'entities/TestNode'
-import { TestSuiteForm, testSuiteStore } from 'entities/TestSuite'
+import { TestSuiteForm } from 'entities/TestSuite'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { LocationState, RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
 
@@ -21,6 +21,7 @@ function TestSuitePage(props: TestSuitePageProps) {
   const { isNew } = props
   const location = useLocation() as Location<LocationState>
   const { testSuiteId } = useParams<RouteParams>()
+  const { testSuiteStore, testNodeStore } = useProjectStores()
 
   useEffect(() => {
     if (isNew) {

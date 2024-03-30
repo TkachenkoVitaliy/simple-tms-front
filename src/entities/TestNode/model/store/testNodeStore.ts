@@ -1,7 +1,6 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 
-import { projectStore } from 'entities/Project'
 import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
 import { TestSuiteShort } from 'entities/TestSuite/model/types/testSuite'
 
@@ -11,7 +10,9 @@ import {
   UpdateTestNodeParent,
 } from '../types/testNode'
 
-class TestNodeStore {
+export class TestNodeStore {
+  projectId: number
+
   isLoading: boolean = false
 
   setLoading = (isLoading: boolean) => {
@@ -78,9 +79,8 @@ class TestNodeStore {
   loadNodes = async () => {
     console.log('loadNodes')
     this.isLoading = true
-    const projectId = projectStore.activeProjectId
-    if (projectId) {
-      TestNodeAPI.getProjectTestNodes(projectId)
+    if (this.projectId) {
+      TestNodeAPI.getProjectTestNodes(this.projectId)
         .then(({ data }) => {
           this.nodesRegistry.clear()
           data.forEach((node) => this.nodesRegistry.set(node.id, node))
@@ -102,9 +102,8 @@ class TestNodeStore {
     // }
   }
 
-  constructor() {
+  constructor(projectId: number) {
+    this.projectId = projectId
     makeAutoObservable(this)
   }
 }
-
-export const testNodeStore = new TestNodeStore()

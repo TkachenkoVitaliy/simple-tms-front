@@ -6,9 +6,7 @@ import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project'
-import { testNodeStore } from 'entities/TestNode'
-
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames } from 'shared/lib/utils'
 import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
 import { FormTextField } from 'shared/ui/FormTextField'
@@ -16,7 +14,6 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import { NULL_PARENT } from '../../model/consts'
-import { testSuiteStore } from '../../model/store/testSuiteStore'
 import { TestSuite, TestSuiteShort } from '../../model/types/testSuite'
 
 import styles from './TestSuiteForm.module.scss'
@@ -33,6 +30,7 @@ type FormInputs = Omit<TestSuite, 'id' | 'projectId' | 'parentSuiteId'> & {
 export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   const { className, testSuite } = props
 
+  const { testSuiteStore, testNodeStore } = useProjectStores()
   const navigate = useNavigate()
 
   const methods = useForm<FormInputs>({
@@ -40,7 +38,8 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
     values: {
       parentSuite:
         testNodeStore.shortSuites.find(
-          (shortSuite) => shortSuite.id === testSuite.parentSuiteId,
+          (shortSuite: TestSuiteShort) =>
+            shortSuite.id === testSuite.parentSuiteId,
         ) || NULL_PARENT,
       name: testSuite.name,
       description: testSuite.description,
@@ -66,13 +65,9 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   }, [formValues, testSuite, isValid])
 
   const submitForm = async (formValues: FormInputs) => {
-    if (projectStore.activeProjectId === null) {
-      throw new Error('Please select active project')
-    }
-
     const testSuiteForSave: TestSuite = {
       id: testSuite.id,
-      projectId: testSuite.projectId || projectStore.activeProjectId,
+      projectId: testSuite.projectId || testSuiteStore.projectId,
       parentSuiteId: formValues.parentSuite.id || null, // TODO нужно брать из селекта
       name: formValues.name.trim(),
       description: formValues.description,
@@ -102,7 +97,7 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
             id="testSuiteFormSelectParentSuite"
             label="Parent suite"
             options={testNodeStore.shortSuites.filter(
-              (s) => s.id !== testSuite.id,
+              (s: TestSuiteShort) => s.id !== testSuite.id,
             )}
             defaultValue={{
               id: 0,

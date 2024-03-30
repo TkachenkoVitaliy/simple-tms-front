@@ -1,4 +1,4 @@
-export { testSuiteStore } from './model/store/testSuiteStore'
+export { TestSuiteStore } from './model/store/testSuiteStore'
 
 export { NULL_PARENT } from './model/consts'
 

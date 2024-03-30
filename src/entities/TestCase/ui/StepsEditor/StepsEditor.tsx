@@ -4,8 +4,9 @@ import { memo, useState } from 'react'
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
 
-import { projectStore } from 'entities/Project'
+import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { swapArrayItems } from 'shared/lib/utils'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper'
 
@@ -13,7 +14,6 @@ import { TestCaseStep } from '../../model/types/testCase'
 import { StepEditor } from '../StepEditor/StepEditor'
 
 import styles from './StepsEditor.module.scss'
-import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
 const TITLE = 'Steps'
 
@@ -30,6 +30,8 @@ type WrappedTestCaseStep = ReordItem & { item: TestCaseStep }
 
 export const StepsEditor = memo((props: StepsEditorProps) => {
   const { values, setValues } = props
+
+  const { testCaseStore } = useProjectStores()
 
   const [showStepSelector, setShowStepSelector] = useState<boolean>(false)
 
@@ -114,7 +116,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
             repeatable,
             action: '',
             expected: '',
-            projectId: projectStore.activeProjectId || undefined,
+            projectId: testCaseStore.projectId,
           },
         },
       },

@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { projectStore } from 'entities/Project'
-import { testNodeStore } from 'entities/TestNode'
+import { TestNodeStore } from 'entities/TestNode'
 import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 
 import { TestSuite } from '../types/testSuite'
@@ -19,7 +18,11 @@ export const NEW_SUITE = {
   description: '',
 }
 
-class TestSuiteStore {
+export class TestSuiteStore {
+  projectId: number
+
+  testNodeStore: TestNodeStore
+
   isLoading: boolean = false
 
   setIsLoading = (loading: boolean) => {
@@ -33,12 +36,12 @@ class TestSuiteStore {
   }
 
   loadSuite = async (suiteId: TestSuite['id']) => {
-    if (projectStore.activeProjectId != null) {
+    if (this.projectId != null) {
       this.setIsLoading(true)
       const testSuite: TestSuite = (
-        await TestSuiteAPI.getById(projectStore.activeProjectId, suiteId)
+        await TestSuiteAPI.getById(this.projectId, suiteId)
       ).data
-      if (testSuite.projectId !== projectStore.activeProjectId) {
+      if (testSuite.projectId !== this.projectId) {
         throw new Error('Bad projectId')
       }
       this.setIsLoading(false)
@@ -52,23 +55,23 @@ class TestSuiteStore {
   }
 
   saveSuite = async (testSuite: TestSuite) => {
-    if (projectStore.activeProjectId != null) {
+    if (this.projectId != null) {
       this.setIsLoading(true)
       const savedSuite = (
-        await TestSuiteAPI.save(projectStore.activeProjectId, {
+        await TestSuiteAPI.save(this.projectId, {
           ...testSuite,
           id: testSuite.id || null,
         })
       ).data
       this.setTestSuite(savedSuite)
-      await testNodeStore.loadNodes()
+      await this.testNodeStore.loadNodes()
       this.setIsLoading(false)
     }
   }
 
-  constructor() {
+  constructor(projectId: number, testNodeStore: TestNodeStore) {
+    this.projectId = projectId
+    this.testNodeStore = testNodeStore
     makeAutoObservable(this)
   }
 }
-
-export const testSuiteStore = new TestSuiteStore()

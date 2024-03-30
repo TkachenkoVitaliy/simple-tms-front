@@ -7,14 +7,13 @@ import { Button, Card, CardActions, CardHeader, Divider } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project'
 import {
   testCasePriorities,
   testCaseTypes,
 } from 'entities/TestCase/model/consts'
-import { testNodeStore } from 'entities/TestNode'
 import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames } from 'shared/lib/utils'
 import { FormAutocomplete } from 'shared/ui/FormAutocomplete'
 import { FormMarkdownEditor } from 'shared/ui/FormMarkdownEditor'
@@ -23,7 +22,6 @@ import { FormToggleButtonGroup } from 'shared/ui/FormToggleButtonGroup'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
-import { testCaseStore } from '../../model/store/testCaseStore'
 import {
   CasePriority,
   CaseType,
@@ -33,7 +31,6 @@ import {
 import { StepsEditor } from '../StepsEditor/StepsEditor'
 
 import styles from './TestCaseForm.module.scss'
-import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
 export interface TestCaseFormProps {
   className?: string
@@ -53,6 +50,8 @@ const CREATE_HEADER = 'Create Test Case'
 export const TestCaseForm = observer((props: TestCaseFormProps) => {
   const { className, testCase } = props
 
+  const { testCaseStore, testNodeStore } = useProjectStores()
+
   const testCaseCopy: TestCase = JSON.parse(JSON.stringify(testCase))
 
   const [steps, setSteps] = useState<TestCaseStep[]>(testCaseCopy.testSteps)
@@ -64,7 +63,8 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
     values: {
       parentSuite:
         testNodeStore.shortSuites.find(
-          (shortSuite) => shortSuite.id === testCase.parentSuiteId,
+          (shortSuite: TestSuiteShort) =>
+            shortSuite.id === testCase.parentSuiteId,
         ) || NULL_PARENT,
       name: testCase.name,
       type: testCase.type,
@@ -108,13 +108,9 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
   }, [formValues, testCase, isValid, steps])
 
   const submitForm = async (formValues: FormInputs) => {
-    if (projectStore.activeProjectId === null) {
-      throw new Error('Please select active project')
-    }
-    console.log(JSON.stringify(steps))
     const testCaseForSave: TestCase = {
       id: testCase.id,
-      projectId: testCase.projectId || projectStore.activeProjectId,
+      projectId: testCase.projectId || testCaseStore.projectId,
       parentSuiteId: formValues.parentSuite.id || null,
       name: formValues.name.trim(),
       type: formValues.type || CaseType.AUTO,
@@ -122,7 +118,6 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
       preconditions: formValues.preconditions,
       testSteps: steps,
     }
-    console.log(JSON.stringify({ ...testCaseForSave }))
     await testCaseStore.saveCase(testCaseForSave)
     navigate(`../${testCaseStore.testCase.id.toString()}`, {
       relative: 'path',

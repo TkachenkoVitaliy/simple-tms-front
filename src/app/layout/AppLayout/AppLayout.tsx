@@ -28,8 +28,8 @@ function AppLayout() {
     }
     projectStore
       .initActiveProject(params.projectId === undefined ? undefined : projectId)
-      .catch((catchedError: Error) => {
-        setError(catchedError.message)
+      .catch((caughtError: Error) => {
+        setError(caughtError.message)
       })
   }, [params.projectId])
 

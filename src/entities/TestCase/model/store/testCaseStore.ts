@@ -1,8 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
-import { projectStore } from 'entities/Project'
 import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
-import { testNodeStore } from 'entities/TestNode'
+import { TestNodeStore } from 'entities/TestNode'
 
 import { CasePriority, CaseType, TestCase } from '../types/testCase'
 
@@ -16,7 +15,11 @@ export const NEW_CASE: TestCase = {
   testSteps: [],
 }
 
-class TestCaseStore {
+export class TestCaseStore {
+  projectId: number
+
+  testNodeStore: TestNodeStore
+
   isLoading: boolean = false
 
   setIsLoading = (loading: boolean) => {
@@ -32,24 +35,24 @@ class TestCaseStore {
   loadCase = async (caseId: TestCase['id']) => {
     this.setIsLoading(true)
     const testCase: TestCase = (await TestCaseAPI.getById(caseId)).data
-    if (projectStore.activeProjectId === null) {
+    if (this.projectId === null) {
       setTimeout(() => {
-        if (testCase.projectId !== projectStore.activeProjectId) {
+        if (testCase.projectId !== this.projectId) {
           throw new Error(
             `Bad projectId. TestCase - ${JSON.stringify(
               testCase,
-            )}. ActiveProjectId - ${projectStore.activeProjectId}`,
+            )}. ActiveProjectId - ${this.projectId}`,
           )
         }
         this.setIsLoading(false)
         this.setTestCase(testCase)
       }, 15)
     } else {
-      if (testCase.projectId !== projectStore.activeProjectId) {
+      if (testCase.projectId !== this.projectId) {
         throw new Error(
           `Bad projectId. TestCase - ${JSON.stringify(
             testCase,
-          )}. ActiveProjectId - ${projectStore.activeProjectId}`,
+          )}. ActiveProjectId - ${this.projectId}`,
         )
       }
       this.setIsLoading(false)
@@ -71,13 +74,13 @@ class TestCaseStore {
       })
     ).data
     this.setTestCase(savedCase)
-    await testNodeStore.loadNodes()
+    await this.testNodeStore.loadNodes()
     this.setIsLoading(false)
   }
 
-  constructor() {
+  constructor(projectId: number, testNodeStore: TestNodeStore) {
+    this.projectId = projectId
+    this.testNodeStore = testNodeStore
     makeAutoObservable(this)
   }
 }
-
-export const testCaseStore = new TestCaseStore()

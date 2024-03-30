@@ -12,13 +12,13 @@ import { TestsTreeActionsPanel } from 'features/TestsTreeActionsPanel'
 import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
-  testNodeStore,
   TestNodeType,
   TreeNode,
   TreeNodeDrag,
   UpdateTestNodeParent,
 } from 'entities/TestNode'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
 import { TMSTree } from 'shared/ui/TMSTree'
 
@@ -29,6 +29,7 @@ import styles from './TestsTree.module.scss'
 export const TestsTree = observer(() => {
   const { projectId } = useParams<RouteParams>()
   const root = document.documentElement
+  const { testNodeStore } = useProjectStores()
 
   useEffect(() => {
     if (!!projectId && projectId !== projectStore.activeProjectId?.toString()) {
