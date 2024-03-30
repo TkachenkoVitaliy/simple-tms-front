@@ -71,7 +71,6 @@ export const Sidebar = memo(
           <Toolbar />
           <Box className={styles.container}>
             <Navigation
-              className={styles.box}
               items={getNavigationItems}
               isCollapsed={isCollapsed}
             />
