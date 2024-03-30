@@ -35,8 +35,6 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
 
   const [showStepSelector, setShowStepSelector] = useState<boolean>(false)
 
-  console.log('values', values)
-
   const [data, setData] = useState<WrappedTestCaseStep[]>(
     values.map((item) => ({
       id: uuidv4(),

@@ -5,12 +5,6 @@ import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 
 import { TestSuite } from '../types/testSuite'
 
-const ROOT_PARENT_SUITE = {
-  id: 0,
-  name: 'Not selected',
-  syntheticId: '0',
-}
-
 export const NEW_SUITE = {
   id: 0,
   parentSuiteId: null,

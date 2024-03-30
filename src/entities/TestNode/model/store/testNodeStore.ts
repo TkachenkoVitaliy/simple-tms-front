@@ -77,7 +77,6 @@ export class TestNodeStore {
   }
 
   loadNodes = async () => {
-    console.log('loadNodes')
     this.isLoading = true
     if (this.projectId) {
       TestNodeAPI.getProjectTestNodes(this.projectId)

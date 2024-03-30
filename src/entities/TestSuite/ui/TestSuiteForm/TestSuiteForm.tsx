@@ -72,13 +72,10 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
       name: formValues.name.trim(),
       description: formValues.description,
     }
-    // await projectStore.saveProject(projectForSave)
-    // navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })
     await testSuiteStore.saveSuite(testSuiteForSave)
     navigate(`../${testSuiteStore.testSuite.id.toString()}`, {
       relative: 'path',
     })
-    // navigate(`../${testSuite.id}`, { relative: 'path' })
   }
 
   return (

@@ -1,19 +1,11 @@
 import { useCallback, useState } from 'react'
 
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  IconButton,
-  List,
-  Typography,
-} from '@mui/material'
+import { Button, Dialog, IconButton, Typography } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 
 import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
 
-import { PageableList } from 'shared/ui/PageableList/PageableList'
 import { TMSDataGrid } from 'shared/ui/TMSDataGrid/TMSDataGrid'
 
 export interface RepeatableStepSelectorProps {

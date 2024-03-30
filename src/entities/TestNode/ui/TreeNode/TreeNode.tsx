@@ -39,7 +39,7 @@ export const TreeNode = (props: TreeNodeProps) => {
     onToggle(id)
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => onClick?.()
+  const handleClick = (_: React.MouseEvent<HTMLDivElement>) => onClick?.()
 
   const dragOverProps = useDragOver(id, isOpen, onToggle)
 

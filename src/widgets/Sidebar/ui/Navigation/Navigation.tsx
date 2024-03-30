@@ -24,13 +24,12 @@ export interface NavigationItem {
 }
 
 export interface NavigationProps {
-  className?: string
   items: NavigationItem[]
   isCollapsed: boolean
 }
 
 export const Navigation = observer((props: NavigationProps) => {
-  const { className, items, isCollapsed } = props
+  const { items, isCollapsed } = props
 
   const showedItems = useMemo(() => {
     return items.filter(

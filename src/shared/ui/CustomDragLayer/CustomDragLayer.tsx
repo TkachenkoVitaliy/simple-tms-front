@@ -36,8 +36,6 @@ export function CustomDragLayer(
     },
   })
 
-  console.log('dsad')
-
   return (
     <div
       style={{
