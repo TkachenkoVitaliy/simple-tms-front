@@ -23,7 +23,12 @@ export const RepeatableTestStepRow = (props: RepeatableTestStepRowProps) => {
   return (
     <>
       <TableRow
-        sx={{ width: '100%', borderColor: 'white', border: '2px solid' }}
+        sx={{
+          width: '100%',
+          borderColor: 'white',
+          border: '2px solid',
+          height: '75px',
+        }}
       >
         <TableCell>
           <IconButton

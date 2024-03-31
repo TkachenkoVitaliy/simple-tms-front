@@ -56,11 +56,15 @@ export function TMSDataGrid<T extends GridValidRowModel>(
           width: '100%',
           height: '100%',
         },
+        '& .MuiDataGrid-virtualScrollerContent': {
+          height: '100%',
+        },
       }}
       // rowHeight={70}
       rowSelection={false}
       disableColumnMenu
       disableColumnSorting
+      getRowHeight={() => 188}
       rows={data}
       slots={{
         row: renderRow,
