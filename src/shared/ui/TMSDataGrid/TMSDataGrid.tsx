@@ -1,103 +1,77 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { DataGrid, GridPaginationModel, GridRowProps } from '@mui/x-data-grid'
+import {
+  DataGrid,
+  GridPaginationModel,
+  GridRowIdGetter,
+  GridRowProps,
+  RowPropsOverrides,
+} from '@mui/x-data-grid'
 import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
+import { GridValidRowModel } from '@mui/x-data-grid/models/gridRows'
+import { AxiosResponse } from 'axios'
 
-import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
-import { RepeatableTestStepRow } from 'entities/TestCase/ui/RepeatableTestStepRow/RepeatableTestStepRow'
+import { Page } from 'shared/types/api'
 
-export interface TMSDataGridProps {}
+export interface TMSDataGridProps<T extends GridValidRowModel> {
+  renderRow: (props: GridRowProps & RowPropsOverrides) => JSX.Element
+  columns: GridColDef[]
+  fetch: (pageModel: GridPaginationModel) => Promise<AxiosResponse<Page<T>>>
+  pageSize: number
+  getRowId: GridRowIdGetter<T>
+}
 
-const mkdStr = `
-# Markdown Editor
-
----
-
-**Hello world!!!**
-
-[![](https://avatars.githubusercontent.com/u/1680273?s=80&v=4)](https://avatars.githubusercontent.com/u/1680273?v=4)
-
-\`\`\`javascript
-import React from "react";
-import ReactDOM from "react-dom";
-import MEDitor from '@uiw/react-md-editor';
-
-\`\`\`
-`
-
-const dataset: TestStepRepeatable[] = [
-  {
-    id: 66,
-    name: 'Repeatable Step',
-    repeatable: true,
-    action: mkdStr,
-    expected: mkdStr,
-    projectId: 33,
-  },
-  {
-    id: 67,
-    name: 'Repeatable Step 2',
-    repeatable: true,
-    action: mkdStr,
-    expected: mkdStr,
-    projectId: 33,
-  },
-]
-
-export const TMSDataGrid = () => {
-  const [data, setData] = useState<TestStepRepeatable[]>(dataset)
+export function TMSDataGrid<T extends GridValidRowModel>(
+  props: TMSDataGridProps<T>,
+) {
+  const { renderRow, columns, fetch, pageSize, getRowId } = props
+  const [data, setData] = useState<T[]>([])
   const [total, setTotal] = useState<number>()
   const [isLoading, setLoading] = useState<boolean>(false)
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
-    pageSize: 5,
+    pageSize,
   })
 
-  const getPageData = ({ page, pageSize }: GridPaginationModel) => {
-    const newData = dataset.slice(page * pageSize, (page + 1) * pageSize)
-    setData(newData)
-  }
-
-  const columns: GridColDef[] = [
-    {
-      field: 'name',
-      headerName: 'Select Test Step',
-      flex: 1,
-      align: 'center',
+  const loadData = useCallback(
+    async (newPaginationModel: GridPaginationModel) => {
+      setLoading(true)
+      const { data } = await fetch(newPaginationModel)
+      setData(data.data)
+      setTotal(data.totalCount)
+      setPaginationModel(newPaginationModel)
+      setLoading(false)
     },
-  ]
+    [props],
+  )
+
+  useEffect(() => {
+    loadData({ page: 0, pageSize })
+  }, [])
 
   return (
-    <DataGrid
+    <DataGrid<T>
       sx={{
         '& .MuiDataGrid-virtualScrollerRenderZone': {
           width: '100%',
           height: '100%',
         },
       }}
-      rowHeight={2000}
+      // rowHeight={70}
       rowSelection={false}
       disableColumnMenu
       disableColumnSorting
       rows={data}
       slots={{
-        row: (props: GridRowProps) => (
-          <RepeatableTestStepRow
-            key={props.row.id}
-            row={props.row as TestStepRepeatable}
-          />
-        ),
+        row: renderRow,
       }}
-      getRowId={(item) => item.name}
-      rowCount={dataset.length}
+      getRowId={getRowId}
+      rowCount={total}
       loading={isLoading}
       pagination
       paginationMode="server"
       paginationModel={paginationModel}
-      onPaginationModelChange={(newPaginationModel) => {
-        getPageData(newPaginationModel)
-        setPaginationModel(newPaginationModel)
-      }}
+      onPaginationModelChange={loadData}
       columns={columns}
     />
   )

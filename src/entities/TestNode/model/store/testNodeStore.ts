@@ -19,10 +19,10 @@ export class TestNodeStore {
     this.isLoading = isLoading
   }
 
-  isRegistryInited: boolean = false
+  isRegistryInitialized: boolean = false
 
-  setRegistryInited(isInited: boolean) {
-    this.isRegistryInited = isInited
+  setRegistryInitialized(isInitialized: boolean) {
+    this.isRegistryInitialized = isInitialized
   }
 
   nodesRegistry: ObservableMap<
@@ -83,7 +83,7 @@ export class TestNodeStore {
         .then(({ data }) => {
           this.nodesRegistry.clear()
           data.forEach((node) => this.nodesRegistry.set(node.id, node))
-          this.setRegistryInited(true)
+          this.setRegistryInitialized(true)
         })
         .finally(() => {
           this.setLoading(false)

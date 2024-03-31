@@ -1,10 +1,14 @@
-import { useCallback, useState } from 'react'
+import { Dialog } from '@mui/material'
+import {
+  GridPaginationModel,
+  GridRowProps,
+  RowPropsOverrides,
+} from '@mui/x-data-grid'
+import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
 
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown'
-import { Button, Dialog, IconButton, Typography } from '@mui/material'
-import ListItem from '@mui/material/ListItem'
-
+import { TestStepApi } from 'entities/TestCase/api/testStepApi'
 import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
+import { RepeatableTestStepRow } from 'entities/TestCase/ui/RepeatableTestStepRow/RepeatableTestStepRow'
 
 import { TMSDataGrid } from 'shared/ui/TMSDataGrid/TMSDataGrid'
 
@@ -15,54 +19,31 @@ export interface RepeatableStepSelectorProps {
 
 export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
   const { open, onClose } = props
-  const [data, setData] = useState<TestStepRepeatable[]>([
-    {
-      id: 66,
-      name: 'Repeatable Step',
-      repeatable: true,
-      action: '3333',
-      expected: '3333',
-      projectId: 33,
-    },
-    {
-      id: 67,
-      name: 'Repeatable Step 2',
-      repeatable: true,
-      action: '3333',
-      expected: '3333',
-      projectId: 33,
-    },
-  ])
-
   const handleCloseEvent = (event: object, reason: string) => {
     onClose()
     // console.log(event)
     // console.log(reason)
   }
 
-  const renderFunc = useCallback((item: TestStepRepeatable) => {
-    return (
-      <ListItem key={item.id}>
-        <IconButton
-          onClick={() => {
-            console.log(item.id)
-          }}
-        >
-          <ExpandCircleDownIcon />
-        </IconButton>
-        <Button
-          sx={{ textAlign: 'start', justifyContent: 'flex-start' }}
-          color="inherit"
-          fullWidth
-          onClick={() => {
-            console.log('ITEM ', item.id)
-          }}
-        >
-          <Typography>{item.name}</Typography>
-        </Button>
-      </ListItem>
-    )
-  }, [])
+  const columns: GridColDef[] = [
+    {
+      field: 'name',
+      headerName: 'Select Test Step',
+      flex: 1,
+      align: 'center',
+    },
+  ]
+
+  const renderRow = ({ row }: GridRowProps & RowPropsOverrides) => (
+    <RepeatableTestStepRow
+      key={row.id}
+      row={row as TestStepRepeatable}
+    />
+  )
+
+  const fetchSteps = (pageModel: GridPaginationModel) => {
+    return TestStepApi.getRepeatableSteps(pageModel.page, pageModel.pageSize)
+  }
 
   return (
     <Dialog
@@ -71,7 +52,13 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
       open={open}
       onClose={handleCloseEvent}
     >
-      <TMSDataGrid />
+      <TMSDataGrid<TestStepRepeatable>
+        renderRow={renderRow}
+        columns={columns}
+        fetch={fetchSteps}
+        pageSize={5}
+        getRowId={(item) => item.id}
+      />
     </Dialog>
   )
 }

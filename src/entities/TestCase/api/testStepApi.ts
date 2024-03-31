@@ -12,6 +12,6 @@ export const TestStepApi = {
     page: number,
     pageSize: number,
   ): Promise<AxiosResponse<Page<TestStepRepeatable>>> {
-    return API.get(`${URL}/?page=${page}&pageSize=${pageSize}`)
+    return API.get(`${URL}?page=${page}&pageSize=${pageSize}`)
   },
 }

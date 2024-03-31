@@ -22,7 +22,9 @@ export const RepeatableTestStepRow = (props: RepeatableTestStepRowProps) => {
 
   return (
     <>
-      <TableRow sx={{ width: '100%' }}>
+      <TableRow
+        sx={{ width: '100%', borderColor: 'white', border: '2px solid' }}
+      >
         <TableCell>
           <IconButton
             aria-label="expand row"
