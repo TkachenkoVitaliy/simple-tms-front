@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { AppLayout } from 'app/layout/AppLayout'
 import { AuthLayout } from 'app/layout/AuthLayout'
 
+import { DashboardPage } from 'pages/DashboardPage'
 import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
@@ -14,7 +15,6 @@ import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
-import { DashboardPage } from 'pages/DashboardPage'
 
 export const appRoutes: AppRoute[] = [
   {
