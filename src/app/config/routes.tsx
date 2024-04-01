@@ -14,6 +14,7 @@ import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
+import { DashboardPage } from 'pages/DashboardPage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -45,7 +46,7 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId/dashboard',
-        element: <div>DASHBOARD PAGE</div>, // <DashboardPage />,
+        element: <DashboardPage />, // <DashboardPage />,
         label: 'Главная',
         Icon: Dashboard,
         showWithoutActiveProject: false,
