@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -10,9 +12,9 @@ import {
   TableRow,
 } from '@mui/material'
 import { GridAlignment } from '@mui/x-data-grid/models/colDef/gridColDef'
-import { AxiosResponse } from 'axios'
 
 import { Page } from 'shared/types/api'
+import { TMSTableRow } from 'shared/ui/TMSTable/TMSTableRow'
 
 export interface ColumnDefinition<T> {
   field: keyof T
@@ -25,7 +27,8 @@ export interface ColumnDefinition<T> {
 export interface TMSTableProps<T> {
   pageSize: number
   columns: ColumnDefinition<T>[]
-  loadData: (page: number, pageSize: number) => Promise<AxiosResponse<Page<T>>>
+  // loadData: (page: number, pageSize: number) => Promise<AxiosResponse<Page<T>>>
+  loadData: (page: number, pageSize: number) => Promise<Page<T>>
   getRowId: (row: T) => string | number
 }
 
@@ -41,34 +44,27 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
     async (_: unknown, newPage: number) => {
       setPage(newPage)
       setLoading(true)
-      const { data } = await loadData(newPage, pageSize)
-      setRows(data.data)
-      setTotal(data.totalCount)
+      const { data, totalCount } = await loadData(newPage, pageSize)
+      setRows(data)
+      setTotal(totalCount)
       setLoading(false)
+      // setPage(newPage)
+      // setLoading(true)
+      // const { data } = await loadData(newPage, pageSize)
+      // setRows(data.data)
+      // setTotal(data.totalCount)
+      // setLoading(false)
     },
     [pageSize],
   )
 
-  const createRow = useCallback(
-    (rowItem: T) => {
-      return (
-        <TableRow key={getRowId(rowItem)}>
-          {columns
-            .filter((c) => c.displayType !== 'collapse')
-            .map((c) => {
-              return (
-                <TableCell align={c.align}>
-                  {c.getCellText
-                    ? c.getCellText(rowItem[c.field])
-                    : String(rowItem[c.field])}
-                </TableCell>
-              )
-            })}
-        </TableRow>
-      )
-    },
-    [columns, getRowId],
-  )
+  const isExpandable = useMemo(() => {
+    return columns.some((col) => col.displayType === 'collapse')
+  }, [])
+
+  useEffect(() => {
+    fetchRows(null, 0)
+  }, [])
 
   return (
     <>
@@ -76,21 +72,39 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
         <Table>
           <TableHead>
             <TableRow>
+              {isExpandable ? <TableCell /> : null}
               {columns
                 .filter((c) => c.displayType !== 'collapse')
                 .map((c) => (
-                  <TableCell align={c.align}>{c.headerName}</TableCell>
+                  <TableCell
+                    align={c.align}
+                    key={c.headerName}
+                  >
+                    {c.headerName}
+                  </TableCell>
                 ))}
             </TableRow>
           </TableHead>
-          <TableBody>{rows.map((r) => createRow(r))}</TableBody>
+          <TableBody>
+            {rows.map((r) => (
+              <TMSTableRow<T>
+                key={getRowId(r)}
+                row={r}
+                isExpandable={isExpandable}
+                id={getRowId(r)}
+                columns={columns}
+              />
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
+        component="div"
         count={total}
         page={page}
         rowsPerPage={pageSize}
         onPageChange={fetchRows}
+        rowsPerPageOptions={[pageSize]}
       />
     </>
   )
