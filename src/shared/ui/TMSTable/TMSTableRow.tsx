@@ -37,6 +37,52 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
     [row, columns],
   )
 
+  const getCellElement = useCallback(
+    (col: ColumnDefinition<T>) => {
+      if (col.customCell) {
+        return (
+          <TableCell
+            align={col.align}
+            key={col.headerName}
+          >
+            {col.customCell(row)}
+          </TableCell>
+        )
+      }
+      if (col.displayType === 'collapse') {
+        return (
+          <TableCell
+            align={col.align}
+            key={col.headerName}
+          >
+            {col.getCellText
+              ? col.getCellText(row[col.field])
+              : String(row[col.field])}
+          </TableCell>
+        )
+      }
+      return (
+        <TableCell
+          align={col.align}
+          key={col.headerName}
+        >
+          {selectColumnName === col.headerName ? (
+            <Button
+              fullWidth
+              color="inherit"
+              style={{ justifyContent: 'flex-start' }}
+            >
+              {getCellTextValue(col)}
+            </Button>
+          ) : (
+            getCellTextValue(col)
+          )}
+        </TableCell>
+      )
+    },
+    [row, columns],
+  )
+
   return (
     <>
       <TableRow>
@@ -54,24 +100,7 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
         {columns
           .filter((c) => c.displayType !== 'collapse')
           .map((c) => {
-            return (
-              <TableCell
-                align={c.align}
-                key={c.headerName}
-              >
-                {selectColumnName === c.headerName ? (
-                  <Button
-                    fullWidth
-                    color="inherit"
-                    style={{ justifyContent: 'flex-start' }}
-                  >
-                    {getCellTextValue(c)}
-                  </Button>
-                ) : (
-                  getCellTextValue(c)
-                )}
-              </TableCell>
-            )
+            return getCellElement(c)
           })}
       </TableRow>
       {isExpandable && (
@@ -105,16 +134,7 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
                     {columns
                       .filter((c) => c.displayType === 'collapse')
                       .map((c) => {
-                        return (
-                          <TableCell
-                            align={c.align}
-                            key={c.headerName}
-                          >
-                            {c.getCellText
-                              ? c.getCellText(row[c.field])
-                              : String(row[c.field])}
-                          </TableCell>
-                        )
+                        return getCellElement(c)
                       })}
                   </TableRow>
                 </TableBody>

@@ -20,6 +20,7 @@ export interface ColumnDefinition<T> {
   align?: GridAlignment
   displayType?: 'main' | 'collapse'
   getCellText?: (val: T[keyof T]) => string
+  customCell?: (row: T) => JSX.Element
 }
 
 export interface TMSTableProps<T> {

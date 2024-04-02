@@ -1,6 +1,7 @@
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
 import axios, { AxiosResponse } from 'axios'
+import MDEditor from '@uiw/react-md-editor'
 
 interface Post {
   postId: number
@@ -26,11 +27,23 @@ function DashboardPage() {
       field: 'email',
       headerName: 'EMAIL',
       displayType: 'collapse',
+      customCell: (row: Post) => (
+        <MDEditor.Markdown
+          source={row.email}
+          style={{ backgroundColor: 'inherit' }}
+        />
+      ),
     },
     {
       field: 'body',
       headerName: 'BODY',
       displayType: 'collapse',
+      customCell: (row: Post) => (
+        <MDEditor.Markdown
+          source={row.body}
+          style={{ backgroundColor: 'inherit' }}
+        />
+      ),
     },
   ]
 
