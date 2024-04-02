@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import {
+  Box,
+  Button,
   Collapse,
   IconButton,
   Table,
@@ -19,17 +21,27 @@ export interface TMSTableRowProps<T> {
   isExpandable: boolean
   id: string | number
   columns: ColumnDefinition<T>[]
+  selectColumnName?: string
 }
 
 export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
-  const { row, isExpandable, id, columns } = props
+  const { row, isExpandable, id, columns, selectColumnName } = props
   const [open, setOpen] = useState<boolean>(false)
+
+  const getCellTextValue = useCallback(
+    (col: ColumnDefinition<T>) => {
+      return col.getCellText
+        ? col.getCellText(row[col.field])
+        : String(row[col.field])
+    },
+    [row, columns],
+  )
 
   return (
     <>
       <TableRow>
         {isExpandable && (
-          <TableCell>
+          <TableCell size="small">
             <IconButton
               aria-label="expand row"
               size="small"
@@ -47,9 +59,17 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
                 align={c.align}
                 key={c.headerName}
               >
-                {c.getCellText
-                  ? c.getCellText(row[c.field])
-                  : String(row[c.field])}
+                {selectColumnName === c.headerName ? (
+                  <Button
+                    fullWidth
+                    color="inherit"
+                    style={{ justifyContent: 'flex-start' }}
+                  >
+                    {getCellTextValue(c)}
+                  </Button>
+                ) : (
+                  getCellTextValue(c)
+                )}
               </TableCell>
             )
           })}
@@ -65,7 +85,7 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
               timeout="auto"
               unmountOnExit
             >
-              <Table>
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     {columns

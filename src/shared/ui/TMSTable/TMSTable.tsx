@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import {
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -30,10 +28,11 @@ export interface TMSTableProps<T> {
   // loadData: (page: number, pageSize: number) => Promise<AxiosResponse<Page<T>>>
   loadData: (page: number, pageSize: number) => Promise<Page<T>>
   getRowId: (row: T) => string | number
+  selectColumnName?: string
 }
 
 export function TMSTable<T>(props: TMSTableProps<T>) {
-  const { pageSize, columns, loadData, getRowId } = props
+  const { pageSize, columns, loadData, getRowId, selectColumnName } = props
 
   const [rows, setRows] = useState<T[]>([])
   const [total, setTotal] = useState<number>(0)
@@ -72,7 +71,12 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
         <Table>
           <TableHead>
             <TableRow>
-              {isExpandable ? <TableCell /> : null}
+              {isExpandable ? (
+                <TableCell
+                  size="small"
+                  style={{ width: '50px' }}
+                />
+              ) : null}
               {columns
                 .filter((c) => c.displayType !== 'collapse')
                 .map((c) => (
@@ -93,6 +97,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
                 isExpandable={isExpandable}
                 id={getRowId(r)}
                 columns={columns}
+                selectColumnName={selectColumnName}
               />
             ))}
           </TableBody>

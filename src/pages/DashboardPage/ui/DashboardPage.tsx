@@ -17,11 +17,11 @@ function DashboardPage() {
       headerName: 'NAME',
       displayType: 'main',
     },
-    {
-      field: 'postId',
-      headerName: 'POST ID',
-      displayType: 'main',
-    },
+    // {
+    //   field: 'postId',
+    //   headerName: 'POST ID',
+    //   displayType: 'main',
+    // },
     {
       field: 'email',
       headerName: 'EMAIL',
@@ -47,12 +47,15 @@ function DashboardPage() {
   return (
     <PageFrame>
       <div>Dashboard</div>
-      <TMSTable
-        pageSize={10}
-        columns={columns}
-        loadData={loadData}
-        getRowId={(item) => item.id}
-      />
+      <div style={{ width: '80%', height: '80%' }}>
+        <TMSTable
+          pageSize={10}
+          columns={columns}
+          loadData={loadData}
+          getRowId={(item) => item.id}
+          selectColumnName="NAME"
+        />
+      </div>
     </PageFrame>
   )
 }
