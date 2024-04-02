@@ -1,16 +1,12 @@
 import { Dialog } from '@mui/material'
-import {
-  GridPaginationModel,
-  GridRowProps,
-  RowPropsOverrides,
-} from '@mui/x-data-grid'
-import { GridColDef } from '@mui/x-data-grid/models/colDef/gridColDef'
+import { GridPaginationModel } from '@mui/x-data-grid'
+import MDEditor from '@uiw/react-md-editor'
 
 import { TestStepApi } from 'entities/TestCase/api/testStepApi'
 import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
-import { RepeatableTestStepRow } from 'entities/TestCase/ui/RepeatableTestStepRow/RepeatableTestStepRow'
 
-import { TMSDataGrid } from 'shared/ui/TMSDataGrid/TMSDataGrid'
+import { TMSTable } from 'shared/ui/TMSTable'
+import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
 
 export interface RepeatableStepSelectorProps {
   open: boolean
@@ -25,25 +21,40 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
     // console.log(reason)
   }
 
-  const columns: GridColDef[] = [
+  const fetchSteps = async (page: number, pageSize: number) => {
+    const response = await TestStepApi.getRepeatableSteps(page, pageSize)
+    return response.data
+  }
+
+  const columns: ColumnDefinition<TestStepRepeatable>[] = [
     {
       field: 'name',
-      headerName: 'Select Test Step',
-      flex: 1,
-      align: 'center',
+      headerName: 'Select Repeatable Test Step',
+      displayType: 'main',
+    },
+    {
+      field: 'action',
+      headerName: 'action',
+      displayType: 'collapse',
+      customCell: (row: TestStepRepeatable) => (
+        <MDEditor.Markdown
+          source={row.action}
+          style={{ backgroundColor: 'inherit' }}
+        />
+      ),
+    },
+    {
+      field: 'expected',
+      headerName: 'expected',
+      displayType: 'collapse',
+      customCell: (row: TestStepRepeatable) => (
+        <MDEditor.Markdown
+          source={row.expected}
+          style={{ backgroundColor: 'inherit' }}
+        />
+      ),
     },
   ]
-
-  const renderRow = ({ row }: GridRowProps & RowPropsOverrides) => (
-    <RepeatableTestStepRow
-      key={row.id}
-      row={row as TestStepRepeatable}
-    />
-  )
-
-  const fetchSteps = (pageModel: GridPaginationModel) => {
-    return TestStepApi.getRepeatableSteps(pageModel.page, pageModel.pageSize)
-  }
 
   return (
     <Dialog
@@ -52,12 +63,11 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
       open={open}
       onClose={handleCloseEvent}
     >
-      <TMSDataGrid<TestStepRepeatable>
-        renderRow={renderRow}
-        columns={columns}
-        fetch={fetchSteps}
+      <TMSTable
         pageSize={5}
-        getRowId={(item) => item.id}
+        columns={columns}
+        loadData={fetchSteps}
+        getRowId={(row) => row.id}
       />
     </Dialog>
   )
