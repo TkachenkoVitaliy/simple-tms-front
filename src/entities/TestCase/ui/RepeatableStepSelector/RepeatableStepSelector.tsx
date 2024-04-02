@@ -59,7 +59,7 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
   return (
     <Dialog
       fullWidth
-      maxWidth={false}
+      maxWidth="xl"
       open={open}
       onClose={handleCloseEvent}
     >
@@ -68,6 +68,8 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
         columns={columns}
         loadData={fetchSteps}
         getRowId={(row) => row.id}
+        selectColumnName="Select Repeatable Test Step"
+        onSelectRow={(row) => console.log(row)}
       />
     </Dialog>
   )

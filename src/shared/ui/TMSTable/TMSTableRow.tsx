@@ -21,10 +21,11 @@ export interface TMSTableRowProps<T> {
   id: string | number
   columns: ColumnDefinition<T>[]
   selectColumnName?: string
+  onSelect?: (row: T) => void
 }
 
 export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
-  const { row, isExpandable, id, columns, selectColumnName } = props
+  const { row, isExpandable, id, columns, selectColumnName, onSelect } = props
   const [open, setOpen] = useState<boolean>(false)
 
   const getCellTextValue = useCallback(
@@ -50,7 +51,8 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
         <Button
           fullWidth
           color="inherit"
-          style={{ justifyContent: 'flex-start' }}
+          style={{ justifyContent: 'flex-start', paddingLeft: '20px' }}
+          onClick={() => onSelect?.(row)}
         >
           {getCellTextValue(col)}
         </Button>

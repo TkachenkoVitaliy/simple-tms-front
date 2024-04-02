@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +13,10 @@ import {
 import { GridAlignment } from '@mui/x-data-grid/models/colDef/gridColDef'
 
 import { Page } from 'shared/types/api'
+import { Spinner } from 'shared/ui/Spinner'
 import { TMSTableRow } from 'shared/ui/TMSTable/TMSTableRow'
+
+import styles from './TMSTable.module.scss'
 
 export interface ColumnDefinition<T> {
   field: keyof T
@@ -26,14 +30,21 @@ export interface ColumnDefinition<T> {
 export interface TMSTableProps<T> {
   pageSize: number
   columns: ColumnDefinition<T>[]
-  // loadData: (page: number, pageSize: number) => Promise<AxiosResponse<Page<T>>>
   loadData: (page: number, pageSize: number) => Promise<Page<T>>
   getRowId: (row: T) => string | number
   selectColumnName?: string
+  onSelectRow?: (row: T) => void
 }
 
 export function TMSTable<T>(props: TMSTableProps<T>) {
-  const { pageSize, columns, loadData, getRowId, selectColumnName } = props
+  const {
+    pageSize,
+    columns,
+    loadData,
+    getRowId,
+    selectColumnName,
+    onSelectRow,
+  } = props
 
   const [rows, setRows] = useState<T[]>([])
   const [total, setTotal] = useState<number>(0)
@@ -48,12 +59,6 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
       setRows(data)
       setTotal(totalCount)
       setLoading(false)
-      // setPage(newPage)
-      // setLoading(true)
-      // const { data } = await loadData(newPage, pageSize)
-      // setRows(data.data)
-      // setTotal(data.totalCount)
-      // setLoading(false)
     },
     [pageSize],
   )
@@ -65,6 +70,22 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
   useEffect(() => {
     fetchRows(null, 0)
   }, [])
+
+  const loader = () => {
+    return (
+      <Box
+        className={styles.loaderBox}
+        display="flex"
+        alignItems="center"
+      >
+        <Spinner
+          size={130}
+          padding={10}
+          className={styles.loader}
+        />
+      </Box>
+    )
+  }
 
   return (
     <>
@@ -91,16 +112,29 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((r) => (
-              <TMSTableRow<T>
-                key={getRowId(r)}
-                row={r}
-                isExpandable={isExpandable}
-                id={getRowId(r)}
-                columns={columns}
-                selectColumnName={selectColumnName}
-              />
-            ))}
+            {isLoading ? (
+              <TableRow>
+                {isExpandable ? (
+                  <TableCell
+                    size="small"
+                    style={{ width: '50px' }}
+                  />
+                ) : null}
+                <TableCell>{loader()}</TableCell>
+              </TableRow>
+            ) : (
+              rows.map((r) => (
+                <TMSTableRow<T>
+                  key={getRowId(r)}
+                  row={r}
+                  isExpandable={isExpandable}
+                  id={getRowId(r)}
+                  columns={columns}
+                  selectColumnName={selectColumnName}
+                  onSelect={onSelectRow}
+                />
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -111,6 +145,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
         rowsPerPage={pageSize}
         onPageChange={fetchRows}
         rowsPerPageOptions={[pageSize]}
+        disabled={isLoading}
       />
     </>
   )
