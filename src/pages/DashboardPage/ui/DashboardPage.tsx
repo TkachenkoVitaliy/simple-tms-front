@@ -1,7 +1,8 @@
+import MDEditor from '@uiw/react-md-editor'
+import axios, { AxiosResponse } from 'axios'
+
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
-import axios, { AxiosResponse } from 'axios'
-import MDEditor from '@uiw/react-md-editor'
 
 interface Post {
   postId: number
@@ -18,11 +19,6 @@ function DashboardPage() {
       headerName: 'NAME',
       displayType: 'main',
     },
-    // {
-    //   field: 'postId',
-    //   headerName: 'POST ID',
-    //   displayType: 'main',
-    // },
     {
       field: 'email',
       headerName: 'EMAIL',

@@ -3,7 +3,6 @@ import React, { useCallback, useState } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import {
-  Box,
   Button,
   Collapse,
   IconButton,
@@ -40,44 +39,23 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
   const getCellElement = useCallback(
     (col: ColumnDefinition<T>) => {
       if (col.customCell) {
-        return (
-          <TableCell
-            align={col.align}
-            key={col.headerName}
-          >
-            {col.customCell(row)}
-          </TableCell>
-        )
+        return col.customCell(row)
       }
       if (col.displayType === 'collapse') {
-        return (
-          <TableCell
-            align={col.align}
-            key={col.headerName}
-          >
-            {col.getCellText
-              ? col.getCellText(row[col.field])
-              : String(row[col.field])}
-          </TableCell>
-        )
+        return col.getCellText
+          ? col.getCellText(row[col.field])
+          : String(row[col.field])
       }
-      return (
-        <TableCell
-          align={col.align}
-          key={col.headerName}
+      return selectColumnName === col.headerName ? (
+        <Button
+          fullWidth
+          color="inherit"
+          style={{ justifyContent: 'flex-start' }}
         >
-          {selectColumnName === col.headerName ? (
-            <Button
-              fullWidth
-              color="inherit"
-              style={{ justifyContent: 'flex-start' }}
-            >
-              {getCellTextValue(col)}
-            </Button>
-          ) : (
-            getCellTextValue(col)
-          )}
-        </TableCell>
+          {getCellTextValue(col)}
+        </Button>
+      ) : (
+        getCellTextValue(col)
       )
     },
     [row, columns],
@@ -89,7 +67,6 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
         {isExpandable && (
           <TableCell size="small">
             <IconButton
-              aria-label="expand row"
               size="small"
               onClick={() => setOpen(!open)}
             >
@@ -99,9 +76,14 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
         )}
         {columns
           .filter((c) => c.displayType !== 'collapse')
-          .map((c) => {
-            return getCellElement(c)
-          })}
+          .map((c) => (
+            <TableCell
+              align={c.align}
+              key={c.headerName}
+            >
+              {getCellElement(c)}
+            </TableCell>
+          ))}
       </TableRow>
       {isExpandable && (
         <TableRow>
@@ -133,9 +115,14 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
                   <TableRow>
                     {columns
                       .filter((c) => c.displayType === 'collapse')
-                      .map((c) => {
-                        return getCellElement(c)
-                      })}
+                      .map((c) => (
+                        <TableCell
+                          align={c.align}
+                          key={c.headerName}
+                        >
+                          {getCellElement(c)}
+                        </TableCell>
+                      ))}
                   </TableRow>
                 </TableBody>
               </Table>
