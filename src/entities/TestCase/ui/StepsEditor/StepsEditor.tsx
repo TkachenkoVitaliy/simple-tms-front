@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { memo, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
@@ -10,7 +10,11 @@ import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { swapArrayItems } from 'shared/lib/utils'
 import { DraggableWrapper } from 'shared/ui/DraggableWrapper'
 
-import { TestCaseStep } from '../../model/types/testCase'
+import {
+  TestCaseStep,
+  TestStep,
+  TestStepRepeatable,
+} from '../../model/types/testCase'
 import { StepEditor } from '../StepEditor/StepEditor'
 
 import styles from './StepsEditor.module.scss'
@@ -100,7 +104,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
     updateState(newArray)
   }
 
-  const addItem = (repeatable: boolean) => {
+  const addItem = (repeatable: boolean, step?: TestStep) => {
     const newUuid = uuidv4()
     const newState: WrappedTestCaseStep[] = [
       ...data,
@@ -108,7 +112,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
         id: newUuid,
         item: {
           orderNumber: data.length + 1,
-          testStep: {
+          testStep: step || {
             id: null,
             name: repeatable ? '' : null,
             repeatable,
@@ -125,6 +129,13 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
   const addSimpleStep = () => addItem(false)
 
   const createRepeatableStep = () => addItem(true)
+
+  const selectRepeatableStep = useCallback(
+    (stepRepeatable: TestStepRepeatable) => {
+      addItem(true, stepRepeatable)
+    },
+    [addItem],
+  )
 
   return (
     <div>
@@ -185,6 +196,7 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
       <RepeatableStepSelector
         open={showStepSelector}
         onClose={() => setShowStepSelector(false)}
+        onSelect={selectRepeatableStep}
       />
     </div>
   )

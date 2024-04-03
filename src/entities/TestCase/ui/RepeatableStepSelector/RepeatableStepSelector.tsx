@@ -1,5 +1,6 @@
+import { useCallback } from 'react'
+
 import { Dialog } from '@mui/material'
-import { GridPaginationModel } from '@mui/x-data-grid'
 import MDEditor from '@uiw/react-md-editor'
 
 import { TestStepApi } from 'entities/TestCase/api/testStepApi'
@@ -11,15 +12,22 @@ import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
 export interface RepeatableStepSelectorProps {
   open: boolean
   onClose: () => void
+  onSelect: (selectedStep: TestStepRepeatable) => void
 }
 
 export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
-  const { open, onClose } = props
+  const { open, onClose, onSelect } = props
   const handleCloseEvent = (event: object, reason: string) => {
     onClose()
-    // console.log(event)
-    // console.log(reason)
   }
+
+  const onSelectRow = useCallback(
+    (testStep: TestStepRepeatable) => {
+      onSelect(testStep)
+      onClose()
+    },
+    [onClose, onSelect],
+  )
 
   const fetchSteps = async (page: number, pageSize: number) => {
     const response = await TestStepApi.getRepeatableSteps(page, pageSize)
@@ -69,7 +77,7 @@ export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
         loadData={fetchSteps}
         getRowId={(row) => row.id}
         selectColumnName="Select Repeatable Test Step"
-        onSelectRow={(row) => console.log(row)}
+        onSelectRow={onSelectRow}
       />
     </Dialog>
   )
