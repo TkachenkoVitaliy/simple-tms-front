@@ -1,5 +1,5 @@
 import { NodeModel } from '@minoru/react-dnd-treeview'
-import { ObservableMap, makeAutoObservable, observable } from 'mobx'
+import { makeAutoObservable, observable, ObservableMap } from 'mobx'
 
 import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
 import { TestSuiteShort } from 'entities/TestSuite/model/types/testSuite'
@@ -9,6 +9,8 @@ import {
   TestNodeType,
   UpdateTestNodeParent,
 } from '../types/testNode'
+import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
+import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 
 export class TestNodeStore {
   projectId: number
@@ -89,6 +91,21 @@ export class TestNodeStore {
           this.setLoading(false)
           return null
         })
+    }
+  }
+
+  deleteNode = async (id: number, type: TestNodeType) => {
+    if (type === TestNodeType.CASE) {
+      this.setLoading(true)
+      TestCaseAPI.delete(id)
+        .then(() => this.loadNodes())
+        .then(() => this.setLoading(false))
+    }
+    if (type === TestNodeType.SUITE) {
+      this.setLoading(true)
+      TestSuiteAPI.delete(this.projectId, id)
+        .then(() => this.loadNodes())
+        .then(() => this.setLoading(false))
     }
   }
 

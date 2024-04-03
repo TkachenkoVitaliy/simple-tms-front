@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -71,6 +71,13 @@ export const TestsTree = observer(() => {
     ref.current?.closeAll()
   }
 
+  const onDeleteNode = useCallback(
+    (id: number, type: TestNodeType) => {
+      testNodeStore.deleteNode(id, type)
+    },
+    [projectId, testNodeStore],
+  )
+
   if (testNodeStore.isLoading) {
     return <PageLoader message="" />
   }
@@ -118,6 +125,7 @@ export const TestsTree = observer(() => {
                   navigate(node.id.toString())
                 }
               }}
+              onDelete={onDeleteNode}
             />
           )}
           dragPreviewRender={(monitorProps) => (

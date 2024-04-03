@@ -32,4 +32,7 @@ export const TestSuiteAPI = {
   ): Promise<AxiosResponse<TestSuite>> {
     return API.put(getProjectUrl(projectId), testSuite)
   },
+  delete(projectId: number, id: number): Promise<AxiosResponse<unknown>> {
+    return API.delete(`${getProjectUrl(projectId)}/${id}`)
+  },
 }

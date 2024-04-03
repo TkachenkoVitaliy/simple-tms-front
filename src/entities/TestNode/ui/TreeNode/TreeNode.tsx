@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
-import { Add, ArrowRight, Edit } from '@mui/icons-material'
+import { Add, ArrowRight, Delete, Edit } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,6 +22,7 @@ export interface TreeNodeProps {
   isOpen: boolean
   onToggle: (id: NodeModel['id']) => void
   onClick?: () => void
+  onDelete: (id: TestNodeData['id'], type: TestNodeData['type']) => void
 }
 
 const DEFAULT_INDENT = 24
@@ -29,7 +30,7 @@ const DEFAULT_INDENT = 24
 // TODO: refactor
 
 export const TreeNode = (props: TreeNodeProps) => {
-  const { className, onClick, onToggle, isOpen, node, depth } = props
+  const { className, onClick, onToggle, isOpen, node, depth, onDelete } = props
   const { id, droppable, data, parent, text } = node
   const indent = depth * DEFAULT_INDENT
   const navigate = useNavigate()
@@ -106,8 +107,13 @@ export const TreeNode = (props: TreeNodeProps) => {
             ]}
           />
         )}
-        <IconButton size="small">
-          <Edit />
+        <IconButton
+          size="small"
+          onClick={() => {
+            if (node.data) onDelete(node.data.id, node.data.type)
+          }}
+        >
+          <Delete />
         </IconButton>
       </div>
     </div>

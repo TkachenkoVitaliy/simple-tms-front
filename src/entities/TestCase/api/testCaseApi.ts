@@ -20,4 +20,7 @@ export const TestCaseAPI = {
   update(testCase: TestCase): Promise<AxiosResponse<TestCase>> {
     return API.put(URL, testCase)
   },
+  delete(id: number): Promise<AxiosResponse<unknown>> {
+    return API.delete(`${URL}/${id}`)
+  },
 }
