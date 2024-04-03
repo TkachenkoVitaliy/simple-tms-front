@@ -96,7 +96,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
               {isExpandable ? (
                 <TableCell
                   size="small"
-                  style={{ width: '50px' }}
+                  style={{ width: '66px' }}
                 />
               ) : null}
               {columns
@@ -117,7 +117,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
                 {isExpandable ? (
                   <TableCell
                     size="small"
-                    style={{ width: '50px' }}
+                    style={{ width: '66px' }}
                   />
                 ) : null}
                 <TableCell>{loader()}</TableCell>
