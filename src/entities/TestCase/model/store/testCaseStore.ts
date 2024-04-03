@@ -5,17 +5,38 @@ import { TestNodeStore } from 'entities/TestNode'
 
 import { CasePriority, CaseType, TestCase } from '../types/testCase'
 
-export const NEW_CASE: TestCase = {
+export const createNewSteps = (projectId: number) => [
+  {
+    orderNumber: 1,
+    testStep: {
+      id: null,
+      name: null,
+      repeatable: false,
+      action: '',
+      expected: '',
+      projectId,
+    },
+  },
+]
+
+export const createNewCase = (projectId: number) => ({
   id: 0,
   parentSuiteId: null,
   name: '',
   type: CaseType.MANUAL,
   priority: CasePriority.NORMAL,
   preconditions: '',
-  testSteps: [],
-}
+  testSteps: [...createNewSteps(projectId)],
+})
 
 export class TestCaseStore {
+  constructor(projectId: number, testNodeStore: TestNodeStore) {
+    this.projectId = projectId
+    this.testCase = { ...createNewCase(projectId) }
+    this.testNodeStore = testNodeStore
+    makeAutoObservable(this)
+  }
+
   projectId: number
 
   testNodeStore: TestNodeStore
@@ -26,7 +47,7 @@ export class TestCaseStore {
     this.isLoading = loading
   }
 
-  testCase: TestCase = { ...NEW_CASE }
+  testCase: TestCase
 
   setTestCase = (testCase: TestCase) => {
     this.testCase = testCase
@@ -61,7 +82,10 @@ export class TestCaseStore {
   }
 
   setNewCase = (parentSuiteId?: TestCase['parentSuiteId']) => {
-    this.setTestCase({ ...NEW_CASE, parentSuiteId: parentSuiteId || null })
+    this.setTestCase({
+      ...createNewCase(this.projectId),
+      parentSuiteId: parentSuiteId || null,
+    })
     this.setIsLoading(false)
   }
 
@@ -76,11 +100,5 @@ export class TestCaseStore {
     this.setTestCase(savedCase)
     await this.testNodeStore.loadNodes()
     this.setIsLoading(false)
-  }
-
-  constructor(projectId: number, testNodeStore: TestNodeStore) {
-    this.projectId = projectId
-    this.testNodeStore = testNodeStore
-    makeAutoObservable(this)
   }
 }
