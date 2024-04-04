@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
@@ -39,16 +39,12 @@ export const StepsEditor = memo((props: StepsEditorProps) => {
 
   const [showStepSelector, setShowStepSelector] = useState<boolean>(false)
 
-  const [data, setData] = useState<WrappedTestCaseStep[]>([])
-
-  useEffect(() => {
-    setData(
-      values.map((item) => ({
-        id: uuidv4(),
-        item,
-      })),
-    )
-  }, [values])
+  const [data, setData] = useState<WrappedTestCaseStep[]>(
+    values.map((item) => ({
+      id: uuidv4(),
+      item,
+    })),
+  )
 
   const mapToValues = (data: WrappedTestCaseStep[]) => {
     return data.map((item) => item.item)
