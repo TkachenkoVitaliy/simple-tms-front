@@ -36,7 +36,10 @@ function TestCasePage(props: TestCasePageProps) {
       {testCaseStore.isLoading || testNodeStore.isLoading ? (
         <PageLoader />
       ) : (
-        <TestCaseForm testCase={testCaseStore.testCase} />
+        <TestCaseForm
+          testCase={testCaseStore.testCase}
+          key={testCaseStore.testCase.id}
+        />
       )}
     </PageFrame>
   )
