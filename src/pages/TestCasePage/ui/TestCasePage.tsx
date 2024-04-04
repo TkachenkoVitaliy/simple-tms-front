@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -31,6 +31,13 @@ function TestCasePage(props: TestCasePageProps) {
     }
   }, [testCaseId, isNew, location.state])
 
+  const key = useCallback(() => {
+    return (
+      testCaseStore.testCase.id.toString() +
+      (testCaseStore.testCase.parentSuiteId?.toString() || 'null')
+    )
+  }, [testCaseStore.testCase])
+
   return (
     <PageFrame>
       {testCaseStore.isLoading || testNodeStore.isLoading ? (
@@ -38,7 +45,7 @@ function TestCasePage(props: TestCasePageProps) {
       ) : (
         <TestCaseForm
           testCase={testCaseStore.testCase}
-          key={testCaseStore.testCase.id}
+          key={key()}
         />
       )}
     </PageFrame>
