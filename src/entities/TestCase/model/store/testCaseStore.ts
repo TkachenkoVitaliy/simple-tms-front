@@ -61,7 +61,11 @@ export class TestCaseStore {
   }
 
   setNewCase = (parentSuiteId?: TestCase['parentSuiteId']) => {
-    this.setTestCase({ ...NEW_CASE, parentSuiteId: parentSuiteId || null })
+    this.setTestCase({
+      ...NEW_CASE,
+      parentSuiteId: parentSuiteId || null,
+      testSteps: [],
+    })
     this.setIsLoading(false)
   }
 

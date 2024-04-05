@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -52,11 +52,13 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
 
   const { testCaseStore, testNodeStore } = useProjectStores()
 
-  const testCaseCopy: TestCase = JSON.parse(JSON.stringify(testCase))
-
-  const [steps, setSteps] = useState<TestCaseStep[]>(testCaseCopy.testSteps)
+  const [steps, setSteps] = useState<TestCaseStep[]>([...testCase.testSteps])
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    setSteps([...testCase.testSteps])
+  }, [testCase])
 
   const methods = useForm<FormInputs>({
     mode: 'onTouched',
@@ -206,6 +208,7 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
           />
           <div style={{ marginTop: '18px' }}>
             <StepsEditor
+              key={testCase.id}
               values={steps}
               setValues={setSteps}
             />
