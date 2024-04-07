@@ -14,7 +14,7 @@ import { Project } from 'entities/Project/model/types/project'
 
 import { useFlatAppRouter } from 'shared/lib/hooks/useFlatAppRouter'
 import { RequiredFields } from 'shared/types/helperTypes'
-import { AppRoute, RouteParams } from 'shared/types/router'
+import { AppRoute, FlatAppRoute, RouteParams } from 'shared/types/router'
 import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete'
 
 // TODO: возможно вынести в отдельный файл constant (использовать так же в ProjectForm)
@@ -47,7 +47,7 @@ export const ProjectSelect = observer(() => {
       const routeObj = flatAppRoutes.find(
         (route) =>
           route.fullPath !== undefined && matchPath(route.fullPath, pathname),
-      ) as RequiredFields<AppRoute, 'path'> | undefined
+      ) as RequiredFields<FlatAppRoute, 'path'> | undefined
       if (routeObj) {
         navigate(
           generatePath(routeObj.onProjectChangePattern || routeObj.path, {

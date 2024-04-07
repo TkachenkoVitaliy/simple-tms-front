@@ -2,21 +2,19 @@ import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Outlet, useNavigate, useOutlet, useParams } from 'react-router-dom'
+import { Outlet, useNavigate, useOutlet } from 'react-router-dom'
 
 import { TestsTree } from 'widgets/TestsTree'
 
 import { ProjectEntitiesRootStore, projectStore } from 'entities/Project'
 
 import { ProjectStoresContext } from 'shared/lib/context/ProjectStoresContext'
-import { RouteParams } from 'shared/types/router'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 
 function TestsPage() {
   const outlet = useOutlet()
   const navigate = useNavigate()
-  const { projectId } = useParams<RouteParams>()
 
   const left = (
     <PageFrame>
@@ -38,11 +36,6 @@ function TestsPage() {
   }, [projectStore.activeProjectId])
 
   if (projectEntitiesRootStore === null) {
-    navigate('../../')
-    return null
-  }
-
-  if (projectStore.activeProjectId?.toString() !== projectId) {
     navigate('../../')
     return null
   }
