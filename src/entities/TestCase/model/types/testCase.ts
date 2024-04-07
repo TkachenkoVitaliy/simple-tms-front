@@ -1,4 +1,5 @@
 import { NewEntity } from 'shared/types/api'
+import { TestSuite } from 'entities/TestSuite/model/types/testSuite'
 
 export enum CaseType {
   MANUAL = 'MANUAL',
@@ -47,6 +48,8 @@ export interface TestCase {
   preconditions: string
   testSteps: TestCaseStep[]
 }
+
+export type TestCaseShort = Omit<TestCase, 'preconditions' | 'testSteps'>
 
 export type NewTestCase = NewEntity<TestCase>
 
