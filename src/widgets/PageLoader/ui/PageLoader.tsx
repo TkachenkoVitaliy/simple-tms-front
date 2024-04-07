@@ -8,12 +8,11 @@ export interface PageLoaderProps {
 
 export const PageLoader = (props: PageLoaderProps) => {
   const { message } = props
-  const DEFAULT_MESSAGE = 'Идет загрузка страницы'
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.loader}>
-        <h2>{message === undefined ? DEFAULT_MESSAGE : message}</h2>
+        {message === undefined ? null : <h2>{message}</h2>}
         <Spinner className={styles.spinner} />
       </div>
     </div>

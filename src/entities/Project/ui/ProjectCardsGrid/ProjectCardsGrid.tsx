@@ -26,7 +26,7 @@ export const ProjectCardsGrid = observer(() => {
       container
       spacing={2}
     >
-      {projectStore.isLoading ? null : wrapGridItem(<NewProjectCard />, 0)}
+      {wrapGridItem(<NewProjectCard />, 0)}
       {projectStore.projects.map((project: Project) =>
         wrapGridItem(<ProjectCard project={project} />, project.id),
       )}
