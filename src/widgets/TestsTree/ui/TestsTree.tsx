@@ -29,7 +29,7 @@ import styles from './TestsTree.module.scss'
 export const TestsTree = observer(() => {
   const { projectId } = useParams<RouteParams>()
   const root = document.documentElement
-  const { testNodeStore } = useProjectStores()
+  const { testNodeStore, testSuiteStore, testCaseStore } = useProjectStores()
 
   useEffect(() => {
     if (!!projectId && projectId !== projectStore.activeProjectId?.toString()) {
@@ -59,7 +59,13 @@ export const TestsTree = observer(() => {
           parentId: dropTarget?.data ? Number(dropTarget.data.id) : null,
           type: dragSource.data.type,
         }
-        testNodeStore.updateTestNode(update)
+        await testNodeStore.updateTestNode(update)
+        if (testSuiteStore.testSuite.id) {
+          await testSuiteStore.loadSuite(testSuiteStore.testSuite.id)
+        }
+        if (testCaseStore.testCase.id) {
+          await testCaseStore.loadCase(testCaseStore.testCase.id)
+        }
       }
     }
   }
