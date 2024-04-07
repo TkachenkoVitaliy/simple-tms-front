@@ -4,7 +4,7 @@ import { AppRoute, FlatAppRoute } from 'shared/types/router'
 
 import { AppRouterContext } from '../context/AppRouterContext'
 
-export function useFlatAppRouter(): AppRoute[] {
+export function useFlatAppRouter(): FlatAppRoute[] {
   const { routes } = useContext(AppRouterContext)
 
   const flattenRoutes = useCallback(

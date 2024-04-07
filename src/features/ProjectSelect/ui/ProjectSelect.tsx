@@ -45,7 +45,8 @@ export const ProjectSelect = observer(() => {
       }
 
       const routeObj = flatAppRoutes.find(
-        (route) => route.path !== undefined && matchPath(route.path, pathname),
+        (route) =>
+          route.fullPath !== undefined && matchPath(route.fullPath, pathname),
       ) as RequiredFields<AppRoute, 'path'> | undefined
       if (routeObj) {
         navigate(
