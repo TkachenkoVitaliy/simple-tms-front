@@ -1,9 +1,4 @@
-import {
-  makeAutoObservable,
-  observable,
-  ObservableMap,
-  runInAction,
-} from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { TestPlanAPI } from '../../api/testPlanApi'
 import { TestPlan } from '../types/testPlan'
@@ -60,7 +55,7 @@ export class TestPlanStore {
       const planForSave: TestPlan = JSON.parse(JSON.stringify(this.testPlan))
       const saveResponse = await TestPlanAPI.save(this.projectId, {
         ...planForSave,
-        projectId: this.projectId,
+        projectId: planForSave.projectId || this.projectId,
       })
       this.setTestPlan(saveResponse.data)
       await this.loadPlans()
