@@ -7,7 +7,7 @@ export interface TestPlan {
   projectId?: number
   name: string
   description: string
-  testCases: TestCaseShort
+  testCases: TestCaseShort[]
 }
 
 export type NewTestPlan = NewEntity<TestPlan>
