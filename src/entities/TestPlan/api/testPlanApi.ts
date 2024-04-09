@@ -7,7 +7,7 @@ import { NewTestPlan, TestPlan } from '../model/types/testPlan'
 const getBaseUrl = (projectId: number) => `projects/${projectId}/plans`
 
 export const TestPlanAPI = {
-  getProjectPlans(projectId: number): Promise<AxiosResponse<TestPlan>> {
+  getProjectPlans(projectId: number): Promise<AxiosResponse<TestPlan[]>> {
     return API.get(getBaseUrl(projectId))
   },
   getById(projectId: number, id: number): Promise<AxiosResponse<TestPlan>> {
