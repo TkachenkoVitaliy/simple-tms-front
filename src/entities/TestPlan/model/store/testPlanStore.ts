@@ -16,7 +16,7 @@ const NEW_PLAN: TestPlan = {
 }
 
 export class TestPlanStore {
-  projectId: number
+  private readonly projectId: number
 
   isLoading: boolean = false
 
@@ -24,15 +24,15 @@ export class TestPlanStore {
 
   testPlan: TestPlan = { ...NEW_PLAN }
 
-  setLoading(isLoading: boolean) {
+  private setLoading(isLoading: boolean) {
     this.isLoading = isLoading
   }
 
-  setTestPlans(testPlans: TestPlan[]) {
+  private setTestPlans(testPlans: TestPlan[]) {
     this.testPlans = testPlans
   }
 
-  setTestPlan(testPlan: TestPlan) {
+  private setTestPlan(testPlan: TestPlan) {
     this.testPlan = testPlan
   }
 
