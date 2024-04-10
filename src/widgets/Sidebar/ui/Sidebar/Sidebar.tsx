@@ -31,11 +31,8 @@ export const Sidebar = memo(
     const getNavigationItems = useMemo((): NavigationItem[] => {
       const navigationItems: NavigationItem[] = []
 
-      console.log('flatapproutes', flatAppRoutes)
-
       flatAppRoutes.forEach((route) => {
         if (route.label && route.Icon && route.path) {
-          console.log('sdas', route.fullPath)
           navigationItems.push({
             path: route.fullPath,
             label: route.label,
