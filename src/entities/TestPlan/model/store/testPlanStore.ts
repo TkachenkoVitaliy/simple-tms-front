@@ -63,6 +63,13 @@ export class TestPlanStore {
     })
   }
 
+  deletePlan = async (id: TestPlan['id']) => {
+    this.setLoading(true)
+    await TestPlanAPI.delete(this.projectId, id)
+    await this.loadPlans()
+    this.setLoading(false)
+  }
+
   constructor(projectId: number) {
     this.projectId = projectId
     makeAutoObservable(this)
