@@ -9,8 +9,9 @@ import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestCasePage } from 'pages/TestCasePage'
+import { TestPlansPage } from 'pages/TestPlansPage'
 import { TestsPage } from 'pages/TestsPage'
-import TestSuitePage from 'pages/TestSuitePage/ui/TestSuitePage'
+import { TestSuitePage } from 'pages/TestSuitePage'
 
 import { PageLoader } from 'widgets/PageLoader'
 
@@ -50,6 +51,14 @@ export const appRoutes: AppRoute[] = [
         label: 'Главная',
         Icon: Dashboard,
         showWithoutActiveProject: false,
+      },
+      {
+        path: 'projects/:projectId/plans',
+        element: <TestPlansPage />,
+        label: 'Планы',
+        Icon: Dashboard,
+        showWithoutActiveProject: false,
+        onProjectChangePattern: 'projects/:projectId',
       },
       {
         path: 'projects/:projectId/tests',
