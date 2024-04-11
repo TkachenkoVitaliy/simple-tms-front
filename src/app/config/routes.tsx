@@ -16,6 +16,7 @@ import { TestSuitePage } from 'pages/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
+import { TestPlanPage } from 'pages/TestPlanPage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -59,6 +60,16 @@ export const appRoutes: AppRoute[] = [
             Icon: Dashboard,
             showWithoutActiveProject: false,
             onProjectChangePattern: 'projects/:projectId',
+          },
+          {
+            path: 'plans/new',
+            element: <TestPlanPage isNew />,
+            onProjectChangePattern: 'projects/:projectId/plans',
+          },
+          {
+            path: 'plans/:testPlanId',
+            element: <TestPlanPage />,
+            onProjectChangePattern: 'projects/:projectId/plans',
           },
           {
             path: 'tests',
