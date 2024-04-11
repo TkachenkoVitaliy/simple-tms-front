@@ -2,13 +2,15 @@ import { useCallback } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { projectStore } from 'entities/Project'
 import { TestPlanAPI } from 'entities/TestPlan/api/testPlanApi'
 import { TestPlan } from 'entities/TestPlan/model/types/testPlan'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSTable } from 'shared/ui/TMSTable'
 import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
-import { projectStore } from 'entities/Project'
+
+import styles from './TestPlansTable.module.scss'
 
 export const TestPlansTable = observer(() => {
   const { testPlanStore } = useProjectStores()
@@ -17,7 +19,6 @@ export const TestPlansTable = observer(() => {
     {
       field: 'name',
       headerName: 'name',
-      // getCellText?: (val: T[keyof T]) => string
     },
     {
       field: 'description',
@@ -50,11 +51,14 @@ export const TestPlansTable = observer(() => {
   )
 
   return (
-    <TMSTable
-      pageSize={10}
-      columns={columns}
-      getRowId={getRowId}
-      loadData={fetchPage}
-    />
+    <div className={styles.wrapper}>
+      <TMSTable
+        pageSize={10}
+        columns={columns}
+        getRowId={getRowId}
+        loadData={fetchPage}
+        selectColumnName="name"
+      />
+    </div>
   )
 })
