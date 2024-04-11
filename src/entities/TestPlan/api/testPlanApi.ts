@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios'
 
 import { API } from 'shared/api'
+import { Page } from 'shared/types/api'
 
 import { NewTestPlan, TestPlan } from '../model/types/testPlan'
-import { Page } from 'shared/types/api'
 
 const getBaseUrl = (projectId: number) => `projects/${projectId}/plans`
 
