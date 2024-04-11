@@ -3,12 +3,20 @@ import { AxiosResponse } from 'axios'
 import { API } from 'shared/api'
 
 import { NewTestPlan, TestPlan } from '../model/types/testPlan'
+import { Page } from 'shared/types/api'
 
 const getBaseUrl = (projectId: number) => `projects/${projectId}/plans`
 
 export const TestPlanAPI = {
   getProjectPlans(projectId: number): Promise<AxiosResponse<TestPlan[]>> {
     return API.get(getBaseUrl(projectId))
+  },
+  getProjectPlansPage(
+    projectId: number,
+    page: number,
+    pageSize: number,
+  ): Promise<AxiosResponse<Page<TestPlan>>> {
+    return API.get(`${getBaseUrl(projectId)}?page=${page}&pageSize=${pageSize}`)
   },
   getById(projectId: number, id: number): Promise<AxiosResponse<TestPlan>> {
     return API.get(`${getBaseUrl(projectId)}/${id}`)

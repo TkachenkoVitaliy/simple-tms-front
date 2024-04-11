@@ -11,7 +11,7 @@ const NEW_PLAN: TestPlan = {
 }
 
 export class TestPlanStore {
-  private readonly projectId: number
+  readonly projectId: number
 
   isLoading: boolean = false
 
