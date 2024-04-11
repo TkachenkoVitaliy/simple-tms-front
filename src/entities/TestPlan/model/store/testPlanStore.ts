@@ -42,13 +42,6 @@ export class TestPlanStore {
     this.setTestPlan({ ...NEW_PLAN })
   }
 
-  loadPlans = async () => {
-    this.setLoading(true)
-    const { data } = await TestPlanAPI.getProjectPlans(this.projectId)
-    this.setTestPlans(data)
-    this.setLoading(false)
-  }
-
   savePlan = async () => {
     await runInAction(async () => {
       this.setLoading(true)
@@ -58,7 +51,6 @@ export class TestPlanStore {
         projectId: planForSave.projectId || this.projectId,
       })
       this.setTestPlan(saveResponse.data)
-      await this.loadPlans()
       this.setLoading(false)
     })
   }
@@ -66,7 +58,6 @@ export class TestPlanStore {
   deletePlan = async (id: TestPlan['id']) => {
     this.setLoading(true)
     await TestPlanAPI.delete(this.projectId, id)
-    await this.loadPlans()
     this.setLoading(false)
   }
 

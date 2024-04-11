@@ -8,6 +8,7 @@ import { TestPlan } from 'entities/TestPlan/model/types/testPlan'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSTable } from 'shared/ui/TMSTable'
 import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
+import { projectStore } from 'entities/Project'
 
 export const TestPlansTable = observer(() => {
   const { testPlanStore } = useProjectStores()
@@ -20,7 +21,7 @@ export const TestPlansTable = observer(() => {
     },
     {
       field: 'description',
-      headerName: 'name',
+      headerName: 'description',
     },
     {
       field: 'testCases',
@@ -36,11 +37,13 @@ export const TestPlansTable = observer(() => {
 
   const fetchPage = useCallback(
     async (page: number, pageSize: number) => {
+      projectStore.setLoading(true)
       const response = await TestPlanAPI.getProjectPlansPage(
         testPlanStore.projectId,
         page,
         pageSize,
       )
+      projectStore.setLoading(false)
       return response.data
     },
     [testPlanStore],

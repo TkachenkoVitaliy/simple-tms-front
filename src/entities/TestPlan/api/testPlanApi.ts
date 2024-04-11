@@ -8,9 +8,6 @@ import { Page } from 'shared/types/api'
 const getBaseUrl = (projectId: number) => `projects/${projectId}/plans`
 
 export const TestPlanAPI = {
-  getProjectPlans(projectId: number): Promise<AxiosResponse<TestPlan[]>> {
-    return API.get(getBaseUrl(projectId))
-  },
   getProjectPlansPage(
     projectId: number,
     page: number,
