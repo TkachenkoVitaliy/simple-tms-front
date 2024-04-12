@@ -53,7 +53,7 @@ export const TestPlansTable = observer(() => {
   return (
     <div className={styles.wrapper}>
       <TMSTable
-        pageSize={10}
+        pageSize={8}
         columns={columns}
         getRowId={getRowId}
         loadData={fetchPage}

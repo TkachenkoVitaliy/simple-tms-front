@@ -40,16 +40,6 @@ function TestSuitePage(props: TestSuitePageProps) {
       )}
     </PageFrame>
   )
-
-  // return (
-  //   <PageFrame>
-  //     {isNew ? (
-  //       <div>{`NEW TEST SUITE PAGE - ${location.state?.parentId}`}</div>
-  //     ) : (
-  //       <div>{`TEST SUITE PAGE - ${location.state?.parentId}`}</div>
-  //     )}
-  //   </PageFrame>
-  // )
 }
 
 export default observer(TestSuitePage)

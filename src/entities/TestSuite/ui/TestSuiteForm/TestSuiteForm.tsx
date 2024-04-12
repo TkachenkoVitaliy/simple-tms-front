@@ -81,7 +81,7 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
   return (
     <TMSSkeleton
       className={classNames(styles.skeleton, {}, [className])}
-      isLoading={false}
+      isLoading={testSuiteStore.isLoading}
       width="50%"
     >
       <Card
