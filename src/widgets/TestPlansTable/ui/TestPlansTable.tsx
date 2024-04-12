@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { useNavigate } from 'react-router-dom'
+
 import { projectStore } from 'entities/Project'
 import { TestPlanAPI } from 'entities/TestPlan/api/testPlanApi'
 import { TestPlan } from 'entities/TestPlan/model/types/testPlan'
@@ -14,6 +16,7 @@ import styles from './TestPlansTable.module.scss'
 
 export const TestPlansTable = observer(() => {
   const { testPlanStore } = useProjectStores()
+  const navigate = useNavigate()
 
   const columns: ColumnDefinition<TestPlan>[] = [
     {
@@ -58,6 +61,7 @@ export const TestPlansTable = observer(() => {
         getRowId={getRowId}
         loadData={fetchPage}
         selectColumnName="name"
+        onSelectRow={(row) => navigate(`${row.id}`)}
       />
     </div>
   )
