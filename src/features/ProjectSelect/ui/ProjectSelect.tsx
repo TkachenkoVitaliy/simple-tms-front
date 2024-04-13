@@ -9,12 +9,11 @@ import {
   useParams,
 } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { Project } from 'entities/Project/model/types/project'
+import { projectStore, Project } from 'entities/Project'
 
 import { useFlatAppRouter } from 'shared/lib/hooks/useFlatAppRouter'
 import { RequiredFields } from 'shared/types/helperTypes'
-import { AppRoute, FlatAppRoute, RouteParams } from 'shared/types/router'
+import { FlatAppRoute, RouteParams } from 'shared/types/router'
 import { TMSAutocomplete } from 'shared/ui/TMSAutocomplete'
 
 // TODO: возможно вынести в отдельный файл constant (использовать так же в ProjectForm)

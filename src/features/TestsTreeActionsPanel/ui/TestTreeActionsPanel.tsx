@@ -29,7 +29,6 @@ export const TestsTreeActionsPanel = (props: TestsTreeActionsPanelProps) => {
           {
             label: 'Suite',
             onSelect: () => {
-              // testSuiteStore.setCreateSuite()
               navigate('suite/new')
             },
           },
