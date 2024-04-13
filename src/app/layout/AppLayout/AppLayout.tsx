@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom'
 import { Header } from 'widgets/Header'
 import { Sidebar } from 'widgets/Sidebar'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
+import { projectStore } from 'entities/Project'
 
 import { RouteParams } from 'shared/types/router'
 

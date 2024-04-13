@@ -37,11 +37,7 @@ export const AppRouterProvider = (props: AppRouterProviderProps) => {
       errorElement: errorElement ? (
         <Suspense fallback={<Spinner />}>{errorElement}</Suspense>
       ) : undefined,
-    } as RouteObject // Изза ошибки
-    //   Type '{ path: string | undefined; element: JSX.Element; children: RouteObject[] | undefined; index: boolean | undefined; errorElement: JSX.Element; }' is not assignable to type 'RouteObject'.
-    //   Types of property 'index' are incompatible.
-    //   Type 'boolean | undefined' is not assignable to type 'false | undefined'.
-    //   Type 'true' is not assignable to type 'false'.ts(2322)
+    } as RouteObject
   }, [])
 
   const router = createBrowserRouter(routes.map(mapToRouteObjects))

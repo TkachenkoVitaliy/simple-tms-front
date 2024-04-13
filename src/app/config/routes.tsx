@@ -9,6 +9,7 @@ import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestCasePage } from 'pages/TestCasePage'
+import { TestPlanPage } from 'pages/TestPlanPage'
 import { TestPlansPage } from 'pages/TestPlansPage'
 import { TestsPage } from 'pages/TestsPage'
 import { TestSuitePage } from 'pages/TestSuitePage'
@@ -16,7 +17,6 @@ import { TestSuitePage } from 'pages/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
-import { TestPlanPage } from 'pages/TestPlanPage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -44,11 +44,11 @@ export const appRoutes: AppRoute[] = [
       },
       {
         path: 'projects/:projectId',
-        element: <ProjectPage />, // <ProjectPage />,
+        element: <ProjectPage />,
         children: [
           {
             path: 'dashboard',
-            element: <DashboardPage />, // <DashboardPage />,
+            element: <DashboardPage />,
             label: 'Главная',
             Icon: Dashboard,
             showWithoutActiveProject: false,
@@ -80,22 +80,22 @@ export const appRoutes: AppRoute[] = [
             children: [
               {
                 path: 'suite/new',
-                element: <TestSuitePage isNew />, // <TestSuiteForm />,
+                element: <TestSuitePage isNew />,
                 onProjectChangePattern: 'projects/:projectId/tests',
               },
               {
                 path: 'suite/:testSuiteId',
-                element: <TestSuitePage />, // <TestSuiteForm />,
+                element: <TestSuitePage />,
                 onProjectChangePattern: 'projects/:projectId/tests',
               },
               {
                 path: 'case/new',
-                element: <TestCasePage isNew />, // <TestCaseForm />,
+                element: <TestCasePage isNew />,
                 onProjectChangePattern: 'projects/:projectId/tests',
               },
               {
                 path: 'case/:testCaseId',
-                element: <TestCasePage />, // <TestCaseForm />,
+                element: <TestCasePage />,
                 onProjectChangePattern: 'projects/:projectId/tests',
               },
             ],
