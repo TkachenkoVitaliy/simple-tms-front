@@ -1,5 +1,3 @@
-import { TestSuite } from 'entities/TestSuite/model/types/testSuite'
-
 import { NewEntity } from 'shared/types/api'
 
 export enum CaseType {

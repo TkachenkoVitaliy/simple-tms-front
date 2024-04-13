@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { useEffect, useMemo, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
@@ -7,10 +6,6 @@ import { Button, Card, CardActions, CardHeader, Divider } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  testCasePriorities,
-  testCaseTypes,
-} from 'entities/TestCase/model/consts'
 import { NULL_PARENT, TestSuiteShort } from 'entities/TestSuite'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -22,6 +17,7 @@ import { FormToggleButtonGroup } from 'shared/ui/FormToggleButtonGroup'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
+import { testCasePriorities, testCaseTypes } from '../../model/consts'
 import {
   CasePriority,
   CaseType,
@@ -109,15 +105,15 @@ export const TestCaseForm = observer((props: TestCaseFormProps) => {
     return isValid && haveChanges && repeatableStepsIsValid
   }, [formValues, testCase, isValid, steps])
 
-  const submitForm = async (formValues: FormInputs) => {
+  const submitForm = async (values: FormInputs) => {
     const testCaseForSave: TestCase = {
       id: testCase.id,
       projectId: testCase.projectId || testCaseStore.projectId,
-      parentSuiteId: formValues.parentSuite.id || null,
-      name: formValues.name.trim(),
-      type: formValues.type || CaseType.AUTO,
-      priority: formValues.priority || CasePriority.NORMAL,
-      preconditions: formValues.preconditions,
+      parentSuiteId: values.parentSuite.id || null,
+      name: values.name.trim(),
+      type: values.type || CaseType.AUTO,
+      priority: values.priority || CasePriority.NORMAL,
+      preconditions: values.preconditions,
       testSteps: steps,
     }
     await testCaseStore.saveCase(testCaseForSave)

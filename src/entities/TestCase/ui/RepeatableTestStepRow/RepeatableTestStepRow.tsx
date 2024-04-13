@@ -10,8 +10,8 @@ import {
   TableRow,
 } from '@mui/material'
 
-import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
-import { RepeatableTestStepDetails } from 'entities/TestCase/ui/RepeatableTestStepDetails/RepeatableTestStepDetails'
+import { TestStepRepeatable } from '../../model/types/testCase'
+import { RepeatableTestStepDetails } from '../../ui/RepeatableTestStepDetails/RepeatableTestStepDetails'
 
 export interface RepeatableTestStepRowProps {
   row: TestStepRepeatable

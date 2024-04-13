@@ -3,11 +3,11 @@ import { useCallback } from 'react'
 import { Dialog } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 
-import { TestStepApi } from 'entities/TestCase/api/testStepApi'
-import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
-
 import { TMSTable } from 'shared/ui/TMSTable'
 import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
+
+import { TestStepApi } from '../../api/testStepApi'
+import { TestStepRepeatable } from '../../model/types/testCase'
 
 export interface RepeatableStepSelectorProps {
   open: boolean
@@ -17,7 +17,7 @@ export interface RepeatableStepSelectorProps {
 
 export const RepeatableStepSelector = (props: RepeatableStepSelectorProps) => {
   const { open, onClose, onSelect } = props
-  const handleCloseEvent = (event: object, reason: string) => {
+  const handleCloseEvent = (_event: object, _reason: string) => {
     onClose()
   }
 

@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
 import MDEditor from '@uiw/react-md-editor'
 
-import { TestStepRepeatable } from 'entities/TestCase/model/types/testCase'
+import { TestStepRepeatable } from '../../model/types/testCase'
 
 export interface RepeatableTestStepDetailsProps {
   item: TestStepRepeatable

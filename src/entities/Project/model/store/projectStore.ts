@@ -1,9 +1,8 @@
 import { ObservableMap, makeAutoObservable, observable } from 'mobx'
 
-import { ProjectAPI } from 'entities/Project/api/projectApi'
-
 import { appLocalStorage } from 'shared/lib/utils'
 
+import { ProjectAPI } from '../../api/projectApi'
 import { Project } from '../types/project'
 
 class ProjectStore {

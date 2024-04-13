@@ -1,10 +1,7 @@
-/* eslint-disable max-lines */
 import { memo, useCallback, useState } from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { v4 as uuidv4 } from 'uuid'
-
-import { RepeatableStepSelector } from 'entities/TestCase/ui/RepeatableStepSelector'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { swapArrayItems } from 'shared/lib/utils'
@@ -15,6 +12,7 @@ import {
   TestStep,
   TestStepRepeatable,
 } from '../../model/types/testCase'
+import { RepeatableStepSelector } from '../../ui/RepeatableStepSelector'
 import { StepEditor } from '../StepEditor/StepEditor'
 
 import styles from './StepsEditor.module.scss'

@@ -1,6 +1,6 @@
 import { TestCaseStore } from 'entities/TestCase'
 import { TestNodeStore } from 'entities/TestNode'
-import { TestPlanStore } from 'entities/TestPlan/model/store/testPlanStore'
+import { TestPlanStore } from 'entities/TestPlan'
 import { TestSuiteStore } from 'entities/TestSuite'
 
 export class ProjectEntitiesRootStore {

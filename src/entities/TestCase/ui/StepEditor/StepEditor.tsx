@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { memo } from 'react'
 
 import { DeleteForever } from '@mui/icons-material'

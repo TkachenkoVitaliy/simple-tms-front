@@ -6,13 +6,13 @@ import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { Project } from 'entities/Project/model/types/project'
-
 import { classNames } from 'shared/lib/utils'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+
+import { projectStore } from '../../model/store/projectStore'
+import { Project } from '../../model/types/project'
 
 import styles from './ProjectForm.module.scss'
 
@@ -51,11 +51,11 @@ export const ProjectForm = observer((props: ProjectFormProps) => {
     return isValid && haveChanges
   }, [formValues, project, isValid])
 
-  const submitForm = async (formValues: FormInputs) => {
+  const submitForm = async (values: FormInputs) => {
     const projectForSave: Project = {
       id: project.id,
-      name: formValues.name.trim(),
-      description: formValues.description,
+      name: values.name.trim(),
+      description: values.description,
     }
     await projectStore.saveProject(projectForSave)
     navigate(`../${projectStore.editableProject.id}`, { relative: 'path' })

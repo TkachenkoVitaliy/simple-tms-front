@@ -2,7 +2,7 @@ import { Add } from '@mui/icons-material'
 import { Button, Card, CardContent } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
+import { projectStore } from '../../model/store/projectStore'
 
 import styles from './NewProjectCard.module.scss'
 

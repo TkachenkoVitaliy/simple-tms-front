@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
-import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
 import { TestNodeStore } from 'entities/TestNode'
 
+import { TestCaseAPI } from '../../api/testCaseApi'
 import { CasePriority, CaseType, TestCase } from '../types/testCase'
 
 export const NEW_CASE: TestCase = {

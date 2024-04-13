@@ -5,12 +5,12 @@ import { observer } from 'mobx-react-lite'
 import { Button, Card, CardContent, CardHeader } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { Project } from 'entities/Project/model/types/project'
-
 import { classNames } from 'shared/lib/utils'
 import { ActionBtn, ActionPanel } from 'shared/ui/ActionPanel'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+
+import { projectStore } from '../../model/store/projectStore'
+import { Project } from '../../model/types/project'
 
 import styles from './ProjectCard.module.scss'
 
@@ -29,7 +29,6 @@ export const ProjectCard = observer((props: ProjectCardProps) => {
 
   const editCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    // projectStore.setEditableProject(project)
     navigate(`../projects/${project.id}`)
   }
 
