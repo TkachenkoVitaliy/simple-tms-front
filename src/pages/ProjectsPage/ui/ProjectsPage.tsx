@@ -4,8 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { PageLoader } from 'widgets/PageLoader'
 
-import { projectStore } from 'entities/Project'
-import { ProjectCardsGrid } from 'entities/Project/ui/ProjectCardsGrid'
+import { projectStore, ProjectCardsGrid } from 'entities/Project'
 
 import { PageFrame } from 'shared/ui/PageFrame'
 

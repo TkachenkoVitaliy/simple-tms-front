@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
-import { TestPlanForm } from 'entities/TestPlan/ui/TestPlanForm/TestPlanForm'
+import { TestPlanForm } from 'entities/TestPlan'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'

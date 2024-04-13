@@ -4,9 +4,11 @@ import { observer } from 'mobx-react-lite'
 
 import { Outlet, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
-import { ProjectEntitiesRootStore } from 'entities/Project'
-import { projectStore } from 'entities/Project/model/store/projectStore'
-import { ProjectForm } from 'entities/Project/ui/ProjectForm'
+import {
+  ProjectEntitiesRootStore,
+  ProjectForm,
+  projectStore,
+} from 'entities/Project'
 
 import { ProjectStoresContext } from 'shared/lib/context/ProjectStoresContext'
 import { RouteParams } from 'shared/types/router'

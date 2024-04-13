@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 
 import { PageLoader } from 'widgets/PageLoader'
-import { TestPlansTable } from 'widgets/TestPlansTable/ui/TestPlansTable'
+import { TestPlansTable } from 'widgets/TestPlansTable'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { PageFrame } from 'shared/ui/PageFrame'
