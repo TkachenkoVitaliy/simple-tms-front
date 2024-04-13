@@ -1,9 +1,6 @@
 import { Description, Folder } from '@mui/icons-material'
 
-import {
-  TestNodeData,
-  TestNodeType,
-} from 'entities/TestNode/model/types/testNode'
+import { TestNodeData, TestNodeType } from '../../model/types/testNode'
 
 export interface TypeIconProps {
   droppable: boolean

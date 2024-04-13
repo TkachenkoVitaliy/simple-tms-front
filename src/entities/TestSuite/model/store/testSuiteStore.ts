@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 import { TestNodeStore } from 'entities/TestNode'
-import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 
+import { TestSuiteAPI } from '../../api/testSuiteApi'
 import { TestSuite } from '../types/testSuite'
 
 export const NEW_SUITE = {

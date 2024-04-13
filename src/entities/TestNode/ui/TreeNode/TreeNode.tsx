@@ -2,15 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/jsx-props-no-spreading */
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
-import { Add, ArrowRight, Delete, Edit } from '@mui/icons-material'
+import { Add, ArrowRight, Delete } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-
-import { TestNodeData } from 'entities/TestNode'
 
 import { classNames } from 'shared/lib/utils'
 import { TMSMenu } from 'shared/ui/TMSMenu'
 
+import { TestNodeData } from '../../model/types/testNode'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 
 import styles from './TreeNode.module.scss'

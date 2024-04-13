@@ -3,11 +3,6 @@ export enum TestNodeType {
   SUITE = 'SUITE',
 }
 
-// export interface TestNode {
-//   dbId: number
-//   name: string
-// }
-
 export interface TestNodeData {
   children: string[]
   id: number

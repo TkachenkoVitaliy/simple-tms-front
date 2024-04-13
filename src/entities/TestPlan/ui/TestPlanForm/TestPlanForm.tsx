@@ -5,13 +5,13 @@ import { observer } from 'mobx-react-lite'
 import { Button, Card, CardActions } from '@mui/material'
 import { useForm } from 'react-hook-form'
 
-import { TestPlan } from 'entities/TestPlan/model/types/testPlan'
-
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames } from 'shared/lib/utils'
 import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
+
+import { TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
 
@@ -49,8 +49,8 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
     return isValid && haveChanges
   }, [formValues, testPlan, isValid])
 
-  const submitForm = async (formValues: FormInputs) => {
-    console.log(formValues)
+  const submitForm = async (values: FormInputs) => {
+    console.log(values)
   }
 
   return (

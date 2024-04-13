@@ -2,10 +2,10 @@ import { NodeModel } from '@minoru/react-dnd-treeview'
 import { makeAutoObservable, observable, ObservableMap } from 'mobx'
 
 import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
-import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
 import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 import { TestSuiteShort } from 'entities/TestSuite/model/types/testSuite'
 
+import { TestNodeAPI } from '../../api/testNodeApi'
 import {
   TestNodeData,
   TestNodeType,
@@ -58,12 +58,6 @@ export class TestNodeStore {
     return count
   }
 
-  // get cases(): NodeModel<TestNodeData>[] {
-  //   return Array.from(this.nodesRegistry.values()).filter(
-  //     (node) => node.data && node.data.type === TestNodeType.CASE,
-  //   )
-  // }
-
   openedSuites: number = 0
 
   setOpenedSuites = (openedCount: number) => {
@@ -113,9 +107,6 @@ export class TestNodeStore {
     this.setLoading(true)
     await TestNodeAPI.updateTestNodeParent(update)
     await this.loadNodes()
-    // if (update.nodeId === testSuiteStore.id) {
-    //   testSuiteStore.setEditSuite(update.nodeId)
-    // }
   }
 
   constructor(projectId: number) {

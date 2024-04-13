@@ -64,13 +64,13 @@ export const TestSuiteForm = observer((props: TestSuiteFormProps) => {
     return isValid && haveChanges
   }, [formValues, testSuite, isValid])
 
-  const submitForm = async (formValues: FormInputs) => {
+  const submitForm = async (values: FormInputs) => {
     const testSuiteForSave: TestSuite = {
       id: testSuite.id,
       projectId: testSuite.projectId || testSuiteStore.projectId,
-      parentSuiteId: formValues.parentSuite.id || null, // TODO нужно брать из селекта
-      name: formValues.name.trim(),
-      description: formValues.description,
+      parentSuiteId: values.parentSuite.id || null, // TODO нужно брать из селекта
+      name: values.name.trim(),
+      description: values.description,
     }
     await testSuiteStore.saveSuite(testSuiteForSave)
     navigate(`../${testSuiteStore.testSuite.id.toString()}`, {

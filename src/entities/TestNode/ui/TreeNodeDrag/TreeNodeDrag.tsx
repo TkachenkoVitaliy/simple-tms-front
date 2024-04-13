@@ -1,7 +1,6 @@
 import { DragLayerMonitorProps } from '@minoru/react-dnd-treeview'
 
-import { TestNodeData } from 'entities/TestNode'
-
+import { TestNodeData } from '../../model/types/testNode'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 
 import styles from './TreeNodeDrag.module.scss'
