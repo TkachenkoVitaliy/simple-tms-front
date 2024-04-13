@@ -7,9 +7,6 @@ declare module '*.scss' {
 }
 
 declare module '*.svg' {
-  // const SVG: React.ElementType<React.ComponentPropsWithRef<'svg'>>
-  // export default SVG
-
   const SVG: React.FC<React.SVGProps<SVGSVGElement>>
   export default SVG
 }

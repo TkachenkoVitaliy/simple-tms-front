@@ -5,8 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
-import { TestPlanAPI } from 'entities/TestPlan/api/testPlanApi'
-import { TestPlan } from 'entities/TestPlan/model/types/testPlan'
+import { TestPlan, TestPlanAPI } from 'entities/TestPlan'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSTable } from 'shared/ui/TMSTable'

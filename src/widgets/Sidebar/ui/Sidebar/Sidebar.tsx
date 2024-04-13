@@ -56,10 +56,6 @@ export const Sidebar = memo(
           className={classNames(styles.drawer, { collapsed: isCollapsed })}
           variant="permanent"
           sx={{
-            // TODO: убрать коменнтарии после проверки работоспособности вариант через CSS
-            // width: isCollapsed ? '50px' : '200px',
-            // transition: 'width 0.2s ease-in-out',
-            // overflowX: 'hidden',
             '& .MuiDrawer-paper': {
               width: isCollapsed ? '50px' : '200px',
               boxSizing: 'border-box',
