@@ -10,9 +10,9 @@ import { TestPlanForm } from 'entities/TestPlan'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
+import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
-import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 
 export interface TestPlanPageProps {
   isNew?: boolean
