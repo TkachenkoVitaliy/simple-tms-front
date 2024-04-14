@@ -57,6 +57,7 @@ export const AppThemeProvider = (props: AppThemeProviderProps) => {
 
   useEffect(() => {
     updateCss(currentTheme)
+    console.log(currentTheme)
   }, [themeName])
 
   return (

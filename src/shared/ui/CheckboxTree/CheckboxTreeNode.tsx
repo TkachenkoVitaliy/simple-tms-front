@@ -16,30 +16,23 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
 
   const children = useMemo(() => getChildren(item), [props])
 
-  // return (
-  //   <ul style={{ marginInlineStart: indent * depth }}>
-  //     <li>
-  //       <FormControlLabel
-  //         control={<Checkbox />}
-  //         label={getLabel(item)}
-  //         labelPlacement="start"
-  //       />
-  //     </li>
-  //     {children !== undefined ? (
-  //       <CheckboxTree
-  //         {...treeProps}
-  //         data={children}
-  //         depth={1}
-  //       />
-  //     ) : null}
-  //   </ul>
-  // )
-
   return (
     <ul style={{ marginInlineStart: indent * depth }}>
       <li>
-        <ListItem disablePadding>
-          <ListItemButton dense>
+        <ListItem
+          disablePadding
+          sx={{ margin: '4px 0px' }}
+        >
+          <ListItemButton
+            dense
+            sx={{
+              bgcolor: 'var(--mui-palette-background-paper)',
+              borderRadius: 1,
+              '&:hover': {
+                backgroundColor: 'var(--mui-palette-background-paper-hover)',
+              },
+            }}
+          >
             <ListItemIcon>
               <Checkbox
                 edge="start"
@@ -59,6 +52,4 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
       ) : null}
     </ul>
   )
-
-  // {getLabel(item)}
 }
