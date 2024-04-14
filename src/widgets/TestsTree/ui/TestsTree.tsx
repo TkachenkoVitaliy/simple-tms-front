@@ -13,7 +13,7 @@ import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
   TestNodeType,
-  TreeNode,
+  TestsTreeNode,
   TreeNodeDrag,
   UpdateTestNodeParent,
 } from 'entities/TestNode'
@@ -118,7 +118,7 @@ export const TestsTree = observer(() => {
           rootId="0"
           ref={ref}
           nodeRender={(node, { depth, isOpen, onToggle }) => (
-            <TreeNode
+            <TestsTreeNode
               node={node}
               depth={depth}
               isOpen={isOpen}

@@ -12,7 +12,7 @@ import { TMSMenu } from 'shared/ui/TMSMenu'
 import { TestNodeData } from '../../model/types/testNode'
 import { TypeIcon } from '../TypeIcon/TypeIcon'
 
-import styles from './TreeNode.module.scss'
+import styles from './TestsTreeNode.module.scss'
 
 export interface TreeNodeProps {
   className?: string
@@ -28,7 +28,7 @@ const DEFAULT_INDENT = 24
 
 // TODO: refactor
 
-export const TreeNode = (props: TreeNodeProps) => {
+export const TestsTreeNode = (props: TreeNodeProps) => {
   const { className, onClick, onToggle, isOpen, node, depth, onDelete } = props
   const { id, droppable, data, parent, text } = node
   const indent = depth * DEFAULT_INDENT
