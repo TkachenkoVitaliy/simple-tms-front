@@ -1,18 +1,19 @@
 import { useMemo } from 'react'
 
-import { Checkbox, FormControlLabel, ListItemIcon } from '@mui/material'
-
-import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import { Checkbox, ListItemIcon } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+
+import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
 
 export type CheckboxTreeNodeProps<T> = Omit<CheckboxTreeProps<T>, 'data'> & {
   item: T
 }
 export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const { item, ...treeProps } = props
-  const { getId, getChildren, depth = 1, indent = 24, getLabel } = treeProps
+  const { getId, getChildren, depth = 1, indent = 36, getLabel } = treeProps
 
   const children = useMemo(() => getChildren(item), [props])
 
@@ -40,6 +41,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
               />
             </ListItemIcon>
             <ListItemText primary={getLabel(item)} />
+            {children !== undefined ? <ExpandMore /> : null}
           </ListItemButton>
         </ListItem>
       </li>

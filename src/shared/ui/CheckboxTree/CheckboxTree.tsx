@@ -10,7 +10,7 @@ export interface CheckboxTreeProps<T> {
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
   const { data, ...nodeProps } = props
-  const { getId, getChildren, depth = 1, indent = 24, getLabel } = nodeProps
+  const { getId, getChildren, depth = 1, indent = 36, getLabel } = nodeProps
 
   return data.map((node) => (
     <CheckboxTreeNode<T>
