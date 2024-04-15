@@ -90,7 +90,6 @@ function TestPlanPage(props: TestPlanPageProps) {
               data={testData}
               getId={(item) => item.id}
               getChildren={(item) => item.children}
-              indent={24}
               getLabel={(item) => item.name}
               depth={0}
             />

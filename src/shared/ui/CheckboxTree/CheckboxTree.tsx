@@ -5,12 +5,12 @@ export interface CheckboxTreeProps<T> {
   getId: (item: T) => string | number
   getChildren: (item: T) => T[] | undefined
   depth?: number
-  indent: number
+  indent?: number
   getLabel: (item: T) => string
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
   const { data, ...nodeProps } = props
-  const { getId, getChildren, depth = 1, indent = 36, getLabel } = nodeProps
+  const { getId } = nodeProps
 
   return data.map((node) => (
     <CheckboxTreeNode<T>
