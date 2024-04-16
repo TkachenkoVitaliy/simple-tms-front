@@ -8,3 +8,19 @@ export function swapArrayItems<T = unknown>(
   newArray[indexSecond] = array[indexFirst]
   return newArray
 }
+
+export function flattenArray<T = unknown, R = unknown>(
+  array: T[],
+  mapFunc: (arg: T) => R,
+  childrenFunc: (arg: T) => T[] | undefined,
+): R[] {
+  return array.reduce((acc: R[], curr: T) => {
+    const item = mapFunc(curr)
+    acc.push(item)
+    const children = childrenFunc(curr)
+    if (children !== undefined) {
+      acc.push(...flattenArray(children, mapFunc, childrenFunc))
+    }
+    return acc
+  }, [])
+}
