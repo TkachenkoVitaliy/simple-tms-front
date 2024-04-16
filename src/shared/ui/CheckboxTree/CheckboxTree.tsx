@@ -1,7 +1,8 @@
-import { CheckboxTreeNode } from 'shared/ui/CheckboxTree/CheckboxTreeNode'
-import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
-import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
 import { useCallback, useMemo } from 'react'
+
+import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
+import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
+import { CheckboxTreeNode } from 'shared/ui/CheckboxTree/CheckboxTreeNode'
 
 export interface CheckboxTreeProps<T> {
   data: T[]
