@@ -136,6 +136,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'warn',
+    'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
     'import/extensions': [
       'warn',
       { ts: 'never', tsx: 'never', js: 'never', svg: 'always', scss: 'always' },

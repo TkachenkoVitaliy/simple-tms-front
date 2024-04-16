@@ -49,7 +49,6 @@ export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
         </CheckboxTreeContext.Provider>
       )
     }
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>
   }, [])
 

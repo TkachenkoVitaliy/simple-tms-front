@@ -1,10 +1,15 @@
-import { useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 
+import { observer } from 'mobx-react-lite'
+
+import { ExpandLess } from '@mui/icons-material'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import { Checkbox, IconButton, ListItemIcon } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+
+import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
 
 import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
 
@@ -17,13 +22,37 @@ const INDENT_DEFAULT = 36
 export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const { item, ...treeProps } = props
   const {
+    getId,
     getChildren,
     depth = 1,
     indent = INDENT_DEFAULT,
     getLabel,
   } = treeProps
 
-  const children = useMemo(() => getChildren(item), [props])
+  const checkboxContext = useCheckboxTreeContext()
+
+  const children = useMemo(() => getChildren(item), [getChildren, item])
+
+  const isExpanded = useMemo(
+    () => checkboxContext.get(getId(item).toString()),
+    [getId, item],
+  )
+
+  const getSecondaryAction = useCallback(() => {
+    if (children === undefined) return null
+    if (isExpanded === undefined) return null
+
+    const toggleExpanded = () => {
+      console.log(isExpanded)
+      checkboxContext.set(getId(item).toString(), !isExpanded)
+    }
+
+    return (
+      <IconButton onClick={toggleExpanded}>
+        {isExpanded ? <ExpandLess /> : <ExpandMore />}
+      </IconButton>
+    )
+  }, [item, getId, getChildren])
 
   return (
     <ul style={{ marginInlineStart: indent * depth }}>
@@ -31,13 +60,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
         <ListItem
           disablePadding
           sx={{ margin: '4px 0px' }}
-          secondaryAction={
-            children !== undefined ? (
-              <IconButton>
-                <ExpandMore />
-              </IconButton>
-            ) : null
-          }
+          secondaryAction={getSecondaryAction()}
         >
           <ListItemButton
             dense
@@ -59,7 +82,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
           </ListItemButton>
         </ListItem>
       </li>
-      {children !== undefined ? (
+      {children !== undefined && isExpanded ? (
         <CheckboxTree
           {...treeProps}
           data={children}
