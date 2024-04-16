@@ -1,15 +1,12 @@
-import { useContext } from 'react'
+import { Dispatch, SetStateAction, useContext, useState } from 'react'
 
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 
-export const useCheckboxTreeContext = () => {
-  const context = useContext(CheckboxTreeContext)
+export const useCheckboxTreeContext = (): [
+  Map<string, boolean>,
+  Dispatch<SetStateAction<Map<string, boolean>>>,
+] => {
+  const [state, setState] = useState(useContext(CheckboxTreeContext))
 
-  if (context === null) {
-    throw new Error(
-      'You have forgotten to wrap your component with CheckboxTreeContextProvider',
-    )
-  }
-
-  return context
+  return [state, setState]
 }
