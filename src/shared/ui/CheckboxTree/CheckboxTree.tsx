@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
+
 import { CheckboxTreeNode } from 'shared/ui/CheckboxTree/CheckboxTreeNode'
 import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
-import { useEffect } from 'react'
 
 export interface CheckboxTreeProps<T> {
   data: T[]
@@ -12,24 +13,21 @@ export interface CheckboxTreeProps<T> {
   forceState?: 'expanded' | 'collapsed'
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
-  console.log('CheckboxTree render')
   const { data, forceState, ...nodeProps } = props
   const { getId } = nodeProps
 
-  const [checkboxState, setCheckBoxState] = useCheckboxTreeContext()
+  const [expandState, setExpandState] = useCheckboxTreeContext()
 
   useEffect(() => {
     if (forceState === 'expanded') {
-      const newMap = new Map(checkboxState)
+      const newMap = new Map(expandState)
       newMap.forEach((value, key) => newMap.set(key, true))
-      setCheckBoxState(newMap)
-      console.log(newMap)
+      setExpandState(newMap)
     }
     if (forceState === 'collapsed') {
-      const newMap = new Map(checkboxState)
+      const newMap = new Map(expandState)
       newMap.forEach((value, key) => newMap.set(key, false))
-      setCheckBoxState(newMap)
-      console.log(newMap)
+      setExpandState(newMap)
     }
   }, [forceState])
 

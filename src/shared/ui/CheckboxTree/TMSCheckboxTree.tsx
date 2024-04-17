@@ -57,31 +57,6 @@ export function TMSCheckboxTree<T>(props: TMSCheckboxTreeProps<T>) {
     setExpandState(res)
   }, [data, forceState])
 
-  // const contextValue = useMemo(
-  //   () =>
-  //     flattenArray(
-  //       data,
-  //       (arg) => {
-  //         const children = getChildren(arg)
-  //         return {
-  //           id: getId(arg).toString(),
-  //           hasChildren: children !== undefined && children.length > 0,
-  //         }
-  //       },
-  //       (arg) => getChildren(arg),
-  //     )
-  //       .filter(({ hasChildren }) => hasChildren)
-  //       .map(({ id }) => ({
-  //         id,
-  //         expanded: defaultExpandedState,
-  //       }))
-  //       .reduce((map, item) => {
-  //         map.set(item.id, item.expanded)
-  //         return map
-  //       }, new Map<string, boolean>()),
-  //   [data, forceState],
-  // )
-
   return (
     <CheckboxTreeContext.Provider value={contextValues}>
       <CheckboxTree

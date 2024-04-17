@@ -21,7 +21,6 @@ export type CheckboxTreeNodeProps<T> = Omit<
 const INDENT_DEFAULT = 36
 
 export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
-  console.log('CheckboxTreeNode render')
   const { item, ...treeProps } = props
   const {
     getId,
@@ -36,10 +35,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const children = useMemo(() => getChildren(item), [getChildren, item])
 
   const isExpanded = useMemo(() => {
-    console.log('isExpandedMap', checkboxState)
-    const isExp = checkboxState.get(getId(item).toString())
-    console.log('isExpanded', isExp)
-    return isExp
+    return checkboxState.get(getId(item).toString())
   }, [getId, item, checkboxState])
 
   const getSecondaryAction = useCallback(() => {
