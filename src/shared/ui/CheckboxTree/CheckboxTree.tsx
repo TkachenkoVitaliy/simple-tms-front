@@ -8,13 +8,14 @@ export interface CheckboxTreeProps<T> {
   data: T[]
   getId: (item: T) => string | number
   getChildren: (item: T) => T[] | undefined
-  depth?: number
   indent?: number
   getLabel: (item: T) => string
+  isRoot?: boolean
+  expandState?: 'expanded' | 'collapsed' | 'intermediate'
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
-  const { data, ...nodeProps } = props
-  const { getId, getChildren, depth } = nodeProps
+  const { data, expandState, ...nodeProps } = props
+  const { getId, getChildren, isRoot = true } = nodeProps
 
   const contextValue = useMemo(
     () =>
@@ -32,25 +33,28 @@ export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
         .filter(({ hasChildren }) => hasChildren)
         .map(({ id }) => ({
           id,
-          expanded: false,
+          expanded: expandState === 'expanded',
         }))
         .reduce((map, item) => {
           map.set(item.id, item.expanded)
           return map
         }, new Map<string, boolean>()),
-    [data],
+    [data, expandState],
   )
 
-  const wrapper = useCallback((children: React.ReactNode): JSX.Element => {
-    if (depth === 0) {
-      return (
-        <CheckboxTreeContext.Provider value={contextValue}>
-          {children}
-        </CheckboxTreeContext.Provider>
-      )
-    }
-    return <>{children}</>
-  }, [])
+  const wrapper = useCallback(
+    (children: React.ReactNode): JSX.Element => {
+      if (isRoot) {
+        return (
+          <CheckboxTreeContext.Provider value={contextValue}>
+            {children}
+          </CheckboxTreeContext.Provider>
+        )
+      }
+      return <>{children}</>
+    },
+    [contextValue],
+  )
 
   return wrapper(
     data.map((node) => (

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -13,6 +13,7 @@ import { RouteParams } from 'shared/types/router'
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
+import { Button } from '@mui/material'
 
 export interface TestPlanPageProps {
   isNew?: boolean
@@ -28,6 +29,10 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { isNew } = props
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
+
+  const [expandState, setExpandState] = useState<'expanded' | 'collapsed'>(
+    'collapsed',
+  )
 
   useEffect(() => {
     if (isNew) {
@@ -85,13 +90,21 @@ function TestPlanPage(props: TestPlanPageProps) {
       }
       secondElement={
         <PageFrame>
+          <div>
+            <Button onClick={() => setExpandState('expanded')}>
+              EXPAND ALL
+            </Button>
+            <Button onClick={() => setExpandState('collapsed')}>
+              COLLAPSE ALL
+            </Button>
+          </div>
           <div style={{ width: '100%' }}>
             <CheckboxTree
               data={testData}
               getId={(item) => item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
-              depth={0}
+              expandState={expandState}
             />
           </div>
         </PageFrame>

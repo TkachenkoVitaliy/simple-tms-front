@@ -1,6 +1,4 @@
-import { memo, useCallback, useMemo } from 'react'
-
-import { observer } from 'mobx-react-lite'
+import { useCallback, useMemo } from 'react'
 
 import { ExpandLess } from '@mui/icons-material'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -13,7 +11,10 @@ import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeCo
 
 import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
 
-export type CheckboxTreeNodeProps<T> = Omit<CheckboxTreeProps<T>, 'data'> & {
+export type CheckboxTreeNodeProps<T> = Omit<
+  CheckboxTreeProps<T>,
+  'data' | 'expandState'
+> & {
   item: T
 }
 
@@ -24,9 +25,9 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const {
     getId,
     getChildren,
-    depth = 1,
     indent = INDENT_DEFAULT,
     getLabel,
+    isRoot,
   } = treeProps
 
   const [checkboxState, setCheckBoxState] = useCheckboxTreeContext()
@@ -43,10 +44,8 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     if (isExpanded === undefined) return null
 
     const toggleExpanded = () => {
-      console.log(isExpanded)
       const newMap = new Map(checkboxState)
       newMap.set(getId(item).toString(), !isExpanded)
-      console.log(newMap)
       setCheckBoxState(newMap)
     }
 
@@ -58,7 +57,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   }, [item, getId, getChildren, checkboxState, setCheckBoxState])
 
   return (
-    <ul style={{ marginInlineStart: indent * depth }}>
+    <ul style={{ marginInlineStart: indent * (isRoot ? 0 : 1) }}>
       <li>
         <ListItem
           disablePadding
@@ -85,11 +84,11 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
           </ListItemButton>
         </ListItem>
       </li>
-      {children !== undefined && isExpanded ? (
+      {children && isExpanded ? (
         <CheckboxTree
           {...treeProps}
           data={children}
-          depth={1}
+          isRoot={false}
         />
       ) : null}
     </ul>
