@@ -1,5 +1,8 @@
 import { createContext } from 'react'
 
-export const CheckboxTreeContext = createContext<Map<string, boolean>>(
-  new Map(),
-)
+export interface CheckboxTreeContextProps {
+  treeExpandState?: Map<string, boolean>
+  setTreeExpandState?: (newState: Map<string, boolean>) => void
+}
+
+export const CheckboxTreeContext = createContext<CheckboxTreeContextProps>({})

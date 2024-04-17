@@ -14,6 +14,7 @@ import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 import { Button } from '@mui/material'
+import { TMSCheckboxTree } from 'shared/ui/CheckboxTree/TMSCheckboxTree'
 
 export interface TestPlanPageProps {
   isNew?: boolean
@@ -30,9 +31,9 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
 
-  const [expandState, setExpandState] = useState<'expanded' | 'collapsed'>(
-    'collapsed',
-  )
+  const [expandState, setExpandState] = useState<
+    'expanded' | 'collapsed' | undefined
+  >('collapsed')
 
   useEffect(() => {
     if (isNew) {
@@ -99,12 +100,12 @@ function TestPlanPage(props: TestPlanPageProps) {
             </Button>
           </div>
           <div style={{ width: '100%' }}>
-            <CheckboxTree
+            <TMSCheckboxTree
               data={testData}
               getId={(item) => item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
-              expandState={expandState}
+              forceState={expandState}
             />
           </div>
         </PageFrame>

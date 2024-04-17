@@ -1,8 +1,6 @@
-import { useCallback, useMemo } from 'react'
-
-import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
-import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 import { CheckboxTreeNode } from 'shared/ui/CheckboxTree/CheckboxTreeNode'
+import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
+import { useEffect } from 'react'
 
 export interface CheckboxTreeProps<T> {
   data: T[]
@@ -11,58 +9,35 @@ export interface CheckboxTreeProps<T> {
   indent?: number
   getLabel: (item: T) => string
   isRoot?: boolean
-  expandState?: 'expanded' | 'collapsed' | 'intermediate'
+  forceState?: 'expanded' | 'collapsed'
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
-  const { data, expandState, ...nodeProps } = props
-  const { getId, getChildren, isRoot = true } = nodeProps
+  console.log('CheckboxTree render')
+  const { data, forceState, ...nodeProps } = props
+  const { getId } = nodeProps
 
-  const contextValue = useMemo(
-    () =>
-      flattenArray(
-        data,
-        (arg) => {
-          const children = getChildren(arg)
-          return {
-            id: getId(arg).toString(),
-            hasChildren: children !== undefined && children.length > 0,
-          }
-        },
-        (arg) => getChildren(arg),
-      )
-        .filter(({ hasChildren }) => hasChildren)
-        .map(({ id }) => ({
-          id,
-          expanded: expandState === 'expanded',
-        }))
-        .reduce((map, item) => {
-          map.set(item.id, item.expanded)
-          return map
-        }, new Map<string, boolean>()),
-    [data, expandState],
-  )
+  const [checkboxState, setCheckBoxState] = useCheckboxTreeContext()
 
-  const wrapper = useCallback(
-    (children: React.ReactNode): JSX.Element => {
-      if (isRoot) {
-        return (
-          <CheckboxTreeContext.Provider value={contextValue}>
-            {children}
-          </CheckboxTreeContext.Provider>
-        )
-      }
-      return <>{children}</>
-    },
-    [contextValue],
-  )
+  useEffect(() => {
+    if (forceState === 'expanded') {
+      const newMap = new Map(checkboxState)
+      newMap.forEach((value, key) => newMap.set(key, true))
+      setCheckBoxState(newMap)
+      console.log(newMap)
+    }
+    if (forceState === 'collapsed') {
+      const newMap = new Map(checkboxState)
+      newMap.forEach((value, key) => newMap.set(key, false))
+      setCheckBoxState(newMap)
+      console.log(newMap)
+    }
+  }, [forceState])
 
-  return wrapper(
-    data.map((node) => (
-      <CheckboxTreeNode<T>
-        key={getId(node)}
-        item={node}
-        {...nodeProps}
-      />
-    )),
-  )
+  return data.map((node) => (
+    <CheckboxTreeNode<T>
+      key={getId(node)}
+      item={node}
+      {...nodeProps}
+    />
+  ))
 }

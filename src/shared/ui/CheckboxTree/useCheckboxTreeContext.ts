@@ -1,12 +1,17 @@
-import { Dispatch, SetStateAction, useContext, useState } from 'react'
+import { useContext } from 'react'
 
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 
 export const useCheckboxTreeContext = (): [
   Map<string, boolean>,
-  Dispatch<SetStateAction<Map<string, boolean>>>,
+  (newState: Map<string, boolean>) => void,
 ] => {
-  const [state, setState] = useState(useContext(CheckboxTreeContext))
+  const { treeExpandState, setTreeExpandState } =
+    useContext(CheckboxTreeContext)
 
-  return [state, setState]
+  if (treeExpandState === undefined || setTreeExpandState === undefined) {
+    throw new Error('CheckboxTreeContext error')
+  }
+
+  return [treeExpandState, setTreeExpandState]
 }
