@@ -20,6 +20,14 @@ export function TMSCheckboxTree<T>(props: TMSCheckboxTreeProps<T>) {
     new Map(),
   )
 
+  const contextValues = useMemo(
+    () => ({
+      treeExpandState: expandState,
+      setTreeExpandState: setExpandState,
+    }),
+    [expandState, setExpandState],
+  )
+
   const defaultExpandedState = useMemo(() => {
     return forceState === 'expanded'
   }, [forceState])
@@ -75,12 +83,7 @@ export function TMSCheckboxTree<T>(props: TMSCheckboxTreeProps<T>) {
   // )
 
   return (
-    <CheckboxTreeContext.Provider
-      value={{
-        treeExpandState: expandState,
-        setTreeExpandState: setExpandState,
-      }}
-    >
+    <CheckboxTreeContext.Provider value={contextValues}>
       <CheckboxTree
         {...props}
         isRoot
