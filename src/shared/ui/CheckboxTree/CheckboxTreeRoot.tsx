@@ -4,16 +4,17 @@ import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 
-export interface TMSCheckboxTreeProps<T> {
+export interface CheckboxTreeRootProps<T> {
   data: T[]
   getId: (item: T) => string | number
   getChildren: (item: T) => T[] | undefined
   indent?: number
   getLabel: (item: T) => string
+  getIcon?: (item: T) => React.ReactNode
   forceState?: 'expanded' | 'collapsed'
 }
 
-export function CheckboxTreeRoot<T>(props: TMSCheckboxTreeProps<T>) {
+export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
   const { data, getChildren, getId, forceState } = props
 
   const [expandState, setExpandState] = useState<Map<string, boolean>>(

@@ -1,16 +1,11 @@
 import { useEffect } from 'react'
 
-import { CheckboxTreeNode } from 'shared/ui/CheckboxTree/CheckboxTreeNode'
-import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
+import { CheckboxTreeNode } from './CheckboxTreeNode'
+import { CheckboxTreeRootProps } from './CheckboxTreeRoot'
+import { useCheckboxTreeContext } from './useCheckboxTreeContext'
 
-export interface CheckboxTreeProps<T> {
-  data: T[]
-  getId: (item: T) => string | number
-  getChildren: (item: T) => T[] | undefined
-  indent?: number
-  getLabel: (item: T) => string
+export type CheckboxTreeProps<T> = CheckboxTreeRootProps<T> & {
   isRoot?: boolean
-  forceState?: 'expanded' | 'collapsed'
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
   const { data, forceState, ...nodeProps } = props

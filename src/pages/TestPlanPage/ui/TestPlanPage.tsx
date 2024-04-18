@@ -17,6 +17,7 @@ import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
 import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
 import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
 import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
+import { TypeIcon } from 'entities/TestNode/ui/TypeIcon/TypeIcon'
 
 export interface TestPlanPageProps {
   isNew?: boolean
@@ -114,6 +115,7 @@ function TestPlanPage(props: TestPlanPageProps) {
               getId={(item) => item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
+              getIcon={(item) => <TypeIcon type={item.type} />}
               forceState={expandState}
             />
           </div>

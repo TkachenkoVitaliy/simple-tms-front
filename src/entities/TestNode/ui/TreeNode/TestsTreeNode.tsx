@@ -68,10 +68,7 @@ export const TestsTreeNode = (props: TreeNodeProps) => {
         )}
       </div>
       <div className={styles.iconWrapper}>
-        <TypeIcon
-          droppable={droppable || false}
-          type={data?.type}
-        />
+        <TypeIcon type={data?.type} />
       </div>
       <div
         className={styles.labelGridItem}

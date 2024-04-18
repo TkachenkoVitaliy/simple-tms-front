@@ -17,10 +17,7 @@ export const TreeNodeDrag = ({ monitorProps }: TreeNodeDragProps) => {
   return (
     <div className={styles.root}>
       <div className={styles.icon}>
-        <TypeIcon
-          droppable={item.droppable || false}
-          type={item?.data?.type}
-        />
+        <TypeIcon type={item?.data?.type} />
       </div>
       <div className={styles.label}>{item.text}</div>
     </div>
