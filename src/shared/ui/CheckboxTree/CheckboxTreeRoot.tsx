@@ -13,7 +13,7 @@ export interface TMSCheckboxTreeProps<T> {
   forceState?: 'expanded' | 'collapsed'
 }
 
-export function TMSCheckboxTree<T>(props: TMSCheckboxTreeProps<T>) {
+export function CheckboxTreeRoot<T>(props: TMSCheckboxTreeProps<T>) {
   const { data, getChildren, getId, forceState } = props
 
   const [expandState, setExpandState] = useState<Map<string, boolean>>(

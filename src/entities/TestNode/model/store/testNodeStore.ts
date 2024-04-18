@@ -5,12 +5,10 @@ import { TestCaseAPI } from 'entities/TestCase/api/testCaseApi'
 import { TestSuiteAPI } from 'entities/TestSuite/api/testSuiteApi'
 import { TestSuiteShort } from 'entities/TestSuite/model/types/testSuite'
 
+import { TestNodeType } from 'shared/consts/types/testNodeType'
+
 import { TestNodeAPI } from '../../api/testNodeApi'
-import {
-  TestNodeData,
-  TestNodeType,
-  UpdateTestNodeParent,
-} from '../types/testNode'
+import { TestNodeData, UpdateTestNodeParent } from '../types/testNode'
 
 export class TestNodeStore {
   projectId: number

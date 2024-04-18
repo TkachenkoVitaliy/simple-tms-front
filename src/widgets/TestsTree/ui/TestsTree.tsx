@@ -12,12 +12,12 @@ import { TestsTreeActionsPanel } from 'features/TestsTreeActionsPanel'
 import { projectStore } from 'entities/Project'
 import {
   TestNodeData,
-  TestNodeType,
   TestsTreeNode,
   TreeNodeDrag,
   UpdateTestNodeParent,
 } from 'entities/TestNode'
 
+import { TestNodeType } from 'shared/consts/types/testNodeType'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
 import { TMSTree } from 'shared/ui/TMSTree'

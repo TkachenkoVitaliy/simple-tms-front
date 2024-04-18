@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { ExpandLess } from '@mui/icons-material'
+import { Description, ExpandLess } from '@mui/icons-material'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import { Checkbox, IconButton, ListItemIcon } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText'
 import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
 
 import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
+import { TypeIcon } from 'entities/TestNode/ui/TypeIcon/TypeIcon'
 
 export type CheckboxTreeNodeProps<T> = Omit<
   CheckboxTreeProps<T>,
@@ -78,6 +79,9 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
                 edge="start"
                 disableRipple
               />
+            </ListItemIcon>
+            <ListItemIcon>
+              <TypeIcon droppable={children !== undefined} />
             </ListItemIcon>
             <ListItemText primary={getLabel(item)} />
           </ListItemButton>

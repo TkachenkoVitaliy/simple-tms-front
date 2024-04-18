@@ -1,6 +1,8 @@
 import { Description, Folder } from '@mui/icons-material'
 
-import { TestNodeData, TestNodeType } from '../../model/types/testNode'
+import { TestNodeType } from 'shared/consts/types/testNodeType'
+
+import { TestNodeData } from '../../model/types/testNode'
 
 export interface TypeIconProps {
   droppable: boolean
@@ -19,6 +21,6 @@ export const TypeIcon = (props: TypeIconProps) => {
     case TestNodeType.CASE:
       return <Description />
     default:
-      return null
+      return <Description />
   }
 }

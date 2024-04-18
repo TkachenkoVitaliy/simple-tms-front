@@ -11,10 +11,12 @@ import { TestPlanForm } from 'entities/TestPlan'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
-import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
-import { TMSCheckboxTree } from 'shared/ui/CheckboxTree/TMSCheckboxTree'
+import { CheckboxTree } from 'shared/ui/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
+import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
+import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
+import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
 
 export interface TestPlanPageProps {
   isNew?: boolean
@@ -30,10 +32,17 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { isNew } = props
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
+  const [data, setData] = useState<TestPlanNode[]>([])
 
   const [expandState, setExpandState] = useState<
     'expanded' | 'collapsed' | undefined
   >('collapsed')
+
+  useEffect(() => {
+    TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
+      setData(res.data),
+    )
+  }, [])
 
   useEffect(() => {
     if (isNew) {
@@ -43,42 +52,42 @@ function TestPlanPage(props: TestPlanPageProps) {
     }
   }, [testPlanId, isNew])
 
-  const testData: TestItem[] = [
-    {
-      id: 1,
-      name: 'Item 1',
-      children: [
-        {
-          id: 4,
-          name: 'Item 4',
-        },
-        {
-          id: 5,
-          name: 'Item 5',
-          children: [
-            {
-              id: 7,
-              name: 'Item 7',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Item 2',
-    },
-    {
-      id: 3,
-      name: 'Item 3',
-      children: [
-        {
-          id: 6,
-          name: 'Item 6',
-        },
-      ],
-    },
-  ]
+  // const testData: TestItem[] = [
+  //   {
+  //     id: 1,
+  //     name: 'Item 1',
+  //     children: [
+  //       {
+  //         id: 4,
+  //         name: 'Item 4',
+  //       },
+  //       {
+  //         id: 5,
+  //         name: 'Item 5',
+  //         children: [
+  //           {
+  //             id: 7,
+  //             name: 'Item 7',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Item 2',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Item 3',
+  //     children: [
+  //       {
+  //         id: 6,
+  //         name: 'Item 6',
+  //       },
+  //     ],
+  //   },
+  // ]
 
   return testPlanStore.isLoading ? (
     <PageLoader />
@@ -100,8 +109,8 @@ function TestPlanPage(props: TestPlanPageProps) {
             </Button>
           </div>
           <div style={{ width: '100%' }}>
-            <TMSCheckboxTree
-              data={testData}
+            <CheckboxTree
+              data={data}
               getId={(item) => item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
