@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { Button } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
@@ -11,10 +12,9 @@ import { TestPlanForm } from 'entities/TestPlan'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
+import { TMSCheckboxTree } from 'shared/ui/CheckboxTree/TMSCheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
-import { Button } from '@mui/material'
-import { TMSCheckboxTree } from 'shared/ui/CheckboxTree/TMSCheckboxTree'
 
 export interface TestPlanPageProps {
   isNew?: boolean

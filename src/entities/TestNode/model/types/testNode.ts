@@ -1,7 +1,4 @@
-export enum TestNodeType {
-  CASE = 'CASE',
-  SUITE = 'SUITE',
-}
+import { TestNodeType } from 'shared/consts/types/testNodeType'
 
 export interface TestNodeData {
   children: string[]

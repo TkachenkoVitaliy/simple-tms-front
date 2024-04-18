@@ -105,7 +105,7 @@ export class TestNodeStore {
 
   updateTestNode = async (update: UpdateTestNodeParent) => {
     this.setLoading(true)
-    await TestNodeAPI.updateTestNodeParent(update)
+    await TestNodeAPI.updateTestNodeParent(update, this.projectId)
     await this.loadNodes()
   }
 

@@ -5,16 +5,19 @@ import { API } from 'shared/api'
 
 import { TestNodeData, UpdateTestNodeParent } from '../model/types/testNode'
 
-const URL = '/tests'
+const TESTS = 'tests'
 
 export const TestNodeAPI = {
   getProjectTestNodes(
     projectId: number,
   ): Promise<AxiosResponse<NodeModel<TestNodeData>[]>> {
-    return API.get(`${URL}/${projectId}`)
+    return API.get(`projects/${projectId}/${TESTS}`)
   },
 
-  updateTestNodeParent(update: UpdateTestNodeParent): Promise<AxiosResponse> {
-    return API.patch(`${URL}/${update.nodeId}`, update)
+  updateTestNodeParent(
+    update: UpdateTestNodeParent,
+    projectId: number,
+  ): Promise<AxiosResponse> {
+    return API.patch(`projects/${projectId}/${TESTS}/${update.nodeId}`, update)
   },
 }
