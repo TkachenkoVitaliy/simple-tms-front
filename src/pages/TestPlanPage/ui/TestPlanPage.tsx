@@ -34,6 +34,7 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
   const [data, setData] = useState<TestPlanNode[]>([])
+  const [selected, setSelected] = useState<Set<string>>(new Set())
 
   const [expandState, setExpandState] = useState<
     'expanded' | 'collapsed' | undefined
@@ -112,7 +113,9 @@ function TestPlanPage(props: TestPlanPageProps) {
           <div style={{ width: '100%' }}>
             <CheckboxTree
               data={data}
-              getId={(item) => item.id}
+              selected={selected}
+              setSelected={setSelected}
+              getId={(item) => item.type + item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
               getIcon={(item) => <TypeIcon type={item.type} />}

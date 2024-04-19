@@ -4,9 +4,20 @@ import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 
+export type CheckboxState = 'checked' | 'indeterminate' | 'unchecked'
+
+export interface FlatTreeItem {
+  id: string
+  parentId: string | null
+  childrenIds?: string[]
+  checkState: CheckboxState
+}
+
 export interface CheckboxTreeRootProps<T> {
   data: T[]
-  getId: (item: T) => string | number
+  selected: Set<string>
+  setSelected: (newSelected: Set<string>) => void
+  getId: (item: T) => string
   getChildren: (item: T) => T[] | undefined
   indent?: number
   getLabel: (item: T) => string
@@ -15,18 +26,48 @@ export interface CheckboxTreeRootProps<T> {
 }
 
 export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
-  const { data, getChildren, getId, forceState } = props
+  const { data, selected, setSelected, getChildren, getId, forceState } = props
 
   const [expandState, setExpandState] = useState<Map<string, boolean>>(
     new Map(),
   )
 
+  function mapToFlat<R extends T>(
+    treeData: R[],
+    parentId: FlatTreeItem['parentId'],
+  ): FlatTreeItem[] {
+    const result: FlatTreeItem[] = []
+
+    treeData.forEach((item) => {
+      const id = getId(item)
+      const children = getChildren(item)
+
+      const flatItem: FlatTreeItem = {
+        id: getId(item),
+        parentId,
+        childrenIds:
+          children !== undefined
+            ? [...mapToFlat(children, id).map((i) => i.id)]
+            : undefined,
+        checkState: 'unchecked',
+      }
+
+      result.push(flatItem)
+    })
+
+    return result
+  }
+
+  console.log(data)
+
   const contextValues = useMemo(
     () => ({
       treeExpandState: expandState,
       setTreeExpandState: setExpandState,
+      treeCheckState: selected,
+      setTreeCheckState: setSelected,
     }),
-    [expandState, setExpandState],
+    [expandState, setExpandState, selected, setSelected],
   )
 
   const defaultExpandedState = useMemo(() => {

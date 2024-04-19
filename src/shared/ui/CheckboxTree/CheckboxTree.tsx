@@ -4,7 +4,10 @@ import { CheckboxTreeNode } from './CheckboxTreeNode'
 import { CheckboxTreeRootProps } from './CheckboxTreeRoot'
 import { useCheckboxTreeContext } from './useCheckboxTreeContext'
 
-export type CheckboxTreeProps<T> = CheckboxTreeRootProps<T> & {
+export type CheckboxTreeProps<T> = Omit<
+  CheckboxTreeRootProps<T>,
+  'selected' | 'setSelected'
+> & {
   isRoot?: boolean
 }
 export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {

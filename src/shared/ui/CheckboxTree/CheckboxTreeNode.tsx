@@ -30,22 +30,38 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     isRoot,
   } = treeProps
 
-  const [checkboxState, setCheckBoxState] = useCheckboxTreeContext()
+  const [expandState, setExpandState, checkedState, setCheckedState] =
+    useCheckboxTreeContext()
+
+  const toggleNodeChecked = (item: T) => {
+    console.log('toggle', item, expandState, checkedState)
+    const id = getId(item)
+    const checked = checkedState.has(id)
+    console.log(checked)
+    const newCheckedState = new Set(checkedState)
+    if (checked) {
+      newCheckedState.delete(id)
+    } else {
+      newCheckedState.add(id)
+    }
+    console.log(newCheckedState)
+    setCheckedState(newCheckedState)
+  }
 
   const children = useMemo(() => getChildren(item), [getChildren, item])
 
   const isExpanded = useMemo(() => {
-    return checkboxState.get(getId(item).toString())
-  }, [getId, item, checkboxState])
+    return expandState.get(getId(item).toString())
+  }, [getId, item, expandState])
 
   const getSecondaryAction = useCallback(() => {
     if (children === undefined) return null
     if (isExpanded === undefined) return null
 
     const toggleExpanded = () => {
-      const newMap = new Map(checkboxState)
+      const newMap = new Map(expandState)
       newMap.set(getId(item).toString(), !isExpanded)
-      setCheckBoxState(newMap)
+      setExpandState(newMap)
     }
 
     return (
@@ -53,7 +69,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
         {isExpanded ? <ExpandLess /> : <ExpandMore />}
       </IconButton>
     )
-  }, [item, getId, getChildren, checkboxState, setCheckBoxState])
+  }, [item, getId, getChildren, expandState, setExpandState])
 
   return (
     <ul style={{ marginInlineStart: indent * (isRoot ? 0 : 1) }}>
@@ -75,6 +91,8 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
           >
             <ListItemIcon>
               <Checkbox
+                checked={checkedState.has(getId(item))}
+                onChange={() => toggleNodeChecked(item)}
                 edge="start"
                 disableRipple
               />
