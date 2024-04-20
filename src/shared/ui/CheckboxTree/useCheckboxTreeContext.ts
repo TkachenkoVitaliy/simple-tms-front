@@ -1,12 +1,13 @@
 import { useContext } from 'react'
 
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
+import { FlatTreeItem } from 'shared/ui/CheckboxTree/CheckboxTreeRoot'
 
 export const useCheckboxTreeContext = (): [
   Map<string, boolean>,
   (newState: Map<string, boolean>) => void,
-  Set<string>,
-  (newState: Set<string>) => void,
+  Map<string, FlatTreeItem>,
+  (newState: Map<string, FlatTreeItem>) => void,
 ] => {
   const {
     treeExpandState,

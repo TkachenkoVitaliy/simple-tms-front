@@ -9,6 +9,10 @@ import ListItemText from '@mui/material/ListItemText'
 
 import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
 import { useCheckboxTreeContext } from './useCheckboxTreeContext'
+import {
+  CheckboxState,
+  FlatTreeItem,
+} from 'shared/ui/CheckboxTree/CheckboxTreeRoot'
 
 export type CheckboxTreeNodeProps<T> = Omit<
   CheckboxTreeProps<T>,
@@ -34,18 +38,61 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     useCheckboxTreeContext()
 
   const toggleNodeChecked = (item: T) => {
-    console.log('toggle', item, expandState, checkedState)
+    const copyCheckedState = new Map(checkedState)
     const id = getId(item)
-    const checked = checkedState.has(id)
-    console.log(checked)
-    const newCheckedState = new Set(checkedState)
-    if (checked) {
-      newCheckedState.delete(id)
-    } else {
-      newCheckedState.add(id)
+    const itemState = copyCheckedState.get(id)
+    if (itemState !== undefined) {
+      const state = itemState.checkState
+      if (state === 'checked') {
+        itemState.checkState = 'unchecked'
+        if (
+          itemState.childrenIds !== undefined &&
+          itemState.childrenIds.length > 0
+        ) {
+          itemState.childrenIds.forEach((childId) => {
+            const child = copyCheckedState.get(childId)
+            if (child) child.checkState = 'unchecked'
+          })
+        }
+      }
+      if (state === 'unchecked' || state === 'indeterminate') {
+        itemState.checkState = 'checked'
+        if (
+          itemState.childrenIds !== undefined &&
+          itemState.childrenIds.length > 0
+        ) {
+          itemState.childrenIds.forEach((childId) => {
+            const child = copyCheckedState.get(childId)
+            if (child) child.checkState = 'checked'
+          })
+        }
+      }
+      const parent =
+        itemState.parentId === null
+          ? undefined
+          : copyCheckedState.get(itemState.parentId)
+      if (parent !== undefined) {
+        const children = parent.childrenIds
+          ?.map((childId) => copyCheckedState.get(childId))
+          .map((elem) => elem?.checkState)
+
+        const allChecked = children
+          ?.filter((el) => el !== undefined)
+          .every((el) => el === 'checked')
+        const allUnchecked = children
+          ?.filter((el) => el !== undefined)
+          .every((el) => el === 'unchecked')
+
+        if (allChecked) parent.checkState = 'checked'
+        else if (allUnchecked) parent.checkState = 'unchecked'
+        else parent.checkState = 'indeterminate'
+      }
+
+      console.log(copyCheckedState)
+      console.log(expandState)
+
+      setCheckedState(copyCheckedState)
     }
-    console.log(newCheckedState)
-    setCheckedState(newCheckedState)
   }
 
   const children = useMemo(() => getChildren(item), [getChildren, item])
@@ -91,7 +138,12 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
           >
             <ListItemIcon>
               <Checkbox
-                checked={checkedState.has(getId(item))}
+                checked={
+                  checkedState.get(getId(item))?.checkState === 'checked'
+                }
+                indeterminate={
+                  checkedState.get(getId(item))?.checkState === 'indeterminate'
+                }
                 onChange={() => toggleNodeChecked(item)}
                 edge="start"
                 disableRipple

@@ -26,7 +26,11 @@ export interface CheckboxTreeRootProps<T> {
 }
 
 export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
-  const { data, selected, setSelected, getChildren, getId, forceState } = props
+  const { data, getChildren, getId, forceState } = props
+
+  const [checkState, setCheckState] = useState<Map<string, FlatTreeItem>>(
+    new Map(),
+  )
 
   const [expandState, setExpandState] = useState<Map<string, boolean>>(
     new Map(),
@@ -34,7 +38,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
   function mapToFlat<R extends T>(
     treeData: R[],
-    parentId: FlatTreeItem['parentId'],
+    parentId: FlatTreeItem['parentId'] = null,
   ): FlatTreeItem[] {
     const result: FlatTreeItem[] = []
 
@@ -45,29 +49,31 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
       const flatItem: FlatTreeItem = {
         id: getId(item),
         parentId,
-        childrenIds:
-          children !== undefined
-            ? [...mapToFlat(children, id).map((i) => i.id)]
-            : undefined,
+        childrenIds: children !== undefined ? [] : undefined,
         checkState: 'unchecked',
       }
-
       result.push(flatItem)
+
+      if (children) {
+        const childrenItems = mapToFlat(children, id)
+        flatItem.childrenIds?.push(
+          ...childrenItems.map((childItem) => childItem.id),
+        )
+        result.push(...childrenItems)
+      }
     })
 
     return result
   }
 
-  console.log(data)
-
   const contextValues = useMemo(
     () => ({
       treeExpandState: expandState,
       setTreeExpandState: setExpandState,
-      treeCheckState: selected,
-      setTreeCheckState: setSelected,
+      treeCheckState: checkState,
+      setTreeCheckState: setCheckState,
     }),
-    [expandState, setExpandState, selected, setSelected],
+    [expandState, setExpandState, checkState, setCheckState],
   )
 
   const defaultExpandedState = useMemo(() => {
@@ -97,6 +103,9 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
       }, new Map<string, boolean>())
 
     setExpandState(res)
+
+    const checkboxMap = new Map(mapToFlat(data).map((item) => [item.id, item]))
+    setCheckState(checkboxMap)
   }, [data, forceState])
 
   return (
