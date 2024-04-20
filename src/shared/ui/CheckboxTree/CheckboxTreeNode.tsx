@@ -105,7 +105,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const children = useMemo(() => getChildren(item), [getChildren, item])
 
   const isExpanded = useMemo(() => {
-    return expandState.get(getId(item).toString())
+    return expandState.get(getId(item))
   }, [getId, item, expandState])
 
   const getSecondaryAction = useCallback(() => {
@@ -114,7 +114,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
 
     const toggleExpanded = () => {
       const newMap = new Map(expandState)
-      newMap.set(getId(item).toString(), !isExpanded)
+      newMap.set(getId(item), !isExpanded)
       setExpandState(newMap)
     }
 
