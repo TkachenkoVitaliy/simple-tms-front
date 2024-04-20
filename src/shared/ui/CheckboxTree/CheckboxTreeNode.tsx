@@ -7,12 +7,10 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
+import { FlatTreeItem } from 'shared/ui/CheckboxTree/CheckboxTreeRoot'
+
 import { CheckboxTree, CheckboxTreeProps } from './CheckboxTree'
 import { useCheckboxTreeContext } from './useCheckboxTreeContext'
-import {
-  CheckboxState,
-  FlatTreeItem,
-} from 'shared/ui/CheckboxTree/CheckboxTreeRoot'
 
 export type CheckboxTreeNodeProps<T> = Omit<
   CheckboxTreeProps<T>,
@@ -36,6 +34,38 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
 
   const [expandState, setExpandState, checkedState, setCheckedState] =
     useCheckboxTreeContext()
+
+  function updateParentState(
+    parentId: string | null,
+    state: Map<string, FlatTreeItem>,
+  ) {
+    const parent = parentId === null ? undefined : state.get(parentId)
+
+    if (parent !== undefined) {
+      const children = parent.childrenIds
+        ?.map((childId) => state.get(childId))
+        .map((elem) => elem?.checkState)
+
+      const allChecked = children
+        ?.filter((el) => el !== undefined)
+        .every((el) => el === 'checked')
+      const allUnchecked = children
+        ?.filter((el) => el !== undefined)
+        .every((el) => el === 'unchecked')
+
+      if (allChecked) {
+        parent.checkState = 'checked'
+      } else if (allUnchecked) {
+        parent.checkState = 'unchecked'
+      } else {
+        parent.checkState = 'indeterminate'
+      }
+
+      if (parent.parentId !== null) {
+        updateParentState(parent.parentId, state)
+      }
+    }
+  }
 
   const toggleNodeChecked = (item: T) => {
     const copyCheckedState = new Map(checkedState)
@@ -67,30 +97,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
           })
         }
       }
-      const parent =
-        itemState.parentId === null
-          ? undefined
-          : copyCheckedState.get(itemState.parentId)
-      if (parent !== undefined) {
-        const children = parent.childrenIds
-          ?.map((childId) => copyCheckedState.get(childId))
-          .map((elem) => elem?.checkState)
-
-        const allChecked = children
-          ?.filter((el) => el !== undefined)
-          .every((el) => el === 'checked')
-        const allUnchecked = children
-          ?.filter((el) => el !== undefined)
-          .every((el) => el === 'unchecked')
-
-        if (allChecked) parent.checkState = 'checked'
-        else if (allUnchecked) parent.checkState = 'unchecked'
-        else parent.checkState = 'indeterminate'
-      }
-
-      console.log(copyCheckedState)
-      console.log(expandState)
-
+      updateParentState(itemState.parentId, copyCheckedState)
       setCheckedState(copyCheckedState)
     }
   }
