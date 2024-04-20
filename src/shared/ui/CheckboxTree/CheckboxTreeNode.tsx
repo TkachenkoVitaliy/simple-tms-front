@@ -67,9 +67,9 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     }
   }
 
-  const toggleNodeChecked = (item: T) => {
+  const toggleNodeChecked = (node: T) => {
     const copyCheckedState = new Map(checkedState)
-    const id = getId(item)
+    const id = getId(node)
     const itemState = copyCheckedState.get(id)
     if (itemState !== undefined) {
       const state = itemState.checkState
