@@ -15,8 +15,8 @@ export interface FlatTreeItem {
 
 export interface CheckboxTreeRootProps<T> {
   data: T[]
-  selected: Set<string>
-  setSelected: (newSelected: Set<string>) => void
+  initialSelected?: string[]
+  setSelected: (newSelected: string[]) => void
   getId: (item: T) => string
   getChildren: (item: T) => T[] | undefined
   indent?: number
@@ -26,18 +26,22 @@ export interface CheckboxTreeRootProps<T> {
 }
 
 export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
-  const { data, getChildren, getId, forceState } = props
+  const {
+    data,
+    getChildren,
+    getId,
+    initialSelected = [],
+    setSelected,
+    forceState,
+  } = props
 
   const [checkState, setCheckState] = useState<Map<string, FlatTreeItem>>(
     new Map(),
   )
 
-  const [expandState, setExpandState] = useState<Map<string, boolean>>(
-    new Map(),
-  )
-
   function mapToFlat<R extends T>(
     treeData: R[],
+    initialSelectedState: string[],
     parentId: FlatTreeItem['parentId'] = null,
   ): FlatTreeItem[] {
     const result: FlatTreeItem[] = []
@@ -47,15 +51,15 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
       const children = getChildren(item)
 
       const flatItem: FlatTreeItem = {
-        id: getId(item),
+        id,
         parentId,
         childrenIds: children !== undefined ? [] : undefined,
-        checkState: 'unchecked',
+        checkState: initialSelectedState.includes(id) ? 'checked' : 'unchecked',
       }
       result.push(flatItem)
 
       if (children) {
-        const childrenItems = mapToFlat(children, id)
+        const childrenItems = mapToFlat(children, initialSelectedState, id)
         flatItem.childrenIds?.push(
           ...childrenItems.map((childItem) => childItem.id),
         )
@@ -65,6 +69,10 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
     return result
   }
+
+  const [expandState, setExpandState] = useState<Map<string, boolean>>(
+    new Map(),
+  )
 
   const contextValues = useMemo(
     () => ({
@@ -104,9 +112,13 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
     setExpandState(res)
 
-    const checkboxMap = new Map(mapToFlat(data).map((item) => [item.id, item]))
+    console.log('init', initialSelected)
+
+    const checkboxMap = new Map(
+      mapToFlat(data, initialSelected).map((item) => [item.id, item]),
+    )
     setCheckState(checkboxMap)
-  }, [data, forceState])
+  }, [data, forceState, initialSelected])
 
   return (
     <CheckboxTreeContext.Provider value={contextValues}>

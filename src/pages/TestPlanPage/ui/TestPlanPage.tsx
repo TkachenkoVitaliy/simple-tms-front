@@ -7,17 +7,16 @@ import { useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
+import { TypeIcon } from 'entities/TestNode/ui/TypeIcon/TypeIcon'
 import { TestPlanForm } from 'entities/TestPlan'
+import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
+import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { RouteParams } from 'shared/types/router'
 import { CheckboxTree } from 'shared/ui/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
 import { ResizableWrapper } from 'shared/ui/ResizableWrapper'
-import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
-import { TestNodeAPI } from 'entities/TestNode/api/testNodeApi'
-import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
-import { TypeIcon } from 'entities/TestNode/ui/TypeIcon/TypeIcon'
 
 export interface TestPlanPageProps {
   isNew?: boolean
@@ -34,7 +33,7 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
   const [data, setData] = useState<TestPlanNode[]>([])
-  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [selected, setSelected] = useState<string[]>(['CASE26'])
 
   const [expandState, setExpandState] = useState<
     'expanded' | 'collapsed' | undefined
@@ -113,7 +112,7 @@ function TestPlanPage(props: TestPlanPageProps) {
           <div style={{ width: '100%' }}>
             <CheckboxTree
               data={data}
-              selected={selected}
+              initialSelected={selected}
               setSelected={setSelected}
               getId={(item) => item.type + item.id}
               getChildren={(item) => item.children}
