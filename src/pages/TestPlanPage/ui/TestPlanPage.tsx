@@ -22,12 +22,6 @@ export interface TestPlanPageProps {
   isNew?: boolean
 }
 
-interface TestItem {
-  id: number
-  name: string
-  children?: TestItem[]
-}
-
 function TestPlanPage(props: TestPlanPageProps) {
   const { isNew } = props
   const { testPlanStore } = useProjectStores()
@@ -52,43 +46,6 @@ function TestPlanPage(props: TestPlanPageProps) {
       testPlanStore.loadPlan(Number(testPlanId))
     }
   }, [testPlanId, isNew])
-
-  // const testData: TestItem[] = [
-  //   {
-  //     id: 1,
-  //     name: 'Item 1',
-  //     children: [
-  //       {
-  //         id: 4,
-  //         name: 'Item 4',
-  //       },
-  //       {
-  //         id: 5,
-  //         name: 'Item 5',
-  //         children: [
-  //           {
-  //             id: 7,
-  //             name: 'Item 7',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Item 2',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Item 3',
-  //     children: [
-  //       {
-  //         id: 6,
-  //         name: 'Item 6',
-  //       },
-  //     ],
-  //   },
-  // ]
 
   return testPlanStore.isLoading ? (
     <PageLoader />
