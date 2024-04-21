@@ -117,6 +117,24 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
     const checkboxMap = new Map(
       mapToFlat(data, initialSelected).map((item) => [item.id, item]),
     )
+    checkboxMap.forEach((val, key) => {
+      const { childrenIds } = val
+      const valFromMap = checkboxMap.get(key)
+      if (childrenIds && childrenIds.length > 0 && valFromMap) {
+        const childrenNodes = childrenIds.map((childId) =>
+          checkboxMap.get(childId),
+        )
+        if (childrenNodes.every((node) => node?.checkState === 'checked')) {
+          valFromMap.checkState = 'checked'
+        } else if (
+          childrenNodes.every((node) => node?.checkState === 'unchecked')
+        ) {
+          valFromMap.checkState = 'unchecked'
+        } else {
+          valFromMap.checkState = 'indeterminate'
+        }
+      }
+    })
     setCheckState(checkboxMap)
   }, [data, forceState, initialSelected])
 
