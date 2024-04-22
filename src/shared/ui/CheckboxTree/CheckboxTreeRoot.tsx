@@ -112,8 +112,6 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
     setExpandState(res)
 
-    console.log('init', initialSelected)
-
     const checkboxMap = new Map(
       mapToFlat(data, initialSelected).map((item) => [item.id, item]),
     )
