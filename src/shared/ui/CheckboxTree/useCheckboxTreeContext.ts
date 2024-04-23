@@ -4,31 +4,14 @@ import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 import { FlatTreeItem } from 'shared/ui/CheckboxTree/CheckboxTreeRoot'
 
 export const useCheckboxTreeContext = (): [
-  Map<string, boolean>,
-  (newState: Map<string, boolean>) => void,
   Map<string, FlatTreeItem>,
   (newState: Map<string, FlatTreeItem>) => void,
 ] => {
-  const {
-    treeExpandState,
-    setTreeExpandState,
-    treeCheckState,
-    setTreeCheckState,
-  } = useContext(CheckboxTreeContext)
+  const { treeCheckState, setTreeCheckState } = useContext(CheckboxTreeContext)
 
-  if (
-    treeExpandState === undefined ||
-    setTreeExpandState === undefined ||
-    treeCheckState === undefined ||
-    setTreeCheckState === undefined
-  ) {
+  if (treeCheckState === undefined || setTreeCheckState === undefined) {
     throw new Error('CheckboxTreeContext error')
   }
 
-  return [
-    treeExpandState,
-    setTreeExpandState,
-    treeCheckState,
-    setTreeCheckState,
-  ]
+  return [treeCheckState, setTreeCheckState]
 }

@@ -19,12 +19,24 @@ export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
   useEffect(() => {
     if (forceState === 'expanded') {
       const newMap = new Map(expandState)
-      newMap.forEach((value, key) => newMap.set(key, true))
+      newMap.forEach((value, key) => {
+        if (value.expanded !== undefined) {
+          // eslint-disable-next-line no-param-reassign
+          value.expanded = true
+          newMap.set(key, value)
+        }
+      })
       setExpandState(newMap)
     }
     if (forceState === 'collapsed') {
       const newMap = new Map(expandState)
-      newMap.forEach((value, key) => newMap.set(key, false))
+      newMap.forEach((value, key) => {
+        if (value.expanded !== undefined) {
+          // eslint-disable-next-line no-param-reassign
+          value.expanded = false
+          newMap.set(key, value)
+        }
+      })
       setExpandState(newMap)
     }
   }, [forceState])

@@ -32,8 +32,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     isRoot,
   } = treeProps
 
-  const [expandState, setExpandState, checkedState, setCheckedState] =
-    useCheckboxTreeContext()
+  const [checkedState, setCheckedState] = useCheckboxTreeContext()
 
   function updateParentState(
     parentId: string | null,
@@ -105,17 +104,21 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   const children = useMemo(() => getChildren(item), [getChildren, item])
 
   const isExpanded = useMemo(() => {
-    return expandState.get(getId(item))
-  }, [getId, item, expandState])
+    return checkedState.get(getId(item))?.expanded
+  }, [getId, item, checkedState])
 
   const getSecondaryAction = useCallback(() => {
     if (children === undefined) return null
     if (isExpanded === undefined) return null
 
     const toggleExpanded = () => {
-      const newMap = new Map(expandState)
-      newMap.set(getId(item), !isExpanded)
-      setExpandState(newMap)
+      const newMap = new Map(checkedState)
+      const node = newMap.get(getId(item))
+      if (node !== undefined) {
+        node.expanded = node.expanded !== undefined ? !node.expanded : undefined
+        newMap.set(getId(item), node)
+        setCheckedState(newMap)
+      }
     }
 
     return (
@@ -123,7 +126,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
         {isExpanded ? <ExpandLess /> : <ExpandMore />}
       </IconButton>
     )
-  }, [item, getId, getChildren, expandState, setExpandState])
+  }, [item, getId, getChildren, checkedState, setCheckedState])
 
   return (
     <ul style={{ marginInlineStart: indent * (isRoot ? 0 : 1) }}>
