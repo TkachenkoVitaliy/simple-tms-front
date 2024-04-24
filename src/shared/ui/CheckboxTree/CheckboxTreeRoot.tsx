@@ -56,7 +56,9 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
         childrenIds: children !== undefined ? [] : undefined,
         checkState: initialSelectedState.includes(id) ? 'checked' : 'unchecked',
         expanded:
-          children !== undefined ? forceState !== 'collapsed' : undefined,
+          children !== undefined && children.length > 0
+            ? forceState !== 'collapsed'
+            : undefined,
       }
       result.push(flatItem)
 
