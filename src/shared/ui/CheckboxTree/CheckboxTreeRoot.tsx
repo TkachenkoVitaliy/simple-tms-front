@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
-import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 import { CheckboxTreeActions } from 'shared/ui/CheckboxTree/CheckboxTreeActions'
+import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
 
 export type CheckboxState = 'checked' | 'indeterminate' | 'unchecked'
 
@@ -105,7 +105,6 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
         }
       }
     })
-    console.log(checkboxMap)
     setCheckState(checkboxMap)
   }, [data, forceState, initialSelected])
 
