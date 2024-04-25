@@ -33,7 +33,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
     getId,
     initialSelected = [],
     setSelected,
-    forceState,
+    forceState = 'collapsed',
   } = props
 
   const [checkState, setCheckState] = useState<Map<string, FlatTreeItem>>(
@@ -58,7 +58,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
         checkState: initialSelectedState.includes(id) ? 'checked' : 'unchecked',
         expanded:
           children !== undefined && children.length > 0
-            ? forceState !== 'collapsed'
+            ? forceState === 'expanded'
             : undefined,
       }
       result.push(flatItem)

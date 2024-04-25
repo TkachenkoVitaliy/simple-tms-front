@@ -29,10 +29,6 @@ function TestPlanPage(props: TestPlanPageProps) {
   const [data, setData] = useState<TestPlanNode[]>([])
   const [selected, setSelected] = useState<string[]>(['CASE26'])
 
-  const [expandState, setExpandState] = useState<
-    'expanded' | 'collapsed' | undefined
-  >('collapsed')
-
   useEffect(() => {
     TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
       setData(res.data),
@@ -67,7 +63,6 @@ function TestPlanPage(props: TestPlanPageProps) {
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
               getIcon={(item) => <TypeIcon type={item.type} />}
-              forceState={expandState}
             />
           </div>
         </PageFrame>
