@@ -21,7 +21,6 @@ export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
       const newMap = new Map(expandState)
       newMap.forEach((value, key) => {
         if (value.expanded !== undefined) {
-          // eslint-disable-next-line no-param-reassign
           value.expanded = true
           newMap.set(key, value)
         }
@@ -32,7 +31,6 @@ export function CheckboxTree<T>(props: CheckboxTreeProps<T>) {
       const newMap = new Map(expandState)
       newMap.forEach((value, key) => {
         if (value.expanded !== undefined) {
-          // eslint-disable-next-line no-param-reassign
           value.expanded = false
           newMap.set(key, value)
         }

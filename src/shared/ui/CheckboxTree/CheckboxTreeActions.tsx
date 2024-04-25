@@ -10,7 +10,6 @@ export const CheckboxTreeActions = () => {
     const newState = new Map(treeCheckState)
     newState.forEach((val) => {
       if (val.expanded !== undefined) {
-        // eslint-disable-next-line no-param-reassign
         val.expanded = expand
       }
     })

@@ -103,6 +103,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'warn',
     'no-underscore-dangle': 'off',
     'no-unused-vars': 'off',
+    'no-param-reassign': 'warn',
     'class-methods-use-this': 'warn',
     'max-lines': [
       'warn',
