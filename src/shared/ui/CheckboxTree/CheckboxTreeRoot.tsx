@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { CheckboxTree } from 'shared/ui/CheckboxTree/CheckboxTree'
 import { CheckboxTreeContext } from 'shared/ui/CheckboxTree/CheckboxTreeContext'
+import { CheckboxTreeActions } from 'shared/ui/CheckboxTree/CheckboxTreeActions'
 
 export type CheckboxState = 'checked' | 'indeterminate' | 'unchecked'
 
@@ -110,6 +111,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
   return (
     <CheckboxTreeContext.Provider value={contextValues}>
+      <CheckboxTreeActions />
       <CheckboxTree
         {...props}
         isRoot

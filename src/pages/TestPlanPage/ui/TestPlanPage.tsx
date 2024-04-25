@@ -58,14 +58,6 @@ function TestPlanPage(props: TestPlanPageProps) {
       }
       secondElement={
         <PageFrame>
-          <div>
-            <Button onClick={() => setExpandState('expanded')}>
-              EXPAND ALL
-            </Button>
-            <Button onClick={() => setExpandState('collapsed')}>
-              COLLAPSE ALL
-            </Button>
-          </div>
           <div style={{ width: '100%' }}>
             <CheckboxTree
               data={data}
