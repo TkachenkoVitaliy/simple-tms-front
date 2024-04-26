@@ -148,6 +148,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
         >
           <ListItemButton
             dense
+            onClick={() => toggleNodeChecked(item)}
             sx={{
               bgcolor: 'var(--mui-palette-background-paper)',
               borderRadius: 1,
@@ -164,7 +165,6 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
                 indeterminate={
                   checkedState.get(getId(item))?.checkState === 'indeterminate'
                 }
-                onChange={() => toggleNodeChecked(item)}
                 edge="start"
                 disableRipple
               />
