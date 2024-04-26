@@ -95,6 +95,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
             const child = copyCheckedState.get(childId)
             if (child) child.checkState = 'checked'
           })
+          itemState.expanded = true
         }
       }
       updateParentState(itemState.parentId, copyCheckedState)
