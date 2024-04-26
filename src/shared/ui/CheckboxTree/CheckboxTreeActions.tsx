@@ -1,7 +1,8 @@
+import { useMemo } from 'react'
+
 import { Button } from '@mui/material'
 
 import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
-import { useMemo } from 'react'
 
 export const CheckboxTreeActions = () => {
   const [treeCheckState, setTreeCheckState] = useCheckboxTreeContext()
