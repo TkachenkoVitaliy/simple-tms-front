@@ -16,7 +16,7 @@ export interface FlatTreeItem {
 
 export interface CheckboxTreeRootProps<T> {
   data: T[]
-  initialSelected?: string[]
+  selected?: string[]
   setSelected: (newSelected: string[]) => void
   getId: (item: T) => string
   getChildren: (item: T) => T[] | undefined
@@ -31,7 +31,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
     data,
     getChildren,
     getId,
-    initialSelected = [],
+    selected = [],
     setSelected,
     forceState = 'collapsed',
   } = props
@@ -85,7 +85,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
   useEffect(() => {
     const checkboxMap = new Map(
-      mapToFlat(data, initialSelected).map((item) => [item.id, item]),
+      mapToFlat(data, selected).map((item) => [item.id, item]),
     )
     checkboxMap.forEach((val, key) => {
       const { childrenIds } = val
@@ -106,7 +106,17 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
       }
     })
     setCheckState(checkboxMap)
-  }, [data, forceState, initialSelected])
+  }, [data, forceState])
+
+  // useEffect(() => {
+  //   const selected: string[] = []
+  //   checkState.forEach((val) => {
+  //     if (val.checkState === 'checked' && val.childrenIds === undefined) {
+  //       selected.push(val.id)
+  //     }
+  //   })
+  //   setSelected(selected)
+  // }, [checkState])
 
   return (
     <CheckboxTreeContext.Provider value={contextValues}>

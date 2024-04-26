@@ -6,7 +6,7 @@ import { useCheckboxTreeContext } from './useCheckboxTreeContext'
 
 export type CheckboxTreeProps<T> = Omit<
   CheckboxTreeRootProps<T>,
-  'selected' | 'setSelected'
+  'selected'
 > & {
   isRoot?: boolean
 }

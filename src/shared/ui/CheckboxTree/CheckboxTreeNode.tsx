@@ -30,6 +30,7 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
     getLabel,
     getIcon,
     isRoot,
+    setSelected,
   } = treeProps
 
   const [checkedState, setCheckedState] = useCheckboxTreeContext()
@@ -98,6 +99,15 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
       }
       updateParentState(itemState.parentId, copyCheckedState)
       setCheckedState(copyCheckedState)
+
+      const selected: string[] = []
+      copyCheckedState.forEach((val) => {
+        // if (val.checkState === 'checked' && val.childrenIds === undefined) {
+        if (val.checkState === 'checked') {
+          selected.push(val.id)
+        }
+      })
+      setSelected(selected)
     }
   }
 

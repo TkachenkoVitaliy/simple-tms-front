@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -42,6 +42,15 @@ function TestPlanPage(props: TestPlanPageProps) {
     }
   }, [testPlanId, isNew])
 
+  useEffect(() => {
+    const { testPlan } = testPlanStore
+    const selectedIds = testPlan.testCases.map(
+      (testCase) => `CASE${testCase.id}`,
+    )
+    console.log('!!!', selectedIds)
+    setSelected(selectedIds)
+  }, [testPlanStore.testPlan])
+
   return testPlanStore.isLoading ? (
     <PageLoader />
   ) : (
@@ -56,8 +65,11 @@ function TestPlanPage(props: TestPlanPageProps) {
           <div style={{ width: '100%' }}>
             <CheckboxTree
               data={data}
-              initialSelected={selected}
-              setSelected={setSelected}
+              selected={selected}
+              setSelected={(v) => {
+                console.log('setSelected', v)
+                setSelected(v)
+              }}
               getId={(item) => item.type + item.id}
               getChildren={(item) => item.children}
               getLabel={(item) => item.name}
