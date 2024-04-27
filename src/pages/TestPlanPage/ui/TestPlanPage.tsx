@@ -57,7 +57,10 @@ function TestPlanPage(props: TestPlanPageProps) {
     <ResizableWrapper
       firstElement={
         <PageFrame>
-          <TestPlanForm testPlan={testPlanStore.testPlan} />
+          <TestPlanForm
+            testPlan={testPlanStore.testPlan}
+            selectedCases={selected}
+          />
         </PageFrame>
       }
       secondElement={

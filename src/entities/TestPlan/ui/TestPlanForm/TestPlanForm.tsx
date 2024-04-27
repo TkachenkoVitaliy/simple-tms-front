@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Button, Card, CardActions } from '@mui/material'
+import { Button, Card, CardActions, List } from '@mui/material'
 import { useForm } from 'react-hook-form'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -14,16 +14,19 @@ import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 import { TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
 export interface TestPlanFormProps {
   className?: string
   testPlan: TestPlan
+  selectedCases: string[]
 }
 
 type FormInputs = Omit<TestPlan, 'id' | 'projectId' | 'testCases'>
 
 export const TestPlanForm = observer((props: TestPlanFormProps) => {
-  const { className, testPlan } = props
+  const { className, testPlan, selectedCases } = props
   const { testPlanStore } = useProjectStores()
 
   const methods = useForm<FormInputs>({
@@ -52,6 +55,12 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
   const submitForm = async (values: FormInputs) => {
     console.log(values)
   }
+
+  const selectedCasesId = useMemo(() => {
+    return selectedCases
+      .filter((item) => item.startsWith('CASE'))
+      .map((item) => item.slice(4))
+  }, [selectedCases])
 
   return (
     <TMSSkeleton
@@ -87,6 +96,13 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
             multiline
             minRows={4}
           />
+          <List>
+            {selectedCasesId.map((id) => (
+              <ListItem key={id}>
+                <ListItemText primary={id} />
+              </ListItem>
+            ))}
+          </List>
         </TMSCardContent>
         <CardActions className={styles.actions}>
           <Button
