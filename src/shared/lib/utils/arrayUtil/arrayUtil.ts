@@ -14,7 +14,6 @@ export function flattenArray<T = unknown, R = unknown>(
   mapFunc: (arg: T) => R,
   childrenFunc: (arg: T) => T[] | undefined,
 ): R[] {
-  console.log('flattenArray', array)
   return array.reduce((acc: R[], curr: T) => {
     const item = mapFunc(curr)
     acc.push(item)

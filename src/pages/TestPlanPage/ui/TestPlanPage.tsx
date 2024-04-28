@@ -11,7 +11,9 @@ import { TestPlanForm } from 'entities/TestPlan'
 import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
 import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
 
+import { TestNodeType } from 'shared/consts/types/testNodeType'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
+import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
 import { RouteParams } from 'shared/types/router'
 import { CheckboxTree } from 'shared/ui/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
@@ -51,6 +53,41 @@ function TestPlanPage(props: TestPlanPageProps) {
     setSelected(selectedIds)
   }, [testPlanStore.testPlan])
 
+  const selectedCasesNames = useMemo(() => {
+    console.log('selected', selected)
+    const ids = new Int32Array(
+      selected
+        .filter((item) => item.startsWith('CASE'))
+        .map((item) => item.slice(4))
+        .map((id) => Number(id)),
+    )
+
+    const idNameDictionary = new Map(
+      flattenArray(
+        data,
+        (testPlanNode) => ({
+          id: testPlanNode.id,
+          type: testPlanNode.type,
+          name: testPlanNode.name,
+        }),
+        (arg) => arg.children,
+      )
+        .filter((item) => item.type === TestNodeType.CASE)
+        .map((item) => [item.id, item.name]),
+    )
+
+    const selectedNames: string[] = []
+
+    ids.sort().forEach((id) => {
+      const name = idNameDictionary.get(id)
+      if (name !== undefined) {
+        selectedNames.push(name)
+      }
+    })
+    console.log('selectedNames', selectedNames)
+    return selectedNames
+  }, [selected])
+
   return testPlanStore.isLoading ? (
     <PageLoader />
   ) : (
@@ -59,7 +96,7 @@ function TestPlanPage(props: TestPlanPageProps) {
         <PageFrame>
           <TestPlanForm
             testPlan={testPlanStore.testPlan}
-            selectedCases={selected}
+            selectedCasesNames={selectedCasesNames}
           />
         </PageFrame>
       }

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Button, Card, CardActions, List } from '@mui/material'
+import { Button, Card, CardActions, List, TextField } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import { useForm } from 'react-hook-form'
@@ -20,13 +20,13 @@ import styles from './TestPlanForm.module.scss'
 export interface TestPlanFormProps {
   className?: string
   testPlan: TestPlan
-  selectedCases: string[]
+  selectedCasesNames: string[]
 }
 
 type FormInputs = Omit<TestPlan, 'id' | 'projectId' | 'testCases'>
 
 export const TestPlanForm = observer((props: TestPlanFormProps) => {
-  const { className, testPlan, selectedCases } = props
+  const { className, testPlan, selectedCasesNames } = props
   const { testPlanStore } = useProjectStores()
 
   const methods = useForm<FormInputs>({
@@ -56,11 +56,9 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
     console.log(values)
   }
 
-  const selectedCasesId = useMemo(() => {
-    return selectedCases
-      .filter((item) => item.startsWith('CASE'))
-      .map((item) => item.slice(4))
-  }, [selectedCases])
+  const selectedCasesNamesText = useMemo(() => {
+    return selectedCasesNames.join('\n')
+  }, [selectedCasesNames])
 
   return (
     <TMSSkeleton
@@ -96,18 +94,15 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
             multiline
             minRows={4}
           />
-          <List
-            style={{
-              border: '1px solid var(--mui-palette-border)',
-              borderRadius: '4px',
-            }}
-          >
-            {selectedCasesId.map((id) => (
-              <ListItem key={id}>
-                <ListItemText primary={id} />
-              </ListItem>
-            ))}
-          </List>
+          <TextField
+            disabled
+            multiline
+            value={
+              selectedCasesNamesText || '\nselected test cases showed there\n'
+            }
+            fullWidth
+            label="Test Cases"
+          />
         </TMSCardContent>
         <CardActions className={styles.actions}>
           <Button

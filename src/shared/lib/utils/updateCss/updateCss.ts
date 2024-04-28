@@ -42,4 +42,9 @@ export function updateCss(theme: Theme) {
     '--mui-palette-background-paper-hover',
     mode === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0 ,0, 0.08)',
   )
+
+  root.style.setProperty(
+    '--mui-palette-border',
+    mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0, 0, 0, 0.23)',
+  )
 }
