@@ -3,6 +3,8 @@ import { useMemo } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Button, Card, CardActions, List } from '@mui/material'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 import { useForm } from 'react-hook-form'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -14,8 +16,6 @@ import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 import { TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
 
 export interface TestPlanFormProps {
   className?: string
@@ -96,7 +96,12 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
             multiline
             minRows={4}
           />
-          <List>
+          <List
+            style={{
+              border: '1px solid var(--mui-palette-border)',
+              borderRadius: '4px',
+            }}
+          >
             {selectedCasesId.map((id) => (
               <ListItem key={id}>
                 <ListItemText primary={id} />
