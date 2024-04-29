@@ -48,8 +48,6 @@ export interface TestCase {
   testSteps: TestCaseStep[]
 }
 
-export type TestCaseShort = Omit<TestCase, 'preconditions' | 'testSteps'>
-
 export type NewTestCase = NewEntity<TestCase>
 
 // TODO: step возможно стоит вынести в отдельную entity

@@ -47,7 +47,7 @@ function TestPlanPage(props: TestPlanPageProps) {
   useEffect(() => {
     const { testPlan } = testPlanStore
     const selectedIds = testPlan.testCases.map(
-      (testCase) => `CASE${testCase.id}`,
+      (testCaseId) => `CASE${testCaseId}`,
     )
     console.log('!!!', selectedIds)
     setSelected(selectedIds)

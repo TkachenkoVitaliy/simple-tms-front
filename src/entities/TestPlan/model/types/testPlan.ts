@@ -1,5 +1,3 @@
-import { TestCaseShort } from 'entities/TestCase/model/types/testCase'
-
 import { NewEntity } from 'shared/types/api'
 
 export interface TestPlan {
@@ -7,7 +5,7 @@ export interface TestPlan {
   projectId?: number
   name: string
   description: string
-  testCases: TestCaseShort[]
+  testCases: number[]
 }
 
 export type NewTestPlan = NewEntity<TestPlan>

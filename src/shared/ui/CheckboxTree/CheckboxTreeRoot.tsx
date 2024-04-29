@@ -108,16 +108,6 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
     setCheckState(checkboxMap)
   }, [data, forceState])
 
-  // useEffect(() => {
-  //   const selected: string[] = []
-  //   checkState.forEach((val) => {
-  //     if (val.checkState === 'checked' && val.childrenIds === undefined) {
-  //       selected.push(val.id)
-  //     }
-  //   })
-  //   setSelected(selected)
-  // }, [checkState])
-
   return (
     <CheckboxTreeContext.Provider value={contextValues}>
       <CheckboxTreeActions />
