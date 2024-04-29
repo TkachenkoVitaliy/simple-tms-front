@@ -28,7 +28,7 @@ function TestPlanPage(props: TestPlanPageProps) {
   const { testPlanStore } = useProjectStores()
   const { testPlanId } = useParams<RouteParams>()
   const [data, setData] = useState<TestPlanNode[]>([])
-  const [selected, setSelected] = useState<string[]>(['CASE26'])
+  const [selected, setSelected] = useState<string[]>([])
 
   useEffect(() => {
     TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
@@ -52,6 +52,15 @@ function TestPlanPage(props: TestPlanPageProps) {
     console.log('!!!', selectedIds)
     setSelected(selectedIds)
   }, [testPlanStore.testPlan])
+
+  const selectedCasesIds = useMemo(() => {
+    return new Int32Array(
+      selected
+        .filter((item) => item.startsWith('CASE'))
+        .map((item) => item.slice(4))
+        .map((id) => Number(id)),
+    )
+  }, [selected])
 
   const selectedCasesNames = useMemo(() => {
     console.log('selected', selected)
@@ -97,6 +106,7 @@ function TestPlanPage(props: TestPlanPageProps) {
           <TestPlanForm
             testPlan={testPlanStore.testPlan}
             selectedCasesNames={selectedCasesNames}
+            selectedCasesIds={selectedCasesIds}
           />
         </PageFrame>
       }

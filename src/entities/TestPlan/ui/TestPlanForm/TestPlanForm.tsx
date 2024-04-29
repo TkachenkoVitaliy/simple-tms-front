@@ -13,20 +13,22 @@ import { FormTextField } from 'shared/ui/FormTextField'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
-import { TestPlan } from '../../model/types/testPlan'
+import { NewTestPlan, TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
+import { TestPlanAPI } from 'entities/TestPlan'
 
 export interface TestPlanFormProps {
   className?: string
   testPlan: TestPlan
   selectedCasesNames: string[]
+  selectedCasesIds: Int32Array
 }
 
 type FormInputs = Omit<TestPlan, 'id' | 'projectId' | 'testCases'>
 
 export const TestPlanForm = observer((props: TestPlanFormProps) => {
-  const { className, testPlan, selectedCasesNames } = props
+  const { className, testPlan, selectedCasesNames, selectedCasesIds } = props
   const { testPlanStore } = useProjectStores()
 
   const methods = useForm<FormInputs>({
@@ -53,7 +55,16 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
   }, [formValues, testPlan, isValid])
 
   const submitForm = async (values: FormInputs) => {
-    console.log(values)
+    const { name, description } = values
+    const planForSave: TestPlan | NewTestPlan = {
+      ...testPlan,
+      name,
+      description,
+      testCases: Array.from(selectedCasesIds.values()),
+    }
+    console.log('save', planForSave)
+    const response = await testPlanStore.savePlan(planForSave)
+    console.log('saved', response)
   }
 
   const selectedCasesNamesText = useMemo(() => {

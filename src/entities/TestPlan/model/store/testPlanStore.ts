@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import { TestPlanAPI } from '../../api/testPlanApi'
-import { TestPlan } from '../types/testPlan'
+import { NewTestPlan, TestPlan } from '../types/testPlan'
 
 const NEW_PLAN: TestPlan = {
   id: 0,
@@ -19,7 +19,7 @@ export class TestPlanStore {
 
   testPlan: TestPlan = { ...NEW_PLAN }
 
-  private setLoading(isLoading: boolean) {
+  setLoading(isLoading: boolean) {
     this.isLoading = isLoading
   }
 
@@ -42,10 +42,11 @@ export class TestPlanStore {
     this.setTestPlan({ ...NEW_PLAN })
   }
 
-  savePlan = async () => {
+  savePlan = async (plan: TestPlan | NewTestPlan) => {
     await runInAction(async () => {
       this.setLoading(true)
-      const planForSave: TestPlan = JSON.parse(JSON.stringify(this.testPlan))
+      const planForSave: TestPlan = JSON.parse(JSON.stringify(plan))
+      console.log('planForSave', planForSave)
       const saveResponse = await TestPlanAPI.save(this.projectId, {
         ...planForSave,
         projectId: planForSave.projectId || this.projectId,
