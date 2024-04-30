@@ -83,26 +83,44 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
     [checkState, setCheckState],
   )
 
+  function calcCheckState(
+    item: FlatTreeItem,
+    map: Map<string, FlatTreeItem>,
+  ): CheckboxState {
+    const { childrenIds } = item
+    if (childrenIds !== undefined && childrenIds.length > 0) {
+      const children = childrenIds.map((childId) => map.get(childId))
+      const childrenCheckState = children
+        .filter((child) => child !== undefined)
+        .map((child) => calcCheckState(child as FlatTreeItem, map))
+      if (
+        childrenCheckState.every(
+          (checkStateItem) => checkStateItem === 'checked',
+        )
+      ) {
+        item.checkState = 'checked'
+      } else if (
+        childrenCheckState.every(
+          (checkStateItem) => checkStateItem === 'unchecked',
+        )
+      ) {
+        item.checkState = 'unchecked'
+      } else {
+        item.checkState = 'indeterminate'
+      }
+    }
+
+    return item.checkState
+  }
+
   useEffect(() => {
     const checkboxMap = new Map(
       mapToFlat(data, selected).map((item) => [item.id, item]),
     )
     checkboxMap.forEach((val, key) => {
-      const { childrenIds } = val
       const valFromMap = checkboxMap.get(key)
-      if (childrenIds && childrenIds.length > 0 && valFromMap) {
-        const childrenNodes = childrenIds.map((childId) =>
-          checkboxMap.get(childId),
-        )
-        if (childrenNodes.every((node) => node?.checkState === 'checked')) {
-          valFromMap.checkState = 'checked'
-        } else if (
-          childrenNodes.every((node) => node?.checkState === 'unchecked')
-        ) {
-          valFromMap.checkState = 'unchecked'
-        } else {
-          valFromMap.checkState = 'indeterminate'
-        }
+      if (valFromMap !== undefined) {
+        calcCheckState(valFromMap, checkboxMap)
       }
     })
     setCheckState(checkboxMap)
