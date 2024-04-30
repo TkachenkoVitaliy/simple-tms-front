@@ -47,12 +47,25 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
 
   const formValues = methods.watch()
 
+  function isEqualArrays(
+    first: Int32Array | number[],
+    second: Int32Array | number[],
+  ): boolean {
+    const sortedFirst = new Int32Array(first).sort()
+    const sortedSecond = new Int32Array(second).sort()
+    return (
+      JSON.stringify(Array.of(sortedFirst)) ===
+      JSON.stringify(Array.of(sortedSecond))
+    )
+  }
+
   const canSave = useMemo(() => {
     const haveChanges =
       formValues.name.trim() !== testPlan.name ||
-      formValues.description !== testPlan.description
+      formValues.description !== testPlan.description ||
+      !isEqualArrays(selectedCasesIds, testPlan.testCases)
     return isValid && haveChanges
-  }, [formValues, testPlan, isValid])
+  }, [formValues, testPlan, isValid, selectedCasesIds])
 
   const submitForm = async (values: FormInputs) => {
     const { name, description } = values
