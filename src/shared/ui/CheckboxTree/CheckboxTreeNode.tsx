@@ -41,14 +41,10 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
   ) {
     const parent = parentId === null ? undefined : state.get(parentId)
 
-    console.log('updateParent-ChildrenIds', parent?.childrenIds)
-
     if (parent !== undefined) {
       const children = parent.childrenIds
         ?.map((childId) => state.get(childId))
         .map((elem) => elem?.checkState)
-
-      console.log('updateParent-Children', children)
 
       const allChecked = children
         ?.filter((el) => el !== undefined)

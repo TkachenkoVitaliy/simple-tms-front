@@ -49,7 +49,6 @@ function TestPlanPage(props: TestPlanPageProps) {
     const selectedIds = testPlan.testCases.map(
       (testCaseId) => `CASE${testCaseId}`,
     )
-    console.log('!!!', selectedIds)
     setSelected(selectedIds)
   }, [testPlanStore.testPlan])
 
@@ -63,7 +62,6 @@ function TestPlanPage(props: TestPlanPageProps) {
   }, [selected])
 
   const selectedCasesNames = useMemo(() => {
-    console.log('selected', selected)
     const ids = new Int32Array(
       selected
         .filter((item) => item.startsWith('CASE'))
@@ -93,7 +91,6 @@ function TestPlanPage(props: TestPlanPageProps) {
         selectedNames.push(name)
       }
     })
-    console.log('selectedNames', selectedNames)
     return selectedNames
   }, [selected])
 
@@ -117,7 +114,6 @@ function TestPlanPage(props: TestPlanPageProps) {
               data={data}
               selected={selected}
               setSelected={(v) => {
-                console.log('setSelected', v)
                 setSelected(v)
               }}
               getId={(item) => item.type + item.id}

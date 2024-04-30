@@ -46,7 +46,6 @@ export class TestPlanStore {
     await runInAction(async () => {
       this.setLoading(true)
       const planForSave: TestPlan = JSON.parse(JSON.stringify(plan))
-      console.log('planForSave', planForSave)
       const saveResponse = await TestPlanAPI.save(this.projectId, {
         ...planForSave,
         projectId: planForSave.projectId || this.projectId,

@@ -75,9 +75,7 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
       description,
       testCases: Array.from(selectedCasesIds.values()),
     }
-    console.log('save', planForSave)
     const response = await testPlanStore.savePlan(planForSave)
-    console.log('saved', response)
   }
 
   const selectedCasesNamesText = useMemo(() => {
