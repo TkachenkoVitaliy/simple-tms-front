@@ -123,6 +123,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
         calcCheckState(valFromMap, checkboxMap)
       }
     })
+    console.log('checkboxMap', checkboxMap)
     setCheckState(checkboxMap)
   }, [data, forceState])
 

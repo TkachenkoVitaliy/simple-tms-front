@@ -31,16 +31,19 @@ function TestPlanPage(props: TestPlanPageProps) {
   const [selected, setSelected] = useState<string[]>([])
 
   useEffect(() => {
-    TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
-      setData(res.data),
-    )
-  }, [])
-
-  useEffect(() => {
     if (isNew) {
       testPlanStore.setNewPlan()
+      TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
+        setData(res.data),
+      )
     } else {
-      testPlanStore.loadPlan(Number(testPlanId))
+      testPlanStore
+        .loadPlan(Number(testPlanId))
+        .then(() =>
+          TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
+            setData(res.data),
+          ),
+        )
     }
   }, [testPlanId, isNew])
 
