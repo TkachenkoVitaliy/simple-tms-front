@@ -33,27 +33,27 @@ function TestPlanPage(props: TestPlanPageProps) {
   useEffect(() => {
     if (isNew) {
       testPlanStore.setNewPlan()
-      TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
-        setData(res.data),
-      )
-    } else {
-      testPlanStore
-        .loadPlan(Number(testPlanId))
-        .then(() =>
-          TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) =>
-            setData(res.data),
-          ),
+      TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) => {
+        setData(res.data)
+        const { testPlan } = testPlanStore
+        const selectedIds = testPlan.testCases.map(
+          (testCaseId) => `CASE${testCaseId}`,
         )
+        setSelected(selectedIds)
+      })
+    } else {
+      testPlanStore.loadPlan(Number(testPlanId)).then(() =>
+        TestPlanNodeAPI.getProjectNodes(testPlanStore.projectId).then((res) => {
+          setData(res.data)
+          const { testPlan } = testPlanStore
+          const selectedIds = testPlan.testCases.map(
+            (testCaseId) => `CASE${testCaseId}`,
+          )
+          setSelected(selectedIds)
+        }),
+      )
     }
   }, [testPlanId, isNew])
-
-  useEffect(() => {
-    const { testPlan } = testPlanStore
-    const selectedIds = testPlan.testCases.map(
-      (testCaseId) => `CASE${testCaseId}`,
-    )
-    setSelected(selectedIds)
-  }, [testPlanStore.testPlan])
 
   const selectedCasesIds = useMemo(() => {
     return new Int32Array(
