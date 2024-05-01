@@ -49,6 +49,7 @@ export class TestPlanStore {
       const saveResponse = await TestPlanAPI.save(this.projectId, {
         ...planForSave,
         projectId: planForSave.projectId || this.projectId,
+        id: planForSave.id || null,
       })
       this.setTestPlan(saveResponse.data)
       this.setLoading(false)

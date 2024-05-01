@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   Box,
+  Button,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TablePagination,
   TableRow,
@@ -34,6 +36,7 @@ export interface TMSTableProps<T> {
   getRowId: (row: T) => string | number
   selectColumnName?: string
   onSelectRow?: (row: T) => void
+  onCreateNew?: () => void
 }
 
 export function TMSTable<T>(props: TMSTableProps<T>) {
@@ -44,6 +47,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
     getRowId,
     selectColumnName,
     onSelectRow,
+    onCreateNew,
   } = props
 
   const [rows, setRows] = useState<T[]>([])
@@ -138,15 +142,43 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={total}
-        page={page}
-        rowsPerPage={pageSize}
-        onPageChange={fetchRows}
-        rowsPerPageOptions={[pageSize]}
-        disabled={isLoading}
-      />
+      {onCreateNew !== undefined ? (
+        <TableFooter
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Button
+            sx={{ margin: '5px 0' }}
+            variant="outlined"
+            color="success"
+            onClick={onCreateNew}
+          >
+            Create new plan
+          </Button>
+          <TablePagination
+            component="div"
+            count={total}
+            page={page}
+            rowsPerPage={pageSize}
+            onPageChange={fetchRows}
+            rowsPerPageOptions={[pageSize]}
+            disabled={isLoading}
+          />
+        </TableFooter>
+      ) : (
+        <TablePagination
+          component="div"
+          count={total}
+          page={page}
+          rowsPerPage={pageSize}
+          onPageChange={fetchRows}
+          rowsPerPageOptions={[pageSize]}
+          disabled={isLoading}
+        />
+      )}
     </>
   )
 }

@@ -61,6 +61,7 @@ export const TestPlansTable = observer(() => {
         loadData={fetchPage}
         selectColumnName="name"
         onSelectRow={(row) => navigate(`${row.id}`)}
+        onCreateNew={() => navigate('new')}
       />
     </div>
   )
