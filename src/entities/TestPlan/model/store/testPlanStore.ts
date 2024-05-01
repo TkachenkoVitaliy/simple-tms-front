@@ -43,6 +43,7 @@ export class TestPlanStore {
   }
 
   savePlan = async (plan: TestPlan | NewTestPlan) => {
+    let id = 'new'
     await runInAction(async () => {
       this.setLoading(true)
       const planForSave: TestPlan = JSON.parse(JSON.stringify(plan))
@@ -53,7 +54,9 @@ export class TestPlanStore {
       })
       this.setTestPlan(saveResponse.data)
       this.setLoading(false)
+      id = saveResponse.data.id.toString()
     })
+    return id
   }
 
   deletePlan = async (id: TestPlan['id']) => {

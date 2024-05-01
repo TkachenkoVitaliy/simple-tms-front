@@ -17,6 +17,7 @@ import { NewTestPlan, TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
 import { TestPlanAPI } from 'entities/TestPlan'
+import { useNavigate } from 'react-router-dom'
 
 export interface TestPlanFormProps {
   className?: string
@@ -30,6 +31,7 @@ type FormInputs = Omit<TestPlan, 'id' | 'projectId' | 'testCases'>
 export const TestPlanForm = observer((props: TestPlanFormProps) => {
   const { className, testPlan, selectedCasesNames, selectedCasesIds } = props
   const { testPlanStore } = useProjectStores()
+  const navigate = useNavigate()
 
   const methods = useForm<FormInputs>({
     mode: 'onTouched',
@@ -75,7 +77,8 @@ export const TestPlanForm = observer((props: TestPlanFormProps) => {
       description,
       testCases: Array.from(selectedCasesIds.values()),
     }
-    await testPlanStore.savePlan(planForSave)
+    const savedId = await testPlanStore.savePlan(planForSave)
+    navigate(`../plans/${savedId}`)
   }
 
   const selectedCasesNamesText = useMemo(() => {
