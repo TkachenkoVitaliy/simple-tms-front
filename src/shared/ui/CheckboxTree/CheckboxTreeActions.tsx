@@ -7,6 +7,16 @@ import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeCo
 export const CheckboxTreeActions = () => {
   const [treeCheckState, setTreeCheckState] = useCheckboxTreeContext()
 
+  const changeCheckStateAll = (checked: boolean) => {
+    const newState = new Map(treeCheckState)
+    newState.forEach((val) => {
+      if (val.checkState !== undefined) {
+        val.checkState = checked ? 'checked' : 'unchecked'
+      }
+    })
+    setTreeCheckState(newState)
+  }
+
   const changeExpandStateAll = (expand: boolean) => {
     const newState = new Map(treeCheckState)
     newState.forEach((val) => {
@@ -39,6 +49,8 @@ export const CheckboxTreeActions = () => {
 
   return (
     <div>
+      <Button onClick={() => changeCheckStateAll(true)}>CHECK ALL</Button>
+      <Button onClick={() => changeCheckStateAll(false)}>UNCHECK ALL</Button>
       <Button
         disabled={!canExpandAll}
         onClick={() => changeExpandStateAll(true)}
