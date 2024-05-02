@@ -17,6 +17,26 @@ export const CheckboxTreeActions = () => {
     setTreeCheckState(newState)
   }
 
+  const canCheckAll = useMemo(() => {
+    let uncheckedCount = 0
+    treeCheckState.forEach((val) => {
+      if (val.checkState === 'unchecked') {
+        uncheckedCount += 1
+      }
+    })
+    return uncheckedCount > 0
+  }, [treeCheckState])
+
+  const canUncheckAll = useMemo(() => {
+    let checkedCount = 0
+    treeCheckState.forEach((val) => {
+      if (val.checkState === 'checked') {
+        checkedCount += 1
+      }
+    })
+    return checkedCount > 0
+  }, [treeCheckState])
+
   const changeExpandStateAll = (expand: boolean) => {
     const newState = new Map(treeCheckState)
     newState.forEach((val) => {
@@ -49,8 +69,18 @@ export const CheckboxTreeActions = () => {
 
   return (
     <div>
-      <Button onClick={() => changeCheckStateAll(true)}>CHECK ALL</Button>
-      <Button onClick={() => changeCheckStateAll(false)}>UNCHECK ALL</Button>
+      <Button
+        disabled={!canCheckAll}
+        onClick={() => changeCheckStateAll(true)}
+      >
+        CHECK ALL
+      </Button>
+      <Button
+        disabled={!canUncheckAll}
+        onClick={() => changeCheckStateAll(false)}
+      >
+        UNCHECK ALL
+      </Button>
       <Button
         disabled={!canExpandAll}
         onClick={() => changeExpandStateAll(true)}
