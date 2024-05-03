@@ -88,13 +88,15 @@ export const CheckboxTreeActions = () => {
           onClick={() => changeCheckStateAll(true)}
           style={{ borderRightColor: 'inherit' }}
         >
-          <CheckBox className={styles.imageRightMargin} /> ALL
+          <CheckBox className={styles.imageRightMargin} />
+          ALL
         </Button>
         <Button
           disabled={!canUncheckAll}
           onClick={() => changeCheckStateAll(false)}
         >
-          <CheckBoxOutlineBlank className={styles.imageRightMargin} /> ALL
+          <CheckBoxOutlineBlank className={styles.imageRightMargin} />
+          ALL
         </Button>
       </ButtonGroup>
       <ButtonGroup
