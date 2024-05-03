@@ -6,13 +6,18 @@ import {
   UnfoldLess,
   UnfoldMore,
 } from '@mui/icons-material'
-import { Button, ButtonGroup } from '@mui/material'
+import { Button } from '@mui/material'
 
 import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
 
 import styles from './CheckboxTreeActions.module.scss'
 
-export const CheckboxTreeActions = () => {
+interface CheckboxTreeActions {
+  setSelected: (newSelected: string[]) => void
+}
+
+export const CheckboxTreeActions = (props: CheckboxTreeActions) => {
+  const { setSelected } = props
   const [treeCheckState, setTreeCheckState] = useCheckboxTreeContext()
 
   const changeCheckStateAll = (checked: boolean) => {
@@ -22,6 +27,13 @@ export const CheckboxTreeActions = () => {
         val.checkState = checked ? 'checked' : 'unchecked'
       }
     })
+    const selected: string[] = []
+    newState.forEach((val) => {
+      if (val.checkState === 'checked') {
+        selected.push(val.id)
+      }
+    })
+    setSelected(selected)
     setTreeCheckState(newState)
   }
 

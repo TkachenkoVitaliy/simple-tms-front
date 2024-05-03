@@ -103,7 +103,6 @@ export function CheckboxTreeNode<T>(props: CheckboxTreeNodeProps<T>) {
 
       const selected: string[] = []
       copyCheckedState.forEach((val) => {
-        // if (val.checkState === 'checked' && val.childrenIds === undefined) {
         if (val.checkState === 'checked') {
           selected.push(val.id)
         }

@@ -2,10 +2,9 @@ import { useMemo } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Button, Card, CardActions, List, TextField } from '@mui/material'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
+import { Button, Card, CardActions, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames } from 'shared/lib/utils'
@@ -16,8 +15,6 @@ import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 import { NewTestPlan, TestPlan } from '../../model/types/testPlan'
 
 import styles from './TestPlanForm.module.scss'
-import { TestPlanAPI } from 'entities/TestPlan'
-import { useNavigate } from 'react-router-dom'
 
 export interface TestPlanFormProps {
   className?: string

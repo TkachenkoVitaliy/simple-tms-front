@@ -129,7 +129,7 @@ export function CheckboxTreeRoot<T>(props: CheckboxTreeRootProps<T>) {
 
   return (
     <CheckboxTreeContext.Provider value={contextValues}>
-      <CheckboxTreeActions />
+      <CheckboxTreeActions setSelected={setSelected} />
       <CheckboxTree
         {...props}
         isRoot
