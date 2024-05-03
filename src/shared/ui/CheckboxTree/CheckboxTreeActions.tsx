@@ -1,8 +1,16 @@
 import { useMemo } from 'react'
 
-import { Button } from '@mui/material'
+import {
+  CheckBox,
+  CheckBoxOutlineBlank,
+  UnfoldLess,
+  UnfoldMore,
+} from '@mui/icons-material'
+import { Button, ButtonGroup } from '@mui/material'
 
 import { useCheckboxTreeContext } from 'shared/ui/CheckboxTree/useCheckboxTreeContext'
+
+import styles from './CheckboxTreeActions.module.scss'
 
 export const CheckboxTreeActions = () => {
   const [treeCheckState, setTreeCheckState] = useCheckboxTreeContext()
@@ -68,31 +76,49 @@ export const CheckboxTreeActions = () => {
   }, [treeCheckState])
 
   return (
-    <div>
-      <Button
-        disabled={!canCheckAll}
-        onClick={() => changeCheckStateAll(true)}
+    <div className={styles.actionsWrapper}>
+      <ButtonGroup
+        size="small"
+        variant="outlined"
+        color="inherit"
+        disableElevation
       >
-        CHECK ALL
-      </Button>
-      <Button
-        disabled={!canUncheckAll}
-        onClick={() => changeCheckStateAll(false)}
+        <Button
+          disabled={!canCheckAll}
+          onClick={() => changeCheckStateAll(true)}
+          style={{ borderRightColor: 'inherit' }}
+        >
+          <CheckBox className={styles.imageRightMargin} /> ALL
+        </Button>
+        <Button
+          disabled={!canUncheckAll}
+          onClick={() => changeCheckStateAll(false)}
+        >
+          <CheckBoxOutlineBlank className={styles.imageRightMargin} /> ALL
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup
+        size="small"
+        variant="outlined"
+        color="inherit"
+        disableElevation
       >
-        UNCHECK ALL
-      </Button>
-      <Button
-        disabled={!canExpandAll}
-        onClick={() => changeExpandStateAll(true)}
-      >
-        EXPAND ALL
-      </Button>
-      <Button
-        disabled={!canCollapseAll}
-        onClick={() => changeExpandStateAll(false)}
-      >
-        COLLAPSE ALL
-      </Button>
+        <Button
+          disabled={!canExpandAll}
+          onClick={() => changeExpandStateAll(true)}
+          style={{ borderRightColor: 'inherit' }}
+        >
+          <UnfoldMore className={styles.imageRightMargin} />
+          ALL
+        </Button>
+        <Button
+          disabled={!canCollapseAll}
+          onClick={() => changeExpandStateAll(false)}
+        >
+          <UnfoldLess className={styles.imageRightMargin} />
+          ALL
+        </Button>
+      </ButtonGroup>
     </div>
   )
 }
