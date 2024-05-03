@@ -77,50 +77,46 @@ export const CheckboxTreeActions = () => {
 
   return (
     <div className={styles.actionsWrapper}>
-      <ButtonGroup
-        size="small"
-        variant="outlined"
-        color="inherit"
-        disableElevation
-      >
+      <div className={styles.actionsGroup}>
         <Button
+          variant="outlined"
+          size="small"
           disabled={!canCheckAll}
           onClick={() => changeCheckStateAll(true)}
-          style={{ borderRightColor: 'inherit' }}
         >
           <CheckBox className={styles.imageRightMargin} />
           ALL
         </Button>
         <Button
+          variant="outlined"
+          size="small"
           disabled={!canUncheckAll}
           onClick={() => changeCheckStateAll(false)}
         >
           <CheckBoxOutlineBlank className={styles.imageRightMargin} />
           ALL
         </Button>
-      </ButtonGroup>
-      <ButtonGroup
-        size="small"
-        variant="outlined"
-        color="inherit"
-        disableElevation
-      >
+      </div>
+      <div className={styles.actionsGroup}>
         <Button
+          variant="outlined"
+          size="small"
           disabled={!canExpandAll}
           onClick={() => changeExpandStateAll(true)}
-          style={{ borderRightColor: 'inherit' }}
         >
           <UnfoldMore className={styles.imageRightMargin} />
           ALL
         </Button>
         <Button
+          variant="outlined"
+          size="small"
           disabled={!canCollapseAll}
           onClick={() => changeExpandStateAll(false)}
         >
           <UnfoldLess className={styles.imageRightMargin} />
           ALL
         </Button>
-      </ButtonGroup>
+      </div>
     </div>
   )
 }

@@ -5,6 +5,12 @@
   margin:0px 50px 20px;
 }
 
+.actionsGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+
 .imageRightMargin {
   margin-right: 10px;
 }
