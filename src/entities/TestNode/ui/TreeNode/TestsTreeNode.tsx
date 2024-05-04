@@ -108,6 +108,7 @@ export const TestsTreeNode = (props: TreeNodeProps) => {
           onClick={() => {
             if (node.data) onDelete(node.data.id, node.data.type)
           }}
+          color="error"
         >
           <Delete />
         </IconButton>

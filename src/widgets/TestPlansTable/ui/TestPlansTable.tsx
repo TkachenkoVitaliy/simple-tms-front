@@ -62,6 +62,7 @@ export const TestPlansTable = observer(() => {
         selectColumnName="name"
         onSelectRow={(row) => navigate(`${row.id}`)}
         onCreateNew={() => navigate('new')}
+        onDeleteRow={(row) => testPlanStore.deletePlan(row.id)}
       />
     </div>
   )

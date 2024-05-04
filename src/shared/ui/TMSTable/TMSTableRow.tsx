@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
+import { Delete } from '@mui/icons-material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import {
@@ -22,10 +23,19 @@ export interface TMSTableRowProps<T> {
   columns: ColumnDefinition<T>[]
   selectColumnName?: string
   onSelect?: (row: T) => void
+  onDelete?: (row: T) => void
 }
 
 export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
-  const { row, isExpandable, id, columns, selectColumnName, onSelect } = props
+  const {
+    row,
+    isExpandable,
+    id,
+    columns,
+    selectColumnName,
+    onSelect,
+    onDelete,
+  } = props
   const [open, setOpen] = useState<boolean>(false)
 
   const getCellTextValue = useCallback(
@@ -86,6 +96,16 @@ export function TMSTableRow<T>(props: TMSTableRowProps<T>) {
               {getCellElement(c)}
             </TableCell>
           ))}
+        {onDelete && (
+          <TableCell size="small">
+            <IconButton
+              color="error"
+              onClick={() => onDelete(row)}
+            >
+              <Delete />
+            </IconButton>
+          </TableCell>
+        )}
       </TableRow>
       {isExpandable && (
         <TableRow>

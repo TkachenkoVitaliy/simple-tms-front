@@ -37,6 +37,7 @@ export interface TMSTableProps<T> {
   selectColumnName?: string
   onSelectRow?: (row: T) => void
   onCreateNew?: () => void
+  onDeleteRow?: (row: T) => void
 }
 
 export function TMSTable<T>(props: TMSTableProps<T>) {
@@ -48,6 +49,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
     selectColumnName,
     onSelectRow,
     onCreateNew,
+    onDeleteRow,
   } = props
 
   const [rows, setRows] = useState<T[]>([])
@@ -113,6 +115,12 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
                     {c.headerName}
                   </TableCell>
                 ))}
+              {onDeleteRow ? (
+                <TableCell
+                  size="small"
+                  style={{ width: '66px' }}
+                />
+              ) : null}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -125,6 +133,12 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
                   />
                 ) : null}
                 <TableCell>{loader()}</TableCell>
+                {onDeleteRow ? (
+                  <TableCell
+                    size="small"
+                    style={{ width: '66px' }}
+                  />
+                ) : null}
               </TableRow>
             ) : (
               rows.map((r) => (
@@ -136,6 +150,7 @@ export function TMSTable<T>(props: TMSTableProps<T>) {
                   columns={columns}
                   selectColumnName={selectColumnName}
                   onSelect={onSelectRow}
+                  onDelete={onDeleteRow}
                 />
               ))
             )}
