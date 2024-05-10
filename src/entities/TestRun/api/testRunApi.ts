@@ -3,11 +3,11 @@ import { AxiosResponse } from 'axios'
 import { API } from 'shared/api'
 import { Page } from 'shared/types/api'
 
-import { TestRun, NewTestRun } from '../model/types/testRun'
+import { TestRun, CreateTestRunRequest } from '../model/types/testRun'
 
 const getBaseUrl = (projectId: number) => `projects/${projectId}/runs`
 
-export const TestPlanAPI = {
+export const TestRunAPI = {
   getProjectRunsPage(
     projectId: number,
     page: number,
@@ -19,19 +19,11 @@ export const TestPlanAPI = {
   getById(projectId: number, id: number): Promise<AxiosResponse<TestRun>> {
     return API.get(`${getBaseUrl(projectId)}/${id}`)
   },
-  save(
-    projectId: number,
-    testRun: TestRun | NewTestRun,
-  ): Promise<AxiosResponse<TestRun>> {
-    return testRun.id === null
-      ? this.create(projectId, testRun)
-      : this.update(projectId, testRun)
-  },
   create(
     projectId: number,
-    testRun: NewTestRun,
+    createTestRunRequest: CreateTestRunRequest,
   ): Promise<AxiosResponse<TestRun>> {
-    return API.post(getBaseUrl(projectId), testRun)
+    return API.post(getBaseUrl(projectId), createTestRunRequest)
   },
   update(projectId: number, testRun: TestRun): Promise<AxiosResponse<TestRun>> {
     return API.put(getBaseUrl(projectId), testRun)

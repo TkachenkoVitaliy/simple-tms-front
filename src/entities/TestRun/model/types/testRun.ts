@@ -1,5 +1,3 @@
-import { NewEntity } from 'shared/types/api'
-
 export enum TestRunState {
   NOT_STARTED,
   PAUSED,
@@ -42,4 +40,7 @@ export interface TestRun {
   state: TestRunState
 }
 
-export type NewTestRun = NewEntity<TestRun>
+export interface CreateTestRunRequest {
+  testPlanId: number
+  name: string
+}
