@@ -48,7 +48,11 @@ export const TestPlansTable = observer(() => {
             margin: 'auto',
           }}
           color="success"
-          onClick={() => testRunStore.createTestRun(row.id, row.name)}
+          onClick={() => {
+            testRunStore
+              .createTestRun(row.id, row.name)
+              .then((id) => navigate(`../runs/${id}`))
+          }}
         >
           <Add />
           CREATE RUN
