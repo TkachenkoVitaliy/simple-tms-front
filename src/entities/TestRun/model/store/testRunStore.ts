@@ -14,7 +14,7 @@ export class TestRunStore {
   createTestRun = async (testPlanId: number, testPlanName: string) => {
     this.setLoading(true)
     const currentDate = new Date()
-    const name = `${testPlanName + currentDate.getDate()}/${
+    const name = `[${testPlanName}] - ${currentDate.getDate()}/${
       currentDate.getMonth() + 1
     }/${currentDate.getFullYear()} @ ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`
     const createTestRunRequest = { testPlanId, name }

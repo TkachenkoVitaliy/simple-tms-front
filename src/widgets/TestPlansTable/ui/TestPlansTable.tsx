@@ -16,7 +16,7 @@ import { ColumnDefinition } from 'shared/ui/TMSTable/TMSTable'
 import styles from './TestPlansTable.module.scss'
 
 export const TestPlansTable = observer(() => {
-  const { testPlanStore } = useProjectStores()
+  const { testPlanStore, testRunStore } = useProjectStores()
   const navigate = useNavigate()
 
   const columns: ColumnDefinition<TestPlan>[] = [
@@ -48,6 +48,7 @@ export const TestPlansTable = observer(() => {
             margin: 'auto',
           }}
           color="success"
+          onClick={() => testRunStore.createTestRun(row.id, row.name)}
         >
           <Add />
           CREATE RUN
