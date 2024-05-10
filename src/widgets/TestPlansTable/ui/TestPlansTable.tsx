@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { Add } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
@@ -28,9 +30,29 @@ export const TestPlansTable = observer(() => {
     },
     {
       field: 'testCases',
+      align: 'center',
       headerName: 'test cases count',
       getCellText: (val: TestPlan[keyof TestPlan]) =>
         Array.isArray(val) ? val.length.toString() : '',
+    },
+    {
+      field: 'id',
+      align: 'center',
+      headerName: 'action',
+      customCell: (row) => (
+        <Button
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '0.5em',
+            margin: 'auto',
+          }}
+          color="success"
+        >
+          <Add />
+          CREATE RUN
+        </Button>
+      ),
     },
   ]
 
