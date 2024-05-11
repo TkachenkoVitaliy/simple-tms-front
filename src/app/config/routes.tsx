@@ -1,4 +1,10 @@
-import { Dashboard, Dataset, Grading } from '@mui/icons-material'
+import {
+  Dashboard,
+  Dataset,
+  Grading,
+  Assignment,
+  SmartDisplay,
+} from '@mui/icons-material'
 import { Navigate } from 'react-router-dom'
 
 import { AppLayout } from 'app/layout/AppLayout'
@@ -17,6 +23,7 @@ import { TestSuitePage } from 'pages/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
+import { TestRunsPage } from 'pages/TestRunsPage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -57,7 +64,7 @@ export const appRoutes: AppRoute[] = [
             path: 'plans',
             element: <TestPlansPage />,
             label: 'Планы',
-            Icon: Dashboard,
+            Icon: Assignment,
             showWithoutActiveProject: false,
             onProjectChangePattern: 'projects/:projectId',
           },
@@ -70,6 +77,14 @@ export const appRoutes: AppRoute[] = [
             path: 'plans/:testPlanId',
             element: <TestPlanPage />,
             onProjectChangePattern: 'projects/:projectId/plans',
+          },
+          {
+            path: 'runs',
+            element: <TestRunsPage />,
+            label: 'Запуски',
+            Icon: SmartDisplay,
+            showWithoutActiveProject: false,
+            onProjectChangePattern: 'projects/:projectId',
           },
           {
             path: 'tests',
