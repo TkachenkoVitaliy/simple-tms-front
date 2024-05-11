@@ -41,7 +41,14 @@ export const TestRunsTable = observer(() => {
                 (runTestCase) => runTestCase.state === TestRunState.COMPLETED,
               )
               .length.toString()
-          : '',
+          : '0',
+    },
+    {
+      field: 'cases',
+      align: 'center',
+      headerName: 'total cases',
+      getCellText: (val: TestRun[keyof TestRun]) =>
+        Array.isArray(val) ? val.length.toString() : '0',
     },
   ]
 
