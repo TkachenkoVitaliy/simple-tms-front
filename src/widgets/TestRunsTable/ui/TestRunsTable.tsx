@@ -79,6 +79,7 @@ export const TestRunsTable = observer(() => {
         loadData={fetchPage}
         selectColumnName="name"
         onSelectRow={(row) => navigate(`${row.id}`)}
+        onDeleteRow={(row) => testRunStore.deleteTestRun(row.id)}
       />
     </div>
   )

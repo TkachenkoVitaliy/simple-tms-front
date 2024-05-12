@@ -16,7 +16,7 @@ export const TestRunAPI = {
     return API.get(`${getBaseUrl(projectId)}?page=${page}&pageSize=${pageSize}`)
   },
 
-  getById(projectId: number, id: number): Promise<AxiosResponse<TestRun>> {
+  getById(projectId: number, id: string): Promise<AxiosResponse<TestRun>> {
     return API.get(`${getBaseUrl(projectId)}/${id}`)
   },
   create(
@@ -28,7 +28,7 @@ export const TestRunAPI = {
   update(projectId: number, testRun: TestRun): Promise<AxiosResponse<TestRun>> {
     return API.put(getBaseUrl(projectId), testRun)
   },
-  delete(projectId: number, id: number): Promise<AxiosResponse<unknown>> {
+  delete(projectId: number, id: string): Promise<AxiosResponse<unknown>> {
     return API.delete(`${getBaseUrl(projectId)}/${id}`)
   },
 }

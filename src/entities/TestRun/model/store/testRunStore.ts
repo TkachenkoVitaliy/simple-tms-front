@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 import { TestRunAPI } from 'entities/TestRun'
+import { TestRun } from 'entities/TestRun/model/types/testRun'
+import { TestPlanAPI } from 'entities/TestPlan'
 
 export class TestRunStore {
   readonly projectId: number
@@ -25,6 +27,12 @@ export class TestRunStore {
     this.setLoading(false)
     const { id } = response.data
     return id
+  }
+
+  deleteTestRun = async (id: TestRun['id']) => {
+    this.setLoading(true)
+    await TestRunAPI.delete(this.projectId, id)
+    this.setLoading(false)
   }
 
   constructor(projectId: number) {
