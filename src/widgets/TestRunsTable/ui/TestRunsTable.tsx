@@ -1,19 +1,19 @@
-import {useCallback} from 'react'
+import { useCallback } from 'react'
 
-import {observer} from 'mobx-react-lite'
+import { observer } from 'mobx-react-lite'
 
-import {useNavigate} from 'react-router-dom'
+import { PlayArrow } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
-import {projectStore} from 'entities/Project'
-import {TestRunAPI} from 'entities/TestRun'
-import {TestRun, TestRunState} from 'entities/TestRun/model/types/testRun'
+import { projectStore } from 'entities/Project'
+import { TestRunAPI } from 'entities/TestRun'
+import { TestRun, TestRunState } from 'entities/TestRun/model/types/testRun'
 
-import {useProjectStores} from 'shared/lib/hooks/useProjectStores'
-import {ColumnDefinition, TMSTable} from 'shared/ui/TMSTable/TMSTable'
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
+import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
 
 import styles from './TestRunsTable.module.scss'
-import {IconButton} from "@mui/material";
-import {PlayArrow} from "@mui/icons-material";
 
 export const TestRunsTable = observer(() => {
   const { testRunStore } = useProjectStores()
@@ -24,14 +24,14 @@ export const TestRunsTable = observer(() => {
       field: 'id',
       headerName: ' ',
       customCell: (row) => (
-          <IconButton
-              color="success"
-              disabled={row.state === TestRunState.COMPLETED}
-              onClick={() => navigate(row.id)}
-          >
-            <PlayArrow/>
-          </IconButton>
-      )
+        <IconButton
+          color="success"
+          disabled={row.state === TestRunState.COMPLETED}
+          onClick={() => navigate(row.id)}
+        >
+          <PlayArrow />
+        </IconButton>
+      ),
     },
     {
       field: 'name',
