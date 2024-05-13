@@ -1,23 +1,38 @@
-import { useCallback } from 'react'
+import {useCallback} from 'react'
 
-import { observer } from 'mobx-react-lite'
+import {observer} from 'mobx-react-lite'
 
-import { useNavigate } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
-import { projectStore } from 'entities/Project'
-import { TestRunAPI } from 'entities/TestRun'
-import { TestRun, TestRunState } from 'entities/TestRun/model/types/testRun'
+import {projectStore} from 'entities/Project'
+import {TestRunAPI} from 'entities/TestRun'
+import {TestRun, TestRunState} from 'entities/TestRun/model/types/testRun'
 
-import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
-import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
+import {useProjectStores} from 'shared/lib/hooks/useProjectStores'
+import {ColumnDefinition, TMSTable} from 'shared/ui/TMSTable/TMSTable'
 
 import styles from './TestRunsTable.module.scss'
+import {IconButton} from "@mui/material";
+import {PlayArrow} from "@mui/icons-material";
 
 export const TestRunsTable = observer(() => {
   const { testRunStore } = useProjectStores()
   const navigate = useNavigate()
 
   const columns: ColumnDefinition<TestRun>[] = [
+    {
+      field: 'id',
+      headerName: ' ',
+      customCell: (row) => (
+          <IconButton
+              color="success"
+              disabled={row.state === TestRunState.COMPLETED}
+              onClick={() => navigate(row.id)}
+          >
+            <PlayArrow/>
+          </IconButton>
+      )
+    },
     {
       field: 'name',
       headerName: 'name',
@@ -77,7 +92,6 @@ export const TestRunsTable = observer(() => {
         columns={columns}
         getRowId={getRowId}
         loadData={fetchPage}
-        selectColumnName="name"
         onSelectRow={(row) => navigate(`${row.id}`)}
         onDeleteRow={(row) => testRunStore.deleteTestRun(row.id)}
       />
