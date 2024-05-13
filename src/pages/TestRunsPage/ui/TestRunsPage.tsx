@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite'
 
 import { PageLoader } from 'widgets/PageLoader'
+import { TestRunsTable } from 'widgets/TestRunsTable'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { PageFrame } from 'shared/ui/PageFrame'
-import {TestRunsTable} from "widgets/TestRunsTable";
 
 const TestRunsPage = observer(() => {
   const { testRunStore } = useProjectStores()

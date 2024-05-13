@@ -17,6 +17,7 @@ import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestCasePage } from 'pages/TestCasePage'
 import { TestPlanPage } from 'pages/TestPlanPage'
 import { TestPlansPage } from 'pages/TestPlansPage'
+import { TestRunPage } from 'pages/TestRunPage'
 import { TestRunsPage } from 'pages/TestRunsPage'
 import { TestsPage } from 'pages/TestsPage'
 import { TestSuitePage } from 'pages/TestSuitePage'
@@ -85,6 +86,11 @@ export const appRoutes: AppRoute[] = [
             Icon: SmartDisplay,
             showWithoutActiveProject: false,
             onProjectChangePattern: 'projects/:projectId',
+          },
+          {
+            path: 'runs/:testRunId',
+            element: <TestRunPage />,
+            onProjectChangePattern: 'projects/:projectId/runs',
           },
           {
             path: 'tests',
