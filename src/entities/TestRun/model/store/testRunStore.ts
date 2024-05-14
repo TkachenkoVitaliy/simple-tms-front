@@ -13,6 +13,23 @@ export class TestRunStore {
     this.isLoading = isLoading
   }
 
+  testRun: TestRun | null = null
+
+  private setTestRun(testRun: TestRun | null) {
+    this.testRun = testRun
+  }
+
+  loadTestRun = async (id: TestRun['id'] | undefined) => {
+    this.setLoading(true)
+    if (id === undefined) {
+      this.setTestRun(null)
+    } else {
+      const { data } = await TestRunAPI.getById(this.projectId, id)
+      this.setTestRun(data)
+    }
+    this.setLoading(false)
+  }
+
   createTestRun = async (testPlanId: number, testPlanName: string) => {
     this.setLoading(true)
     const currentDate = new Date()
