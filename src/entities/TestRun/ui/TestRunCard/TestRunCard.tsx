@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 
-import { Card, TextField } from '@mui/material'
+import { Card, Divider, TextField } from '@mui/material'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames, toHHMMSS } from 'shared/lib/utils'
@@ -8,6 +8,8 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import styles from './TestRunCard.module.scss'
+import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
+import React from 'react'
 
 export interface TestRunCardProps {
   className?: string
@@ -43,6 +45,12 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
             )}
             label="Timer (HH:MM:SS)"
           />
+          {testRunStore.testRun && (
+            <>
+              <Divider />
+              <TestRunCasesList cases={testRunStore.testRun?.cases} />
+            </>
+          )}
         </TMSCardContent>
       </Card>
     </TMSSkeleton>

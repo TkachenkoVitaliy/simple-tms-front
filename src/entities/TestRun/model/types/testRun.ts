@@ -1,9 +1,9 @@
 export enum TestRunState {
-  NOT_STARTED,
-  PAUSED,
-  BLOCKED,
-  FAILED,
-  COMPLETED,
+  NOT_STARTED = 'NOT_STARTED',
+  PAUSED = 'PAUSED',
+  BLOCKED = 'BLOCKED',
+  FAILED = 'FAILED',
+  COMPLETED = 'COMPLETED',
 }
 
 interface RunTestPlan {
@@ -19,7 +19,7 @@ interface RunTestCaseStep {
   expected: string
 }
 
-interface RunTestCase {
+export interface RunTestCase {
   id: number
   orderNumber: number
   name: string
