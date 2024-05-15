@@ -51,8 +51,8 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
             <>
               <Divider />
               <TestRunCasesList
-                cases={testRunStore.testRun?.cases}
-                currentCaseId={testRunStore.testRun?.currentCaseId}
+                cases={testRunStore.testRun.cases}
+                currentCaseId={testRunStore.testRun.currentCaseId}
               />
             </>
           )}
