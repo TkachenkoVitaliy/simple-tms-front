@@ -7,10 +7,11 @@ import styles from './TestRunCasesList.module.scss'
 
 export interface TestRunCasesListProps {
   cases: TestRun['cases']
+  currentCaseId: number | null
 }
 
 export const TestRunCasesList = (props: TestRunCasesListProps) => {
-  const { cases } = props
+  const { cases, currentCaseId } = props
 
   return (
     <>
@@ -20,7 +21,10 @@ export const TestRunCasesList = (props: TestRunCasesListProps) => {
         style={{ marginTop: '10px' }}
       >
         {cases.map((runCase) => (
-          <TestRunCaseItem runCase={runCase} />
+          <TestRunCaseItem
+            runCase={runCase}
+            selected={currentCaseId === runCase.id}
+          />
         ))}
       </List>
     </>

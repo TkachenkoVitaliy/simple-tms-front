@@ -38,6 +38,7 @@ export interface TestRun {
   cases: RunTestCase[]
   timer: number
   state: TestRunState
+  currentCaseId: number | null
 }
 
 export interface CreateTestRunRequest {

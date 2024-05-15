@@ -1,6 +1,10 @@
+import React from 'react'
+
 import { observer } from 'mobx-react-lite'
 
 import { Card, Divider, TextField } from '@mui/material'
+
+import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames, toHHMMSS } from 'shared/lib/utils'
@@ -8,8 +12,6 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import styles from './TestRunCard.module.scss'
-import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
-import React from 'react'
 
 export interface TestRunCardProps {
   className?: string
@@ -48,7 +50,10 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
           {testRunStore.testRun && (
             <>
               <Divider />
-              <TestRunCasesList cases={testRunStore.testRun?.cases} />
+              <TestRunCasesList
+                cases={testRunStore.testRun?.cases}
+                currentCaseId={testRunStore.testRun?.currentCaseId}
+              />
             </>
           )}
         </TMSCardContent>

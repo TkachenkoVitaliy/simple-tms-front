@@ -11,17 +11,18 @@ import { RunTestCase } from '../../model/types/testRun'
 
 export interface TestRunCaseItemProps {
   runCase: RunTestCase
+  selected: boolean
 }
 
 export const TestRunCaseItem = (props: TestRunCaseItemProps) => {
-  const { runCase } = props
+  const { runCase, selected } = props
 
   return (
     <ListItem
       secondaryAction={<div>{toHHMMSS(runCase.timer)}</div>}
       disablePadding
     >
-      <ListItemButton selected={runCase.orderNumber === 3}>
+      <ListItemButton selected={selected}>
         <ListItemIcon>
           <RunStateIcon state={runCase.state} />
         </ListItemIcon>
