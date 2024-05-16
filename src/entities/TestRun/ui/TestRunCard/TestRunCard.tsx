@@ -2,8 +2,10 @@ import React from 'react'
 
 import { observer } from 'mobx-react-lite'
 
+import { PlayCircle } from '@mui/icons-material'
 import { Button, Card, CardActions, Divider, TextField } from '@mui/material'
 
+import { TestRunState } from 'entities/TestRun/model/types/testRun'
 import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -12,8 +14,6 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import styles from './TestRunCard.module.scss'
-import { TestRunState } from 'entities/TestRun/model/types/testRun'
-import { PlayCircle } from '@mui/icons-material'
 
 export interface TestRunCardProps {
   className?: string
