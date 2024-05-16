@@ -2,7 +2,7 @@ import React from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { Card, Divider, TextField } from '@mui/material'
+import { Button, Card, CardActions, Divider, TextField } from '@mui/material'
 
 import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
 
@@ -12,6 +12,8 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import styles from './TestRunCard.module.scss'
+import { TestRunState } from 'entities/TestRun/model/types/testRun'
+import { PlayCircle } from '@mui/icons-material'
 
 export interface TestRunCardProps {
   className?: string
@@ -57,6 +59,20 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
             </>
           )}
         </TMSCardContent>
+        <CardActions className={styles.actions}>
+          <Button
+            disabled={
+              testRunStore.testRun?.state === TestRunState.COMPLETED ||
+              !testRunStore.testRun?.currentCaseId
+            }
+            size="large"
+            variant="contained"
+            color="success"
+          >
+            <PlayCircle sx={{ marginRight: '15px' }} />
+            RUN
+          </Button>
+        </CardActions>
       </Card>
     </TMSSkeleton>
   )
