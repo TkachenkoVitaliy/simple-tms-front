@@ -24,11 +24,14 @@ function TestRunPage() {
       .then(() => console.log(JSON.stringify(testRunStore.testRun)))
   }, [])
 
-  return testRunStore.isLoading ? (
+  return testRunStore.isLoading || testRunStore.testRun === null ? (
     <PageLoader />
   ) : (
     <PageFrame>
-      <TestRunCard className={styles.container} />
+      <TestRunCard
+        className={styles.container}
+        testRun={testRunStore.testRun}
+      />
     </PageFrame>
   )
 }

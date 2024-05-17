@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
 import { PlayCircle } from '@mui/icons-material'
 import { Button, Card, CardActions, Divider, TextField } from '@mui/material'
 
-import { TestRunState } from 'entities/TestRun/model/types/testRun'
+import { TestRun, TestRunState } from 'entities/TestRun/model/types/testRun'
 import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -17,11 +17,25 @@ import styles from './TestRunCard.module.scss'
 
 export interface TestRunCardProps {
   className?: string
+  testRun: TestRun
 }
 
 export const TestRunCard = observer((props: TestRunCardProps) => {
-  const { className } = props
+  const { className, testRun } = props
   const { testRunStore } = useProjectStores()
+
+  useEffect(() => {
+    if (testRun.currentCaseId === null && testRun.cases.length > 0) {
+      testRun.currentCaseId = testRun.cases[0].id
+    }
+  }, [testRun])
+
+  const setStartCase = useCallback(
+    (id: number) => {
+      testRun.currentCaseId = id
+    },
+    [testRun],
+  )
 
   return (
     <TMSSkeleton
@@ -55,6 +69,7 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
               <TestRunCasesList
                 cases={testRunStore.testRun.cases}
                 currentCaseId={testRunStore.testRun.currentCaseId}
+                setStartCase={setStartCase}
               />
             </>
           )}

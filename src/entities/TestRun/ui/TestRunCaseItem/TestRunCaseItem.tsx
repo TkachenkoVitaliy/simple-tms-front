@@ -7,22 +7,27 @@ import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
 
 import { toHHMMSS } from 'shared/lib/utils'
 
-import { RunTestCase } from '../../model/types/testRun'
+import { RunTestCase, TestRunState } from '../../model/types/testRun'
 
 export interface TestRunCaseItemProps {
   runCase: RunTestCase
   selected: boolean
+  setStartCase: (id: number) => void
 }
 
 export const TestRunCaseItem = (props: TestRunCaseItemProps) => {
-  const { runCase, selected } = props
+  const { runCase, selected, setStartCase } = props
 
   return (
     <ListItem
       secondaryAction={<div>{toHHMMSS(runCase.timer)}</div>}
       disablePadding
     >
-      <ListItemButton selected={selected}>
+      <ListItemButton
+        selected={selected}
+        disabled={runCase.state === TestRunState.COMPLETED}
+        onClick={() => setStartCase(runCase.id)}
+      >
         <ListItemIcon>
           <RunStateIcon state={runCase.state} />
         </ListItemIcon>

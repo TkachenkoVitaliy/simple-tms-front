@@ -8,10 +8,11 @@ import styles from './TestRunCasesList.module.scss'
 export interface TestRunCasesListProps {
   cases: TestRun['cases']
   currentCaseId: number | null
+  setStartCase: (id: number) => void
 }
 
 export const TestRunCasesList = (props: TestRunCasesListProps) => {
-  const { cases, currentCaseId } = props
+  const { cases, currentCaseId, setStartCase } = props
 
   return (
     <>
@@ -24,6 +25,7 @@ export const TestRunCasesList = (props: TestRunCasesListProps) => {
           <TestRunCaseItem
             runCase={runCase}
             selected={currentCaseId === runCase.id}
+            setStartCase={setStartCase}
           />
         ))}
       </List>
