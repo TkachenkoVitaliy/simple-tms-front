@@ -3,7 +3,11 @@ import { AxiosResponse } from 'axios'
 import { API } from 'shared/api'
 import { Page } from 'shared/types/api'
 
-import { TestRun, CreateTestRunRequest } from '../model/types/testRun'
+import {
+  TestRun,
+  CreateTestRunRequest,
+  RunTestCase,
+} from '../model/types/testRun'
 
 const getBaseUrl = (projectId: number) => `projects/${projectId}/runs`
 
@@ -30,5 +34,15 @@ export const TestRunAPI = {
   },
   delete(projectId: number, id: string): Promise<AxiosResponse<unknown>> {
     return API.delete(`${getBaseUrl(projectId)}/${id}`)
+  },
+  updateTestCase(
+    projectId: number,
+    testRunId: string,
+    testCase: RunTestCase,
+  ): Promise<AxiosResponse<TestRun>> {
+    return API.put(
+      `${getBaseUrl(projectId)}/${testRunId}/cases/${testCase.id}`,
+      testCase,
+    )
   },
 }

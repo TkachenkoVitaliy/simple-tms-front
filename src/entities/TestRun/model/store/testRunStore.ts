@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 
 import { TestPlanAPI } from 'entities/TestPlan'
 import { TestRunAPI } from 'entities/TestRun'
-import { TestRun } from 'entities/TestRun/model/types/testRun'
+import { RunTestCase, TestRun } from 'entities/TestRun/model/types/testRun'
 
 export class TestRunStore {
   readonly projectId: number
@@ -68,6 +68,20 @@ export class TestRunStore {
   deleteTestRun = async (id: TestRun['id']) => {
     this.setLoading(true)
     await TestRunAPI.delete(this.projectId, id)
+    this.setLoading(false)
+  }
+
+  updateTestRunCase = async (
+    testRunId: TestRun['id'],
+    testCase: RunTestCase,
+  ) => {
+    this.setLoading(true)
+    const response = await TestRunAPI.updateTestCase(
+      this.projectId,
+      testRunId,
+      testCase,
+    )
+    this.setTestRun(response.data)
     this.setLoading(false)
   }
 
