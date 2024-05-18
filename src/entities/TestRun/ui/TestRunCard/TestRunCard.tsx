@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
@@ -22,12 +22,6 @@ export interface TestRunCardProps {
 export const TestRunCard = observer((props: TestRunCardProps) => {
   const { className, testRun } = props
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (testRun.currentCaseId === null && testRun.cases.length > 0) {
-      testRun.currentCaseId = testRun.cases[0].id
-    }
-  }, [testRun])
 
   const setStartCase = useCallback(
     (id: number) => {
