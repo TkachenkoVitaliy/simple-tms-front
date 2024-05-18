@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router-dom'
 import { TestRun, TestRunState } from 'entities/TestRun/model/types/testRun'
 import { TestRunCasesList } from 'entities/TestRun/ui/TestRunCasesList'
 
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { classNames, toHHMMSS } from 'shared/lib/utils'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 
 import styles from './TestRunCard.module.scss'
-import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 
 export interface TestRunCardProps {
   className?: string

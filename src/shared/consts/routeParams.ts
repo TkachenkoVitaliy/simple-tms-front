@@ -4,4 +4,5 @@ export enum RouteParamKeys {
   testCaseId = 'testCaseId',
   testPlanId = 'testPlanId',
   testRunId = 'testRunId',
+  executedCaseId = 'executedCaseId',
 }
