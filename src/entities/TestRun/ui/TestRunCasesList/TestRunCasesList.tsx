@@ -23,6 +23,7 @@ export const TestRunCasesList = (props: TestRunCasesListProps) => {
       >
         {cases.map((runCase) => (
           <TestRunCaseItem
+            key={runCase.id}
             runCase={runCase}
             selected={currentCaseId === runCase.id}
             setStartCase={setStartCase}
