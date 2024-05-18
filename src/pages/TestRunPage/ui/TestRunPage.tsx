@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { useParams } from 'react-router-dom'
+import { Outlet, useOutlet, useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
@@ -17,6 +17,7 @@ import styles from './TestRunPage.module.scss'
 function TestRunPage() {
   const { testRunStore } = useProjectStores()
   const { testRunId } = useParams<RouteParams>()
+  const outlet = useOutlet()
 
   useEffect(() => {
     testRunStore
@@ -28,10 +29,14 @@ function TestRunPage() {
     <PageLoader />
   ) : (
     <PageFrame>
-      <TestRunCard
-        className={styles.container}
-        testRun={testRunStore.testRun}
-      />
+      {outlet ? (
+        <Outlet />
+      ) : (
+        <TestRunCard
+          className={styles.container}
+          testRun={testRunStore.testRun}
+        />
+      )}
     </PageFrame>
   )
 }

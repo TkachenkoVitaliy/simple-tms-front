@@ -25,6 +25,7 @@ import { TestSuitePage } from 'pages/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
+import { TestRunExecutionPage } from 'pages/TestRunExecutionPage'
 
 export const appRoutes: AppRoute[] = [
   {
@@ -91,6 +92,13 @@ export const appRoutes: AppRoute[] = [
             path: 'runs/:testRunId',
             element: <TestRunPage />,
             onProjectChangePattern: 'projects/:projectId/runs',
+            children: [
+              {
+                path: ':executedCaseId',
+                element: <TestRunExecutionPage />,
+                onProjectChangePattern: 'projects/:projectId/runs',
+              },
+            ],
           },
           {
             path: 'tests',
