@@ -17,6 +17,7 @@ import { ProjectsPage } from 'pages/ProjectsPage'
 import { TestCasePage } from 'pages/TestCasePage'
 import { TestPlanPage } from 'pages/TestPlanPage'
 import { TestPlansPage } from 'pages/TestPlansPage'
+import { TestRunExecutionPage } from 'pages/TestRunExecutionPage'
 import { TestRunPage } from 'pages/TestRunPage'
 import { TestRunsPage } from 'pages/TestRunsPage'
 import { TestsPage } from 'pages/TestsPage'
@@ -25,7 +26,6 @@ import { TestSuitePage } from 'pages/TestSuitePage'
 import { PageLoader } from 'widgets/PageLoader'
 
 import { AppRoute } from 'shared/types/router'
-import { TestRunExecutionPage } from 'pages/TestRunExecutionPage'
 
 export const appRoutes: AppRoute[] = [
   {
