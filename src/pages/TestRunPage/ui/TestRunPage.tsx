@@ -29,14 +29,7 @@ function TestRunPage() {
     <PageLoader />
   ) : (
     <PageFrame>
-      {outlet ? (
-        <Outlet />
-      ) : (
-        <TestRunCard
-          className={styles.container}
-          testRun={testRunStore.testRun}
-        />
-      )}
+      {outlet ? <Outlet /> : <TestRunCard className={styles.container} />}
     </PageFrame>
   )
 }

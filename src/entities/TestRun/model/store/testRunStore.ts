@@ -85,6 +85,12 @@ export class TestRunStore {
     this.setLoading(false)
   }
 
+  setCurrentCaseId = (currentCaseId: number) => {
+    if (this.testRun !== null) {
+      this.testRun.currentCaseId = currentCaseId
+    }
+  }
+
   constructor(projectId: number) {
     this.projectId = projectId
     makeAutoObservable(this)

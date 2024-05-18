@@ -13,22 +13,22 @@ import { classNames, toHHMMSS } from 'shared/lib/utils'
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 
 import styles from './TestRunCard.module.scss'
+import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 
 export interface TestRunCardProps {
   className?: string
-  testRun: TestRun
 }
 
 export const TestRunCard = observer((props: TestRunCardProps) => {
-  const { className, testRun } = props
+  const { className } = props
   const navigate = useNavigate()
 
-  const setStartCase = useCallback(
-    (id: number) => {
-      testRun.currentCaseId = id
-    },
-    [testRun],
-  )
+  const { testRunStore } = useProjectStores()
+  const { testRun, setCurrentCaseId } = testRunStore
+
+  if (testRun === null) {
+    return null
+  }
 
   return (
     <Card
@@ -55,7 +55,7 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
             <TestRunCasesList
               cases={testRun.cases}
               currentCaseId={testRun.currentCaseId}
-              setStartCase={setStartCase}
+              setStartCase={setCurrentCaseId}
             />
           </>
         )}
@@ -63,7 +63,7 @@ export const TestRunCard = observer((props: TestRunCardProps) => {
       <CardActions className={styles.actions}>
         <Button
           disabled={
-            testRun.state === TestRunState.COMPLETED || !testRun?.currentCaseId
+            testRun.state === TestRunState.COMPLETED || !testRun.currentCaseId
           }
           size="large"
           variant="contained"
