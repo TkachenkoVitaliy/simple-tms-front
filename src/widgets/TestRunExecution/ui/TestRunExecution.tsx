@@ -21,6 +21,14 @@ export const TestRunExecution = () => {
     [testRun.currentCaseId],
   )
 
+  const getStatusText = useCallback(
+    (items: RunTestCase[]) => {
+      const currentCase = items.find((val) => val.id === testRun.currentCaseId)
+      return currentCase ? `Current case: ${currentCase.name}` : ''
+    },
+    [testRun],
+  )
+
   const getItemComponent = (item: RunTestCase) => {
     if (isCurrent(item) || item.state === TestRunState.NOT_STARTED) {
       return (
@@ -51,6 +59,7 @@ export const TestRunExecution = () => {
         itemComponent={getItemComponent}
         getKey={(item) => item.id.toString()}
         isCurrent={isCurrent}
+        statusText={getStatusText}
       />
     </div>
   )
