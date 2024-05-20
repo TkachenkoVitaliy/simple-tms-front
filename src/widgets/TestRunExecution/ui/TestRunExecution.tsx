@@ -1,7 +1,8 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { RunTestCase, TestRunState } from 'entities/TestRun/model/types/testRun'
 import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
+import { TestCaseExecution } from 'entities/TestRun/ui/TestCaseExecution'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSStepper } from 'shared/ui/TMSStepper'
@@ -28,6 +29,10 @@ export const TestRunExecution = () => {
     },
     [testRun],
   )
+
+  const currentCase = useMemo(() => {
+    return testRun.cases.find((val) => val.id === testRun.currentCaseId)
+  }, [testRun])
 
   const getItemComponent = (item: RunTestCase) => {
     if (isCurrent(item) || item.state === TestRunState.NOT_STARTED) {
@@ -61,6 +66,7 @@ export const TestRunExecution = () => {
         isCurrent={isCurrent}
         statusText={getStatusText}
       />
+      {currentCase && <TestCaseExecution testCase={currentCase} />}
     </div>
   )
 }
