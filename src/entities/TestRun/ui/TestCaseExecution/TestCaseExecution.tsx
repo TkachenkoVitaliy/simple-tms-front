@@ -29,6 +29,7 @@ export const TestCaseExecution = (props: TestCaseExecutionProps) => {
             multiline
             value={testCase.preconditions || '\t'}
             label="Preconditions"
+            style={{ margin: '20px 20px 0' }}
           />
           {testCase.steps.map((step) => (
             <StepPreview step={step} />
