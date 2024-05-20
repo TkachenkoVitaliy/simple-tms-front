@@ -5,6 +5,7 @@ import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import { RunTestCase } from '../../model/types/testRun'
+import { StepPreview } from 'entities/TestRun/ui/StepPreview'
 
 export interface TestCaseExecutionProps {
   testCase: RunTestCase
@@ -29,12 +30,9 @@ export const TestCaseExecution = (props: TestCaseExecutionProps) => {
             value={testCase.preconditions || '\t'}
             label="Preconditions"
           />
-          <MDEditor
-            preview="preview"
-            hideToolbar
-            visibleDragbar={false}
-            value={testCase.steps[0].action}
-          />
+          {testCase.steps.map((step) => (
+            <StepPreview step={step} />
+          ))}
         </TMSCardContent>
       </Card>
     </TMSSkeleton>

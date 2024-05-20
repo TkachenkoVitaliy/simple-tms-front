@@ -11,7 +11,7 @@ interface RunTestPlan {
   name: string
 }
 
-interface RunTestCaseStep {
+export interface RunTestCaseStep {
   id: number
   orderNumber: number
   name: string
