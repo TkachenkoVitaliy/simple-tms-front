@@ -26,6 +26,8 @@ export const Sidebar = memo(
         appLocalStorage.setSideBarCollapsed(!prev)
         return !prev
       })
+      const root = document.documentElement
+      root.style.setProperty('--sidebar-width', isCollapsed ? '200px' : '50px')
     }
 
     const getNavigationItems = useMemo((): NavigationItem[] => {

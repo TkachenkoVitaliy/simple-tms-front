@@ -1,0 +1,11 @@
+.actionsWrapper {
+  height: 100px;
+  width: calc(100% - var(--sidebar-width));
+  display: flex;
+  align-content: center;
+  position: absolute;
+  bottom: 0;
+  left: var(--sidebar-width);
+  z-index: 1000;
+  border-top: 1px solid white;
+}

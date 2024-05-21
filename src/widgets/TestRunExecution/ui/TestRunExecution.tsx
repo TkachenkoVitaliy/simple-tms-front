@@ -1,11 +1,15 @@
 import { useCallback, useMemo } from 'react'
 
+import { ExecutionActions } from 'features/ExecutionActions'
+
 import { RunTestCase, TestRunState } from 'entities/TestRun/model/types/testRun'
 import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
 import { TestCaseExecution } from 'entities/TestRun/ui/TestCaseExecution'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSStepper } from 'shared/ui/TMSStepper'
+
+import styles from './TestRunExecution.module.scss'
 
 export const TestRunExecution = () => {
   const { testRunStore } = useProjectStores()
@@ -67,6 +71,10 @@ export const TestRunExecution = () => {
         statusText={getStatusText}
       />
       {currentCase && <TestCaseExecution testCase={currentCase} />}
+      <ExecutionActions
+        setStatus={(caseStatus) => console.log(caseStatus)}
+        className={styles.actionsWrapper}
+      />
     </div>
   )
 }
