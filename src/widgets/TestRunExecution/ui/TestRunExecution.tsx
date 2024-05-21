@@ -72,7 +72,10 @@ export const TestRunExecution = () => {
       />
       {currentCase && <TestCaseExecution testCase={currentCase} />}
       <ExecutionActions
-        setStatus={(caseStatus) => console.log(caseStatus)}
+        setStatus={(caseStatus, comment: string) =>
+          console.log(caseStatus, comment)
+        }
+        comment={currentCase?.comment || ''}
         className={styles.actionsWrapper}
       />
     </div>

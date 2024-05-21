@@ -1,8 +1,8 @@
 .actionsWrapper {
-  height: 100px;
+  height: 200px;
   width: calc(100% - var(--sidebar-width));
-  display: flex;
-  align-content: center;
+  //display: flex;
+  //align-content: center;
   position: absolute;
   bottom: 0;
   left: var(--sidebar-width);
