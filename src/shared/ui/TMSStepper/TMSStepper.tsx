@@ -1,4 +1,5 @@
 import { Typography, Divider } from '@mui/material'
+import { observer } from 'mobx-react-lite'
 
 export interface TMSStepperProps<T> {
   steps: T[]
@@ -9,7 +10,7 @@ export interface TMSStepperProps<T> {
   statusText?: (items: T[]) => string
 }
 
-export function TMSStepper<T>(props: TMSStepperProps<T>) {
+function Stepper<T>(props: TMSStepperProps<T>) {
   const {
     steps,
     itemComponent,
@@ -70,3 +71,5 @@ export function TMSStepper<T>(props: TMSStepperProps<T>) {
     </div>
   )
 }
+
+export const TMSStepper = observer(Stepper)

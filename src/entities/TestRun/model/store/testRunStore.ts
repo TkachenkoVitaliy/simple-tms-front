@@ -1,6 +1,5 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
-import { TestPlanAPI } from 'entities/TestPlan'
 import { TestRunAPI } from 'entities/TestRun'
 import { RunTestCase, TestRun } from 'entities/TestRun/model/types/testRun'
 
@@ -75,14 +74,16 @@ export class TestRunStore {
     testRunId: TestRun['id'],
     testCase: RunTestCase,
   ) => {
-    this.setLoading(true)
-    const response = await TestRunAPI.updateTestCase(
-      this.projectId,
-      testRunId,
-      testCase,
-    )
-    this.setTestRun(response.data)
-    this.setLoading(false)
+    await runInAction(async () => {
+      this.setLoading(true)
+      const response = await TestRunAPI.updateTestCase(
+        this.projectId,
+        testRunId,
+        testCase,
+      )
+      this.setTestRun(response.data)
+      this.setLoading(false)
+    })
   }
 
   setCurrentCaseId = (currentCaseId: number) => {

@@ -1,5 +1,9 @@
 import { useCallback, useMemo } from 'react'
 
+import { observer } from 'mobx-react-lite'
+
+import { useNavigate } from 'react-router-dom'
+
 import { ExecutionActions } from 'features/ExecutionActions'
 
 import { RunTestCase, TestRunState } from 'entities/TestRun/model/types/testRun'
@@ -11,9 +15,10 @@ import { TMSStepper } from 'shared/ui/TMSStepper'
 
 import styles from './TestRunExecution.module.scss'
 
-export const TestRunExecution = () => {
+export const TestRunExecution = observer(() => {
   const { testRunStore } = useProjectStores()
   const { testRun } = testRunStore
+  const navigate = useNavigate()
 
   if (testRun === null) {
     return null
@@ -35,6 +40,9 @@ export const TestRunExecution = () => {
   )
 
   const currentCase = useMemo(() => {
+    if (testRun.cases === undefined) {
+      return undefined
+    }
     return testRun.cases.find((val) => val.id === testRun.currentCaseId)
   }, [testRun])
 
@@ -61,6 +69,21 @@ export const TestRunExecution = () => {
     )
   }
 
+  const updateTestCase = async (
+    caseStatus: RunTestCase['state'] | null,
+    comment: string,
+  ) => {
+    if (currentCase) {
+      const newCase = {
+        ...currentCase,
+        state: caseStatus || currentCase.state,
+        comment,
+      }
+      await testRunStore.updateTestRunCase(testRun.id, newCase)
+      navigate(`../${testRunStore.testRun?.currentCaseId || ''}`)
+    }
+  }
+
   return (
     <div>
       <TMSStepper
@@ -73,11 +96,11 @@ export const TestRunExecution = () => {
       {currentCase && <TestCaseExecution testCase={currentCase} />}
       <ExecutionActions
         setStatus={(caseStatus, comment: string) =>
-          console.log(caseStatus, comment)
+          updateTestCase(caseStatus, comment)
         }
         comment={currentCase?.comment || ''}
         className={styles.actionsWrapper}
       />
     </div>
   )
-}
+})
