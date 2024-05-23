@@ -7,18 +7,10 @@ export interface TMSStepperProps<T> {
   activeBorderRadius?: string
   getKey: (item: T) => string
   isCurrent: (item: T) => boolean
-  statusText?: (items: T[]) => string
 }
 
 function Stepper<T>(props: TMSStepperProps<T>) {
-  const {
-    steps,
-    itemComponent,
-    activeBorderRadius,
-    getKey,
-    isCurrent,
-    statusText,
-  } = props
+  const { steps, itemComponent, activeBorderRadius, getKey, isCurrent } = props
 
   const getItemView = (step: T) => {
     return (
@@ -47,7 +39,7 @@ function Stepper<T>(props: TMSStepperProps<T>) {
   }
 
   return (
-    <div>
+    <div style={{ marginBottom: '20px' }}>
       <div
         style={{
           display: 'flex',
@@ -58,16 +50,6 @@ function Stepper<T>(props: TMSStepperProps<T>) {
       >
         {steps.map((item) => getItemView(item))}
       </div>
-      {statusText && (
-        <Typography
-          align="center"
-          variant="h4"
-          style={{ width: '100%', margin: '18px 0' }}
-        >
-          {statusText(steps)}
-        </Typography>
-      )}
-      <Divider variant="fullWidth" />
     </div>
   )
 }

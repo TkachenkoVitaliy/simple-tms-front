@@ -42,6 +42,7 @@ export const StepPreview = (props: StepPreviewProps) => {
         <div className={styles.stepSide}>
           <div className={styles.typeTitle}>Action</div>
           <MDEditor
+            height="120px"
             visibleDragbar={false}
             hideToolbar
             value={step.action || '\t'}
@@ -51,6 +52,7 @@ export const StepPreview = (props: StepPreviewProps) => {
         <div className={styles.stepSide}>
           <div className={styles.typeTitle}>Expected</div>
           <MDEditor
+            height="120px"
             visibleDragbar={false}
             hideToolbar
             value={step.expected || '\t'}

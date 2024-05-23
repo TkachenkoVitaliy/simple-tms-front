@@ -1,10 +1,11 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { observer } from 'mobx-react-lite'
 
 import { useNavigate } from 'react-router-dom'
 
 import { ExecutionActions } from 'features/ExecutionActions'
+import { ExecutionTimers } from 'features/ExecutionTimers'
 
 import { RunTestCase, TestRunState } from 'entities/TestRun/model/types/testRun'
 import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
@@ -19,6 +20,7 @@ export const TestRunExecution = observer(() => {
   const { testRunStore } = useProjectStores()
   const { testRun } = testRunStore
   const navigate = useNavigate()
+  const [timer, setTimer] = useState(0)
 
   if (testRun === null) {
     return null
@@ -46,6 +48,10 @@ export const TestRunExecution = observer(() => {
     return testRun.cases.find((val) => val.id === testRun.currentCaseId)
   }, [testRun])
 
+  useEffect(() => {
+    setTimer(currentCase?.timer || 0)
+  }, [currentCase, testRun])
+
   const getItemComponent = (item: RunTestCase) => {
     if (isCurrent(item) || item.state === TestRunState.NOT_STARTED) {
       return (
@@ -72,11 +78,14 @@ export const TestRunExecution = observer(() => {
   const updateTestCase = async (
     caseStatus: RunTestCase['state'] | null,
     comment: string,
+    caseTimer: number,
   ) => {
     if (currentCase) {
+      console.log(caseStatus, comment, timer)
       const newCase = {
         ...currentCase,
         state: caseStatus || currentCase.state,
+        timer: caseTimer,
         comment,
       }
       await testRunStore.updateTestRunCase(testRun.id, newCase)
@@ -91,12 +100,16 @@ export const TestRunExecution = observer(() => {
         itemComponent={getItemComponent}
         getKey={(item) => item.id.toString()}
         isCurrent={isCurrent}
-        statusText={getStatusText}
+      />
+      <ExecutionTimers
+        testRunTimer={testRun.timer}
+        caseTimer={timer}
+        setCaseTimer={setTimer}
       />
       {currentCase && <TestCaseExecution testCase={currentCase} />}
       <ExecutionActions
         setStatus={(caseStatus, comment: string) =>
-          updateTestCase(caseStatus, comment)
+          updateTestCase(caseStatus, comment, timer)
         }
         comment={currentCase?.comment || ''}
         className={styles.actionsWrapper}
