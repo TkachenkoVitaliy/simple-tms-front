@@ -1,5 +1,6 @@
-import { useStopwatch } from 'react-timer-hook'
 import { useEffect } from 'react'
+
+import { useStopwatch } from 'react-timer-hook'
 
 export interface TimerProps {
   startSecondsOffset?: number
