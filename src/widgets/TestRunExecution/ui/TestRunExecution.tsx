@@ -33,14 +33,6 @@ export const TestRunExecution = observer(() => {
     [testRun.currentCaseId],
   )
 
-  const getStatusText = useCallback(
-    (items: RunTestCase[]) => {
-      const currentCase = items.find((val) => val.id === testRun.currentCaseId)
-      return currentCase ? `Current case: ${currentCase.name}` : ''
-    },
-    [testRun],
-  )
-
   const currentCase = useMemo(() => {
     if (testRun.cases === undefined) {
       return undefined
@@ -81,7 +73,6 @@ export const TestRunExecution = observer(() => {
     caseTimer: number,
   ) => {
     if (currentCase) {
-      console.log(caseStatus, comment, timer)
       const newCase = {
         ...currentCase,
         state: caseStatus || currentCase.state,

@@ -14,6 +14,7 @@ import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
 
 import styles from './TestRunsTable.module.scss'
+import { toHHMMSS } from 'shared/lib/utils'
 
 export const TestRunsTable = observer(() => {
   const { testRunStore } = useProjectStores()
@@ -44,6 +45,7 @@ export const TestRunsTable = observer(() => {
     {
       field: 'timer',
       headerName: 'timer',
+      getCellText: (time: TestRun[keyof TestRun]) => toHHMMSS(time as number),
     },
     {
       field: 'cases',

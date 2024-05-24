@@ -53,7 +53,6 @@ export class TestRunStore {
         ? `0${currentDate.getSeconds()}`
         : currentDate.getSeconds().toString()
     const name = `[${testPlanName}] - ${date}/${month}/${currentDate.getFullYear()} @ ${hours}:${minutes}:${seconds}`
-    console.log(name)
     const createTestRunRequest = { testPlanId, name }
     const response = await TestRunAPI.create(
       this.projectId,

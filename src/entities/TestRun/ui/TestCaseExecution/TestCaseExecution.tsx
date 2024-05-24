@@ -32,7 +32,10 @@ export const TestCaseExecution = (props: TestCaseExecutionProps) => {
             style={{ margin: '20px 20px 0' }}
           />
           {testCase.steps.map((step) => (
-            <StepPreview step={step} />
+            <StepPreview
+              step={step}
+              key={step.id}
+            />
           ))}
         </TMSCardContent>
       </Card>
