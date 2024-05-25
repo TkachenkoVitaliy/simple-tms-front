@@ -85,19 +85,22 @@ export const TestRunExecution = observer(() => {
   }
 
   return (
-    <div>
-      <TMSStepper
-        steps={testRun.cases}
-        itemComponent={getItemComponent}
-        getKey={(item) => item.id.toString()}
-        isCurrent={isCurrent}
-      />
-      <ExecutionTimers
-        testRunTimer={testRun.timer}
-        caseTimer={timer}
-        setCaseTimer={setTimer}
-      />
+    <div className={styles.grid}>
+      <div className={styles.header}>
+        <TMSStepper
+          steps={testRun.cases}
+          itemComponent={getItemComponent}
+          getKey={(item) => item.id.toString()}
+          isCurrent={isCurrent}
+        />
+        <ExecutionTimers
+          testRunTimer={testRun.timer}
+          caseTimer={timer}
+          setCaseTimer={setTimer}
+        />
+      </div>
       {currentCase && <TestCaseExecution testCase={currentCase} />}
+      <div className="justEmptyForGrid" />
       <ExecutionActions
         setStatus={(caseStatus, comment: string) =>
           updateTestCase(caseStatus, comment, timer)

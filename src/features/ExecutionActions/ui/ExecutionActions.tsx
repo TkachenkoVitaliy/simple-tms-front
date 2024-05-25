@@ -20,17 +20,9 @@ export const ExecutionActions = (props: ExecutionActionsProps) => {
   const [value, setValue] = useState<string>(comment)
 
   return (
-    <div className={classNames('', {}, [className])}>
+    <div className={classNames(styles.wrapper, {}, [className])}>
       <div className={styles.actions}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '700px',
-            margin: 'auto',
-          }}
-        >
+        <div className={styles.btnWrapper}>
           <Button
             color="success"
             variant="contained"

@@ -1,12 +1,25 @@
-.actions {
-  height: 60px;
-  width: calc(100% - var(--sidebar-width));
-  display: flex;
-  align-content: center;
-  margin: 20px auto;
+.wrapper {
+  background: var(--mui-palatte-background-default);
+
+  .actions {
+    height: 60px;
+    width: calc(100% - var(--sidebar-width));
+    display: flex;
+    align-content: center;
+    margin: 20px auto;
+
+    .btnWrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 700px;
+      margin: auto;
+    }
+  }
+
+  .comment {
+    width: 80%;
+    margin: 10px auto;
+  }
 }
 
-.comment {
-  width: 80%;
-  margin: 10px auto;
-}

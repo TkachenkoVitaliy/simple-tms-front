@@ -1,11 +1,25 @@
-.actionsWrapper {
-  height: 200px;
-  width: calc(100% - var(--sidebar-width));
-  //display: flex;
-  //align-content: center;
-  position: absolute;
-  bottom: 0;
-  left: var(--sidebar-width);
-  z-index: 1000;
-  border-top: 1px solid var(--mui-palette-divider);
+.grid {
+  height: 100%;
+  display: grid;
+  grid-template-rows: min-content min-content auto min-content;
+
+  .header {
+    position: sticky;
+    top: 64px;
+    background: var(--mui-palatte-background-default);
+    z-index: 1000;
+  }
+
+  .actionsWrapper {
+    height: 200px;
+    width: 100%;
+    //display: flex;
+    //align-content: center;
+    position: sticky;
+    bottom: 0;
+    left: var(--sidebar-width);
+    z-index: 1000;
+    border-top: 1px solid var(--mui-palette-divider);
+  }
 }
+

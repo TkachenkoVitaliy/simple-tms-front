@@ -28,7 +28,7 @@ function TestRunPage() {
   return testRunStore.isLoading || testRunStore.testRun === null ? (
     <PageLoader />
   ) : (
-    <PageFrame>
+    <PageFrame style={{ overflowY: 'inherit' }}>
       {outlet ? <Outlet /> : <TestRunCard className={styles.container} />}
     </PageFrame>
   )
