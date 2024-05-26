@@ -6,17 +6,24 @@ export interface TimerProps {
   startSecondsOffset?: number
   setTotalSeconds?: (totalSeconds: number) => void
   label?: string
+  autoStart?: boolean
 }
 
 export const Timer = (props: TimerProps) => {
-  const { startSecondsOffset = 0, setTotalSeconds, label = '' } = props
+  const {
+    startSecondsOffset = 0,
+    setTotalSeconds,
+    label = '',
+    autoStart = true,
+  } = props
   const stopwatchOffset = new Date()
   stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + startSecondsOffset)
 
-  const { totalSeconds, seconds, minutes, hours, days } = useStopwatch({
-    autoStart: true,
-    offsetTimestamp: stopwatchOffset,
-  })
+  const { totalSeconds, seconds, minutes, hours, days, start, pause } =
+    useStopwatch({
+      autoStart,
+      offsetTimestamp: stopwatchOffset,
+    })
 
   useEffect(() => {
     if (setTotalSeconds) {

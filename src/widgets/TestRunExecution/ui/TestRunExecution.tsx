@@ -7,7 +7,11 @@ import { useNavigate } from 'react-router-dom'
 import { ExecutionActions } from 'features/ExecutionActions'
 import { ExecutionTimers } from 'features/ExecutionTimers'
 
-import { RunTestCase, TestRunState } from 'entities/TestRun/model/types/testRun'
+import {
+  RunTestCase,
+  TestRun,
+  TestRunState,
+} from 'entities/TestRun/model/types/testRun'
 import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
 import { TestCaseExecution } from 'entities/TestRun/ui/TestCaseExecution'
 
@@ -20,7 +24,22 @@ export const TestRunExecution = observer(() => {
   const { testRunStore } = useProjectStores()
   const { testRun } = testRunStore
   const navigate = useNavigate()
-  const [timer, setTimer] = useState(0)
+
+  const getInitTimer = (testRun: TestRun | null) => {
+    if (testRun === null) {
+      return 0
+    }
+    const { cases, currentCaseId } = testRun
+    if (!cases || cases.length === 0) {
+      return 0
+    }
+    const currentCase = cases.find((val) => val.id === currentCaseId)
+    if (currentCase === undefined) {
+      return 0
+    }
+    return currentCase.timer
+  }
+  const [timer, setTimer] = useState<number>(getInitTimer(testRun))
 
   if (testRun === null) {
     return null
@@ -41,8 +60,10 @@ export const TestRunExecution = observer(() => {
   }, [testRun])
 
   useEffect(() => {
-    setTimer(currentCase?.timer || 0)
-  }, [currentCase, testRun])
+    if (currentCase) {
+      setTimer(currentCase.timer)
+    }
+  }, [currentCase, testRun.id, testRun.currentCaseId])
 
   const getItemComponent = (item: RunTestCase) => {
     if (isCurrent(item) || item.state === TestRunState.NOT_STARTED) {
