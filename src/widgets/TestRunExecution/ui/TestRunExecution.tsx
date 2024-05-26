@@ -101,7 +101,11 @@ export const TestRunExecution = observer(() => {
         comment,
       }
       await testRunStore.updateTestRunCase(testRun.id, newCase)
-      navigate(`../${testRunStore.testRun?.currentCaseId || ''}`)
+      if (caseStatus === TestRunState.PAUSED) {
+        navigate('..')
+      } else {
+        navigate(`../${testRunStore.testRun?.currentCaseId || ''}`)
+      }
     }
   }
 
