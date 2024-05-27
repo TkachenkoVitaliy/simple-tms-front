@@ -6,10 +6,8 @@ import { useParams } from 'react-router-dom'
 
 import { PageLoader } from 'widgets/PageLoader'
 
-import { TypeIcon } from 'entities/TestNode/ui/TypeIcon/TypeIcon'
-import { TestPlanForm } from 'entities/TestPlan'
-import { TestPlanNodeAPI } from 'entities/TestPlan/api/testPlanNodeApi'
-import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
+import { TypeIcon } from 'entities/TestNode'
+import { TestPlanForm, TestPlanNodeAPI, TestPlanNode } from 'entities/TestPlan'
 
 import { TestNodeType } from 'shared/consts/types/testNodeType'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
