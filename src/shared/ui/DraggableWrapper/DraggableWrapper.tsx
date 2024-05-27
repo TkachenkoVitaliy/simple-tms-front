@@ -4,11 +4,8 @@ import update from 'immutability-helper'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import {
-  CustomDragLayer,
-  CustomDragLayerProps,
-} from '../CustomDragLayer/CustomDragLayer'
-import { Draggable } from '../Draggable/Draggable'
+import { CustomDragLayer, CustomDragLayerProps } from '../CustomDragLayer'
+import { Draggable } from '../Draggable'
 
 export interface DraggableWrapperProps {
   Wrapper: React.ReactElement<{ children?: React.ReactNode }>

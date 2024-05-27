@@ -1,1 +1,1 @@
-export { TMSTable } from 'shared/ui/TMSTable/TMSTable'
+export { TMSTable } from './TMSTable'

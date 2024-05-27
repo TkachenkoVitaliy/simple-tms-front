@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// TODO: Временно чтобы не забыть все доступные свойтсва
 import { observer } from 'mobx-react-lite'
 
 import { TextField, TextFieldProps } from '@mui/material'

@@ -1,7 +1,5 @@
 import { observer } from 'mobx-react-lite'
 
-import { Typography, Divider } from '@mui/material'
-
 export interface TMSStepperProps<T> {
   steps: T[]
   itemComponent: (item: T) => JSX.Element
@@ -20,7 +18,7 @@ function Stepper<T>(props: TMSStepperProps<T>) {
         style={{
           borderWidth: '3px',
           borderColor: isCurrent(step)
-            ? 'var(--mui-pallete-info-main)'
+            ? 'var(--mui-palette-info-main)'
             : 'var(--mui-palette-text-primary)',
           borderRadius: activeBorderRadius || '50%',
           borderStyle: 'solid',
@@ -30,7 +28,7 @@ function Stepper<T>(props: TMSStepperProps<T>) {
           margin: '8px',
           cursor: 'default',
           color: isCurrent(step)
-            ? 'var(--mui-pallete-info-main)'
+            ? 'var(--mui-palette-info-main)'
             : 'var(--mui-palette-text-primary)',
         }}
       >

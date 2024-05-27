@@ -17,7 +17,7 @@ export function updateCss(theme: Theme) {
     mode === 'dark' ? '#121212' : '#f5f5f5',
   )
 
-  root.style.setProperty('--mui-pallete-info-main', info.main)
+  root.style.setProperty('--mui-palette-info-main', info.main)
 
   root.style.setProperty('--mui-contrast-text', primary.contrastText)
 
@@ -31,7 +31,7 @@ export function updateCss(theme: Theme) {
 
   root.style.setProperty('--mui-palette-divider', divider)
 
-  root.style.setProperty('--mui-palatte-background-default', background.default)
+  root.style.setProperty('--mui-palette-background-default', background.default)
 
   root.style.setProperty(
     '--mui-palette-background-paper',

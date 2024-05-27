@@ -11,7 +11,7 @@ import { TestPlanForm, TestPlanNodeAPI, TestPlanNode } from 'entities/TestPlan'
 
 import { TestNodeType } from 'shared/consts/types/testNodeType'
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
-import { flattenArray } from 'shared/lib/utils/arrayUtil/arrayUtil'
+import { flattenArray } from 'shared/lib/utils'
 import { RouteParams } from 'shared/types/router'
 import { CheckboxTree } from 'shared/ui/CheckboxTree'
 import { PageFrame } from 'shared/ui/PageFrame'
