@@ -1,11 +1,10 @@
 import { Card, TextField } from '@mui/material'
 
-import { StepPreview } from 'entities/TestRun/ui/StepPreview'
-
 import { TMSCardContent } from 'shared/ui/TMSCardContent'
 import { TMSSkeleton } from 'shared/ui/TMSSkeleton'
 
 import { RunTestCase } from '../../model/types/testRun'
+import { StepPreview } from '../../ui/StepPreview'
 
 export interface TestCaseExecutionProps {
   testCase: RunTestCase

@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios'
 
-import { TestPlanNode } from 'entities/TestPlan/model/types/testPlanNode'
-
 import { API } from 'shared/api'
+
+import { TestPlanNode } from '../model/types/testPlanNode'
 
 const getBaseUrl = (projectId: number) => `projects/${projectId}/tests/nodes`
 

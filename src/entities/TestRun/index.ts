@@ -1,3 +1,6 @@
 export { TestRunAPI } from './api/testRunApi'
 export { TestRunStore } from './model/store/testRunStore'
-export { TestRunCard } from 'entities/TestRun/ui/TestRunCard'
+export { RunStateIcon } from './ui/RunStateIcon'
+export { TestRunCard } from './ui/TestRunCard'
+export { TestCaseExecution } from './ui/TestCaseExecution'
+export { TestRunState } from './model/types/testRun'

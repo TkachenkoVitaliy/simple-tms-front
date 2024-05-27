@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { TestRunAPI } from 'entities/TestRun'
-import { RunTestCase, TestRun } from 'entities/TestRun/model/types/testRun'
+import { TestRunAPI } from '../../api/testRunApi'
+import { RunTestCase, TestRun } from '../../model/types/testRun'
 
 export class TestRunStore {
   readonly projectId: number

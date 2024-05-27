@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom'
 import { ExecutionActions } from 'features/ExecutionActions'
 import { ExecutionTimers } from 'features/ExecutionTimers'
 
+import { RunStateIcon, TestCaseExecution } from 'entities/TestRun'
 import {
   RunTestCase,
   TestRun,
   TestRunState,
 } from 'entities/TestRun/model/types/testRun'
-import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
-import { TestCaseExecution } from 'entities/TestRun/ui/TestCaseExecution'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { TMSStepper } from 'shared/ui/TMSStepper'

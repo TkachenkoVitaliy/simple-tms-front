@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/jsx-props-no-spreading */
 import { NodeModel, useDragOver } from '@minoru/react-dnd-treeview'
 import { Add, ArrowRight, Delete } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'

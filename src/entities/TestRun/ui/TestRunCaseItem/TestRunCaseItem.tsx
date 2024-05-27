@@ -3,11 +3,10 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
-import { RunStateIcon } from 'entities/TestRun/ui/RunStateIcon/RunStateIcon'
-
 import { toHHMMSS } from 'shared/lib/utils'
 
 import { RunTestCase, TestRunState } from '../../model/types/testRun'
+import { RunStateIcon } from '../../ui/RunStateIcon'
 
 export interface TestRunCaseItemProps {
   runCase: RunTestCase

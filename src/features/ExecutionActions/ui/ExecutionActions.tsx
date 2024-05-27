@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Button, TextField } from '@mui/material'
 
-import { TestRunState } from 'entities/TestRun/model/types/testRun'
+import { TestRunState } from 'entities/TestRun'
 
 import { classNames } from 'shared/lib/utils'
 
