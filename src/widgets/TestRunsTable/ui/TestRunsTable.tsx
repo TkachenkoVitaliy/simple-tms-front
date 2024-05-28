@@ -7,14 +7,13 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
-import { TestRunAPI } from 'entities/TestRun'
-import { TestRun, TestRunState } from 'entities/TestRun/model/types/testRun'
+import { TestRun, TestRunAPI, TestRunState } from 'entities/TestRun'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
+import { toHHMMSS } from 'shared/lib/utils'
 import { ColumnDefinition, TMSTable } from 'shared/ui/TMSTable/TMSTable'
 
 import styles from './TestRunsTable.module.scss'
-import { toHHMMSS } from 'shared/lib/utils'
 
 export const TestRunsTable = observer(() => {
   const { testRunStore } = useProjectStores()
