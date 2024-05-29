@@ -50,7 +50,7 @@ function ProjectPage(props: ProjectPageProps) {
     return new ProjectEntitiesRootStore(projectStore.activeProjectId)
   }, [projectStore.activeProjectId])
 
-  if (projectEntitiesRootStore === null) {
+  if (projectEntitiesRootStore === null && !isNew) {
     navigate('../../')
     return null
   }
