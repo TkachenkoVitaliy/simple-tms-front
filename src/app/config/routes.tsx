@@ -55,13 +55,13 @@ export const appRoutes: AppRoute[] = [
         path: 'projects/:projectId',
         element: <ProjectPage />,
         children: [
-          {
-            path: 'dashboard',
-            element: <DashboardPage />,
-            label: 'Главная',
-            Icon: Dashboard,
-            showWithoutActiveProject: false,
-          },
+          // {
+          //   path: 'dashboard',
+          //   element: <DashboardPage />,
+          //   label: 'Главная',
+          //   Icon: Dashboard,
+          //   showWithoutActiveProject: false,
+          // },
           {
             path: 'plans',
             element: <TestPlansPage />,
