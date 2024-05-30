@@ -12,7 +12,7 @@ import {
   RunTestCase,
   TestCaseExecution,
   TestRun,
-  TestRunState,
+  TestRunCaseState,
 } from 'entities/TestRun'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
@@ -66,7 +66,7 @@ export const TestRunExecution = observer(() => {
   }, [currentCase, testRun.id, testRun.currentCaseId])
 
   const getItemComponent = (item: RunTestCase) => {
-    if (isCurrent(item) || item.state === TestRunState.NOT_STARTED) {
+    if (isCurrent(item) || item.state === TestRunCaseState.NOT_STARTED) {
       return (
         <div
           style={{
@@ -101,7 +101,7 @@ export const TestRunExecution = observer(() => {
         comment,
       }
       await testRunStore.updateTestRunCase(testRun.id, newCase)
-      if (caseStatus === TestRunState.PAUSED) {
+      if (caseStatus === TestRunCaseState.PAUSED) {
         navigate('..')
       } else {
         navigate(`../${testRunStore.testRun?.currentCaseId || ''}`)

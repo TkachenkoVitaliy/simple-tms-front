@@ -7,7 +7,12 @@ import { IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import { projectStore } from 'entities/Project'
-import { TestRun, TestRunAPI, TestRunState } from 'entities/TestRun'
+import {
+  TestRun,
+  TestRunAPI,
+  TestRunCaseState,
+  TestRunState,
+} from 'entities/TestRun'
 
 import { useProjectStores } from 'shared/lib/hooks/useProjectStores'
 import { toHHMMSS } from 'shared/lib/utils'
@@ -54,7 +59,8 @@ export const TestRunsTable = observer(() => {
         Array.isArray(val)
           ? val
               .filter(
-                (runTestCase) => runTestCase.state === TestRunState.COMPLETED,
+                (runTestCase) =>
+                  runTestCase.state === TestRunCaseState.COMPLETED,
               )
               .length.toString()
           : '0',

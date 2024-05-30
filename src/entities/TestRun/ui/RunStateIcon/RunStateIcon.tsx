@@ -6,19 +6,19 @@ import {
   RemoveCircle,
 } from '@mui/icons-material'
 
-import { TestRunState } from '../../model/types/testRun'
+import { TestRunCaseState } from '../../model/types/testRun'
 
 export interface RunStateIconProps {
-  state: TestRunState
+  state: TestRunCaseState
   style?: React.CSSProperties
 }
 
 export const RunStateIcon = (props: RunStateIconProps) => {
   const { state, style } = props
-  if (state === TestRunState.NOT_STARTED) {
+  if (state === TestRunCaseState.NOT_STARTED) {
     return <NotStarted style={{ ...style }} />
   }
-  if (state === TestRunState.PAUSED) {
+  if (state === TestRunCaseState.PAUSED) {
     return (
       <PauseCircle
         color="disabled"
@@ -26,7 +26,7 @@ export const RunStateIcon = (props: RunStateIconProps) => {
       />
     )
   }
-  if (state === TestRunState.BLOCKED) {
+  if (state === TestRunCaseState.BLOCKED) {
     return (
       <RemoveCircle
         color="warning"
@@ -34,7 +34,7 @@ export const RunStateIcon = (props: RunStateIconProps) => {
       />
     )
   }
-  if (state === TestRunState.FAILED) {
+  if (state === TestRunCaseState.FAILED) {
     return (
       <Error
         color="error"
@@ -42,7 +42,7 @@ export const RunStateIcon = (props: RunStateIconProps) => {
       />
     )
   }
-  if (state === TestRunState.COMPLETED) {
+  if (state === TestRunCaseState.COMPLETED) {
     return (
       <CheckCircle
         color="success"

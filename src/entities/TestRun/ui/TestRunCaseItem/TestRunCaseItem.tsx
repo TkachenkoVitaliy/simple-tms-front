@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText'
 
 import { toHHMMSS } from 'shared/lib/utils'
 
-import { RunTestCase, TestRunState } from '../../model/types/testRun'
+import { RunTestCase, TestRunCaseState } from '../../model/types/testRun'
 import { RunStateIcon } from '../../ui/RunStateIcon'
 
 export interface TestRunCaseItemProps {
@@ -24,7 +24,7 @@ export const TestRunCaseItem = (props: TestRunCaseItemProps) => {
     >
       <ListItemButton
         selected={selected}
-        disabled={runCase.state === TestRunState.COMPLETED}
+        disabled={runCase.state === TestRunCaseState.COMPLETED}
         onClick={() => setStartCase(runCase.id)}
       >
         <ListItemIcon>

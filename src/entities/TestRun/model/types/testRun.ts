@@ -1,6 +1,14 @@
-export enum TestRunState {
+export enum TestRunCaseState {
   NOT_STARTED = 'NOT_STARTED',
   PAUSED = 'PAUSED',
+  BLOCKED = 'BLOCKED',
+  FAILED = 'FAILED',
+  COMPLETED = 'COMPLETED',
+}
+
+export enum TestRunState {
+  NOT_STARTED = 'NOT_STARTED',
+  IN_PROGRESS = 'IN_PROGRESS',
   BLOCKED = 'BLOCKED',
   FAILED = 'FAILED',
   COMPLETED = 'COMPLETED',
@@ -26,7 +34,7 @@ export interface RunTestCase {
   preconditions: string
   steps: RunTestCaseStep[]
   timer: number
-  state: TestRunState
+  state: TestRunCaseState
   comment: string
 }
 

@@ -2,14 +2,14 @@ import { useState } from 'react'
 
 import { Button, TextField } from '@mui/material'
 
-import { TestRunState } from 'entities/TestRun'
+import { TestRunCaseState } from 'entities/TestRun'
 
 import { classNames } from 'shared/lib/utils'
 
 import styles from './ExecutionActions.module.scss'
 
 export interface ExecutionActionsProps {
-  setStatus: (newState: TestRunState | null, comment: string) => void
+  setStatus: (newState: TestRunCaseState | null, comment: string) => void
   comment: string
   className?: string
 }
@@ -27,7 +27,7 @@ export const ExecutionActions = (props: ExecutionActionsProps) => {
             color="success"
             variant="contained"
             size="large"
-            onClick={() => setStatus(TestRunState.COMPLETED, value)}
+            onClick={() => setStatus(TestRunCaseState.COMPLETED, value)}
           >
             COMPLETED
           </Button>
@@ -35,7 +35,7 @@ export const ExecutionActions = (props: ExecutionActionsProps) => {
             color="error"
             variant="contained"
             size="large"
-            onClick={() => setStatus(TestRunState.FAILED, value)}
+            onClick={() => setStatus(TestRunCaseState.FAILED, value)}
           >
             FAILED
           </Button>
@@ -43,12 +43,12 @@ export const ExecutionActions = (props: ExecutionActionsProps) => {
             color="warning"
             variant="contained"
             size="large"
-            onClick={() => setStatus(TestRunState.BLOCKED, value)}
+            onClick={() => setStatus(TestRunCaseState.BLOCKED, value)}
           >
             BLOCKED
           </Button>
           <Button
-            onClick={() => setStatus(TestRunState.PAUSED, value)}
+            onClick={() => setStatus(TestRunCaseState.PAUSED, value)}
             variant="contained"
             size="large"
             color="secondary"
