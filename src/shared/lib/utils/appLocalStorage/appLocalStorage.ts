@@ -4,6 +4,8 @@ enum AppLocalStorageItems {
   THEME = 'theme',
   ACTIVE_PROJECT = 'active_project',
   SIDEBAR_STATE = 'sidebar_state',
+  ACCESS_TOKEN = 'access_token',
+  REFRESH_TOKEN = 'refresh_token',
 }
 
 export const appLocalStorage = {
@@ -60,5 +62,17 @@ export const appLocalStorage = {
       AppLocalStorageItems.SIDEBAR_STATE,
       collapsed ? 'collapsed' : 'expanded',
     )
+  },
+  getAccessToken() {
+    return localStorage.getItem(AppLocalStorageItems.ACCESS_TOKEN)
+  },
+  setAccessToken(accessToken: string) {
+    localStorage.setItem(AppLocalStorageItems.ACCESS_TOKEN, accessToken)
+  },
+  getRefreshToken() {
+    return localStorage.getItem(AppLocalStorageItems.REFRESH_TOKEN)
+  },
+  setRefreshToken(accessToken: string) {
+    localStorage.setItem(AppLocalStorageItems.REFRESH_TOKEN, accessToken)
   },
 }
