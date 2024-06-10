@@ -4,13 +4,11 @@ import { LoginResponse } from 'app/model/types/authTypes'
 
 import { API } from 'shared/api'
 
-const URL = '/auth'
-
-export const AppAPI = {
+export const AuthApi = {
   login(
     email: string,
     password: string,
   ): Promise<AxiosResponse<LoginResponse>> {
-    return API.post(URL, { email, password })
+    return API.post('signin', { email, password })
   },
 }

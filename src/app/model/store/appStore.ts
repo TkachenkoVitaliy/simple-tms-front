@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { makeAutoObservable } from 'mobx'
 
-import { AppAPI } from 'app/api/appApi'
+import { AuthApi } from 'app/api/authApi'
 
 import { appLocalStorage } from 'shared/lib/utils'
 
@@ -18,7 +18,7 @@ class AppStore {
 
   async login(email: string, password: string) {
     try {
-      const response = await AppAPI.login(email, password)
+      const response = await AuthApi.login(email, password)
       appLocalStorage.setAccessToken(response.data.accessToken)
       appLocalStorage.setRefreshToken(response.data.refreshToken)
       this.setAuth(true)
