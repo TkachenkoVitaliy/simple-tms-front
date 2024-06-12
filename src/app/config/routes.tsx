@@ -8,9 +8,8 @@ import {
 import { Navigate } from 'react-router-dom'
 
 import { AppLayout } from 'app/layout/AppLayout'
-import { AuthLayout } from 'app/layout/AuthLayout'
 
-import { DashboardPage } from 'pages/DashboardPage'
+import { AuthPage } from 'pages/AuthPage'
 import { ErrorPage } from 'pages/ErrorPage'
 import { ProjectPage } from 'pages/ProjectPage'
 import { ProjectsPage } from 'pages/ProjectsPage'
@@ -135,6 +134,6 @@ export const appRoutes: AppRoute[] = [
   },
   {
     path: 'auth',
-    element: <AuthLayout />,
+    element: <AuthPage />,
   },
 ]
