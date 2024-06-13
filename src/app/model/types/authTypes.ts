@@ -1,4 +1,12 @@
 export interface LoginResponse {
-  accessToken: string
+  id: number
+  token: string
   refreshToken: string
+  type: 'Bearer'
+  username: string
+  roles: string[]
+}
+
+export interface LoginError {
+  error: string
 }
