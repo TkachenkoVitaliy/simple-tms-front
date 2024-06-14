@@ -10,3 +10,5 @@ export interface LoginResponse {
 export interface LoginError {
   error: string
 }
+
+export type SignInResponse = LoginResponse | LoginError

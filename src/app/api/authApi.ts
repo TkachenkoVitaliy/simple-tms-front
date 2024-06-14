@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
-import { LoginError, LoginResponse } from 'app/model/types/authTypes'
+import { SignInResponse } from 'app/model/types/authTypes'
 
 const siteUrl = window.location.hostname
 
@@ -22,16 +22,16 @@ API.interceptors.request.use((config) => {
 })
 
 export const AuthApi = {
-  login(
+  signIn(
     email: string,
     password: string,
-  ): Promise<AxiosResponse<LoginResponse | LoginError>> {
+  ): Promise<AxiosResponse<SignInResponse>> {
     return API.post('signin', { email, password })
   },
   signUp(
     email: string,
     password: string,
-  ): Promise<AxiosResponse<LoginResponse | LoginError>> {
+  ): Promise<AxiosResponse<SignInResponse>> {
     return API.post('signup', { username: email, email, password })
   },
   refresh(refreshToken: string) {
