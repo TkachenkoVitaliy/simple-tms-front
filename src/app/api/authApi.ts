@@ -32,9 +32,12 @@ export const AuthApi = {
     email: string,
     password: string,
   ): Promise<AxiosResponse<LoginResponse | LoginError>> {
-    return API.post('singup', { username: email, email, password })
+    return API.post('signup', { username: email, email, password })
   },
   refresh(refreshToken: string) {
     return API.post('refreshToken', { refreshToken })
+  },
+  signOut(): Promise<AxiosResponse> {
+    return API.post('signout')
   },
 }
