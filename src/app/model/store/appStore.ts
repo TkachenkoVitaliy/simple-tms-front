@@ -34,6 +34,24 @@ class AppStore {
       }
     }
   }
+
+  async signUp(email: string, password: string) {
+    try {
+      const response = await AuthApi.signUp(email, password)
+      const responseData: SignInResponse = response.data
+      if ('error' in responseData) {
+        throw new Error(responseData.error)
+      } else {
+        appLocalStorage.setAccessToken(responseData.token)
+        appLocalStorage.setRefreshToken(responseData.refreshToken)
+        this.setAuth(true)
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        console.error(e.toJSON)
+      }
+    }
+  }
 }
 
 export const appStore = new AppStore()
